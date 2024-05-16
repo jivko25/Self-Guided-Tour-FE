@@ -1,10 +1,12 @@
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "./styles/page.module.css";
+import variables from "./styles/_variables.module.scss"
 
 export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
+        <div className={`${variables.title}`}>Test SASS</div>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>app/page.js</code>

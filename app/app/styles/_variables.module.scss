@@ -1,0 +1,18 @@
+$color-primary: lime;
+
+$font-primary: "Roboto", sans-serif;
+
+$font-size-base: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xxl: 24px;
+$font-size-xxxl: 28px;
+
+.title {
+  color: $color-primary;
+}
+
+.h1 {
+  font-size: $font-size-xxl;
+}
