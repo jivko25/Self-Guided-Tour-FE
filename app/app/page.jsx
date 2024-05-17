@@ -26,6 +26,9 @@ export default function Home() {
     }
     fetchData();
   }, []);
+
+
+
   return (
     <main>
       <h1 className={variables.title}>Home</h1>
