@@ -92,7 +92,6 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-   
       </Container>
     </ThemeProvider>
   );
