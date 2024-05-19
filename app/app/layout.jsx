@@ -6,9 +6,10 @@ import "./styles/globals.css";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 
+const inter = Inter({ subsets: ["latin"] });
+
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
