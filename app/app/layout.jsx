@@ -1,4 +1,5 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
 
