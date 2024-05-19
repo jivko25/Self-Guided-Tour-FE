@@ -4,6 +4,8 @@ import "./styles/globals.css";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../theme';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,10 +18,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <AppRouterCacheProvider>
+        <ThemeProvider theme={theme}>
           options={{ key: "css" }}
           <Header />
           {children}
           <Footer />
+          </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
