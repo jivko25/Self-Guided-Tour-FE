@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,14 +14,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const { registerSubmitHandler, getFault, clearFault } =
-    useContext(AuthContext);
+  const { registerSubmitHandler, getFault, clearFault } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -37,6 +35,10 @@ export default function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      // Handle password mismatch error here
+      return;
+    }
     registerSubmitHandler(formData);
   };
 
@@ -44,7 +46,7 @@ export default function SignUp() {
     return () => {
       clearFault();
     };
-  }, []);
+  }, [clearFault]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -69,12 +71,7 @@ export default function SignUp() {
               {getFault()}
             </Typography>
           )}
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -141,19 +138,12 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
