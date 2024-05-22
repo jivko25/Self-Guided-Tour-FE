@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useState, useContext } from "react";
-import * as authService from "../services/authService";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
 import { usePersistedState } from "../hooks/usePersistedState";
@@ -13,11 +13,21 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [fault, setFault] = useState(null);
 
+  const initialToken = localStorage.getItem("accessToken");
+
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000/",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${initialToken}`,
+    },
+  });
+
   const onLoginSubmit = async (values) => {
     try {
-      const result = await authService.login(values.email, values.password);
-      setAuth(result);
-      localStorage.setItem("access_token", result.access_token);
+      const response = await axiosInstance.post("auth/login/", values);
+      setAuth(response.data);
+      localStorage.setItem("accessToken", response.data.token);
       router.push("/");
     } catch (err) {
       console.error("Login failed:", err.message);
@@ -38,14 +48,9 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const result = await authService.register(
-        firstName.values,
-        lastName.values,
-        values.email,
-        values.password
-      );
-      localStorage.setItem("access_token", result.access_token);
-      setAuth(result);
+      const response = await axiosInstance.post("auth/register/", values);
+      localStorage.setItem("accessToken", result.data.token);
+      setAuth(response.data);
       router.push("/");
     } catch (err) {
       console.error("Registration failed:", err.message);
@@ -54,9 +59,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logoutHandler = () => {
-    setAuth({});
-    localStorage.removeItem("access_token");
-    router.push("/");
+    try {
+      localStorage.removeItem("accessToken");
+      setAuth({});
+      router.push("/");
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+      router.push("/");
+    }
   };
 
   const getError = () => error;
@@ -73,6 +83,8 @@ export const AuthProvider = ({ children }) => {
     userId: auth.id,
     isAuthenticated: !!auth.access_token,
     isAdmin: auth.email === "admin@abv.bg",
+    axiosInstance: axiosInstance,
+    initialToken: initialToken,
     getError,
     clearError,
     getFault,
