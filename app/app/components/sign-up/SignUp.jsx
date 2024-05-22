@@ -19,7 +19,7 @@ import { AuthContext } from "../../context/authContext";
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const { registerSubmitHandler, getFault, clearFault } = useContext(AuthContext);
+  const { registerSubmitHandler, fault, setFault } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,16 +27,24 @@ export default function SignUp() {
     password: "",
     confirmPassword: "",
   });
+  const [passwordError, setPasswordError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (name === "password" || name === "confirmPassword") {
+      if (formData.password !== formData.confirmPassword) {
+        setPasswordError("Passwords do not match");
+      } else {
+        setPasswordError("");
+      }
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      // Handle password mismatch error here
+      setPasswordError("Passwords do not match");
       return;
     }
     registerSubmitHandler(formData);
@@ -44,9 +52,9 @@ export default function SignUp() {
 
   useEffect(() => {
     return () => {
-      clearFault();
+      setFault(null);
     };
-  }, [clearFault]);
+  }, [setFault]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -66,9 +74,14 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          {getFault() && (
+          {fault && (
             <Typography color="error" variant="body2">
-              {getFault()}
+              {fault}
+            </Typography>
+          )}
+          {passwordError && (
+            <Typography color="error" variant="body2">
+              {passwordError}
             </Typography>
           )}
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
