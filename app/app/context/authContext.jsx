@@ -13,13 +13,6 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [fault, setFault] = useState(null);
 
-  useEffect(() => {
-    const initialToken = localStorage.getItem("accessToken");
-    if (initialToken) {
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${initialToken}`;
-    }
-  }, []);
-
   const axiosInstance = axios.create({
     baseURL: "http://127.0.0.1:3000/",
     headers: {
@@ -27,11 +20,29 @@ export const AuthProvider = ({ children }) => {
     },
   });
 
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+  }, []);
+
+  axiosInstance.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response && error.response.status === 401) {
+        logoutHandler();
+      }
+      return Promise.reject(error);
+    }
+  );
+
   const onLoginSubmit = async (values) => {
     try {
       const response = await axiosInstance.post("auth/login/", values);
       setAuth(response.data);
       localStorage.setItem("accessToken", response.data.token);
+      router.push("/");
     } catch (err) {
       console.error("Login failed:", err.message);
       setError("Login failed. Please check your credentials.");
@@ -39,11 +50,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const registerSubmitHandler = async (values) => {
-    console.log(values);
     try {
       const response = await axiosInstance.post("auth/register", values);
       localStorage.setItem("accessToken", response.data.token);
       setAuth(response.data);
+      router.push("/"); 
     } catch (err) {
       console.error("Registration failed:", err.message);
       setFault("Registration failed. Please try again.");
@@ -51,19 +62,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logoutHandler = () => {
-    try {
-      localStorage.removeItem("accessToken");
-      setAuth({});
-    } catch (error) {
-      console.error("Logout failed:", error.message);
-    }
+    localStorage.removeItem("accessToken");
+    setAuth({});
+    router.push("/login"); 
   };
-
-  const getError = () => error;
-  const clearError = () => setError(null);
-
-  const getFault = () => fault;
-  const clearFault = () => setFault(null);
 
   const values = {
     registerSubmitHandler,
@@ -73,11 +75,11 @@ export const AuthProvider = ({ children }) => {
     userId: auth.id,
     isAuthenticated: !!auth.token,
     isAdmin: auth.email === "admin@abv.bg",
-    axiosInstance: axiosInstance,
-    getError,
-    clearError,
-    getFault,
-    clearFault,
+    axiosInstance,
+    error,
+    setError,
+    fault,
+    setFault,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
@@ -86,5 +88,6 @@ export const AuthProvider = ({ children }) => {
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
 export const useAuth = () => useContext(AuthContext);
 export default AuthContext;
