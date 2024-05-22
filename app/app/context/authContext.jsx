@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
@@ -13,13 +13,17 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [fault, setFault] = useState(null);
 
-  const initialToken = localStorage.getItem("accessToken");
+  useEffect(() => {
+    const initialToken = localStorage.getItem("accessToken");
+    if (initialToken) {
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${initialToken}`;
+    }
+  }, []);
 
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000/",
+    baseURL: "http://127.0.0.1:3000/",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${initialToken}`,
     },
   });
 
@@ -28,7 +32,6 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosInstance.post("auth/login/", values);
       setAuth(response.data);
       localStorage.setItem("accessToken", response.data.token);
-      router.push("/");
     } catch (err) {
       console.error("Login failed:", err.message);
       setError("Login failed. Please check your credentials.");
@@ -36,22 +39,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const registerSubmitHandler = async (values) => {
-    const emailRegex =
-      /^[a-zA-Z0-9]+@.[a-zA-Z0-9]+\.[a-zA-Z0-9]+(?:\.[a-zA-Z]+)*$/;
-    if (values.password !== values["confirm-password"]) {
-      setFault("Passwords do not match. Please enter matching passwords.");
-      return;
-    }
+    console.log(values);
     try {
-      if (!emailRegex.test(values.email)) {
-        setFault("Invalid email format. Please enter a valid email address.");
-        return;
-      }
-
-      const response = await axiosInstance.post("auth/register/", values);
-      localStorage.setItem("accessToken", result.data.token);
+      const response = await axiosInstance.post("auth/register", values);
+      localStorage.setItem("accessToken", response.data.token);
       setAuth(response.data);
-      router.push("/");
     } catch (err) {
       console.error("Registration failed:", err.message);
       setFault("Registration failed. Please try again.");
@@ -62,10 +54,8 @@ export const AuthProvider = ({ children }) => {
     try {
       localStorage.removeItem("accessToken");
       setAuth({});
-      router.push("/");
     } catch (error) {
       console.error("Logout failed:", error.message);
-      router.push("/");
     }
   };
 
@@ -81,10 +71,9 @@ export const AuthProvider = ({ children }) => {
     logoutHandler,
     email: auth.email,
     userId: auth.id,
-    isAuthenticated: !!auth.access_token,
+    isAuthenticated: !!auth.token,
     isAdmin: auth.email === "admin@abv.bg",
     axiosInstance: axiosInstance,
-    initialToken: initialToken,
     getError,
     clearError,
     getFault,
@@ -97,6 +86,5 @@ export const AuthProvider = ({ children }) => {
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
 export const useAuth = () => useContext(AuthContext);
 export default AuthContext;
