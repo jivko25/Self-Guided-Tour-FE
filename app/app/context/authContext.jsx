@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { createContext, useState, useContext } from "react";
 import * as authService from "../services/authService";
 import { useRouter } from "next/navigation";
@@ -38,7 +38,12 @@ export const AuthProvider = ({ children }) => {
         return;
       }
 
-      const result = await authService.register(values.email, values.password);
+      const result = await authService.register(
+        firstName.values,
+        lastName.values,
+        values.email,
+        values.password
+      );
       localStorage.setItem("access_token", result.access_token);
       setAuth(result);
       router.push("/");
@@ -64,11 +69,10 @@ export const AuthProvider = ({ children }) => {
     registerSubmitHandler,
     onLoginSubmit,
     logoutHandler,
-    username: auth.username || auth.email,
     email: auth.email,
     userId: auth.id,
     isAuthenticated: !!auth.access_token,
-    isAdmin: auth.email === 'admin@abv.bg',
+    isAdmin: auth.email === "admin@abv.bg",
     getError,
     clearError,
     getFault,
