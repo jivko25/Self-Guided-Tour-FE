@@ -1,4 +1,6 @@
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import { AuthProvider } from './context/authContext';
+
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
@@ -8,8 +10,8 @@ import Footer from "./components/Footer.jsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
 
 export const metadata = {
   title: "Create Next App",
@@ -21,10 +23,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <AppRouterCacheProvider>
-        <ThemeProvider theme={theme}>
-          <Header />
-          {children}
-          <Footer />
+          <ThemeProvider theme={theme}>
+            <AuthProvider>
+              <Header />
+              {children}
+              <Footer />
+            </AuthProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
