@@ -1,5 +1,3 @@
-"use client";
-import { useFormik } from "formik";
 import {
   Container,
   Typography,
@@ -12,27 +10,8 @@ import LockResetIcon from "@mui/icons-material/LockReset";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import { emailSchema } from "@/utils/authSchemas.js";
 
-
-
-
-export default function ForgotPasswordForm() {
-  const formik = useFormik({
-    initialValues: { email: "" },
-    validationSchema: emailSchema,
-    onSubmit: async (values) => {
-      try {
-        // Implement your password reset logic here
-        // For example, call a function to send the reset link
-        // await sendResetPasswordLink(values.email);
-        console.log("Form values:", values);
-      } catch (error) {
-        console.error("Failed to send reset link:", error);
-      }
-    },
-  });
-
+export default function ForgotPasswordForm({ formik }) {
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -81,14 +60,14 @@ export default function ForgotPasswordForm() {
           >
             Send Reset Link
           </Button>
-          <Grid container >
+          <Grid container>
             <Grid item sx={{ display: "flex", alignItems: "center" }}>
               <Link
                 href="/login"
                 style={{ textDecoration: "none", color: "black" }}
                 variant="body1"
               >
-                <Box sx={{ display: "flex", alignItems: "center"  }}>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
                   <KeyboardReturnIcon sx={{ mr: 2 }} />
                   {"Return to Login page"}
                 </Box>
