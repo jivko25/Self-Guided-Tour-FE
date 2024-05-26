@@ -1,36 +1,18 @@
 "use client";
-import { useFormik } from "formik";
 import {
-    Container,
-    Typography,
-    TextField,
-    Button,
-    Grid,
-    Link,
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Link,
 } from "@mui/material";
-import SyncLockIcon from '@mui/icons-material/SyncLock';
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import SyncLockIcon from "@mui/icons-material/SyncLock";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import { passwordSchema } from "@/utils/authSchemas.js";
 
 
-
-export default function ResetPasswordForm() {
-  const formik = useFormik({
-    initialValues: { password: "", confirmPassword: "" },
-    validationSchema: passwordSchema,
-    onSubmit: async (values) => {
-      try {
-        // Implement your password reset logic here
-        // For example, call a function to update the password
-        // await resetPassword(values.password);
-        console.log("Form values:", values);
-      } catch (error) {
-        console.error("Failed to reset password:", error);
-      }
-    },
-  });
+export default function ResetPasswordForm({formik}) {
 
   return (
     <Container component="main" maxWidth="xs">
@@ -83,8 +65,13 @@ export default function ResetPasswordForm() {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-            helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+            error={
+              formik.touched.confirmPassword &&
+              Boolean(formik.errors.confirmPassword)
+            }
+            helperText={
+              formik.touched.confirmPassword && formik.errors.confirmPassword
+            }
           />
           <Button
             type="submit"
