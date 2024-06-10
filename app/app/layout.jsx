@@ -1,4 +1,4 @@
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+
 
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
@@ -16,7 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} flex flex-col items-center gap-10`}>
         <Header />
         {children}
         <Footer />

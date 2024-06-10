@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <main>
-      <h1 className={variables.title}>Home</h1>
+      <h1 className="text-7xl font-bold">Home</h1>
     </main>
   );
 }
