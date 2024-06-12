@@ -2,6 +2,8 @@
 import variables from "./styles/_variables.module.scss";
 import { axios } from "../api/axios";
 import { useEffect } from "react";
+import Button from "./components/Buttons/Button.jsx";
+import ButtonGoogle from "./components/Buttons/ButtonGoogle.jsx";
 export default function Home() {
   useEffect(() => {
     async function fetchData() {
@@ -27,11 +29,17 @@ export default function Home() {
     fetchData();
   }, []);
 
-
-
   return (
-    <main>
-      <h1 className="text-7xl font-bold">Home</h1>
+    <main className="flex flex-col gap-6">
+      {/* <h1 className="text-7xl font-bold">Home</h1> */}
+      <Button text="Primary" />
+      <Button variant="primary-short" text="Primary Short" />
+      {/* <Button variant="primary-long" text="Primary Long" /> */}
+      <Button variant="secondary" text="Secondary" />
+      <Button variant="secondary-short" text="Secondary Short" />
+      <Button variant="secondary-outlined" text="Outlined" />
+      <Button variant="secondary-bg-color" text="Secondary" />
+      {/* <ButtonGoogle /> */}
     </main>
   );
 }
