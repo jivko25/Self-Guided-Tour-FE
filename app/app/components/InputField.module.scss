@@ -1,0 +1,81 @@
+@use '../styles/variables.module' as var;
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+        font-size: var.$font-size-sm;
+    }
+
+    input {
+        width: 288px;
+        height: 48px;
+        line-height: 24px;
+        background-color: var.$color-primary;
+        font-size: var.$font-size-md;
+        border: 0.5px solid #CECECE;
+        border-radius: 4px;
+    }
+
+    input:focus, input:focus-visible {
+        outline: none;
+    }
+
+    input.error {
+        border-color: var.$color-error;
+        color: var.$color-error;
+    }
+    
+    p.error-msg {
+        font-size: var.$font-size-sm;
+        color: var.$color-error;
+    }
+
+    p.hint-msg {
+        font-size: var.$font-size-sm;
+        color: #575757;
+    }
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.alert-icon-4 {
+    position: relative;
+    right: 2em;
+}
+
+.alert-icon-5 {
+    position: relative;
+    right: 5.6em;
+}
+
+.eye-icon {
+    position: relative;
+    right: 2.2em;
+}
+
+@media (min-width: 393px) {
+    .input-field {
+        input {
+            width: 320px;
+        }
+    }
+}
+
+@media (min-width: 834px) {
+    .input-field {
+        label {
+            font-size: var.$font-size-md;
+        }
+
+        input {
+            width: 400px;
+            height: 60px;
+        }
+    }
+}
