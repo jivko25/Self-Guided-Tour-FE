@@ -2,7 +2,7 @@
 import variables from "./styles/_variables.module.scss";
 import { axios } from "../api/axios";
 import { useEffect } from "react";
-import InputField from "./components/InputField";
+
 export default function Home() {
   useEffect(() => {
     async function fetchData() {
@@ -27,10 +27,6 @@ export default function Home() {
     }
     fetchData();
   }, []);
-
-  const handleCHange = (e) => {
-    console.log(e.target.value);
-  }
 
   return (
     <main>

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './InputField.module.scss';
 import Image from 'next/image';
 import EyeIcon from '../public/icon-eye.svg';
@@ -12,47 +12,39 @@ export default function InputField({
   placeholder,
   name,
   type = 'text',
+  value = '',
   onChange,
   error,
   hint,
   required,
   disabled,
   readOnly,
+  ...otherProps
 }) {
-  const [value, setValue] = useState('');
-  const [classN, setClassN] = useState('');
+  const [inputValue, setInputValue] = useState(value);
   const [inputErr, setInputErr] = useState('');
-  const [inputType, setInputType] = useState(type);
-  const [eyeIconClass, setEyeIconClass] = useState('eye-icon');
 
   useEffect(() => {
-    if (type === 'password' && error) {
-      setClassN('alert-icon-5');
-    } else {
-      setClassN('alert-icon-4');
-    }
-
     if (error) {
       setInputErr('error');
     } else {
       setInputErr('');
     }
-  }, [type, error, setClassN, setInputErr]);
+
+  }, [type, error, setInputErr]);
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setInputValue(e.target.value);
     if (onChange) {
       onChange(e);
     }
   };
 
   const handleShowPassword = () => {
-    if (inputType === 'password') {
+    if (type === 'password') {
         setInputType('text');
-        setEyeIconClass('eye-icon-shown');
     } else {
         setInputType('password');
-        setEyeIconClass('eye-icon');
     }
   }
   return (
@@ -62,31 +54,32 @@ export default function InputField({
         <input
           className={styles[inputErr]}
           id={id}
-          type={inputType}
+          type={type}
           name={name}
-          value={value}
+          value={inputValue}
           placeholder={placeholder}
           onChange={handleChange}
           required={required}
           disabled={disabled}
           readOnly={readOnly}
+          {...otherProps}
         />
-        {type === 'password' && (
+        {(type === 'password' && !error) && (
           <a
-            className={styles[eyeIconClass]}
+            className={styles['eye-icon']}
             onClick={handleShowPassword}
           >
             <Image src={EyeIcon} width={32} height={32} alt="Eye icon" />
           </a>
         )}
         {error && (
-          <div className={styles[classN]}>
+          <div className={styles['alert-icon-4']}>
             <Image src={AlertIcon} width={24} height={24} alt="Alert icon" />
           </div>
         )}
       </div>
-      {error && <p className={styles['error-msg']}>{error}</p>}
       {hint && <p className={styles['hint-msg']}>{hint}</p>}
+      {error && <p className={styles['error-msg']}>{error}</p>}
     </div>
   );
 }

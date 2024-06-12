@@ -25,6 +25,7 @@
 
     input.error {
         border-color: var.$color-error;
+        color: var.$color-error;
     }
     
     p.error-msg {
@@ -56,18 +57,6 @@
 .eye-icon {
     position: relative;
     right: 2.2em;
-}
-
-.eye-icon-shown {
-    position: relative;
-    right: 2.2em;
-    border-radius: 100%;
-}
-
-.eye-icon:active, .eye-icon-shown:active {
-    background-color: #ededed;
-    border-radius: 100%;
-    overflow: hidden;
 }
 
 @media (min-width: 393px) {
