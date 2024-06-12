@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "../components/Buttons/Button";
 
 export default function Header() {
   return (
@@ -40,21 +41,15 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="px-4 py-3 mx-5 bg-neutral-50 rounded-[5px] border-2 border-blue-950 justify-center items-center gap-2.5 inline-flex">
-            <Link
-              href="/sign-in"
-              className="text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-            >
-              Sign In
+          <div className="mx-2.5">
+            <Link href="/sign-in">
+              <Button variant="secondary-outlined" text="Sign In" />
             </Link>
           </div>
 
-          <div className="px-4 py-3 bg-blue-950 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
-            <Link
-              href="/create-account"
-              className="text-center text-white text-base font-medium font-['Inter Tight']"
-            >
-              Create Account
+          <div className="mx-2.5">
+            <Link href="/create-account">
+              <Button variant="primary-short" text="Create Account" />
             </Link>
           </div>
         </div>
