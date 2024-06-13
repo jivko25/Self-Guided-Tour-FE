@@ -69,14 +69,12 @@ const Tablet = () => {
 
   return (
     <>
-      <div>
         <Link
-          className="text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
+          className="absolute top-6 left-3 text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
           href="/"
         >
           LOGO
         </Link>
-      </div>
       <div className="">
         {show ? (
           <CloseIcon onClick={toggleShow} />
