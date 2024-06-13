@@ -1,4 +1,4 @@
-"use client";
+// Web.jsx
 import Link from "next/link";
 import Button from "../../Buttons/Button";
 
