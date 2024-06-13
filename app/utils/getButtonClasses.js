@@ -9,7 +9,7 @@ export default function getButtonClasses(variant) {
     case "secondary-short":
       return "w-20   bg-neutral-50 ";
     case "secondary-outlined":
-      return "w-20   bg-neutral-50 rounded-md border-2 border-blue-950";
+      return "bg-neutral-50 rounded-md border-2 border-blue-950";
     case "secondary-bg-color":
       return "w-32  bg-neutral-50 rounded-md text-gray-900";
     default:
