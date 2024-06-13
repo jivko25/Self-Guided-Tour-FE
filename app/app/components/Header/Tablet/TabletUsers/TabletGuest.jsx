@@ -4,7 +4,7 @@ import Button from "../../../Buttons/Button";
 
 export default function TabletGuest() {
   return (
-    <nav className="hidden tablet:block w-[834px] h-[404px] relative bg-neutral-50 rounded-bl-[5px] rounded-br-[5px]">
+    <nav className="w-[834px] h-[404px] relative bg-neutral-50 rounded-bl-[5px] rounded-br-[5px]">
       <div className="w-[583px] h-9 left-[127px] top-[89px] absolute rounded-[5px] border border-stone-300">
         <div className="w-9 h-9 left-[547px] top-0 absolute bg-blue-950 rounded-tr-[5px] rounded-br-[5px]" />
         <div className="w-6 h-6 left-[555px] top-[6px] absolute" />
