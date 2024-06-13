@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import styles from './InputField.module.scss';
 import Image from 'next/image';
 import EyeIcon from '../public/icon-eye.svg';
-import AlertIcon from '../public/alert-circle-outline.svg';
 
 export default function InputField({
   id,
@@ -23,6 +22,7 @@ export default function InputField({
 }) {
   const [inputValue, setInputValue] = useState(value);
   const [inputErr, setInputErr] = useState('');
+  const [inputType, setInputType] = useState(type); 
 
   useEffect(() => {
     if (error) {
@@ -41,7 +41,7 @@ export default function InputField({
   };
 
   const handleShowPassword = () => {
-    if (type === 'password') {
+    if (inputType === 'password') {
         setInputType('text');
     } else {
         setInputType('password');
@@ -54,7 +54,7 @@ export default function InputField({
         <input
           className={styles[inputErr]}
           id={id}
-          type={type}
+          type={inputType}
           name={name}
           value={inputValue}
           placeholder={placeholder}
@@ -71,11 +71,6 @@ export default function InputField({
           >
             <Image src={EyeIcon} width={32} height={32} alt="Eye icon" />
           </a>
-        )}
-        {error && (
-          <div className={styles['alert-icon-4']}>
-            <Image src={AlertIcon} width={24} height={24} alt="Alert icon" />
-          </div>
         )}
       </div>
       {hint && <p className={styles['hint-msg']}>{hint}</p>}
