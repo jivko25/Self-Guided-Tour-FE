@@ -26,7 +26,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full bg-stone-900/opacity-30" style={{ height: 'calc(100vh - 120px)' }}>
+    <div className="flex items-center justify-center w-full bg-stone-900/opacity-30 bg-custom-image" style={{ height: 'calc(100vh - 120px)' }}   >
       <div>
         <form
         className="flex items-center justify-evenly flex-col w-[582px] h-[602px] relative bg-neutral-50 rounded-tl-[5px] rounded-tr-[5px]"
