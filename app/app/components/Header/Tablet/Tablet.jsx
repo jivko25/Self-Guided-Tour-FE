@@ -68,26 +68,26 @@ const Tablet = () => {
   };
 
   return (
-  <>
-  <div>
-  <Link
+    <>
+      <div>
+        <Link
           className="text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
           href="/"
         >
           LOGO
         </Link>
-  </div>
-    <div className="">
-      {show ? (
-        <CloseIcon onClick={toggleShow} />
-      ) : (
-        <MenuIcon onClick={toggleShow} />
-      )}
-      <div className={`  ${show ? "block" : "hidden"}`}>
-        {authenticated ? <TabletConsumer /> : <TabletGuest />}
       </div>
-    </div>
-</>
+      <div className="">
+        {show ? (
+          <CloseIcon onClick={toggleShow} />
+        ) : (
+          <MenuIcon onClick={toggleShow} />
+        )}
+        <div className={`  ${show ? "block" : "hidden"}`}>
+          {authenticated ? <TabletConsumer /> : <TabletGuest />}
+        </div>
+      </div>
+    </>
   );
 };
 
