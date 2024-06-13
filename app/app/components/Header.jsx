@@ -52,6 +52,7 @@ export default function Header() {
               <Button variant="primary-short" text="Create Account" />
             </Link>
           </div>
+          
         </div>
       </nav>
     </header>
