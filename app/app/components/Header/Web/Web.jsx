@@ -4,7 +4,6 @@ import Button from "../../Buttons/Button";
 
 export default function Web() {
   return (
-    <header className="flex w-full items-center justify-center h-100px py-9">
       <nav className="flex items-center w-full h-full justify-around">
         <Link
           className="text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
@@ -52,6 +51,5 @@ export default function Web() {
           </div>
         </div>
       </nav>
-    </header>
   );
 }
