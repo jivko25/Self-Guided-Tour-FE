@@ -11,7 +11,7 @@ export default function Header({ isAuthenticated }) {
       </div>
 
       {/* Показваме Tablet компонента само при ширина на екрана под 834px */}
-      <div className="tablet:hidden flex w-full items-center justify-center h-100px py-9">
+      <div className="tablet:hidden flex w-full items-center justify-center h-100px">
         <Tablet />
       </div>
     </>
