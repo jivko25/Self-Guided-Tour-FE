@@ -27,7 +27,6 @@ export default function TabletGuest() {
       >
         Explore
       </Link>
-      <div className="w-6 h-6 p-[5.62px] left-[786px] top-[24px] absolute justify-center items-center inline-flex" />
       <div className="w-[181px] px-4 py-3 left-[125px] top-[297px] absolute bg-neutral-50 rounded-[5px] border border-blue-950 justify-center items-center gap-2.5 inline-flex">
         <Link
           href="/sign-in"
