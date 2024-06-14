@@ -44,24 +44,26 @@ export default function HeaderMobile() {
   ];
 
   return (
-    <nav
-      className={`${
-        darkMode ? "bg-blue-950 text-white" : "bg-neutral-50 text-blue-950"
-      } fixed bottom-0 w-full shadow `}
-    >
-      <ul className="flex justify-around">
-        {navItems.map((item, i) => (
-          <HeaderMobileItem
-            key={i}
-            icon={item.icon}
-            iconFocus={item.iconFocus}
-            text={item.text}
-            index={i}
-            handleFocus={handleFocus}
-            isFocused={focus === i}
-          />
-        ))}
-      </ul>
-    </nav>
+    <header className="flex  justify-around">
+      <nav
+        className={`${
+          darkMode ? "bg-blue-950 text-white" : "bg-neutral-50 text-blue-950"
+        }  fixed bottom-0 w-full shadow flex justify-center`}
+      >
+        <ul className="flex justify-around w-full">
+          {navItems.map((item, i) => (
+            <HeaderMobileItem
+              key={i}
+              icon={item.icon}
+              iconFocus={item.iconFocus}
+              text={item.text}
+              index={i}
+              handleFocus={handleFocus}
+              isFocused={focus === i}
+            />
+          ))}
+        </ul>
+      </nav>
+    </header>
   );
 }
