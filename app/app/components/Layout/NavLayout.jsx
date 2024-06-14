@@ -10,7 +10,7 @@ export default function NavLayout() {
 
   return (
     <div className="tablet:w-full">
-      {screenWidth <= 834 ? (
+      {screenWidth < 834 ? (
         <HeaderMobile />
       ) : (
         <>
