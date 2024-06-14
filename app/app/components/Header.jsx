@@ -49,7 +49,7 @@ export default function Header() {
 
           <div className="mx-2.5">
             <Link href="/create-account">
-              <Button variant="primary-short" text="Create Account" />
+              <Button text="Create Account" />
             </Link>
           </div>
           
