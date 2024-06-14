@@ -26,7 +26,8 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-[calc(90vh-120px)] w-full  bg-cover bg-center bg-[url('/images/headerImg.jpeg')]">
+    <div  className="min-h-[calc(90vh-120px)] w-full bg-cover bg-center relative"
+    style={{ backgroundImage: "url('/images/headerImg.jpeg')" }}>
       <div
         className="flex items-center justify-center w-full bg-stone-900/opacity-30 "
         
