@@ -1,9 +1,7 @@
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
 
-import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
-import HeaderMobile from "./components/Header/HeaderMobile.jsx";
+import NavLayout from "./components/Layout/NavLayout.jsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +18,8 @@ export default function RootLayout({ children }) {
         className={`${inter.className}  flex flex-col items-center  gap-10`}
       >
         <AuthProvider>
-          <Header />
+          <NavLayout/>
           {children}
-          <Footer />
-          <HeaderMobile />
         </AuthProvider>
       </body>
     </html>

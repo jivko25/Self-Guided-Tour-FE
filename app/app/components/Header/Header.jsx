@@ -1,8 +1,9 @@
 import Link from "next/link";
-import Button from "../components/Buttons/Button";
+import Button from "../Buttons/Button.jsx";
 
 export default function Header() {
   return (
+    
     <header className="flex w-full items-center justify-center h-100px py-9">
       <nav className="flex items-center w-full h-full justify-around">
         <Link
