@@ -1,61 +1,24 @@
-import Link from "next/link";
-import Button from "../Buttons/Button.jsx";
+"use client";
+import Web from "./Web/Web";
+import Tablet from "./Tablet/Tablet";
+import HeaderMobile from "./HeaderMobile.jsx";
 
-export default function Header() {
+export default function Header({ isAuthenticated }) {
   return (
-    
-    <header className="flex w-full items-center justify-center h-100px py-9">
-      <nav className="flex items-center w-full h-full justify-around">
-        <Link
-          className="text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
-          href="/"
-        >
-          LOGO
-        </Link>
-        <div className="flex items-center">
-          <Link
-            className="text-center mx-5 text-gray-900 text-base font-medium font-['Inter Tight']"
-            href="/explore"
-          >
-            Explore
-          </Link>
+    <>
+      {/* Показваме Web компонента само при ширина на екрана по-голяма от 834px */}
+      <div className="hidden web:flex w-full  items-center justify-center h-100px py-9">
+        <Web />
+      </div>
 
-          <Link
-            className="mx-5 text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-            href="/create"
-          >
-            Create
-          </Link>
-          <Link
-            className="mx-5 text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-            href="/my-tours"
-          >
-            My Tours
-          </Link>
+      {/* Показваме Tablet компонента само при ширина на екрана под 834px */}
+      <div className="hidden tablet:flex web:hidden items-center justify-center h-100px">
+        <Tablet />
+      </div>
 
-          <div className="w-32 px-4 py-3 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
-            <Link
-              href="/menu"
-              className="text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-            >
-              Menu
-            </Link>
-          </div>
-
-          <div className="mx-2.5">
-            <Link href="/sign-in">
-              <Button variant="secondary-outlined" text="Sign In" />
-            </Link>
-          </div>
-
-          <div className="mx-2.5">
-            <Link href="/create-account">
-              <Button text="Create Account" />
-            </Link>
-          </div>
-          
-        </div>
-      </nav>
-    </header>
+      <div className="tablet:hidden ">
+        <HeaderMobile />
+      </div>
+    </>
   );
 }
