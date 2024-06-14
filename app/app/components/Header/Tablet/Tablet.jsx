@@ -1,8 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TabletConsumer from "./TabletUsers/TabletConsumer";
 import TabletGuest from "./TabletUsers/TabletGuest";
 import Link from "next/link";
+
 const CloseIcon = ({ onClick }) => (
   <svg
     className="absolute top-5 right-3 z-10 cursor-pointer"
@@ -62,26 +63,44 @@ const MenuIcon = ({ onClick }) => (
 const Tablet = () => {
   const [authenticated, setAuthenticated] = useState(false);
   const [show, setShow] = useState(false);
+  const menuRef = useRef(null);
 
   const toggleShow = () => {
     setShow((prev) => !prev);
   };
 
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setShow(false);
+    }
+  };
+
+  useEffect(() => {
+    if (show) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [show]);
+
   return (
     <>
-        <Link
-          className="absolute top-6 left-3 text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
-          href="/"
-        >
-          LOGO
-        </Link>
+      <Link
+        className="absolute top-6 left-3 text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
+        href="/"
+      >
+        LOGO
+      </Link>
       <div className="">
         {show ? (
           <CloseIcon onClick={toggleShow} />
         ) : (
           <MenuIcon onClick={toggleShow} />
         )}
-        <div className={`  ${show ? "block" : "hidden"}`}>
+        <div ref={menuRef} className={` ${show ? "block" : "hidden"}`}>
           {authenticated ? <TabletConsumer /> : <TabletGuest />}
         </div>
       </div>
