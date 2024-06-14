@@ -14,6 +14,7 @@ export default function Header({ isAuthenticated }) {
       <div className="tablet:hidden flex w-full items-center justify-center h-100px">
         <Tablet />
       </div>
+      
     </>
   );
 }
