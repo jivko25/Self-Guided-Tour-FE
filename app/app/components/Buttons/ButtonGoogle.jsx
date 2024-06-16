@@ -1,6 +1,6 @@
 export default function ButtonGoogle() {
   return (
-    <button className=" h-[60px] bg-neutral-50  border border-stone-300 px-4 py-3 rounded-md justify-center items-center gap-2.5 inline-flex text-center text-base text-neutral-700 font-medium">
+    <button className="w-[400px] h-[60px] bg-neutral-50  border border-stone-300 px-4 py-3 rounded-md justify-center items-center gap-2.5 inline-flex text-center text-base text-neutral-700 font-medium">
       <svg
         width="24"
         height="24"
