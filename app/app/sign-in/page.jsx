@@ -3,8 +3,8 @@ import LoginForm from "../components/loginForm/LoginForm";
 
 export default function SignIn() {
   return (
-    <main>
+    <section className="flex items-center justify-center flex-col h-screen w-screen">
       <LoginForm />
-    </main>
+    </section>
   );
 }
