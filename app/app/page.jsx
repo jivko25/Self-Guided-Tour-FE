@@ -29,14 +29,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-6">
+    <main className="flex items-center justify-center flex-col h-screen w-screen">
       {/* <h1 className="text-7xl font-bold">Home</h1> */}
-      <Button variant="primary-short" text="Button" />
-      <Button variant="primary-long" text="Button" />
-      <Button variant="secondary" text="Button" />
-      <Button variant="secondary-short" text="Button" />
-      <Button variant="secondary-outlined" text="Button" />
-      <Button variant="secondary-bg-color" text="Button" />
+
     </main>
   );
 }
