@@ -20,6 +20,8 @@
         font-size: var.$font-size-md;
         border: 0.5px solid #CECECE;
         border-radius: 4px;
+        padding-left: 10px;
+
     }
 
     input:focus,
@@ -72,6 +74,8 @@
 
         input {
             height: 60px;
+        padding-left: 10px;
+
         }
     }
 }

@@ -29,8 +29,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-6">
-      <h1 className="text-7xl font-bold">Home</h1>
+    <main className="flex items-center justify-center flex-col h-screen w-screen">
+      {/* <h1 className="text-7xl font-bold">Home</h1> */}
+
     </main>
   );
 }

@@ -7,7 +7,11 @@ module.exports = {
     "./utils/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "custom-image": "url('/images/lanju-fotografie-cvS-IDyGKTE-unsplash.jpg')",
+      },
+    },
     screens: {
       phone: "393px",
       tablet: "768px",
