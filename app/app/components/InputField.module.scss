@@ -7,9 +7,11 @@
     justify-content: center;
     overflow-wrap: break-word;
     width: 288px;
+    font-weight: 400;
 
     label {
         font-size: var.$font-size-sm;
+        font-weight: 500;
     }
 
     input {
@@ -21,7 +23,7 @@
         border: 0.5px solid #CECECE;
         border-radius: 4px;
         padding-left: 10px;
-
+        font-weight: 400;
     }
 
     input:focus,

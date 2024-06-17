@@ -1,5 +1,3 @@
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-
 import { Inter } from "next/font/google";
 import "./styles/globals.css";
 
@@ -13,15 +11,17 @@ export const metadata = {
 };
 import { AuthProvider } from "./context/authContext";
 import Footer from "./components/Footer";
+import { getUserSession } from "./actions/authActions";
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await getUserSession();
   return (
     <html lang="en">
       <body
         className={`${inter.className}  flex flex-col items-center`}
       >
         <AuthProvider>
-          <Header />
+          <Header isAuthenticated={session}/>
           {children}
           <Footer/>
         </AuthProvider>

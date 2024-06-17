@@ -6,7 +6,7 @@ import EyeIcon from '../public/icon-eye.svg';
 
 export default function InputField({
   id,
-  className,
+  className = '',
   label,
   placeholder,
   name,

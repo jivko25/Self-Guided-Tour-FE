@@ -60,7 +60,7 @@ const MenuIcon = ({ onClick }) => (
   </svg>
 );
 
-const Tablet = () => {
+const Tablet = ({isAuthenticated}) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [show, setShow] = useState(false);
   const menuRef = useRef(null);
@@ -76,6 +76,12 @@ const Tablet = () => {
   };
 
   useEffect(() => {
+
+    if (isAuthenticated) {
+      setAuthenticated(isAuthenticated);
+    } else {
+      setAuthenticated(false);
+    }
     if (show) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
