@@ -4,26 +4,31 @@ import ButtonGoogle from "../Buttons/ButtonGoogle";
 
 import * as React from "react";
 import InputField from "../InputField";
-import Link from "next/link";
+
+import { loginUser } from "@/app/actions/authActions";
+import { useFormState } from "react-dom";
+import { useAuth } from "@/app/context/authContext";
+import { redirect } from 'next/navigation';
 
 const LoginForm = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
+  const [formState, loginAction] = useFormState(loginUser, "");
+  const { session, setSession } = useAuth();
+
+  React.useEffect(() => {
+    if (formState.data === true) {
+      setSession(formState.data);
+      redirect('/');
+    } else if (formState.error) {
+      setError(formState.error);
+    }
+  }, [formState, setSession, setError]);
+  
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Perform validation or form submission logic here
-    if (!email || !password) {
-      setError("Please fill in all fields");
-    } else {
-      setError("");
-      // Submit the form or perform further validation
-    }
-  };
 
   return (
 
@@ -33,8 +38,7 @@ const LoginForm = () => {
         </h2>
         <form
           className="flex items-center justify-evenly flex-col w-[582px] h-[602px] bg-neutral-50"
-          action=" "
-          onSubmit={handleSubmit}
+          action={loginAction}
         >
           <ButtonGoogle />
 
@@ -50,8 +54,7 @@ const LoginForm = () => {
 
           <InputField
             id="email"
-            label="Email"
-            placeholder="Enter your email"
+            label="Email Address"
             name="email"
             type="email"
             value={email}
@@ -64,7 +67,6 @@ const LoginForm = () => {
           <InputField
             id="password"
             label="Password"
-            placeholder="Enter your password"
             name="password"
             type="password"
             value={password}
@@ -74,9 +76,7 @@ const LoginForm = () => {
             required
           />
 
-          <Link href="/sign-in">
-            <Button variant="primary-long" text="Sign In" />
-          </Link>
+            <Button variant="primary-long" text="Sign In" type={'submit'}/>
         </form>
         {/* <Button variant="primary-short" text="Button" />
       <Button variant="primary-long" text="Button" />
