@@ -17,7 +17,7 @@ import MenuFocus from "../../public/menu-focus.svg";
 import MenuDark from "../../public/menu-dark.svg";
 import MenuFocusDark from "../../public/menu-focus-dark.svg";
 
-export default function HeaderMobile() {
+export default function HeaderMobile({isAuthenticated}) {
   const [focus, setFocus] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
 

@@ -4,10 +4,21 @@ import ButtonGoogle from "../Buttons/ButtonGoogle";
 import * as React from "react";
 import InputField from "../InputField";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useFormState } from "react-dom";
+import { registerUser } from "@/app/actions/authActions";
+import { useAuth } from "@/app/context/authContext";
+import { redirect } from 'next/navigation';
 
 const RegisterForm = ({ userId }) => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const [formState, registerAction] = useFormState(registerUser, "");
+  const { setSession } = useAuth();
+  const [errors, setErrors] = React.useState({
+    Email: "",
+    Name: "",
+    Password: "",
+    RepeatPassword: "",
+  });
+
 
   const [formData, setFormData] = React.useState({
     creator: userId,
@@ -17,14 +28,18 @@ const RegisterForm = ({ userId }) => {
     repeatPassword: "",
   });
 
-  const onSubmit = (data) => {
-    if (data.password !== data.repeatPassword) {
-      alert("Passwords do not match");
-    } else {
-      alert("Form submitted successfully");
-      // Perform further actions (e.g., send data to the server)
+  React.useEffect(() => {
+    if (formState.data === true) {
+      setSession(formState.data);
+      redirect('/');
+    } else if (formState.error) {
+      if (typeof formState.error === 'object') {
+        setErrors({ ...formState.error.errors});
+      } else {
+        setErrors(state => ({...state, Email: formState.error}));
+      }
     }
-  };
+  }, [formState, setSession, setErrors]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +49,7 @@ const RegisterForm = ({ userId }) => {
     });
   };
 
-  const password = watch("password", "");
+  // const password = watch("password", "");
 
   return (
     <div className="flex flex-col items-center justify-evenly h-4/5 ">
@@ -43,7 +58,7 @@ const RegisterForm = ({ userId }) => {
       </h2>
       <form
         className="flex items-center justify-evenly flex-col w-[582px] h-[826px] bg-neutral-50"
-        onSubmit={handleSubmit(onSubmit)}
+        action={registerAction}
       >
         <div className="text-center">
           <span className="text-neutral-700 text-base font-normal font-['Inter Tight']">
@@ -68,14 +83,12 @@ const RegisterForm = ({ userId }) => {
 
         <InputField
           id="email"
-          label="Email"
-          placeholder="Enter your email"
+          label="Email Address"
           name="email"
           type="email"
           value={formData.email}
           onChange={handleInputChange}
-          {...register("email", { required: "Email is required" })}
-          error={errors.email?.message}
+          error={errors.Email}
           hint="Please enter a valid email address"
           required
         />
@@ -83,13 +96,11 @@ const RegisterForm = ({ userId }) => {
         <InputField
           id="name"
           label="Name"
-          placeholder="Enter your name"
           name="name"
           type="text"
           value={formData.name}
           onChange={handleInputChange}
-          {...register("name", { required: "Name is required" })}
-          error={errors.name?.message}
+          error={errors.Name}
           hint="Please enter a valid name"
           required
         />
@@ -97,38 +108,24 @@ const RegisterForm = ({ userId }) => {
         <InputField
           id="password"
           label="Password"
-          placeholder="Enter your password"
           name="password"
           type="password"
           value={formData.password}
           onChange={handleInputChange}
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters long",
-            },
-          })}
-          error={errors.password?.message}
-          hint="Your password must be at least 8 characters long"
+          error={errors.Password}
+          hint="Your password must be at least 6 characters long"
           required
         />
 
         <InputField
           id="repeatPassword"
           label="Repeat Password"
-          placeholder="Repeat your password"
           name="repeatPassword"
           type="password"
           value={formData.repeatPassword}
           onChange={handleInputChange}
-          {...register("repeatPassword", {
-            required: "Please confirm your password",
-            validate: (value) =>
-              value === password || "Passwords do not match",
-          })}
-          error={errors.repeatPassword?.message}
-          hint="Your repeat password must be at least 8 characters long"
+          error={errors.RepeatPassword}
+          hint="Your repeat password must be at least 6 characters long"
           required
         />
 
