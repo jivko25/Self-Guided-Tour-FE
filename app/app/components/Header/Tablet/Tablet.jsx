@@ -106,7 +106,8 @@ const Tablet = ({ isAuthenticated }) => {
           <MenuIcon onClick={toggleShow} />
         )}
         <div ref={menuRef} className={` ${show ? "flex" : "hidden"}`}>
-          {authenticated ? <TabletConsumer /> : <TabletGuest />}
+          {/* {authenticated ? <TabletConsumer /> : <TabletGuest />} */}
+          <TabletConsumer /> 
         </div>
       </div>
     </>
