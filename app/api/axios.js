@@ -1,7 +1,7 @@
 import Axios from "axios";
 import https from "https";
 //TODO: Get the base url from the env
-const BASE_URL = "https://localhost:7038";
+const BASE_URL = "https://localhost:7038/api";
 
 // to be removed for production
 const agent = new https.Agent({
@@ -18,7 +18,7 @@ export const axios = Axios.create({
 
 //TODO: Add axios private instance for the auth
 export const axiosAuth = Axios.create({
-  baseURL: `${BASE_URL}/api/Auth/`,
+  baseURL: `${BASE_URL}/Auth/`,
   headers: {
     "Content-Type": "application/json",
   },
