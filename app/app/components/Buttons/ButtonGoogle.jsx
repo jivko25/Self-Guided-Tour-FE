@@ -1,6 +1,16 @@
-export default function ButtonGoogle() {
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import { axios } from "../../../api/axios";
+
+function GoogleButton({ onLoginSuccess }) {
+  const login = useGoogleLogin({
+    onSuccess: (response) => onLoginSuccess(response),
+    onError: (error) => console.error(error),
+  });
   return (
-    <button className="w-[400px] h-[60px] bg-neutral-50  border border-stone-300 px-4 py-3 rounded-md justify-center items-center gap-2.5 inline-flex text-center text-base text-neutral-700 font-medium">
+    <button
+      onClick={() => login()}
+      className="w-[400px] h-[60px] bg-neutral-50  border border-stone-300 px-4 py-3 rounded-md justify-center items-center gap-2.5 inline-flex text-center text-base text-neutral-700 font-medium"
+    >
       <svg
         width="24"
         height="24"
@@ -33,5 +43,25 @@ export default function ButtonGoogle() {
       </svg>
       Continue with Google
     </button>
+  );
+}
+
+export default function ButtonGoogle() {
+  async function handleLoginSuccess(response) {
+    try {
+      const { access_token } = response;
+
+      const res = await axios.post("/Auth/google-signin", {
+        idToken: access_token,
+      });
+      console.log("User logged in succesfully:", res.data);
+    } catch (error) {
+      console.log("Error logging in:", error);
+    }
+  }
+  return (
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+      <GoogleButton onLoginSuccess={handleLoginSuccess} />
+    </GoogleOAuthProvider>
   );
 }
