@@ -1,5 +1,5 @@
 "use client";
-import Button from "../Buttons/Button";
+import Btn from "../Buttons/Btn.jsx";
 import ButtonGoogle from "../Buttons/ButtonGoogle";
 import * as React from "react";
 import InputField from "../InputField";
@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { registerUser } from "@/app/actions/authActions";
 import { useAuth } from "@/app/context/authContext";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 const RegisterForm = ({ userId }) => {
   const [formState, registerAction] = useFormState(registerUser, "");
@@ -18,7 +18,6 @@ const RegisterForm = ({ userId }) => {
     Password: "",
     RepeatPassword: "",
   });
-
 
   const [formData, setFormData] = React.useState({
     creator: userId,
@@ -31,12 +30,12 @@ const RegisterForm = ({ userId }) => {
   React.useEffect(() => {
     if (formState.data === true) {
       setSession(formState.data);
-      redirect('/');
+      redirect("/");
     } else if (formState.error) {
-      if (typeof formState.error === 'object') {
-        setErrors({ ...formState.error.errors});
+      if (typeof formState.error === "object") {
+        setErrors({ ...formState.error.errors });
       } else {
-        setErrors(state => ({...state, Email: formState.error}));
+        setErrors((state) => ({ ...state, Email: formState.error }));
       }
     }
   }, [formState, setSession, setErrors]);
@@ -57,7 +56,7 @@ const RegisterForm = ({ userId }) => {
         Create Account
       </h2>
       <form
-        className="flex items-center justify-evenly flex-col w-[582px] h-[826px] bg-neutral-50"
+        className="flex items-center p-4  justify-evenly flex-col  h-[826px] bg-neutral-50"
         action={registerAction}
       >
         <div className="text-center">
@@ -66,19 +65,19 @@ const RegisterForm = ({ userId }) => {
           </span>
           <span className="text-white text-base font-normal font-['Inter Tight']"></span>
           <span className="text-blue-500 text-base font-normal font-['Inter Tight']">
-            <Link href="/signin">Sign In</Link>
+            <Link href="/sign-in">Sign In</Link>
           </span>
         </div>
 
         <ButtonGoogle />
 
-        <div className="flex justify-center items-center w-full gap-2">
-          <div className="w-[182px] h-[0px] border border-zinc-400"></div>
+        <div className="flex justify-center items-center w-full mb-1 gap-2">
+          <div className="w-full h-[0px] border border-zinc-400"></div>
 
-          <div className="text-center text-zinc-400 text-sm font-medium font-['Inter Tight']">
+          <div className="text-center text-zinc-400 text-[10px] font-medium font-['Inter Tight']">
             OR
           </div>
-          <div className="w-[183px] h-[0px] border border-zinc-400"></div>
+          <div className="w-full h-[0px] border border-zinc-400"></div>
         </div>
 
         <InputField
@@ -129,7 +128,7 @@ const RegisterForm = ({ userId }) => {
           required
         />
 
-        <Button variant="primary-long" text="Sign Up" />
+        <Btn type="submit" variant="filled" text="Sign Up" fullWidth />
       </form>
     </div>
   );

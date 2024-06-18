@@ -9,6 +9,7 @@ function GoogleButton({ onLoginSuccess }) {
     onError: (error) => console.error(error),
   });
   return (
+
     <button
       type="button"
       onClick={() => login()}
