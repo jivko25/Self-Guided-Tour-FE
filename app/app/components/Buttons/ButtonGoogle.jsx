@@ -1,6 +1,8 @@
+"use client";
 import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
-import { axios } from "../../../api/axios";
 import { externalLoginUser } from "@/app/actions/authActions";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/authContext";
 function GoogleButton({ onLoginSuccess }) {
   const login = useGoogleLogin({
     onSuccess: (response) => onLoginSuccess(response),
@@ -48,16 +50,17 @@ function GoogleButton({ onLoginSuccess }) {
 }
 
 export default function ButtonGoogle() {
+  const router = useRouter();
+  const { setSession } = useAuth();
   async function handleLoginSuccess(response) {
     try {
-      const { access_token } = response;
-
-      const res = await axios.post("/Auth/google-signin", {
-        idToken: access_token,
-      });
-      console.log("User logged in succesfully:", res.data);
-    } catch (error) {
-      console.log("Error logging in:", error);
+      const resp = await externalLoginUser(response);
+      if (resp.data) {
+        setSession(resp.data);
+        router.push("/");
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
   return (
