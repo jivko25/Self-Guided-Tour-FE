@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        "custom-image": "url('/images/lanju-fotografie-cvS-IDyGKTE-unsplash.jpg')",
+        "custom-image": "url('../public/images/headerImg.jpeg')",
       },
     },
     screens: {
