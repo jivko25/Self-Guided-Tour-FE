@@ -4,42 +4,34 @@ import Button from "../../../Buttons/Button";
 
 export default function TabletGuest() {
   return (
-    <nav className="w-[834px] h-[404px] relative bg-neutral-50 rounded-bl-[5px] rounded-br-[5px]">
-      <div className="w-[583px] h-9 left-[127px] top-[89px] absolute rounded-[5px] border border-stone-300">
-        <div className="w-9 h-9 left-[547px] top-0 absolute bg-blue-950 rounded-tr-[5px] rounded-br-[5px]" />
-        <div className="w-6 h-6 left-[555px] top-[6px] absolute" />
-      </div>
+    <nav className="flex flex-col w-full bg-neutral-50 h-[404px]">
       <Link
         href="/"
-        className="left-[385px] top-[36px] absolute text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
+        className="flex justify-center items-center text-center text-gray-900 font-medium text-2xl p-10"
       >
         LOGO
       </Link>
-      <Link
-        href="/menu"
-        className="left-[125px] top-[214px] absolute text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-      >
+
+      <div className="flex justify-center items-center">
+        <div className="flex justify-between items-center w-full tablet:max-w-[583px]">
+          <input className="rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50/opacity-80 w-full h-[36px] tablet:max-w-[547px]" type="text" />
+          <button className="cursor-pointer bg-blue-950 rounded-tr-[5px] rounded-br-[5px] w-full h-[36px] tablet:max-w-[36px]">
+            p
+          </button>
+        </div>
+      </div>
+
+      <Link href="/menu" className="">
         Menu
       </Link>
-      <Link
-        href="/explore"
-        className="left-[125px] top-[171px] absolute text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-      >
+      <Link href="/explore" className="">
         Explore
       </Link>
-      <div className="w-[181px] px-4 py-3 left-[125px] top-[297px] absolute bg-neutral-50 rounded-[5px] border border-blue-950 justify-center items-center gap-2.5 inline-flex">
-        <Link
-          href="/sign-in"
-          className="text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-        >
+      <div className="">
+        <Link href="/sign-in" className="">
           Sign In
         </Link>
-      </div>
-      <div className="w-[182px] px-4 py-3 left-[326px] top-[297px] absolute bg-blue-950 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
-        <Link
-          href="/create-account"
-          className="text-center text-white text-base font-medium font-['Inter Tight']"
-        >
+        <Link href="/create-account" className="">
           Create Account
         </Link>
       </div>
