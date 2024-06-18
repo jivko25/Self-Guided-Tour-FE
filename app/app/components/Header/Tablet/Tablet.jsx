@@ -60,7 +60,7 @@ const MenuIcon = ({ onClick }) => (
   </svg>
 );
 
-const Tablet = ({isAuthenticated}) => {
+const Tablet = ({ isAuthenticated }) => {
   const [authenticated, setAuthenticated] = useState(false);
   const [show, setShow] = useState(false);
   const menuRef = useRef(null);
@@ -76,7 +76,6 @@ const Tablet = ({isAuthenticated}) => {
   };
 
   useEffect(() => {
-
     if (isAuthenticated) {
       setAuthenticated(isAuthenticated);
     } else {
@@ -95,18 +94,18 @@ const Tablet = ({isAuthenticated}) => {
   return (
     <>
       <Link
-        className="absolute top-6 left-3 text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
+        className="absolute top-6 left-3 text-center text-gray-900 text-2xl font-medium font-['Inter Tight'] z-30"
         href="/"
       >
         LOGO
       </Link>
-      <div className="">
+      <div className="w-full z-40">
         {show ? (
           <CloseIcon onClick={toggleShow} />
         ) : (
           <MenuIcon onClick={toggleShow} />
         )}
-        <div ref={menuRef} className={` ${show ? "block" : "hidden"}`}>
+        <div ref={menuRef} className={` ${show ? "flex" : "hidden"}`}>
           {authenticated ? <TabletConsumer /> : <TabletGuest />}
         </div>
       </div>
