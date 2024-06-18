@@ -30,15 +30,15 @@ const SearchIcon = () => (
 const Search = ({ containerClassName, inputClassName, buttonClassName }) => {
   return (
     <div className="flex justify-center items-center w-full">
-      <form className={`${containerClassName} flex justify-between items-center w-full`}>
+      <div className={`${containerClassName} flex justify-between items-center w-full`}>
         <input
-          className={`${inputClassName} rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 w-full`}
+          className={`${inputClassName} rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 w-full h-full`}
           type="text"
         />
-        <button className={`${buttonClassName} cursor-pointer bg-blue-950 rounded-tr-[5px] rounded-br-[5px] flex items-center justify-center w-full`}>
+        <button className={`${buttonClassName} cursor-pointer bg-blue-950 rounded-tr-[5px] rounded-br-[5px] flex items-center justify-center w-full h-full`}>
           <SearchIcon />
         </button>
-      </form>
+      </div>
     </div>
   );
 };
