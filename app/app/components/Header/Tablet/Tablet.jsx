@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import TabletConsumer from "./TabletUsers/TabletConsumer";
-import TabletGuest from "./TabletUsers/TabletGuest";
 import Link from "next/link";
+import TabletNavigation from "./TabletNavigation/TabletNavigation";
 
 const CloseIcon = ({ onClick }) => (
   <svg
@@ -61,7 +60,6 @@ const MenuIcon = ({ onClick }) => (
 );
 
 const Tablet = ({ isAuthenticated }) => {
-  const [authenticated, setAuthenticated] = useState(false);
   const [show, setShow] = useState(false);
   const menuRef = useRef(null);
 
@@ -76,11 +74,6 @@ const Tablet = ({ isAuthenticated }) => {
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setAuthenticated(isAuthenticated);
-    } else {
-      setAuthenticated(false);
-    }
     if (show) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
@@ -106,8 +99,7 @@ const Tablet = ({ isAuthenticated }) => {
           <MenuIcon onClick={toggleShow} />
         )}
         <div ref={menuRef} className={` ${show ? "flex" : "hidden"}`}>
-          {/* {authenticated ? <TabletConsumer /> : <TabletGuest />} */}
-          <TabletConsumer /> 
+          <TabletNavigation isAuthenticated={isAuthenticated} />
         </div>
       </div>
     </>
