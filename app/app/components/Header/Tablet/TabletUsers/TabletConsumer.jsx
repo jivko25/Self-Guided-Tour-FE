@@ -5,43 +5,58 @@ import Btn from "@/app/components/Buttons/Btn.jsx";
 
 export default function TabletConsumer() {
   return (
-    <nav className="w-[834px] h-[404px] relative bg-neutral-50 rounded-bl-[5px] rounded-br-[5px]">
-      <div className="w-[583px] h-9 left-[124px] top-[89px] absolute rounded-[5px] border border-stone-300">
-        <div className="w-9 h-9 left-[547px] top-0 absolute bg-blue-950 rounded-tr-[5px] rounded-br-[5px]" />
-        <div className="w-6 h-6 left-[555px] top-[6px] absolute" />
-      </div>
+    <nav className="flex flex-col w-full bg-neutral-50 h-[404px]">
       <Link
         href="/"
-        className="left-[385px] top-[36px] absolute text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
+        className="flex justify-center items-center text-center text-gray-900 font-medium text-2xl p-6"
       >
         LOGO
       </Link>
-      <Btn
-          type="button"
-          variant="transparent"
-          text="Explore"
-          link="/explore"
-        />
-      <Link
-        href="/create"
-        className="left-[125px] top-[214px] absolute text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-      >
-        Create
-      </Link>
-      <Link
-        href="/my-tours"
-        className="left-[125px] top-[257px] absolute text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-      >
-        My Tours
-      </Link>
-      <div className="w-6 h-6 left-[786px] top-[24px] absolute" />
-      <div className="w-[181px] px-4 py-3 left-[125px] top-[322px] absolute bg-neutral-50 rounded-[5px] border border-blue-950 justify-center items-center gap-2.5 inline-flex">
-        <Link
-          href="/menu"
-          className="text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-        >
-          Menu
-        </Link>
+
+      <div className="flex justify-center items-center">
+        <div className="flex justify-between items-center w-full tablet:max-w-[583px]">
+          <input
+            className="rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 w-full h-[36px] tablet:max-w-[547px]"
+            type="text"
+          />
+          <button className="cursor-pointer bg-blue-950 rounded-tr-[5px] rounded-br-[5px] w-full h-[36px] tablet:max-w-[36px]">
+            p
+          </button>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center w-full mt-[30px]">
+        <div className="flex flex-col items-start w-full tablet:max-w-[610px] ">
+          <Btn
+            type="button"
+            variant="transparent"
+            text="Explore"
+            link="/explore"
+          />
+          <Btn
+            type="button"
+            variant="transparent"
+            text="Create"
+            link="/create"
+          />
+          <Btn
+            type="button"
+            variant="transparent"
+            text="My tours"
+            link="/my-tours"
+          />
+          <div className="flex mt-[30px]">
+            <div className="mx-2.5">
+              <Btn
+                type="button"
+                variant="outlined"
+                text="Menu"
+                link="/menu"
+                width="w-[182px]"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );
