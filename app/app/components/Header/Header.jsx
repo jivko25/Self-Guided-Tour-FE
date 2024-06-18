@@ -25,7 +25,7 @@ export default function Header({ isAuthenticated }) {
       </header>
 
       {/* Показваме Tablet компонента само при ширина на екрана под 834px */}
-      <header className="hidden tablet:flex web:hidden items-center justify-center h-100px">
+      <header className="hidden tablet:flex web:hidden items-center justify-center w-full h-100px">
         <Tablet isAuthenticated={session} />
       </header>
 
