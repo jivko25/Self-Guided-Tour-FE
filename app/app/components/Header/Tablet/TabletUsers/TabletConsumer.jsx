@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Button from "../../../Buttons/Button";
+import Btn from "@/app/components/Buttons/Btn.jsx";
 
 export default function TabletConsumer() {
   return (
@@ -15,12 +16,12 @@ export default function TabletConsumer() {
       >
         LOGO
       </Link>
-      <Link
-        href="/explore"
-        className="left-[125px] top-[171px] absolute text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-      >
-        Explore
-      </Link>
+      <Btn
+          type="button"
+          variant="transparent"
+          text="Explore"
+          link="/explore"
+        />
       <Link
         href="/create"
         className="left-[125px] top-[214px] absolute text-center text-gray-900 text-base font-medium font-['Inter Tight']"
