@@ -14,7 +14,7 @@ const TabletNavigation = ({ isAuthenticated }) => {
       </Link>
 
       <Search
-        containerClassName="max-w-[583px]"
+        containerClassName="max-w-[583px] h-[36px]"
         inputClassName="w-[547px] h-[36px]"
         buttonClassName="w-[36px] h-[36px]"
       />
