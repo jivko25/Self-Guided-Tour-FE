@@ -43,22 +43,23 @@ const TabletNavigation = ({ isAuthenticated }) => {
             <>
               <Btn type="button" variant="transparent" text="Menu" link="/menu" />
               <div className="flex mt-[30px]">
-                <div className="mx-2.5">
+                <div className="mx-2.5 w-[182px]">
                   <Btn
                     type="button"
                     variant="outlined"
                     text="Sign in"
                     link="/sign-in"
-                    width="w-[182px]"
+                    fullWidth
                   />
                 </div>
-                <div className="mx-2.5">
+                <div className="mx-2.5 w-[182px]">
                   <Btn
                     type="button"
                     variant="filled"
                     text="Create Account"
                     link="/create-account"
                     width="w-[182px]"
+                    fullWidth
                   />
                 </div>
               </div>
