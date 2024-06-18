@@ -35,7 +35,7 @@ export default function Web({ isAuthenticated }) {
             <Btn
               type="button"
               variant="transparent"
-              text="Explore"
+              text="My tours"
               link="/my-tours"
             />
             <div className="w-32 px-4 py-3 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
