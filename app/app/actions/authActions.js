@@ -48,21 +48,24 @@ export async function loginUser(prev, formData) {
 
   return { data, error };
 }
-export async function externalLoginUser(response) {
+export async function externalLoginUser(resp) {
+  const respData = { data: null, error: null };
   try {
-    const { access_token } = response;
-
-    const res = await axios.post("/Auth/google-signin", {
+    const { access_token } = resp;
+    const response = await axiosAuth.post("google-signin", {
       idToken: access_token,
     });
+
     setCookie("session", {
       accessToken: response.data.accessToken,
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
     });
+    respData.data = true;
   } catch (err) {
-    console.log(err.response?.data);
+    respData.error = err.response?.data;
   }
+  return respData;
 }
 
 // Logout user
