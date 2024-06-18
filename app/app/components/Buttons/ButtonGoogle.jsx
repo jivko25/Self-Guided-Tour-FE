@@ -1,6 +1,6 @@
 import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
 import { axios } from "../../../api/axios";
-
+import { externalLoginUser } from "@/app/actions/authActions";
 function GoogleButton({ onLoginSuccess }) {
   const login = useGoogleLogin({
     onSuccess: (response) => onLoginSuccess(response),
@@ -8,6 +8,7 @@ function GoogleButton({ onLoginSuccess }) {
   });
   return (
     <button
+      type="button"
       onClick={() => login()}
       className="w-[400px] h-[60px] bg-neutral-50  border border-stone-300 px-4 py-3 rounded-md justify-center items-center gap-2.5 inline-flex text-center text-base text-neutral-700 font-medium"
     >
