@@ -16,6 +16,7 @@ module.exports = {
       phone: "393px",
       tablet: "768px",
       web: "1280px",
+      smallPhone: "320px",
     },
   },
   plugins: [],
