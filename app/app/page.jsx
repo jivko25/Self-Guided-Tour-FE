@@ -3,6 +3,9 @@ import { axios } from "../api/axios";
 import { useEffect } from "react";
 import Button from "./components/Buttons/Button.jsx";
 import ButtonGoogle from "./components/Buttons/ButtonGoogle.jsx";
+
+import Search from "@/app/components/Search/Search";
+
 export default function Home() {
   useEffect(() => {
     async function fetchData() {
@@ -31,7 +34,7 @@ export default function Home() {
   return (
     <main className="flex items-center justify-center flex-col h-screen w-screen">
       {/* <h1 className="text-7xl font-bold">Home</h1> */}
-
+      <Search variant="default" />
     </main>
   );
 }
