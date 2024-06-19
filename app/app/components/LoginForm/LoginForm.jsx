@@ -69,7 +69,7 @@ const LoginForm = () => {
           value={password}
           onChange={handlePasswordChange}
           error={error}
-          hint="Your password must be at least 8 characters long"
+          hint="Your password must be at least 6 characters long"
           required
         />
 

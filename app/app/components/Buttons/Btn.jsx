@@ -2,7 +2,6 @@ import Link from "next/link.js";
 export default function Btn({
   variant = "filled",
   fullWidth = false,
-  width,
   type,
   text,
   link,
@@ -16,7 +15,7 @@ export default function Btn({
   };
 
   const commonClasses = `h-11 px-4 py-3 justify-center items-center inline-flex text-center font-medium ${
-    fullWidth ? "w-full" : width ? width : "w-fit"
+    fullWidth ? "w-full" : "w-fit"
   } ${variantClasses[variant]}`;
 
   if (link) {

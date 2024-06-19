@@ -1,4 +1,3 @@
-"use client";
 import Search from "@/app/components/Search/Search";
 
 export default function Home() {
