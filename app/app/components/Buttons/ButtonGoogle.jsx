@@ -1,6 +1,20 @@
-export default function ButtonGoogle() {
+"use client";
+import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
+import { externalLoginUser } from "@/app/actions/authActions";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/authContext";
+function GoogleButton({ onLoginSuccess }) {
+  const login = useGoogleLogin({
+    onSuccess: (response) => onLoginSuccess(response),
+    onError: (error) => console.error(error),
+  });
   return (
-    <button className="w-full h-[60px] bg-neutral-50  border border-stone-300 px-4 py-3 rounded-md justify-center items-center gap-2.5 inline-flex text-center text-base text-neutral-700 font-medium">
+
+    <button
+      type="button"
+      onClick={() => login()}
+      className="w-[400px] h-[60px] bg-neutral-50  border border-stone-300 px-4 py-3 rounded-md justify-center items-center gap-2.5 inline-flex text-center text-base text-neutral-700 font-medium"
+    >
       <svg
         width="24"
         height="24"
@@ -33,5 +47,26 @@ export default function ButtonGoogle() {
       </svg>
       Continue with Google
     </button>
+  );
+}
+
+export default function ButtonGoogle() {
+  const router = useRouter();
+  const { setSession } = useAuth();
+  async function handleLoginSuccess(response) {
+    try {
+      const resp = await externalLoginUser(response);
+      if (resp.data) {
+        setSession(resp.data);
+        router.push("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  return (
+    <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
+      <GoogleButton onLoginSuccess={handleLoginSuccess} />
+    </GoogleOAuthProvider>
   );
 }
