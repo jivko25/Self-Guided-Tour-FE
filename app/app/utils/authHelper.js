@@ -8,8 +8,8 @@ export function setCookie(name, data) {
     cookies().set(name, jwt, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 60 * 60 * 24 * 7 * 4,
-        sameSite: 'strict',
+        maxAge: 60 * 60 * 24 * 30,
+        sameSite: 'Strict',
       });
 }
 
@@ -19,5 +19,11 @@ export function getCookie(name) {
 }
 
 export function deleteCookie(name) {
-    cookies().delete(name);
+    cookies().set(name, '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: -1,
+    sameSite: 'strict',
+    path: '/',
+  });
 }

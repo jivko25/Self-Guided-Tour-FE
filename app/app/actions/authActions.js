@@ -2,6 +2,7 @@
 
 import { axiosAuth } from "@/api/axios";
 import { deleteCookie, getCookie, setCookie } from "../utils/authHelper";
+import { redirect } from 'next/navigation'
 
 // Register user
 export async function registerUser(prev, formData) {
@@ -70,25 +71,24 @@ export async function externalLoginUser(resp) {
 
 // Logout user
 export async function logoutUser() {
-  let data = null;
-  let error = null;
-
-  try {
-    // to be checked with backend
-    // const session = getCookie('session');
-
-    // const response = await axiosAuth.post("logout", {
-    //     userId: session.accessToken
-    // });
-
-    deleteCookie("session");
-
-    data = "success";
-  } catch (err) {
-    error = err.response?.data;
-  }
-
-  return { data, error };
+    let data = null;
+    let error = null;
+    
+    try {
+        // to be checked with backend
+        // const session = getCookie('session');
+        
+        // const response = await axiosAuth.post("logout", {
+        //     userId: session.accessToken
+        // });
+        
+        deleteCookie('session');
+        
+        redirect('/');
+    } catch (err) {
+        error = err.response?.data;
+    }
+    return { error };
 }
 
 // Returns the session state
