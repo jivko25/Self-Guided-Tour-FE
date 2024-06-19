@@ -17,12 +17,21 @@ import MenuFocus from "../../public/menu-focus.svg";
 import MenuDark from "../../public/menu-dark.svg";
 import MenuFocusDark from "../../public/menu-focus-dark.svg";
 
-export default function HeaderMobile({isAuthenticated}) {
+import MobileMenuOverlay from "../MobileMenuOverlay/MobileMenuOverlay.jsx";
+
+export default function HeaderMobile({ isAuthenticated }) {
   const [focus, setFocus] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [menuOverlayVisible, setMenuOverlayVisible] = useState(true);
 
   const handleFocus = (index) => {
     setFocus(index);
+    // Toggle menu overlay visibility when "Menu" is clicked
+    if (index === 2) {
+      setMenuOverlayVisible(!menuOverlayVisible);
+    } else {
+      setMenuOverlayVisible(false);
+    }
   };
 
   const navItems = [
@@ -64,6 +73,16 @@ export default function HeaderMobile({isAuthenticated}) {
           ))}
         </ul>
       </nav>
+      {menuOverlayVisible && (
+        <div className={`fixed inset-0 flex justify-center items-end z-50 `}>
+          {menuOverlayVisible && (
+            <MobileMenuOverlay
+              menuOverlayVisible={handleFocus}
+              isAuthenticated={isAuthenticated}
+            />
+          )}
+        </div>
+      )}
     </header>
   );
 }
