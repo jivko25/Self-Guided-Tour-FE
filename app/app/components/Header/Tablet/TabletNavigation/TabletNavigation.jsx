@@ -4,6 +4,8 @@ import Link from "next/link";
 import Btn from "../../../Buttons/Btn";
 import Search from "@/app/components/Search/Search";
 const TabletNavigation = ({ isAuthenticated }) => {
+ 
+
   return (
     <nav className="flex flex-col w-full bg-neutral-50 h-[404px]">
       <Link
@@ -13,11 +15,7 @@ const TabletNavigation = ({ isAuthenticated }) => {
         LOGO
       </Link>
 
-      <Search
-        containerClassName="max-w-[583px] h-[36px]"
-        inputClassName="w-[547px] h-[36px]"
-        buttonClassName="w-[36px] h-[36px]"
-      />
+      <Search variant="tabletNavigationSearch" />
 
       <div className="flex items-center justify-center w-full mt-[30px]">
         <div className="flex flex-col items-start w-full tablet:max-w-[610px] ">
