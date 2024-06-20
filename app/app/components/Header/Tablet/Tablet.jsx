@@ -68,9 +68,10 @@ const Tablet = ({ isAuthenticated }) => {
   };
 
   const handleClickOutside = (event) => {
+    console.log(menuRef.current, );
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setShow(false);
-    }
+    } 
   };
 
   useEffect(() => {
@@ -99,7 +100,7 @@ const Tablet = ({ isAuthenticated }) => {
           <MenuIcon onClick={toggleShow} />
         )}
         <div ref={menuRef} className={` ${show ? "flex" : "hidden"}`}>
-          <TabletNavigation isAuthenticated={isAuthenticated} />
+          <TabletNavigation isAuthenticated={isAuthenticated} handleNavClose={toggleShow} />
         </div>
       </div>
     </>
