@@ -14,6 +14,7 @@ module.exports = {
       backgroundImage: {
         "custom-image": "url('../public/images/headerImg.jpeg')",
       },
+      
     },
     screens: {
       phone: "393px",
