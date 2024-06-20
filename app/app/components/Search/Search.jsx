@@ -54,7 +54,7 @@ const Search = ({ variant = "default" }) => {
   `;
 
   const inputDefaultStyles = `
-    rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
+    px-[10px] rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
     w-full h-full
     phone:max-w-[321px] max-h-[36px]  
     tablet:max-w-[516px] tablet:max-h-[60px]    
@@ -63,7 +63,7 @@ const Search = ({ variant = "default" }) => {
   `;
 
   const inputTabletNavigationSearchStyles = `
-    rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
+    px-[10px] rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
     w-full h-full
     max-w-[547px] max-h-[36px]
   `;
