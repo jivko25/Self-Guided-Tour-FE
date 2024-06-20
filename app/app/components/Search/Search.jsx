@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 
-const SearchIcon = () => (
+const SearchIcon = ({ className }) => (
   <svg
-    width="30"
-    height="30"
+    className={className}
     viewBox="0 0 40 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -82,6 +81,16 @@ const Search = ({ variant = "default" }) => {
     w-full h-full
     max-w-[36px] max-h-[36px]
   `;
+  const svgDefaultStyles = `
+    phone:w-[24px] phone:h-[24px] 
+    tablet:w-[40px] tablet:h-[40px] 
+    web:w-[40px] web:h-[40px] 
+    smallPhone:w-[24px] smallPhone:h-[24px]
+`;
+
+  const svgTabletNavigationSearchStyles = `
+    w-[24px] h-[40px]
+`;
 
   return (
     <div className="flex justify-center items-center w-full">
@@ -108,7 +117,13 @@ const Search = ({ variant = "default" }) => {
               : buttonTabletNavigationSearchStyles
           }
         >
-          <SearchIcon />
+          <SearchIcon
+            className={
+              variant === "default"
+                ? svgDefaultStyles
+                : svgTabletNavigationSearchStyles
+            }
+          />
         </button>
       </div>
     </div>
@@ -116,5 +131,7 @@ const Search = ({ variant = "default" }) => {
 };
 
 export default Search;
-{/* <Search variant="tabletNavigationSearch" />
-<Search variant="default" /> */}
+{
+  /* <Search variant="tabletNavigationSearch" />
+<Search variant="default" /> */
+}
