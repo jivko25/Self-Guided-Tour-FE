@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      content: {
+        'custom-image': 'url("../public/images/headerImg.jpeg")',
+      },
       backgroundImage: {
         "custom-image": "url('../public/images/headerImg.jpeg')",
       },
