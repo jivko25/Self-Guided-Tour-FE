@@ -37,7 +37,12 @@ const LoginForm = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full w-full">
-      <h2 className="mb-[40px] text-center  text-white text-[32px] font-medium font-['Inter']">
+      <h2 className="mb-[40px] text-center  text-white font-medium font-['Inter']
+      web:text-[32px]
+      tablet:text-[32px]
+      phone:text-[24px]
+      smallPhone:text-[24px]
+      ">
         Sign In
       </h2>
       <form
