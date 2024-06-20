@@ -69,7 +69,7 @@ const RegisterForm = ({ userId }) => {
         Create Account
       </h2>
       <form
-        className="flex items-center justify-evenly flex-col bg-neutral-50 
+        className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-[5px] 
         web:w-[582px] web:h-[826px] 
         tablet:w-[582px] tablet:h-[798px] 
         phone:w-[361px] phone:min-h-[713px] 
@@ -110,7 +110,7 @@ const RegisterForm = ({ userId }) => {
           tablet:w-[400px] tablet:h-[17px] "
         >
           <div
-            className="border border-zinc-400 
+            className="border  border-zinc-400
             web:w-[183px] web:h-[1px] 
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
@@ -127,7 +127,7 @@ const RegisterForm = ({ userId }) => {
           </div>
 
           <div
-            className="border border-zinc-400
+            className="border  border-zinc-400
             web:w-[183px] web:h-[1px] 
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
