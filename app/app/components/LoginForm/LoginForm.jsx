@@ -30,8 +30,15 @@ const LoginForm = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full">
-      <h2 className="mb-[40px] text-center  text-white font-medium font-['Inter']
+    <div className="flex flex-col items-center justify-center h-full w-full 
+    
+    tablet:mt-[55px]
+    smallPhone:mt-[-40px]
+    phone:mt-[-50px]
+    web:mt-[0px]
+
+    ">
+      <h2 className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
       web:text-[32px]
       tablet:text-[32px]
       phone:text-[24px]
@@ -40,11 +47,11 @@ const LoginForm = () => {
         Sign In
       </h2>
       <form
-        className="flex items-center px-4 justify-evenly flex-col bg-neutral-50 
-        web:w-[582px] web:h-[602px] 
-        tablet:w-[582px] tablet:h-[602px] 
-        phone:w-[361px] phone:h-[441px] 
-        smallPhone:w-full smallPhone:h-[451px]"
+        className="flex  items-center justify-evenly flex-col bg-neutral-50 
+        web:w-[582px] web:min-h-[602px] 
+        tablet:w-[582px] tablet:min-h-[602px] 
+        phone:w-[361px] phone:min-h-[441px] 
+        smallPhone:w-full smallPhone:min-h-[451px]"
         action={loginAction}
       >
         <div
