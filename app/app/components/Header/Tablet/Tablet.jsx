@@ -68,7 +68,6 @@ const Tablet = ({ isAuthenticated }) => {
   };
 
   const handleClickOutside = (event) => {
-    console.log(menuRef.current, );
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setShow(false);
     } 
