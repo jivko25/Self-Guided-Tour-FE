@@ -22,7 +22,7 @@ import MobileMenuOverlay from "../MobileMenuOverlay/MobileMenuOverlay.jsx";
 export default function HeaderMobile({ isAuthenticated }) {
   const [focus, setFocus] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
-  const [menuOverlayVisible, setMenuOverlayVisible] = useState(true);
+  const [menuOverlayVisible, setMenuOverlayVisible] = useState(false);
 
   const handleFocus = (index) => {
     setFocus(index);
