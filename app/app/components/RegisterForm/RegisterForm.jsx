@@ -51,8 +51,12 @@ const RegisterForm = ({ userId }) => {
   // const password = watch("password", "");
 
   return (
-    <div className="flex flex-col items-center justify-evenly h-4/5 ">
-      <h2 className="mb-[40px] text-center text-white font-medium font-['Inter']
+    <div className="flex flex-col items-center justify-center h-screen w-full
+    tablet:mt-[300px]
+    smallPhone:mt-[100px]
+    phone:mt-[130px]
+    web:mt-[30px]">
+      <h2 className="mb-[30px] text-center text-white font-medium font-['Inter']
       web:text-[32px]
       tablet:text-[32px]
       phone:text-[24px]
@@ -61,11 +65,11 @@ const RegisterForm = ({ userId }) => {
         Create Account
       </h2>
       <form
-        className="flex items-center px-4 justify-evenly flex-col bg-neutral-50 
+        className="flex items-center justify-evenly flex-col bg-neutral-50 
         web:w-[582px] web:h-[826px] 
         tablet:w-[582px] tablet:h-[798px] 
-        phone:w-[361px] phone:h-[713px] 
-        smallPhone:w-full smallPhone:h-[673px]"
+        phone:w-[361px] phone:min-h-[713px] 
+        smallPhone:w-full smallPhone:min-h-[673px]"
         action={registerAction}
       >
         <div className=" text-center 
