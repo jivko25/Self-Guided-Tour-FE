@@ -30,23 +30,60 @@ const LoginForm = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   return (
-    <div className="flex flex-col items-center  justify-evenly h-4/5 ">
-      <h2 className="text-center  text-white text-[32px] font-medium font-['Inter']">
+    <div className="flex flex-col items-center justify-center h-full w-full">
+      <h2 className="mb-[40px] text-center  text-white text-[32px] font-medium font-['Inter']">
         Sign In
       </h2>
       <form
-        className="flex items-center px-4 justify-evenly flex-col  h-[602px] bg-neutral-50"
+        className="flex items-center px-4 justify-evenly flex-col bg-neutral-50 
+        web:w-[582px] web:h-[602px] 
+        tablet:w-[582px] tablet:h-[602px] 
+        phone:w-[361px] phone:h-[441px] 
+        smallPhone:w-full smallPhone:h-[451px]"
         action={loginAction}
       >
-        <ButtonGoogle />
+        <div
+          className="
+            web:w-[400px] web:h-[60px] 
+            tablet:w-[400px] tablet:h-[60px]
+            phone:w-[320px] phone:h-[43px] 
+            smallPhone:w-[288px] smallPhone:h-[48px]
+            sm:w-72 sm:h-[43px]
+            md:w-80 md:h-[43px]
+            lg:w-[400px] lg:h-[60px]
+          "
+        >
+          <ButtonGoogle />
+        </div>
 
-        <div className="flex justify-center items-center w-full  mb-1 gap-2">
-          <div className="w-full h-[0px] border border-zinc-400"></div>
+        <div
+          className="justify-center items-center gap-2 inline-flex 
+          web:w-[400px] web:h-[17px]
+          tablet:w-[400px] tablet:h-[17px] "
+        >
+          <div
+            className="border border-zinc-400 
+            web:w-[183px] web:h-[1px] 
+            tablet:w-[183px] tablet:h-[1px]
+            phone:w-[145px] phone:h-[1px]
+            smallPhone:w-[126px] smallPhone:h-[1px]
+          "
+          ></div>
 
-          <div className="text-center text-zinc-400 text-[10px]  font-medium font-['Inter Tight']">
+          <div className="text-center text-zinc-400 font-medium font-['Inter Tight']
+          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px]
+          ">
             OR
           </div>
-          <div className="w-full h-[0px] border border-zinc-400"></div>
+
+          <div
+            className="border border-zinc-400
+            web:w-[183px] web:h-[1px] 
+            tablet:w-[183px] tablet:h-[1px]
+            phone:w-[145px] phone:h-[1px]
+            smallPhone:w-[126px] smallPhone:h-[1px]
+          "
+          ></div>
         </div>
 
         <InputField
@@ -57,7 +94,7 @@ const LoginForm = () => {
           value={email}
           onChange={handleEmailChange}
           error={error}
-          hint="Please enter a valid email address"
+          // hint="Please enter a valid email address"
           required
         />
 
@@ -69,18 +106,21 @@ const LoginForm = () => {
           value={password}
           onChange={handlePasswordChange}
           error={error}
-          hint="Your password must be at least 6 characters long"
+          // hint="Your password must be at least 6 characters long"
           required
         />
 
-        <Btn type="submit" variant="filled" text="Sign In" fullWidth />
+        <div
+          className="
+        web:w-[400px] web:h-[43px] 
+        tablet:w-[400px] tablet:h-[43px]
+        phone:w-80 phone:h-[43px] 
+        smallPhone:w-72 smallPhone:h-[43px]
+        "
+        >
+          <Btn type="submit" variant="filled" text="Sign In" fullWidth />
+        </div>
       </form>
-      {/* <Button variant="primary-short" text="Button" />
-      <Button variant="primary-long" text="Button" />
-      <Button variant="secondary" text="Button" />
-      <Button variant="secondary-short" text="Button" />
-      <Button variant="secondary-outlined" text="Button" />
-      <Button variant="secondary-bg-color" text="Button" /> */}
     </div>
   );
 };
