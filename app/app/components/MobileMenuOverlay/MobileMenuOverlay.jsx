@@ -21,14 +21,15 @@ export default function MobileMenuOverlay({
         <Link
           href="/"
           className="flex justify-center items-center text-center text-gray-900 font-medium text-2xl p-6"
+          onClick={menuOverlayVisible}
         >
           LOGO
         </Link>
         <div className="flex flex-col phone:mb-32 ">
           {isAuthenticated ? (
-            <MobileMenuOverlayUser />
+            <MobileMenuOverlayUser menuOverlayVisible={menuOverlayVisible}/>
           ) : (
-            <MobileMenuOverlayGuest />
+            <MobileMenuOverlayGuest menuOverlayVisible={menuOverlayVisible}/>
           )}
         </div>
       </div>
