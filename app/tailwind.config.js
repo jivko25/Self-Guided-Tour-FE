@@ -8,14 +8,19 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "custom-image": "url('/images/lanju-fotografie-cvS-IDyGKTE-unsplash.jpg')",
+      content: {
+        'custom-image': 'url("../public/images/headerImg.jpeg")',
       },
+      backgroundImage: {
+        "custom-image": "url('../public/images/headerImg.jpeg')",
+      },
+      
     },
     screens: {
       phone: "393px",
       tablet: "768px",
       web: "1280px",
+      smallPhone: "320px",
     },
   },
   plugins: [],

@@ -22,7 +22,9 @@ export default function Web({ isAuthenticated }) {
           link="/explore"
         />
         {!isAuthenticated && (
-          <Btn type="button" variant="transparent" text="Menu" link="/menu" />
+          <div className="mr-[30px]">
+            <Btn type="button" variant="transparent" text="Menu" link="/menu" />
+          </div>
         )}
         {isAuthenticated && (
           <>
@@ -38,13 +40,13 @@ export default function Web({ isAuthenticated }) {
               text="My tours"
               link="/my-tours"
             />
-            <div className="w-32 px-4 py-3 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
-              <Link
-                href="/menu"
-                className="text-center text-gray-900 text-base font-medium font-['Inter Tight']"
-              >
-                Menu
-              </Link>
+            <div>
+              <Btn
+                type="button"
+                variant="transparent"
+                text="Menu"
+                link="/menu"
+              />
             </div>
             <div className="mx-2.5">
               <Button
@@ -68,7 +70,7 @@ export default function Web({ isAuthenticated }) {
               />
             </div>
             <div className="mx-2.5">
-            <Btn
+              <Btn
                 type="button"
                 variant="filled"
                 text="Create Account"
