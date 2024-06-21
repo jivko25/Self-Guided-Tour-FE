@@ -202,6 +202,7 @@ const RegisterForm = ({ userId }) => {
         tablet:w-[400px] tablet:h-[43px]
         phone:w-80 phone:h-[43px] 
         smallPhone:w-72 smallPhone:h-[43px]
+        w-72 h-[43px]
         "
         >
           <Btn type="submit" variant="filled" text="Sign In" fullWidth />
