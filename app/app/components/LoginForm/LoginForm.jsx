@@ -42,6 +42,7 @@ const LoginForm = () => {
       tablet:text-[32px]
       phone:text-[24px]
       smallPhone:text-[24px]
+      text-[24px]
       ">
         Sign In
       </h2>
@@ -50,7 +51,8 @@ const LoginForm = () => {
         web:w-[582px] web:min-h-[602px] 
         tablet:w-[582px] tablet:min-h-[602px] 
         phone:w-[361px] phone:min-h-[441px] 
-        smallPhone:w-full smallPhone:min-h-[451px]"
+        smallPhone:w-full smallPhone:min-h-[451px]
+        w-full min-h-[451px]"
         action={loginAction}
       >
         <div
@@ -59,6 +61,7 @@ const LoginForm = () => {
             tablet:w-[400px] tablet:h-[60px]
             phone:w-[320px] phone:h-[43px] 
             smallPhone:w-[288px] smallPhone:h-[48px]
+            w-[288px] h-[48px]
             sm:w-72 sm:h-[43px]
             md:w-80 md:h-[43px]
             lg:w-[400px] lg:h-[60px]
@@ -78,11 +81,12 @@ const LoginForm = () => {
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
+            w-[126px] h-[1px]
           "
           ></div>
 
           <div className="text-center text-zinc-400 font-medium font-['Inter Tight']
-          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px]
+          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px] text-[10px]
           ">
             OR
           </div>
@@ -93,6 +97,7 @@ const LoginForm = () => {
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
+            w-[126px] h-[1px]
           "
           ></div>
         </div>
@@ -127,6 +132,7 @@ const LoginForm = () => {
         tablet:w-[400px] tablet:h-[43px]
         phone:w-80 phone:h-[43px] 
         smallPhone:w-72 smallPhone:h-[43px]
+        w-72 h-[43px]
         "
         >
           <Btn type="submit" variant="filled" text="Sign In" fullWidth />

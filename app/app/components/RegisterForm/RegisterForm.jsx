@@ -62,6 +62,7 @@ const RegisterForm = ({ userId }) => {
         tablet:text-[32px]
         phone:text-[24px]
         smallPhone:text-[24px]
+        text-[24px]
     "
       >
         Create Account
@@ -71,26 +72,27 @@ const RegisterForm = ({ userId }) => {
         web:w-[582px] web:h-[826px] 
         tablet:w-[582px] tablet:h-[798px] 
         phone:w-[361px] phone:min-h-[713px] 
-        smallPhone:w-full smallPhone:min-h-[673px]"
+        smallPhone:w-full smallPhone:min-h-[673px]
+        w-full min-h-[673px]"
         action={registerAction}
       >
         <div
           className=" text-center 
-        web:flex tablet:flex phone:flex smallPhone:hidden"
+        web:flex tablet:flex phone:flex smallPhone:hidden hidden"
         >
           <span
             className="text-neutral-700 font-normal font-['Inter Tight'] 
-          web:text-base tablet:text-base phone:text-sm "
+          web:text-base tablet:text-base phone:text-sm text-sm"
           >
             Already have an account?
           </span>
           <span
             className="text-white font-normal font-['Inter Tight']
-          web:text-base tablet:text-base phone:text-sm "
+          web:text-base tablet:text-base phone:text-sm text-sm"
           ></span>
           <span
             className="text-blue-500 font-normal font-['Inter Tight']
-          web:text-base tablet:text-base phone:text-sm "
+          web:text-base tablet:text-base phone:text-sm text-sm"
           >
             <Link href="/sign-in">Sign In</Link>
           </span>
@@ -105,6 +107,7 @@ const RegisterForm = ({ userId }) => {
             sm:w-72 sm:h-[43px]
             md:w-80 md:h-[43px]
             lg:w-[400px] lg:h-[60px]
+            w-[400px] h-[60px]
           "
         >
           <ButtonGoogle />
@@ -113,7 +116,8 @@ const RegisterForm = ({ userId }) => {
         <div
           className="justify-center items-center gap-2 inline-flex 
           web:w-[400px] web:h-[17px]
-          tablet:w-[400px] tablet:h-[17px] "
+          tablet:w-[400px] tablet:h-[17px] 
+          w-[400px] h-[17px]"
         >
           <div
             className="border  border-zinc-400
@@ -121,12 +125,13 @@ const RegisterForm = ({ userId }) => {
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
+            w-[126px] h-[1px]
           "
           ></div>
 
           <div
             className="text-center text-zinc-400 font-medium font-['Inter Tight']
-          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px]
+          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px] text-[10px]
           "
           >
             OR
@@ -138,6 +143,7 @@ const RegisterForm = ({ userId }) => {
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
+            w-[126px] h-[1px]
           "
           ></div>
         </div>
