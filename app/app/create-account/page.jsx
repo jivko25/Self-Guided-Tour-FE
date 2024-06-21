@@ -13,8 +13,8 @@ export default function SignUp() {
       ></div>
       <div className="w-full h-full absolute   
         tablet:top-[150px]
-        smallPhone:top-[20px]
-        phone:top-[40px]
+        smallPhone:top-[70px]
+        phone:top-[70px]
         web:top-[70px]
         ">
         <RegisterForm />
