@@ -18,7 +18,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-neutral-50 flex flex-col items-center h-screen`}
+        className={`${inter.className} bg-neutral-50 flex flex-col items-center min-h-screen`}
       >
         <AuthProvider>
           <Header isAuthenticated={session}/>
