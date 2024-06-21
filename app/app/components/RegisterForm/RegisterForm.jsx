@@ -31,11 +31,15 @@ const RegisterForm = ({ userId }) => {
     if (formState.data === true) {
       setSession(formState.data);
       redirect("/");
-    } else if (formState.error) {
+    } else {
       if (typeof formState.error === "object") {
         setErrors({ ...formState.error.errors });
-      } else {
+      } else if (formState.error){
         setErrors((state) => ({ ...state, Email: formState.error }));
+      } else {
+        if (formState !== '') {
+          console.log(formState);
+        }
       }
     }
   }, [formState, setSession, setErrors]);

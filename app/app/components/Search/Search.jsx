@@ -26,7 +26,7 @@ const SearchIcon = ({ className }) => (
   </svg>
 );
 
-const Search = ({ variant = "default" }) => {
+const Search = ({ variant = "default", handleNavClose }) => {
   const [query, setQuery] = useState("");
 
   const handleInputChange = (event) => {
@@ -34,8 +34,12 @@ const Search = ({ variant = "default" }) => {
   };
 
   const handleSearch = () => {
-    if (onSearch) {
-      onSearch(query);
+    // if (onSearch) {
+    //   onSearch(query);
+    // }
+
+    if (handleNavClose) {
+      handleNavClose();
     }
   };
 

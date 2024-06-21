@@ -21,8 +21,14 @@ const LoginForm = () => {
     if (formState.data === true) {
       setSession(formState.data);
       redirect("/");
-    } else if (formState.error) {
-      setError(formState.error);
+    } else {
+      if (formState.error) {
+        setError(formState.error);
+      } else {
+        if (formState !== '') {
+          console.log(formState);
+        }
+      }
     }
   }, [formState, setSession, setError]);
 

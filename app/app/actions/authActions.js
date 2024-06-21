@@ -75,15 +75,20 @@ export async function logoutUser() {
     let error = null;
     
     try {
-        // to be checked with backend
-        // const session = getCookie('session');
+        const session = getCookie('session');
         
-        // const response = await axiosAuth.post("logout", {
-        //     userId: session.accessToken
-        // });
+        const response = await axiosAuth.delete("logout", {
+          headers: {
+            'authorization': `Bearer ${session.accessToken}`,
+          }
+        });
+
+        if (response.status !== 204) {
+          throw response.statusText;
+        }
         
         deleteCookie('session');
-        
+
         redirect('/');
     } catch (err) {
         error = err.response?.data;
