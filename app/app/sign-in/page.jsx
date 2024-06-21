@@ -9,7 +9,8 @@ export default function SignIn() {
       smallPhone:max-h-[245px] smallPhone:brightness-50 smallPhone:phone:max-h-none smallPhone:top-0 
       phone:max-h-[245px] phone:brightness-50 phone:tablet:max-h-none phone:top-0 
       tablet:brightness-50 tablet:max-h-[554px] tablet:top-0 
-      web:w-full web:h-full web:tablet:max-h-none web:brightness-50 web:top-0"
+      web:w-full web:h-full web:tablet:max-h-none web:brightness-50 web:top-0
+      max-h-[245px] brightness-50 top-0"
       ></div>
       <div className="w-full absolute   
                       tablet:top-[150px]
