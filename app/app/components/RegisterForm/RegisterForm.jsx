@@ -51,13 +51,15 @@ const RegisterForm = ({ userId }) => {
   // const password = watch("password", "");
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full">
-      <h2 className="mb-[30px] text-center text-white font-medium font-['Inter']
-      web:text-[32px]
-      tablet:text-[32px]
-      phone:text-[24px]
-      smallPhone:text-[24px]
-      ">
+    <div className="flex flex-col items-center justify-start h-full w-full">
+      <h2
+        className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
+        web:text-[32px]
+        tablet:text-[32px]
+        phone:text-[24px]
+        smallPhone:text-[24px]
+    "
+      >
         Create Account
       </h2>
       <form
@@ -68,16 +70,24 @@ const RegisterForm = ({ userId }) => {
         smallPhone:w-full smallPhone:min-h-[673px]"
         action={registerAction}
       >
-        <div className=" text-center 
-        web:flex tablet:flex phone:flex smallPhone:hidden">
-          <span className="text-neutral-700 font-normal font-['Inter Tight'] 
-          web:text-base tablet:text-base phone:text-sm ">
+        <div
+          className=" text-center 
+        web:flex tablet:flex phone:flex smallPhone:hidden"
+        >
+          <span
+            className="text-neutral-700 font-normal font-['Inter Tight'] 
+          web:text-base tablet:text-base phone:text-sm "
+          >
             Already have an account?
           </span>
-          <span className="text-white font-normal font-['Inter Tight']
-          web:text-base tablet:text-base phone:text-sm "></span>
-          <span className="text-blue-500 font-normal font-['Inter Tight']
-          web:text-base tablet:text-base phone:text-sm ">
+          <span
+            className="text-white font-normal font-['Inter Tight']
+          web:text-base tablet:text-base phone:text-sm "
+          ></span>
+          <span
+            className="text-blue-500 font-normal font-['Inter Tight']
+          web:text-base tablet:text-base phone:text-sm "
+          >
             <Link href="/sign-in">Sign In</Link>
           </span>
         </div>
