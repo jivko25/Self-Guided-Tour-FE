@@ -29,7 +29,7 @@ export default function Header({ isAuthenticated }) {
         <Tablet isAuthenticated={session} />
       </header>
 
-      <header className="tablet:hidden ">
+      <header className="tablet:hidden z-50">
         <HeaderMobile isAuthenticated={session} />
       </header>
     </>
