@@ -51,11 +51,7 @@ const RegisterForm = ({ userId }) => {
   // const password = watch("password", "");
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full
-    tablet:mt-[300px]
-    smallPhone:mt-[50px]
-    phone:mt-[130px]
-    web:mt-[30px]">
+    <div className="flex flex-col items-center justify-center h-screen w-full">
       <h2 className="mb-[30px] text-center text-white font-medium font-['Inter']
       web:text-[32px]
       tablet:text-[32px]
