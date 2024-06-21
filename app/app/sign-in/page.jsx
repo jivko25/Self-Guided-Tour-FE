@@ -12,11 +12,11 @@ export default function SignIn() {
       web:w-full web:h-full web:tablet:max-h-none web:brightness-50 web:top-0"
       ></div>
       <div className="w-full absolute   
-        tablet:top-[150px]
-        smallPhone:top-[70px]
-        phone:top-[70px]
-        web:top-[70px]
-        ">
+                      tablet:top-[150px]
+                      smallPhone:top-[70px]
+                      phone:top-[70px]
+                      web:top-[70px]
+                      ">
         <LoginForm />
       </div>
     </section>
