@@ -1,10 +1,19 @@
-// Web.jsx
+"use client";
 import Link from "next/link";
 import Button from "../../Buttons/Button";
 import { logoutUser } from "@/app/actions/authActions";
 import Btn from "../../Buttons/Btn.jsx";
-
+import { usePathname } from "next/navigation";
 export default function Web({ isAuthenticated }) {
+  const pathname = usePathname();
+
+  const signInButtonClass =
+    pathname === "/"
+      ? "h-11 px-4 py-3 justify-center items-center flex text-center font-medium text-gray-900 rounded-md border-2 border-neutral-50 bg-neutral-50"
+      : "h-11 px-4 py-3 justify-center items-center flex text-center font-medium bg-neutral text-gray-900 border-2 rounded-md border-blue-950";
+
+   
+
   return (
     <nav className="flex items-center w-full h-full justify-around">
       <Link
@@ -67,6 +76,7 @@ export default function Web({ isAuthenticated }) {
                 variant="outlined"
                 text="Sign in"
                 link="/sign-in"
+                className={signInButtonClass}
               />
             </div>
             <div className="mx-2.5">
