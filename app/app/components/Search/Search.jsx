@@ -58,22 +58,19 @@ const Search = ({ variant = "default", handleNavClose }) => {
 
   const inputDefaultStyles = `
     px-[10px] rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
-    w-full h-full
-    phone:max-w-[321px] max-h-[36px]  
-    tablet:max-w-[516px] tablet:max-h-[60px]    
-    web:max-w-[810px] web:max-h-[60px]  
-    smallPhone:max-w-[248px] smallPhone:max-h-[36px]
+    phone:w-[321px] h-[36px]  
+    tablet:w-[516px] tablet:h-[60px]    
+    web:w-[810px] web:h-[60px]  
+    smallPhone:w-[248px] smallPhone:h-[36px]
   `;
 
   const inputTabletNavigationSearchStyles = `
     px-[10px] rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
-    w-full h-full
-    max-w-[547px] max-h-[36px]
+    w-[547px] h-[36px]
   `;
 
   const buttonDefaultStyles = `
     cursor-pointer bg-blue-950 rounded-tr-[5px] rounded-br-[5px] flex items-center justify-center  
-    w-full h-full
     phone:w-[40px] phone:h-[36px]   
     tablet:w-[74px] tablet:h-[60px]   
     web:w-[74px] web:h-[60px]   
@@ -82,8 +79,7 @@ const Search = ({ variant = "default", handleNavClose }) => {
 
   const buttonTabletNavigationSearchStyles = `
     cursor-pointer bg-blue-950 rounded-tr-[5px] rounded-br-[5px] flex items-center justify-center  
-    w-full h-full
-    max-w-[36px] max-h-[36px]
+    w-[36px] h-[36px]
   `;
   const svgDefaultStyles = `
     phone:w-[24px] phone:h-[24px] 
