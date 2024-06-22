@@ -57,7 +57,7 @@ const Search = ({ variant = "default", handleNavClose }) => {
   `;
 
   const inputDefaultStyles = `
-    px-[10px] rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
+    px-[10px] rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 opacity-80
     phone:w-[321px] h-[36px]  
     tablet:w-[516px] tablet:h-[60px] tablet:opacity-80  
     web:w-[810px] web:h-[60px] web:opacity-80
