@@ -11,10 +11,10 @@ export default function SignUp() {
       tablet:brightness-50 tablet:max-h-[554px] tablet:top-0 
       web:w-full web:h-full web:tablet:max-h-none web:brightness-50 web:top-0"
       ></div>
-      <div className="w-full h-full absolute   
+      <div className="w-full min-h-screen pb-16 absolute   
                       tablet:top-[150px]
-                      smallPhone:top-[70px]
-                      phone:top-[70px]
+                      smallPhone:top-[60px]
+                      phone:top-[60px]
                       web:top-[70px]
                       ">
         <RegisterForm />
