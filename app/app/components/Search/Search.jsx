@@ -59,8 +59,8 @@ const Search = ({ variant = "default", handleNavClose }) => {
   const inputDefaultStyles = `
     px-[10px] rounded-bl-[5px] rounded-tl-[5px] border border-stone-300 bg-neutral-50 
     phone:w-[321px] h-[36px]  
-    tablet:w-[516px] tablet:h-[60px] tablet:opacity-80  
-    web:w-[810px] web:h-[60px] web:opacity-80
+    tablet:w-[516px] tablet:h-[60px]    
+    web:w-[810px] web:h-[60px]  
     smallPhone:w-[248px] smallPhone:h-[36px]
   `;
 
