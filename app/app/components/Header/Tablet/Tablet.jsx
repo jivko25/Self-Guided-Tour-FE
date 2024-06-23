@@ -98,7 +98,7 @@ const Tablet = ({ isAuthenticated }) => {
         ) : (
           <MenuIcon onClick={toggleShow} />
         )}
-        <div ref={menuRef} className={` ${show ? "flex" : "hidden"}`}>
+        <div ref={menuRef} className={`relative ${show ? "flex" : "hidden"}`}>
           <TabletNavigation isAuthenticated={isAuthenticated} handleNavClose={toggleShow} />
         </div>
       </div>
