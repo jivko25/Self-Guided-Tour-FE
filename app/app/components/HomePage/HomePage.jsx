@@ -6,11 +6,11 @@ function HomePage() {
   return (
     <div className="flex flex-col items-center w-full min-h-screen">
       <div
-        className="absolute top-0 left-0 w-full h-full bg-custom-image bg-cover bg-center z-[-5]
+        className="absolute brightness-75 top-0 left-0 w-full h-full bg-custom-image bg-cover bg-center z-[-5]
       smallPhone:h-[222px] smallPhone:phone:h-none 
       phone:h-[245px]  phone:tablet:h-none 
       tablet:h-[554px]
-      web:w-full web:h-[655px] web:tablet:h-none "
+      web:w-full web:h-[655px] web:tablet:h-none"
       ></div>
       <section className="flex flex-col items-center smallPhone:relative phone:relative justify-center smallPhone:h-[222px] phone:h-[245px] tablet:py-[150px] tablet:h-[554px] web:h-[535px] w-full ">
         <h1
