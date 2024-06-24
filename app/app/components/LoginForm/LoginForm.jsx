@@ -36,7 +36,7 @@ const LoginForm = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   return (
-    <div className="flex flex-col items-center justify-start h-full w-full">
+    <div className="flex flex-col items-center justify-start  w-full">
       <h2 className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
       web:text-[32px]
       tablet:text-[32px]

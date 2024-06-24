@@ -1,9 +1,9 @@
-import Search from "@/app/components/Search/Search";
+import HomePage from "./components/HomePage/HomePage";
 
 export default function Home() {
   return (
     <main className="flex items-center justify-center flex-col h-screen w-screen">
-      <Search variant="default" /> 
+      <HomePage/>
     </main>
   );
 }
