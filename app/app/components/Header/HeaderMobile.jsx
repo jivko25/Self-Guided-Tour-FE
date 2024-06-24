@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderMobileItem from "./HeaderMobileItem.jsx";
 
 import Explore from "../../public/explore.svg";
@@ -18,6 +18,7 @@ import MenuDark from "../../public/menu-dark.svg";
 import MenuFocusDark from "../../public/menu-focus-dark.svg";
 
 import MobileMenuOverlay from "../MobileMenuOverlay/MobileMenuOverlay.jsx";
+import { usePathname } from "next/navigation.js";
 
 export default function HeaderMobile({ isAuthenticated }) {
   const [focus, setFocus] = useState(null);

@@ -75,6 +75,7 @@ const Search = ({ variant = "default", handleNavClose }) => {
     tablet:w-[74px] tablet:h-[60px]   
     web:w-[74px] web:h-[60px]   
     smallPhone:w-[40px] smallPhone:h-[36px]
+    w-[36px] h-[32px]
   `;
 
   const buttonTabletNavigationSearchStyles = `
@@ -86,6 +87,7 @@ const Search = ({ variant = "default", handleNavClose }) => {
     tablet:w-[40px] tablet:h-[40px] 
     web:w-[40px] web:h-[40px] 
     smallPhone:w-[24px] smallPhone:h-[24px]
+    w-[18px] h-[18px]
 `;
 
   const svgTabletNavigationSearchStyles = `
@@ -93,7 +95,7 @@ const Search = ({ variant = "default", handleNavClose }) => {
 `;
 
   return (
-    <div className="flex justify-center items-center w-full">
+    <div className="flex justify-center items-center w-full px-5">
       <div
         className={
           variant === "default" ? defaultStyles : tabletNavigationSearchStyles
