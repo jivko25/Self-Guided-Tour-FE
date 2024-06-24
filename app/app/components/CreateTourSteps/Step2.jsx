@@ -1,6 +1,7 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
 import Btn from "../Buttons/Btn.jsx";
+import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 
 const Step2 = () => {
   const { formData, updateFormData, nextStep, prevStep } = useCreateTour();
@@ -28,6 +29,9 @@ const Step2 = () => {
         value={input}
         onChange={handleChange}
       />
+      <section>
+        <GoogleMapsComponent />
+      </section>
       <div className="flex gap-4">
         <Btn variant="filled" text="Previous" onClick={prevStep} />
         <Btn variant="filled" text="Next" onClick={nextStep} />
