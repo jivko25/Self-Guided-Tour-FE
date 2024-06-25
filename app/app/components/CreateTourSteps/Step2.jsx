@@ -19,21 +19,20 @@ const Step2 = () => {
   };
 
   return (
-    <section className="w-[100%] flex flex-col align-center gap-4 px-[16px] text-[14px] 
-                        px-[8px] mb-[120px] font-medium text-[#081120] text-[14px]
-                        phone:px-[16px]">
+    <section className="w-[100%] flex flex-col align-center gap-4 text-[14px]
+                        mb-[120px] font-medium text-[#081120] text-[14px] web:align-left web:w-[582px]">
       <header className="flex flex-row justify-between">
         <h2 className="text-[20px]">Plan your route</h2>
-        <span className="mt-[7px] text-[#E8B600]">Step 2 of 4</span>
+        <span className="mt-[7px] tablet:mt-0 text-[#E8B600]">Step 2 of 4</span>
       </header>
-      <p className="max-w-[296px]">Choose locations on the map, give them titles and add them to your tour.</p>
-      <section className="h-[250px] phone:h-[297px] mb-[20px]">
+      <p className="max-w-[296px] tablet:max-w-[425px] font-normal">Choose locations on the map, give them titles and add them to your tour.</p>
+      <section className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-[834px] web:h-[582px] web:absolute web:right-[40px]">
         <GoogleMapsComponent />
       </section>
-      <section>
-      <InputField classes="mb-[20px] w-[100%]" label={'Location'}/>
-      <InputField classes="mb-[20px] w-[100%]" label={'Latitude'}/>
-      <InputField classes="mb-[20px] w-[100%]" label={'Longitude'}/>
+      <section className="flex flex-wrap gap-6 web:w-[582px]">
+        <InputField classes="w-[100%] shrink-0" label='Location' name='location'/>
+        <InputField classes="w-[100%] tablet:flex-1 shrink" label='Latitude' name='latitude'/>
+        <InputField classes="w-[100%] tablet:flex-1 shrink" label='Longitude'name='longitude'/>
       </section>
         <Btn className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] h-[43px] self-center" variant="transparent" text="Next" onClick={nextStep} />
     </section>

@@ -23,7 +23,7 @@ const MultiStepForm = () => {
     }
   };
 
-  return <div className="w-[100%]">{renderStep()}</div>;
+  return <div className="w-[100%] px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[36px] web:relative">{renderStep()}</div>;
 };
 
 export default function App() {
