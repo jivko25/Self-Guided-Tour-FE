@@ -11,7 +11,7 @@ const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
   }
 
   return (
-    <nav className="flex flex-col w-full bg-neutral-50 h-[404px]">
+    <nav className="absolute flex flex-col w-full bg-neutral-50 h-[404px]">
       <Link
         href="/"
         className="flex justify-center items-center text-center text-gray-900 font-medium text-2xl p-6"

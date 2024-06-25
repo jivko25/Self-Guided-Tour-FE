@@ -4,9 +4,12 @@ import Tablet from "./Tablet/Tablet";
 import HeaderMobile from "./HeaderMobile.jsx";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext";
+import { usePathname } from "next/navigation";
 
 export default function Header({ isAuthenticated }) {
   const { session, setSession } = useAuth();
+  const [headerVisible, setHeaderVisible] = useState(false);
+  const pathname = usePathname();
   
   useEffect(() => {
     if (isAuthenticated) {
@@ -14,8 +17,14 @@ export default function Header({ isAuthenticated }) {
     } else {
       setSession(false);
     }
-    // console.log(session);
-  }, [setSession, isAuthenticated]);
+    
+    // handle mobile menu visibility
+    if (pathname === '/sign-in' || pathname === '/create-account') {
+      setHeaderVisible(true);
+    } else {
+      setHeaderVisible(false);
+    }
+  }, [setSession, isAuthenticated, pathname, setHeaderVisible]);
 
   return (
     <>
@@ -29,7 +38,7 @@ export default function Header({ isAuthenticated }) {
         <Tablet isAuthenticated={session} />
       </header>
 
-      <header className="tablet:hidden z-50">
+      <header className="tablet:hidden z-50" hidden={headerVisible}>
         <HeaderMobile isAuthenticated={session} />
       </header>
     </>
