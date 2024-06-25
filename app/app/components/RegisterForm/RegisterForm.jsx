@@ -151,6 +151,7 @@ const RegisterForm = ({ userId }) => {
         <InputField
           id="email"
           label="Email Address"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="email"
           type="email"
           value={formData.email}
@@ -163,6 +164,7 @@ const RegisterForm = ({ userId }) => {
         <InputField
           id="name"
           label="Name"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="name"
           type="text"
           value={formData.name}
@@ -175,6 +177,7 @@ const RegisterForm = ({ userId }) => {
         <InputField
           id="password"
           label="Password"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="password"
           type="password"
           value={formData.password}
@@ -187,6 +190,7 @@ const RegisterForm = ({ userId }) => {
         <InputField
           id="repeatPassword"
           label="Repeat Password"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="repeatPassword"
           type="password"
           value={formData.repeatPassword}

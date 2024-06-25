@@ -2,11 +2,6 @@
 import { useEffect, useRef } from 'react';
 import { Loader } from "@googlemaps/js-api-loader"
 
-const containerStyle = {
-    width: '100%',
-    height: '400px'
-};
-
 const center = {
     lat: 42.698334,
     lng: 23.319941
@@ -46,6 +41,6 @@ export default function GoogleMapsComponent() {
         initMaps();
     }, []);
     return (
-        <div style={{ height: '297px', width: '361px' }} ref={mapsRef} />
+        <div className="w-[100%] h-[100%]" ref={mapsRef} />
     );
 };

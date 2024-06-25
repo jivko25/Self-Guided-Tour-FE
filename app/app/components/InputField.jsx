@@ -6,7 +6,7 @@ import EyeIcon from '../public/icon-eye.svg';
 
 export default function InputField({
   id,
-  className = '',
+  classes = '',
   label,
   placeholder,
   name,
@@ -48,7 +48,7 @@ export default function InputField({
     }
   }
   return (
-    <div className={`${styles['input-field']} ${className}`}>
+    <div className={`${styles['input-field']} ${classes}`}>
       {label && <label htmlFor={id}>{label}</label>}
       <div className={styles['input-wrapper']}>
         <input

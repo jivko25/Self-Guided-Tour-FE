@@ -105,6 +105,7 @@ const LoginForm = () => {
         <InputField
           id="email"
           label="Email Address"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="email"
           type="email"
           value={email}
@@ -117,6 +118,7 @@ const LoginForm = () => {
         <InputField
           id="password"
           label="Password"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="password"
           type="password"
           value={password}
