@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useCreateTour } from "../../context/createTourContext.jsx";
 import Create from "../../public/svg/create-stepper.svg";
 import Location from "../../public/svg/location-stepper.svg";
 import Visualize from "../../public/svg/image-stepper.svg";
@@ -12,6 +13,8 @@ const steps = [
 ];
 
 export default function Stepper() {
+  const { step, goToStep } = useCreateTour();
+
   return (
     <nav
       className="w-full h-[140px] flex justify-center mb-2 mt-8 bg-neutral-50 rounded-tl-[5px] rounded-tr-[5px] border-b border-gray-200 tablet:mt-24 web:mt-8"
