@@ -1,3 +1,4 @@
+"use client"
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
 import Btn from "../Buttons/Btn.jsx";
