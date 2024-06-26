@@ -5,44 +5,70 @@ import InputField from "../InputField.jsx";
 
 const Step3 = () => {
   const { formData, updateFormData, prevStep } = useCreateTour();
-  const [input, setInput] = useState(formData.step3Data);
+  const [inputs, setInputs] = useState({
+    locationName: formData.step3Data.locationName || "",
+    locationDescription: formData.step3Data.locationDescription || "",
+    addFields: formData.step3Data.addFields || "",
+  });
 
   useEffect(() => {
-    setInput(formData.step3Data);
+    setInputs({
+      locationName: formData.step3Data.locationName || "",
+      locationDescription: formData.step3Data.locationDescription || "",
+      addFields: formData.step3Data.addFields || "",
+    });
   }, [formData.step3Data]);
 
-  const handleFinish = () => {
-    alert("Form submitted!");
-  };
+  // const handleFinish = () => {
+  //   alert("Form submitted!")
+  // }
 
   const handleChange = (e) => {
-    const newValue = e.target.value;
-    setInput(newValue);
-    updateFormData({ step3Data: newValue });
+    const { name, value } = e.target;
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      [name]: value,
+    }));
+    updateFormData({step3Data: {...inputs, [name]:value}})
   };
+
+  // const { formData, updateFormData, prevStep } = useCreateTour();
+  // const [input, setInput] = useState(formData.step3Data);
+
+  // useEffect(() => {
+  //   setInput(formData.step3Data);
+  // }, [formData.step3Data]);
+
+  // const handleFinish = () => {
+  //   alert("Form submitted!");
+  // };
+
+  // const handleChange = (e) => {
+  //   const newValue = e.target.value;
+  //   setInput(newValue);
+  //   updateFormData({ step3Data: newValue });
+  // };
 
   return (
     <div className="flex flex-col h-full w-full">
       <div className="flex h-full max-h-[691px]">
         <div className="flex items-center justify-between flex-col w-full max-w-[582px]  mx-[50px] my-[10px]">
-
           <div className="flex items-center justify-between w-full mb-[20px]">
-
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
                 Describe and shoot
               </h4>
-              <div className="w-[425px] text-blue-950 text-base font-normal leading-normal">
+              <p className="w-[425px] text-blue-950 text-base font-normal leading-normal">
                 Add description, images and audio files for the location so that
                 the other travelers know more about it.
-              </div>
+              </p>
             </div>
-            <div className="text-yellow-500 text-base font-medium leading-normal">
+            <p className="text-yellow-500 text-base font-medium leading-normal">
               Step 3 of 4
-            </div>
+            </p>
           </div>
 
-        {/* Inputs */}
+          {/* Inputs */}
           <div className="flex flex-col mb-[20px] w-full">
             <label
               className="text-gray-900 text-base font-medium leading-normal"
@@ -54,8 +80,10 @@ const Step3 = () => {
               id="locationName"
               name="locationName"
               type="text"
-              value={input}
+              value={inputs.locationName}
               onChange={handleChange}
+              // value={input}
+              // onChange={handleChange}
               className="bg-neutral-50 rounded border border-stone-300 w-full max-w-[581px] h-[60px] "
               required
             />
@@ -71,8 +99,10 @@ const Step3 = () => {
               id="locationDescription"
               name="locationDescription"
               type="text"
-              value={input}
+              value={inputs.locationDescription}
               onChange={handleChange}
+              // value={input}
+              // onChange={handleChange}
               className="bg-neutral-50 rounded border border-stone-300 w-full max-w-[582px] h-[200px] "
               required
             />
@@ -90,8 +120,10 @@ const Step3 = () => {
                 name="addFields"
                 type="textarea"
                 placeholder="You can upload images and audio files up to 5MB"
-                value={input}
+                value={inputs.addFields}
                 onChange={handleChange}
+                // value={input}
+                // onChange={handleChange}
                 className={`web:w-full web:max-w-[453px] web:h-full pl-[10px]`}
                 required
               />
@@ -104,9 +136,8 @@ const Step3 = () => {
               </button>
             </div>
           </div>
-
         </div>
-        
+
         {/* MAP */}
         <div className="w-full max-w-[1128px]  rounded-[5px]">
           <img
