@@ -20,7 +20,8 @@ const Step2 = () => {
 
   return (
     <section className="w-[100%] flex flex-col align-center gap-4 text-[14px]
-                        mb-[120px] font-medium text-[#081120] text-[14px] web:align-left web:w-[582px]">
+                        mb-[120px] font-medium text-[#081120] text-[14px] web:align-left web:w-[582px]
+                        px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[36px]">
       <header className="flex flex-row justify-between">
         <h2 className="text-[20px]">Plan your route</h2>
         <span className="mt-[7px] tablet:mt-0 text-[#E8B600]">Step 2 of 4</span>
