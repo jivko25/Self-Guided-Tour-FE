@@ -25,7 +25,9 @@ const Step3 = () => {
     <div className="flex flex-col h-full w-full">
       <div className="flex h-full max-h-[691px]">
         <div className="flex items-center justify-between flex-col w-full max-w-[582px]  mx-[50px] my-[10px]">
+
           <div className="flex items-center justify-between w-full mb-[20px]">
+
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
                 Describe and shoot
@@ -40,6 +42,7 @@ const Step3 = () => {
             </div>
           </div>
 
+        {/* Inputs */}
           <div className="flex flex-col mb-[20px] w-full">
             <label
               className="text-gray-900 text-base font-medium leading-normal"
@@ -81,7 +84,7 @@ const Step3 = () => {
             >
               Add Fields
             </label>
-            <div className="flex justify-between w-full max-w-[581px] h-[60px] pl-[10px] bg-neutral-50 rounded-[5px] border border-stone-300 ">
+            <div className="flex justify-between w-full max-w-[581px] h-[60px]  bg-neutral-50 rounded-[5px] border border-stone-300 ">
               <input
                 id="addFields"
                 name="addFields"
@@ -89,7 +92,7 @@ const Step3 = () => {
                 placeholder="You can upload images and audio files up to 5MB"
                 value={input}
                 onChange={handleChange}
-                className={`web:w-full web:max-w-[453px] web:h-full`}
+                className={`web:w-full web:max-w-[453px] web:h-full pl-[10px]`}
                 required
               />
 
@@ -101,7 +104,10 @@ const Step3 = () => {
               </button>
             </div>
           </div>
+
         </div>
+        
+        {/* MAP */}
         <div className="w-full max-w-[1128px]  rounded-[5px]">
           <img
             className="w-full h-full rounded-[5px]"
