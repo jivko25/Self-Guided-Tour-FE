@@ -1,8 +1,4 @@
 import Image from "next/image";
-<<<<<<< HEAD
-import { useCreateTour } from "../../context/createTourContext.jsx";
-=======
->>>>>>> 31312e9 (Create Stepper Component)
 import Create from "../../public/svg/create-stepper.svg";
 import Location from "../../public/svg/location-stepper.svg";
 import Visualize from "../../public/svg/image-stepper.svg";
