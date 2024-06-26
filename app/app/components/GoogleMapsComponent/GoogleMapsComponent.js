@@ -7,12 +7,25 @@ const center = {
     lng: 23.319941
 };
 
-const handleCoordinates = (e) => {
-    console.log(e);
-}
-
-export default function GoogleMapsComponent() {
+export default function GoogleMapsComponent({ handleMapClick }) {
     const mapsRef = useRef();
+
+    const handleClick = async (Place, e) => {
+        if (e.placeId && handleMapClick) {
+            const place = new Place({ id: e?.placeId });
+            await place.fetchFields({ fields: ["displayName"] });
+            const { latLng } = e;
+            const lat = latLng.lat();
+            const lng = latLng.lng();
+            const location = place.displayName;
+            handleMapClick({latitude: lat, longitude: lng, location});
+        }
+
+    }
+
+    const handleMarkerClick = (e) => {
+        console.log(e);
+    }
 
     useEffect(() => {
         const initMaps = async () => {
@@ -22,7 +35,8 @@ export default function GoogleMapsComponent() {
             });
 
             const { Map } = await loader.importLibrary('maps');
-            const { AdvancedMarkerElement  } = await loader.importLibrary('marker');
+            const { AdvancedMarkerElement } = await loader.importLibrary('marker');
+            const { Place } = await loader.importLibrary('places');
 
             const mapOPtions = {
                 center,
@@ -32,14 +46,20 @@ export default function GoogleMapsComponent() {
 
             const map = new Map(mapsRef.current, mapOPtions);
 
-            const marker = new AdvancedMarkerElement ({
+            const marker = new AdvancedMarkerElement({
                 map,
                 position: center,
             });
+
+            map.addListener('click', handleClick.bind(null, Place));
+            marker.addListener('click', handleMarkerClick);
+
         }
 
         initMaps();
-    }, []);
+    }, [handleClick]);
+
+
     return (
         <div className="w-[100%] h-[100%]" ref={mapsRef} />
     );
