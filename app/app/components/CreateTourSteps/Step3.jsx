@@ -20,9 +20,9 @@ const Step3 = () => {
     });
   }, [formData.step3Data]);
 
-  // const handleFinish = () => {
-  //   alert("Form submitted!")
-  // }
+  const handleFinish = () => {
+    alert("Form submitted!")
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,7 +99,7 @@ const Step3 = () => {
             <textarea
               id="locationDescription"
               name="locationDescription"
-              type="text"
+              type="textarea"
               value={inputs.locationDescription}
               onChange={handleChange}
               // value={input}
@@ -119,7 +119,7 @@ const Step3 = () => {
               <input
                 id="addFields"
                 name="addFields"
-                type="textarea"
+                type="file"
                 placeholder="You can upload images and audio files up to 5MB"
                 value={inputs.addFields}
                 onChange={handleChange}
