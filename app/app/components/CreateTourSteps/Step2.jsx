@@ -1,23 +1,21 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import InputField from "../InputField.jsx";
 
 const Step2 = () => {
-  const { formData, updateFormData, nextStep, prevStep } = useCreateTour();
-  // const [data, setData] = useState([]);
+  const { formData, updateStep2Data, nextStep, prevStep } = useCreateTour();
+  const [data, setData] = useState([]);
 
-  // useEffect(() => {
-  //   setData([...formData.step2Data]);
-  // }, [formData.step2Data, setData]);
+  useEffect(() => {
+    setData([...formData?.step2Data]);
+  }, [formData]);
 
-  const handleMapClick = (newData) => {
-    updateFormData({...formData,
-      step2Data: [...formData.step2Data, newData]
-    });
-    console.log(formData);
-  };
+  const handleMapClick = useCallback((newData) => {
+    updateStep2Data(newData);
+  },[updateStep2Data]);
+
   return (
     <section className="w-[100%] flex flex-col align-center gap-4 text-[14px]
                         mb-[120px] font-medium text-[#081120] text-[14px] 
@@ -31,9 +29,9 @@ const Step2 = () => {
         <GoogleMapsComponent handleMapClick={handleMapClick}/>
       </section>
       <section className="flex flex-wrap gap-6 web:max-w-[582px] web:mr-[900px] web:mt-[20px]">
-        <InputField classes="w-[100%] shrink-0" label='Location' name='location' value={formData.step2Data[0]?.location}/>
-        <InputField classes="w-[100%] tablet:flex-1 shrink" label='Latitude' name='latitude' value={formData.step2Data[0]?.latitude}/>
-        <InputField classes="w-[100%] tablet:flex-1 shrink" label='Longitude'name='longitude' value={formData.step2Data[0]?.longitude}/>
+        <InputField classes="w-[100%] shrink-0" label='Location' name='location' value={data[0]?.location}/>
+        <InputField classes="w-[100%] tablet:flex-1 shrink" label='Latitude' name='latitude' value={data[0]?.latitude}/>
+        <InputField classes="w-[100%] tablet:flex-1 shrink" label='Longitude'name='longitude' value={data[0]?.longitude}/>
       </section>
         <Btn className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] h-[43px] self-center web:mr-[900px]" variant="transparent" text="Next" onClick={nextStep} />
     </section>

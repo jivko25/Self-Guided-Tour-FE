@@ -11,7 +11,7 @@ export default function InputField({
   placeholder,
   name,
   type = 'text',
-  value = '',
+  value,
   onChange,
   error,
   hint,
@@ -20,18 +20,22 @@ export default function InputField({
   readOnly,
   ...otherProps
 }) {
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState('');
   const [inputErr, setInputErr] = useState('');
   const [inputType, setInputType] = useState(type); 
 
   useEffect(() => {
+    if (value) {
+      setInputValue(value);
+    }
+
     if (error) {
       setInputErr('error');
     } else {
       setInputErr('');
     }
 
-  }, [type, error, setInputErr]);
+  }, [type, error, setInputErr, value]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
