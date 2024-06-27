@@ -19,9 +19,15 @@ export const CreateTourProvider = ({ children }) => {
     setFormData((prevData) => ({ ...prevData, ...newData }));
   };
 
+  const updateStep2Data = (newData) => {
+    setFormData(prevData => ({...prevData,
+      step2Data: [...prevData.step2Data, newData]
+    }));
+  }
+
   return (
     <CreateTourContext.Provider
-      value={{ step, formData, nextStep, prevStep, goToStep, updateFormData }}
+      value={{ step, formData, nextStep, prevStep, goToStep, updateFormData, updateStep2Data }}
     >
       {children}
     </CreateTourContext.Provider>

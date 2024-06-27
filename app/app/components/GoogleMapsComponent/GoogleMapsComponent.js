@@ -57,7 +57,7 @@ export default function GoogleMapsComponent({ handleMapClick }) {
         }
 
         initMaps();
-    }, [handleClick]);
+    }, []);
 
 
     return (
