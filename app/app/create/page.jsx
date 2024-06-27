@@ -24,7 +24,7 @@ const MultiStepForm = () => {
     }
   };
 
-  return <div>{renderStep()}</div>;
+  return <div className="w-[100%] web:relative">{renderStep()}</div>;
 };
 
 export default function App() {
