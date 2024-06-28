@@ -1,32 +1,24 @@
 'use client'
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Loader } from "@googlemaps/js-api-loader"
 import locationmarker from "../../public/svg/locationmarker.svg";
 import Image from 'next/image';
+import styles from "./GoogleMapsComponent.module.scss";
 
-const center = {
-  lat: 42.698334,
-  lng: 23.319941
-};
+const center = { lat: 42.698334, lng: 23.319941 }
 
 export default function GoogleMapsComponent({ handleMapClick }) {
-  const mapsRef = useRef();
-  const markerRef = useRef();
+  const mapsRef = useRef(null);
+  const markerRef = useRef(null);
+  const infoWindowRef = useRef(null);
+  const currentInfoWindowRef = useRef(null);
+  const [data, setData] = useState({});
 
-  const handleClick = async (Place, e) => {
-    if (e.placeId && handleMapClick) {
-      const place = new Place({ id: e?.placeId });
-      await place.fetchFields({ fields: ["displayName"] });
-      const { latLng } = e;
-      const lat = latLng.lat();
-      const lng = latLng.lng();
-      const location = place.displayName;
-      handleMapClick({ latitude: lat, longitude: lng, location });
-    }
-
+  const handleSave = (data) => {
+    handleMapClick(data)
   }
 
-  const handleMarkerClick = (e) => {
+  const handleCancel = (e) => {
     console.log(e);
   }
 
@@ -37,7 +29,7 @@ export default function GoogleMapsComponent({ handleMapClick }) {
         version: "weekly",
       });
 
-      const { Map } = await loader.importLibrary('maps');
+      const { Map, InfoWindow } = await loader.importLibrary('maps');
       const { AdvancedMarkerElement } = await loader.importLibrary('marker');
       const { Place } = await loader.importLibrary('places');
 
@@ -49,14 +41,40 @@ export default function GoogleMapsComponent({ handleMapClick }) {
 
       const map = new Map(mapsRef.current, mapOPtions);
 
-      const marker = new AdvancedMarkerElement({
-        map,
-        position: center,
-        content: markerRef.current,
-      });
+      const handleClick = async (e) => {
+        e.stop();
+        if (currentInfoWindowRef.current) {
+          console.log(currentInfoWindowRef);
+          currentInfoWindowRef.current.close();
+        }
+        if (e.placeId && handleMapClick) {
+          const place = new Place({ id: e?.placeId });
+          await place.fetchFields({ fields: ["displayName"] });
+          const { latLng } = e;
+          const lat = latLng.lat();
+          const lng = latLng.lng();
 
-      map.addListener('click', handleClick.bind(null, Place));
-      marker.addListener('click', handleMarkerClick);
+          const location = place.displayName;
+          handleSave({ latitude: lat, longitude: lng, location });
+
+          const marker = new AdvancedMarkerElement({
+            map,
+            position: {lat, lng},
+            content: markerRef.current,
+          });
+  
+          const infoWindow = new InfoWindow({
+            content: infoWindowRef.current,
+            headerDisabled: true,
+          });
+
+          currentInfoWindowRef.current = infoWindow;
+          infoWindow.open(map, marker);
+        }
+    
+      }
+
+      map.addListener('click', handleClick);
 
     }
 
@@ -67,14 +85,26 @@ export default function GoogleMapsComponent({ handleMapClick }) {
   return (
     <div className="w-[100%] h-[100%]" ref={mapsRef}>
       {/* Hidden container for marker content */}
-      <div style={{ display: 'none' }}>
+      <div style={{ display: "none" }}>
         <div ref={markerRef}>
           <Image
             src={locationmarker}
             alt="Marker Image"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
           />
+        </div>
+      </div>
+       {/* Hidden container for InfoWindow content */}
+       <div style={{ display: "none" }}>
+        <div ref={infoWindowRef} className={"w-[162px] h-[85px]"}>
+          <div>
+            <textarea className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] resize-none focus:outline-none rounded-sm text-[#808080]" placeholder='Location name'></textarea>
+            <div className='flex justify-around mt-[10px] text-[#4285F4]'>
+              <button onClick={handleSave}>Save</button>
+              <button onClick={handleCancel}>Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
