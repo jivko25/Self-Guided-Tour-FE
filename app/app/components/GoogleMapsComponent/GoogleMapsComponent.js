@@ -43,7 +43,6 @@ export default function GoogleMapsComponent({ handleMapClick }) {
       const handleClick = async (e) => {
         e.stop();
         if (currentInfoWindowRef.current) {
-          console.log(currentInfoWindowRef);
           currentInfoWindowRef.current.close();
         }
         if (e.placeId && handleMapClick) {
