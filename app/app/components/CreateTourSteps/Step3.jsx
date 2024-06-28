@@ -72,7 +72,7 @@ const Step3 = () => {
 
         <div className="flex-1 flex flex-col items-center justify-center w-full overflow-auto">
 
-          <div className="flex items-center justify-between w-full max-w-[581px] mt-[50px] mb-[30px]">
+          <div className="flex items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]">
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
                 Describe and shoot
@@ -169,7 +169,7 @@ const Step3 = () => {
                       alt="Uploaded Media"
                     />
                   )}
-                  
+
                   {isVideo(file) && (
                     <ReactPlayer
                       url={URL.createObjectURL(file)}
