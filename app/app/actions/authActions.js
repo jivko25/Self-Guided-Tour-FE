@@ -2,7 +2,7 @@
 
 import { axiosAuth } from "@/api/axios";
 import { deleteCookie, getCookie, setCookie } from "../utils/authHelper";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
 // Register user
 export async function registerUser(prev, formData) {
@@ -21,9 +21,8 @@ export async function registerUser(prev, formData) {
     });
     data = true;
   } catch (err) {
-    error = err.response?.data;
+    error = err.response?.data?.Message;
   }
-
   return { data, error };
 }
 
@@ -44,9 +43,9 @@ export async function loginUser(prev, formData) {
     });
     data = true;
   } catch (err) {
-    error = err.response?.data;
+    error = err.response?.data?.Message;
   }
-
+  console.log(error);
   return { data, error };
 }
 export async function externalLoginUser(resp) {
@@ -64,36 +63,36 @@ export async function externalLoginUser(resp) {
     });
     respData.data = true;
   } catch (err) {
-    respData.error = err.response?.data;
+    respData.error = err.response?.data?.Message;
   }
   return respData;
 }
 
 // Logout user
 export async function logoutUser() {
-    let data = null;
-    let error = null;
-    
-    try {
-        const session = getCookie('session');
-        
-        const response = await axiosAuth.delete("logout", {
-          headers: {
-            'authorization': `Bearer ${session.accessToken}`,
-          }
-        });
+  let data = null;
+  let error = null;
 
-        if (response.status !== 204) {
-          throw response.statusText;
-        }
-        
-        deleteCookie('session');
+  try {
+    const session = getCookie("session");
 
-        redirect('/');
-    } catch (err) {
-        error = err.response?.data;
+    const response = await axiosAuth.delete("logout", {
+      headers: {
+        authorization: `Bearer ${session.accessToken}`,
+      },
+    });
+
+    if (response.status !== 204) {
+      throw response.statusText;
     }
-    return { error };
+
+    deleteCookie("session");
+
+    redirect("/");
+  } catch (err) {
+    error = err.response?.data?.Message;
+  }
+  return { error };
 }
 
 // Returns the session state
