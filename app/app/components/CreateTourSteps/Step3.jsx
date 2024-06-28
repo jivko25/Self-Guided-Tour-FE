@@ -68,10 +68,8 @@ const Step3 = () => {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex justify-between h-full max-h-[691px] w-full">
-
-        <div className="flex-1 flex flex-col items-center justify-center w-full overflow-auto">
-
+      <div className="flex justify-between h-full min-h-[691px] w-full">
+        <div className="flex-1 flex flex-col items-center justify-center w-full h-full min-h-[691px] overflow-y-auto ">
           <div className="flex items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]">
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
@@ -153,26 +151,38 @@ const Step3 = () => {
             </div>
           </div>
 
-          {/* VIDEO IMAGES */}
-          <div className="flex flex-col items-center justify-center">
+          {/* IMAGES */}
+          <div className="flex items-center justify-center w-full max-w-[581px] h-full">
+            <div className="flex flex-row flex-wrap justify-around">
+              {inputs.addFields.length > 0 &&
+                inputs.addFields.map((file, index) => (
+                  <div key={index} className="flex flex-row  mb-4">
+                    {isImage(file) && (
+                      <Image
+                        src={URL.createObjectURL(file)}
+                        width={150}
+                        height={150}
+                        alt="Uploaded Media"
+                      />
+                    )}
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {/* VIDEO  */}
+          <div className="flex flex-row items-center justify-center w-full h-full flex-wrap p-[10px]">
             {inputs.addFields.length > 0 &&
               inputs.addFields.map((file, index) => (
                 <div
                   key={index}
                   className="flex flex-row items-center justify-center mb-4"
                 >
-                  {isImage(file) && (
-                    <Image
-                      src={URL.createObjectURL(file)}
-                      width={150}
-                      height={150}
-                      alt="Uploaded Media"
-                    />
-                  )}
-
                   {isVideo(file) && (
                     <ReactPlayer
                       url={URL.createObjectURL(file)}
+                      width={150}
+                      height={150}
                       controls={true}
                     />
                   )}
@@ -182,10 +192,9 @@ const Step3 = () => {
         </div>
 
         {/* MAP */}
-        <div className="flex flex-2 w-full max-w-[1128px] rounded-[5px]">
+        <div className="flex flex-2 w-full max-w-[1128px] rounded-[5px] h-[691px]">
           <GoogleMapsComponent handleMapClick={handleMapClick} />
         </div>
-
       </div>
       <div className="w-full h-[138px] bg-neutral-50 border-t border-gray-200 justify-start items-center flex gap-[324px]">
         <Btn
@@ -206,8 +215,3 @@ const Step3 = () => {
 };
 
 export default Step3;
-
-
-
-
-
