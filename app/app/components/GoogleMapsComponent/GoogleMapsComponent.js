@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Loader } from "@googlemaps/js-api-loader"
 import locationmarker from "../../public/svg/locationmarker.svg";
 import Image from 'next/image';
+import styles from "./GoogleMapsComponent.module.scss";
 
 const center = { lat: 42.698334, lng: 23.319941 }
 
