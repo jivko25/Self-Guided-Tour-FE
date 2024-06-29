@@ -2,7 +2,7 @@
 import Btn from "../Buttons/Btn.jsx";
 import ButtonGoogle from "../Buttons/ButtonGoogle";
 import * as React from "react";
-import InputField from "../InputField";
+import InputField from "../InputField/InputField.jsx";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { registerUser } from "@/app/actions/authActions";

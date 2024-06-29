@@ -14,7 +14,12 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
   const currentMarkerRef = useRef(null);
   const [data, setData] = useState({});
 
-  const handleSave = (data) => {
+  const handleSave = () => {
+    const textAreaValue = currentInfoWindowRef.current.content.children[0].firstChild.value;
+
+    if (textAreaValue !== data.location) {
+      data.location = textAreaValue;
+    }
     getLocationInfo(data);
   }
 
@@ -47,6 +52,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         if (currentInfoWindowRef.current) {
           currentInfoWindowRef.current.close();
         }
+
         if (e.placeId && getLocationInfo) {
           const place = new Place({ id: e?.placeId });
           await place.fetchFields({ fields: ["displayName"] });
@@ -56,13 +62,15 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
           const location = place.displayName;
           setData({ latitude: lat, longitude: lng, location });
-
+          
           const marker = new AdvancedMarkerElement({
             map,
-            position: {lat, lng},
+            position: { lat, lng },
             content: markerRef.current,
           });
-  
+          
+          infoWindowRef.current.children[0].firstChild.value = location
+
           const infoWindow = new InfoWindow({
             content: infoWindowRef.current,
             headerDisabled: true,
@@ -72,7 +80,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           currentMarkerRef.current = marker;
           infoWindow.open(map, marker);
         }
-    
+
       }
 
       map.addListener('click', handleClick);
@@ -112,11 +120,13 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           />
         </div>
       </div>
-       {/* Hidden container for InfoWindow content */}
-       <div style={{ display: "none" }}>
+      {/* Hidden container for InfoWindow content */}
+      <div style={{ display: "none" }}>
         <div ref={infoWindowRef} className={"w-[162px] h-[85px]"}>
           <div>
-            <textarea className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] resize-none focus:outline-none rounded-sm text-[#808080]" placeholder='Location name'></textarea>
+            <textarea id='infoTextArea' className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
+                                resize-none focus:outline-none rounded-sm text-[#808080]" placeholder='Location name'>
+            </textarea>
             <div className='flex justify-around mt-[10px] text-[#4285F4]'>
               <button onClick={handleSave}>Save</button>
               <button onClick={handleCancel}>Cancel</button>
