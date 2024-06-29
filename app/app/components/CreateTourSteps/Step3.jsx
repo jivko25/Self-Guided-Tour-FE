@@ -76,7 +76,8 @@ const Step3 = () => {
       <div
         className="flex w-full justify-center items-center
        web:h-full web:flex-row web:max-h-[691px] 
-       tablet:h-full tablet:flex-col-reverse "
+       tablet:h-full tablet:flex-col-reverse 
+       phone:h-full phone:flex-col-reverse"
       >
         <div
           className="flex flex-col items-center w-full
@@ -85,9 +86,10 @@ const Step3 = () => {
         >
           {/* Content that appears in a web type */}
           <section
-            className="hidden  items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]
+            className="hidden items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]
           web:flex
-          tablet:hidden"
+          tablet:hidden
+          phone:hidden"
           >
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
@@ -106,9 +108,15 @@ const Step3 = () => {
           {/* Inputs */}
           <section
             className="flex items-center flex-col w-full justify-center 
-          tablet:pt-[30px]"
+          tablet:pt-[30px]
+          phone:pt-[30px]"
           >
-            <div className="flex items-center justify-start flex-col mb-[30px] w-full max-w-[581px]">
+            <div
+              className="flex items-center justify-start flex-col mb-[30px] w-full 
+            web:max-w-[581px] 
+            tablet:max-w-[581px] 
+            phone:max-w-[361px]"
+            >
               <label
                 className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
                 htmlFor="locationName"
@@ -121,12 +129,20 @@ const Step3 = () => {
                 type="text"
                 value={inputs.locationName}
                 onChange={handleChange}
-                className="bg-neutral-50 rounded border border-stone-300 w-full max-w-[581px] h-[60px]"
+                className="bg-neutral-50 rounded border border-stone-300 w-full h-[60px]
+                web:max-w-[581px]
+                tablet:max-w-[581px] 
+                phone:max-w-[361px]"
                 required
               />
             </div>
 
-            <div className="flex items-center flex-col w-full mb-[20px] max-w-[581px]">
+            <div
+              className="flex items-center flex-col w-full mb-[20px] 
+            web:max-w-[581px] 
+            tablet:max-w-[581px] 
+            phone:max-w-[361px]"
+            >
               <label
                 className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
                 htmlFor="locationDescription"
@@ -138,7 +154,10 @@ const Step3 = () => {
                 name="locationDescription"
                 value={inputs.locationDescription}
                 onChange={handleChange}
-                className="bg-neutral-50 rounded border border-stone-300 w-full max-w-[582px] h-[200px]"
+                className="bg-neutral-50 rounded border border-stone-300 w-full 
+                web:max-w-[581px] web:h-[200px] 
+                tablet:max-w-[581px] tablet:h-[200px] 
+                phone:max-w-[361px] phone:h-[178px]"
                 required
               />
             </div>
@@ -230,24 +249,38 @@ const Step3 = () => {
         <section
           className="flex flex-col rounded-[5px] w-full 
         web:h-full web:max-w-[50%] web:max-h-[691px] 
-        tablet:items-center tablet:justify-center tablet:max-w-[584px] tablet:h-screen tablet:max-h-[676px]"
+        tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[676px]
+        phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[297px]"
         >
           {/* Content that hides in a web type */}
           <section
-            className="hidden items-center justify-between w-full max-w-[581px] pt-[10px] pb-[20px]
-          web:hidden 
-          tablet:flex "
+            className="hidden items-center justify-between w-full 
+          web:hidden web:max-w-[581px] web:pt-[10px] web:pb-[20px]
+          tablet:flex tablet:max-w-[581px] tablet:pt-[10px] tablet:pb-[20px] tablet:items-start
+          phone:flex phone:max-w-[361px] phone:pt-[10px] phone:pb-[20px] phone:text-sm phone:items-start"
           >
             <div>
-              <h4 className="text-gray-900 text-2xl font-medium leading-9">
+              <h4
+                className="text-gray-900 text-2xl font-medium leading-9 
+              tablet:font-medium
+              phone:text-xl "
+              >
                 Describe and shoot
               </h4>
-              <p className="w-[425px] text-blue-950 text-base font-normal leading-normal">
+              <p
+                className="w-[425px] text-blue-950 text-base font-normal leading-normal 
+                tablet:w-[425px] tablet:text-base
+                phone:w-[269px] phone:text-sm"
+              >
                 Add description, images and audio files for the location so that
                 the other travelers know more about it.
               </p>
             </div>
-            <p className="text-yellow-500 text-base font-medium leading-normal">
+            <p
+              className="text-yellow-500 text-base font-medium leading-normal 
+              tablet:w-[85px] tablet:text-base
+              phone:w-[74px] phone:text-sm"
+            >
               Step 3 of 4
             </p>
           </section>
