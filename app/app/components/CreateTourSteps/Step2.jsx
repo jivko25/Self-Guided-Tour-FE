@@ -107,13 +107,13 @@ const Step2 = () => {
                     web:mr-[960px] font-bold"
         >
           <Btn
-            className="text-[16px] w-[177px] h-[43px] self-center hidden tablet:block"
+            className="text-[16px] w-[128px] h-[43px] self-center hidden tablet:block"
             variant="transparent"
             text="Prev"
             onClick={prevStep}
           />
           <Btn
-            className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] h-[43px] self-center"
+            className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[128px] h-[43px] self-center"
             variant="transparent"
             text="Next"
             onClick={nextStep}
