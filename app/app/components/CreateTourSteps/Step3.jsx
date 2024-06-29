@@ -162,14 +162,22 @@ const Step3 = () => {
               />
             </div>
 
-            <div className="flex items-center flex-col mb-[30px] w-full max-w-[581px]">
+            <div className="flex items-center flex-col mb-[30px] w-full 
+            web:max-w-[581px]
+            tablet:max-w-[581px]
+            phone:max-w-[360px]
+            ">
               <label
                 className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
                 htmlFor="addInput"
               >
                 Add Fields
               </label>
-              <div className="flex justify-between w-full max-w-[581px] h-[60px] bg-neutral-50 rounded-[5px] border border-stone-300">
+              <div className="flex justify-between w-full h-[60px] bg-neutral-50 rounded-[5px] border border-stone-300
+               web:max-w-[581px]  
+               tablet:max-w-[581px]
+               phone:max-w-[360px]
+              ">
                 <input
                   id="addInput"
                   name="addFields"
@@ -178,9 +186,14 @@ const Step3 = () => {
                   className="hidden"
                   onChange={handleChange}
                 />
-                <div className="flex w-full max-w-[453px] h-full pl-[10px] items-center">
+                <div className="hidden web:flex w-full max-w-[453px] h-full pl-[10px] items-center">
                   <span className="text-gray-500">
                     You can upload images and audio files up to 5MB
+                  </span>
+                </div>
+                <div className="hidden web:hidden phone:flex w-full max-w-[281px] h-full pl-[10px] items-center">
+                  <span className="text-zinc-500 text-base font-normal leading-normal">
+                  Images and Audio files
                   </span>
                 </div>
                 <label
@@ -196,7 +209,9 @@ const Step3 = () => {
           {/* Images and video on the web */}
           <section
             className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
-          web:flex "
+          web:flex 
+          phone:flex
+          tablet:hidden"
           >
             {/* IMAGES */}
 
@@ -321,7 +336,8 @@ const Step3 = () => {
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
         web:hidden 
-        tablet:flex "
+        tablet:flex 
+        "
         >
           {/* IMAGES */}
           <div className="flex items-center justify-center w-full h-full">
