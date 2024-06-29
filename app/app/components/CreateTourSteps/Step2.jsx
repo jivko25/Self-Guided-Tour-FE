@@ -1,13 +1,15 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
 
 const Step2 = () => {
-  const { formData, updateStep2Data, nextStep, prevStep } = useCreateTour();
-  const [data, setData] = useState([]);
+  const { formData, updateFormData, updateStep2Data, nextStep, prevStep } = useCreateTour();
+  const [data, setData] = useState({});
+  const drag = useRef(0);
+  const dragOver = useRef(0);
 
   useEffect(() => {
     setData([...formData?.step2Data]);
@@ -16,9 +18,18 @@ const Step2 = () => {
   const getLocationInfo = useCallback(
     (newData) => {
       updateStep2Data(newData);
+      setData(newData);
     },
     [updateStep2Data]
   );
+
+  const handleSort = () => {
+    const locations = [...formData.step2Data];
+    const temp = locations[drag.current];
+    locations[drag.current] = locations[dragOver.current];
+    locations[dragOver.current] = temp;
+    updateFormData({step2Data: [...locations]});
+  }
 
   return (
     <>
@@ -50,19 +61,19 @@ const Step2 = () => {
               classes="w-[100%] shrink-0"
               label="Location"
               name="location"
-              value={data[0]?.location}
+              value={data?.location}
             />
             <InputField
               classes="w-[100%] tablet:flex-1 shrink"
               label="Latitude"
               name="latitude"
-              value={data[0]?.latitude}
+              value={data?.latitude}
             />
             <InputField
               classes="w-[100%] tablet:flex-1 shrink"
               label="Longitude"
               name="longitude"
-              value={data[0]?.longitude}
+              value={data?.longitude}
             />
           </section>
           {formData.step2Data.length > 0 && (
@@ -80,8 +91,13 @@ const Step2 = () => {
               {formData.step2Data.map(({ location }, index) => (
                 <LocationComponent
                   key={index}
-                  count={++index}
+                  count={index + 1}
                   text={location}
+                  draggable
+                  onDragStart={() => (drag.current = index)}
+                  onDragEnter={() => (dragOver.current = index)}
+                  onDragEnd={handleSort}
+                  onDragOver={(e) => e.preventDefault()}
                 />
               ))}
             </section>
