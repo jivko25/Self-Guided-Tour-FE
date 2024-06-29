@@ -14,9 +14,10 @@ const Step2 = () => {
     setData([...formData?.step2Data]);
   }, [formData]);
 
-  const handleMapClick = useCallback(
+  const getLocationInfo = useCallback(
     (newData) => {
       updateStep2Data(newData);
+      console.log(formData);
     },
     [updateStep2Data]
   );
@@ -44,7 +45,7 @@ const Step2 = () => {
             className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-[834px] web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent handleMapClick={handleMapClick} />
+            <GoogleMapsComponent getLocationInfo={getLocationInfo} />
           </section>
           <section className="flex flex-wrap gap-6 web:mt-[20px]">
             <InputField
