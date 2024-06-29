@@ -67,7 +67,11 @@ const Step3 = () => {
   };
 
   return (
-    <div className="flex flex-col web:h-screen tablet:min-h-screen w-full">
+    <div
+      className="flex flex-col w-full
+    web:h-screen 
+    tablet:min-h-screen "
+    >
       {/* Main container for inputs and maps, files for web */}
       <div
         className="flex w-full justify-center items-center
@@ -80,7 +84,11 @@ const Step3 = () => {
         tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]"
         >
           {/* Content that appears in a web type */}
-          <section className="hidden tablet:hidden web:flex items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]">
+          <section
+            className="hidden  items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]
+          web:flex
+          tablet:hidden"
+          >
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
                 Describe and shoot
@@ -96,7 +104,10 @@ const Step3 = () => {
           </section>
 
           {/* Inputs */}
-          <section className="flex items-center flex-col w-full justify-center tablet:pt-[30px]">
+          <section
+            className="flex items-center flex-col w-full justify-center 
+          tablet:pt-[30px]"
+          >
             <div className="flex items-center justify-start flex-col mb-[30px] w-full max-w-[581px]">
               <label
                 className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
@@ -164,7 +175,10 @@ const Step3 = () => {
           </section>
 
           {/* Images and video on the web */}
-          <section className="hidden web:flex flex-col items-center justify-center w-full max-w-[581px] h-full">
+          <section
+            className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
+          web:flex "
+          >
             {/* IMAGES */}
 
             <div className="flex items-center justify-center w-full h-full">
@@ -219,7 +233,11 @@ const Step3 = () => {
         tablet:items-center tablet:justify-center tablet:max-w-[584px] tablet:h-screen tablet:max-h-[676px]"
         >
           {/* Content that hides in a web type */}
-          <section className="hidden web:hidden tablet:flex items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]">
+          <section
+            className="hidden items-center justify-between w-full max-w-[581px] pt-[10px] pb-[20px]
+          web:hidden 
+          tablet:flex "
+          >
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
                 Describe and shoot
@@ -240,11 +258,15 @@ const Step3 = () => {
       </div>
 
       {/* Buttons with files for tablet, phone */}
-      <div className="flex flex-col items-center web:justify-start tablet:justify-center w-full  h-full">
+      <div
+        className="flex flex-col w-full h-full 
+      web:justify-start web:items-start
+      tablet:justify-center tablet:items-center  "
+      >
         {/* Buttons */}
         <div
-          className="flex items-center gap-[324px] w-full h-[138px] web:ml-[66px] bg-neutral-50 border-t border-gray-200 
-      web:justify-start
+          className="flex items-start gap-[324px] w-full h-[138px]  bg-neutral-50 border-t border-gray-200 
+      web:w-[50%] web:justify-start web:ml-[0px]
       tablet:justify-center "
         >
           <Btn
@@ -262,7 +284,11 @@ const Step3 = () => {
         </div>
 
         {/* Files for tablet, phone */}
-        <div className="hidden web:hidden tablet:flex flex-col items-center justify-center w-full max-w-[581px] h-full">
+        <div
+          className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
+        web:hidden 
+        tablet:flex "
+        >
           {/* IMAGES */}
           <div className="flex items-center justify-center w-full h-full">
             <div className="flex flex-row flex-wrap justify-between">
