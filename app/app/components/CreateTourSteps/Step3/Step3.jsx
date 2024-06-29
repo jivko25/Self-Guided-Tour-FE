@@ -72,9 +72,7 @@ const Step3 = () => {
 
   return (
     <div
-      className="flex flex-col w-full
-    web:h-screen 
-    tablet:min-h-screen "
+      className="flex flex-col w-full web:h-[85vh] "
     >
       {/* Main container for inputs and maps, files for web */}
       <div
