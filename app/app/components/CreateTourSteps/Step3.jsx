@@ -298,13 +298,14 @@ const Step3 = () => {
       >
         {/* Buttons */}
         <div
-          className="flex items-start gap-[324px] w-full h-[138px]  bg-neutral-50 border-t border-gray-200 
-      web:w-[50%] web:justify-start web:ml-[0px]
-      tablet:justify-center "
+          className="flex items-start  w-full h-[138px]  bg-neutral-50 border-t border-gray-200 
+      web:w-[50%] web:justify-start web:ml-[0px] web:gap-[324px]
+      tablet:justify-center tablet:gap-[324px]
+      phone:justify-center"
         >
           <Btn
             variant="transparent"
-            className="text-center text-gray-900 text-base font-semibold px-4 py-3 w-32 h-[43px] justify-center items-center inline-flex border-b-2 border-neutral-50"
+            className="hidden tablet:inline-flex web:inline-flex text-center text-gray-900 text-base font-semibold px-4 py-3 w-32 h-[43px] justify-center items-center border-b-2 border-neutral-50"
             text="Prev"
             onClick={prevStep}
           />
