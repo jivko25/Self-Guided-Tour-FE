@@ -103,7 +103,7 @@ const Step3 = () => {
             <FileUpload handleChange={handleChange} />
           </section>
 
-          {/* Images and video on the web */}
+          {/* Images and videos for web and phone */}
           <section
             className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
           web:flex 
@@ -118,7 +118,7 @@ const Step3 = () => {
           </section>
         </div>
 
-        {/* MAP */}
+        {/* MAP and Description for tablet, phone*/}
         <section
           className="flex flex-col rounded-[5px] w-full 
         web:h-full web:max-w-[50%] web:max-h-[691px] 
@@ -126,15 +126,15 @@ const Step3 = () => {
         phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]"
         >
           {/* Content that hides in a web type */}
-
           <DescriptionTabletPhone />
 
           {/* MAP */}
           <GoogleMapsComponent handleMapClick={handleMapClick} />
+
         </section>
       </div>
 
-      {/* Buttons with files for tablet, phone */}
+      {/* Buttons and files for tablet*/}
       <div
         className="flex flex-col w-full h-full 
       web:justify-start web:items-start
@@ -151,7 +151,7 @@ const Step3 = () => {
           <NavigationButtons prevStep={prevStep} handleFinish={handleFinish}/>
         </div>
 
-        {/* Files for tablet*/}
+        {/* Media files for tablet*/}
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
         web:hidden 
