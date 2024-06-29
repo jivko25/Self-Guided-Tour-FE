@@ -102,7 +102,7 @@ const Step2 = () => {
       <div className="border-t border-[#E7EAED]">
         <div
           className="my-[50px] flex flex-row justify-center tablet:justify-between tablet:px-[125px] web:px-0
-                      web:max-w-[582px] web:mr-[900px] font-bold"
+                    web:mr-[960px] font-bold"
         >
           <Btn
             className="text-[16px] w-[177px] h-[43px] self-center hidden tablet:block"
