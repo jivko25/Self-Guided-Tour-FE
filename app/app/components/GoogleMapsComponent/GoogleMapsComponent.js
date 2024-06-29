@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ handleMapClick }) {
+export default function GoogleMapsComponent({ handleMapClick, coordinates, coordinatesArray }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -73,6 +73,22 @@ export default function GoogleMapsComponent({ handleMapClick }) {
       }
 
       map.addListener('click', handleClick);
+
+      if (coordinates) {
+        const marker = new AdvancedMarkerElement({
+          map,
+          position: coordinates,
+        });
+      }
+
+      if (coordinatesArray && coordinatesArray.length > 0) {
+        coordinatesArray.forEach((coordinates) => {
+          const marker = new AdvancedMarkerElement({
+            map,
+            position: coordinates,
+          });
+        });
+      }
 
     }
 
