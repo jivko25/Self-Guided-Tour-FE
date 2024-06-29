@@ -45,7 +45,7 @@ const Step2 = () => {
         >
           <GoogleMapsComponent handleMapClick={handleMapClick} />
         </section>
-        <section className="flex flex-wrap gap-6 web:max-w-[582px] web:mr-[900px] web:mt-[20px]">
+        <section className="flex flex-wrap gap-6 web:mr-[900px] web:mt-[20px]">
           <InputField
             classes="w-[100%] shrink-0"
             label="Location"
@@ -67,7 +67,7 @@ const Step2 = () => {
         </section>
         <section
           className="flex flex-col text-center text-[14px] tablet:text-left tablet:text-[16px] 
-                          text-[#13294B] justify-center web:max-w-[582px] web:mr-[900px] mt-[20px]"
+                          text-[#13294B] justify-center  web:mr-[900px] mt-[20px]"
         >
           <h2 className="text-[#081120] text-[20px] web:text-[24px]">
             Your locations
@@ -102,7 +102,7 @@ const Step2 = () => {
       <div className="border-t border-[#E7EAED]">
         <div
           className="my-[50px] flex flex-row justify-center tablet:justify-between tablet:px-[125px] web:px-0
-                      web:max-w-[582px] web:mr-[900px]"
+                      web:max-w-[582px] web:mr-[900px] font-bold"
         >
           <Btn
             className="text-[16px] w-[177px] h-[43px] self-center hidden tablet:block"
