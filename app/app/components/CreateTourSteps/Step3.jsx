@@ -250,7 +250,7 @@ const Step3 = () => {
           className="flex flex-col rounded-[5px] w-full 
         web:h-full web:max-w-[50%] web:max-h-[691px] 
         tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[676px]
-        phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[297px]"
+        phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]"
         >
           {/* Content that hides in a web type */}
           <section
