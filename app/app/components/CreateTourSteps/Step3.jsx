@@ -67,10 +67,20 @@ const Step3 = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full">
-      <div className="flex justify-between w-full h-full max-h-[691px]">
-        <div className="flex-1 flex flex-col items-center justify-start max-h-[691px] w-full overflow-y-auto">
-          <div className="flex items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]">
+    <div className="flex flex-col web:h-screen tablet:min-h-screen w-full">
+      {/* Main container for inputs and maps, files for web */}
+      <div
+        className="flex w-full justify-center items-center
+       web:h-full web:flex-row web:max-h-[691px] 
+       tablet:h-full tablet:flex-col-reverse "
+      >
+        <div
+          className="flex flex-col items-center w-full
+        web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
+        tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]"
+        >
+          {/* Content that appears in a web type */}
+          <section className="hidden tablet:hidden web:flex items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]">
             <div>
               <h4 className="text-gray-900 text-2xl font-medium leading-9">
                 Describe and shoot
@@ -83,11 +93,11 @@ const Step3 = () => {
             <p className="text-yellow-500 text-base font-medium leading-normal">
               Step 3 of 4
             </p>
-          </div>
+          </section>
 
           {/* Inputs */}
-          <div className="flex items-center flex-col w-full max-w-[581px]">
-            <div className="flex items-center flex-col mb-[30px] w-full">
+          <section className="flex items-center flex-col w-full justify-center tablet:pt-[30px]">
+            <div className="flex items-center justify-start flex-col mb-[30px] w-full max-w-[581px]">
               <label
                 className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
                 htmlFor="locationName"
@@ -105,7 +115,7 @@ const Step3 = () => {
               />
             </div>
 
-            <div className="flex items-center flex-col w-full mb-[20px]">
+            <div className="flex items-center flex-col w-full mb-[20px] max-w-[581px]">
               <label
                 className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
                 htmlFor="locationDescription"
@@ -122,7 +132,7 @@ const Step3 = () => {
               />
             </div>
 
-            <div className="flex items-center flex-col mb-[30px] w-full">
+            <div className="flex items-center flex-col mb-[30px] w-full max-w-[581px]">
               <label
                 className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
                 htmlFor="addInput"
@@ -151,9 +161,10 @@ const Step3 = () => {
                 </label>
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="flex flex-col items-center justify-center w-full max-w-[581px] h-full">
+          {/* Images and video on the web */}
+          <section className="hidden web:flex flex-col items-center justify-center w-full max-w-[581px] h-full">
             {/* IMAGES */}
 
             <div className="flex items-center justify-center w-full h-full">
@@ -198,27 +209,104 @@ const Step3 = () => {
                   ))}
               </div>
             </div>
-          </div>
+          </section>
         </div>
 
         {/* MAP */}
-        <div className="flex flex-2 w-full max-w-[1128px] rounded-[5px] h-[691px]">
+        <section
+          className="flex flex-col rounded-[5px] w-full 
+        web:h-full web:max-w-[50%] web:max-h-[691px] 
+        tablet:items-center tablet:justify-center tablet:max-w-[584px] tablet:h-screen tablet:max-h-[676px]"
+        >
+          {/* Content that hides in a web type */}
+          <section className="hidden web:hidden tablet:flex items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]">
+            <div>
+              <h4 className="text-gray-900 text-2xl font-medium leading-9">
+                Describe and shoot
+              </h4>
+              <p className="w-[425px] text-blue-950 text-base font-normal leading-normal">
+                Add description, images and audio files for the location so that
+                the other travelers know more about it.
+              </p>
+            </div>
+            <p className="text-yellow-500 text-base font-medium leading-normal">
+              Step 3 of 4
+            </p>
+          </section>
+
+          {/* MAP */}
           <GoogleMapsComponent handleMapClick={handleMapClick} />
-        </div>
+        </section>
       </div>
-      <div className="w-full h-[138px] bg-neutral-50 border-t border-gray-200 justify-start items-center flex gap-[324px]">
-        <Btn
-          variant="transparent"
-          className="text-center text-gray-900 text-base font-semibold px-4 py-3 w-32 h-[43px] justify-center items-center inline-flex border-b-2 border-neutral-50"
-          text="Prev"
-          onClick={prevStep}
-        />
-        <Btn
-          variant="fullWidth"
-          className="text-center text-gray-900 text-base font-semibold px-4 py-3 w-32 h-[43px] justify-center items-center inline-flex border-b-2 border-yellow-500"
-          text="Next"
-          onClick={handleFinish}
-        />
+
+      {/* Buttons with files for tablet, phone */}
+      <div className="flex flex-col items-center web:justify-start tablet:justify-center w-full  h-full">
+        {/* Buttons */}
+        <div
+          className="flex items-center gap-[324px] w-full h-[138px] web:ml-[66px] bg-neutral-50 border-t border-gray-200 
+      web:justify-start
+      tablet:justify-center "
+        >
+          <Btn
+            variant="transparent"
+            className="text-center text-gray-900 text-base font-semibold px-4 py-3 w-32 h-[43px] justify-center items-center inline-flex border-b-2 border-neutral-50"
+            text="Prev"
+            onClick={prevStep}
+          />
+          <Btn
+            variant="fullWidth"
+            className="text-center text-gray-900 text-base font-semibold px-4 py-3 w-32 h-[43px] justify-center items-center inline-flex border-b-2 border-yellow-500"
+            text="Next"
+            onClick={handleFinish}
+          />
+        </div>
+
+        {/* Files for tablet, phone */}
+        <div className="hidden web:hidden tablet:flex flex-col items-center justify-center w-full max-w-[581px] h-full">
+          {/* IMAGES */}
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="flex flex-row flex-wrap justify-between">
+              {inputs.addFields.length > 0 &&
+                inputs.addFields.map((file, index) => (
+                  <div key={index} className="flex flex-row  mb-4">
+                    {isImage(file) && (
+                      <Image
+                        src={URL.createObjectURL(file)}
+                        width={150}
+                        height={100}
+                        background-position="center"
+                        object-fit="cover"
+                        background-size="contain"
+                        alt="Uploaded Media"
+                      />
+                    )}
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {/* VIDEO  */}
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="flex  flex-row flex-wrap justify-between">
+              {inputs.addFields.length > 0 &&
+                inputs.addFields.map((file, index) => (
+                  <div key={index} className="flex flex-row  mb-4">
+                    {isVideo(file) && (
+                      <ReactPlayer
+                        url={URL.createObjectURL(file)}
+                        width={150}
+                        height={100}
+                        background-position="center"
+                        object-fit="cover"
+                        background-size="contain"
+                        controls={true}
+                      />
+                    )}
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
