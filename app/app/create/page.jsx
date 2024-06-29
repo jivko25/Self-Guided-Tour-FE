@@ -5,7 +5,7 @@ import {
 } from "../context/createTourContext.jsx";
 import Step1 from "../components/CreateTourSteps/Step1.jsx";
 import Step2 from "../components/CreateTourSteps/Step2.jsx";
-import Step3 from "../components/CreateTourSteps/Step3.jsx";
+import Step3 from "../components/CreateTourSteps/Step3/Step3.jsx";
 import Stepper from "../components/Stepper/Stepper.jsx";
 
 const MultiStepForm = () => {
