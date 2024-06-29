@@ -6,19 +6,21 @@ import Image from 'next/image';
 
 const center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ handleMapClick, coordinates, coordinatesArray, index }) {
+export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, index }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
   const currentInfoWindowRef = useRef(null);
+  const currentMarkerRef = useRef(null);
   const [data, setData] = useState({});
 
   const handleSave = (data) => {
-    handleMapClick(data)
+    getLocationInfo(data);
   }
 
-  const handleCancel = (e) => {
-    console.log(e);
+  const handleCancel = () => {
+    currentInfoWindowRef.current.close();
+    currentMarkerRef.current.setMap(null);
   }
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export default function GoogleMapsComponent({ handleMapClick, coordinates, coord
         if (currentInfoWindowRef.current) {
           currentInfoWindowRef.current.close();
         }
-        if (e.placeId && handleMapClick) {
+        if (e.placeId && getLocationInfo) {
           const place = new Place({ id: e?.placeId });
           await place.fetchFields({ fields: ["displayName"] });
           const { latLng } = e;
@@ -53,7 +55,7 @@ export default function GoogleMapsComponent({ handleMapClick, coordinates, coord
           const lng = latLng.lng();
 
           const location = place.displayName;
-          handleSave({ latitude: lat, longitude: lng, location });
+          setData({ latitude: lat, longitude: lng, location });
 
           const marker = new AdvancedMarkerElement({
             map,
@@ -67,6 +69,7 @@ export default function GoogleMapsComponent({ handleMapClick, coordinates, coord
           });
 
           currentInfoWindowRef.current = infoWindow;
+          currentMarkerRef.current = marker;
           infoWindow.open(map, marker);
         }
     
