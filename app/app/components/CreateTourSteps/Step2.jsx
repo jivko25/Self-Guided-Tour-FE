@@ -2,9 +2,8 @@ import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect, useCallback } from "react";
 import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
-import InputField from "../InputField.jsx";
-import pencil from "../../public/svg/pencil.svg";
-import Image from "next/image.js";
+import LocationComponent from "../LocationComponent/LocationComponent.js";
+import InputField from "../InputField/InputField.jsx";
 
 const Step2 = () => {
   const { formData, updateStep2Data, nextStep, prevStep } = useCreateTour();
@@ -17,7 +16,6 @@ const Step2 = () => {
   const getLocationInfo = useCallback(
     (newData) => {
       updateStep2Data(newData);
-      console.log(formData);
     },
     [updateStep2Data]
   );
@@ -67,39 +65,27 @@ const Step2 = () => {
               value={data[0]?.longitude}
             />
           </section>
-          <section
-            className="flex flex-col text-center text-[14px] tablet:text-left tablet:text-[16px] 
+          {formData.step2Data.length > 0 && (
+            <section
+              className="flex flex-col text-center text-[14px] tablet:text-left tablet:text-[16px] 
                           text-[#13294B] justify-center mt-[20px]"
-          >
-            <h2 className="text-[#081120] text-[20px] web:text-[24px]">
-              Your locations
-            </h2>
-            <p className="px-[20px] tablet:px-0 mt-[14px] mb-[18px] font-normal tablet:w-[425px] tablet:mb-[10px]">
-              Once you’ve added locations on the map, they’ll appear in the list
-              below.
-            </p>
-            <div className="mt-[20px] border border-[0.5px] borcer-color-[#CECECE] rounded-md">
-              <div className="flex flex-row items-center">
-                <div
-                  className="bg-[#617086] text-center text-[#FFFFFF] w-[35px] h-[60px] content-center text-[16px]
-                            border border-[0.5px] borcer-color-[#CECECE] rounded-md tablet:w-[40px] tablet:h-[40px]
-                            tablet:text-[20px]"
-                >
-                  <span>1</span>
-                </div>
-                <p className="text-left pl-[10px] pr-[30px] w-[100%] font-normal">
-                  Sofia, Bulgaria, National Theater Ivan Vazov
-                </p>
-                <Image
-                  className="pr-[10px]"
-                  src={pencil}
-                  width={36}
-                  height={36}
-                  alt="pencil"
+            >
+              <h2 className="text-[#081120] text-[20px] web:text-[24px]">
+                Your locations
+              </h2>
+              <p className="px-[20px] tablet:px-0 mt-[14px] mb-[18px] font-normal tablet:max-w-[425px] tablet:mb-[10px]">
+                Once you’ve added locations on the map, they’ll appear in the
+                list below.
+              </p>
+              {formData.step2Data.map(({ location }, index) => (
+                <LocationComponent
+                  key={index}
+                  count={++index}
+                  text={location}
                 />
-              </div>
-            </div>
-          </section>
+              ))}
+            </section>
+          )}
         </div>
       </section>
       <div className="border-t border-[#E7EAED]">
