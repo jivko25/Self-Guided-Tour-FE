@@ -21,6 +21,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
       data.location = textAreaValue;
     }
     getLocationInfo(data);
+    currentInfoWindowRef.current.close();
   }
 
   const handleCancel = () => {
@@ -124,7 +125,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
       <div style={{ display: "none" }}>
         <div ref={infoWindowRef} className={"w-[162px] h-[85px]"}>
           <div>
-            <textarea id='infoTextArea' className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
+            <textarea className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
                                 resize-none focus:outline-none rounded-sm text-[#808080]" placeholder='Location name'>
             </textarea>
             <div className='flex justify-around mt-[10px] text-[#4285F4]'>

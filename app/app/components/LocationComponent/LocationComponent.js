@@ -1,9 +1,9 @@
 import pencil from "../../public/svg/pencil.svg";
 import Image from "next/image.js";
 
-export default function LocationComponent({ count, text }) {
+export default function LocationComponent({ count, text , draggable, onDragStart, onDragEnter, onDragEnd, onDragOver }) {
     return (
-        <div className="mt-[20px] border border-[0.5px] borcer-color-[#CECECE] rounded-md">
+        <div className="mt-[20px] border border-[0.5px] borcer-color-[#CECECE] rounded-md cursor-move" draggable={draggable} onDragStart={onDragStart} onDragEnter={onDragEnter} onDragEnd={onDragEnd} onDragOver={onDragOver}>
             <div className="flex flex-row items-center">
                 <div
                     className="bg-[#617086] text-center text-[#FFFFFF] w-[35px] h-[60px] content-center text-[16px]
