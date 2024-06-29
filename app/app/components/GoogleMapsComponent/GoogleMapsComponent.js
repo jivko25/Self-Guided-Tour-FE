@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ handleMapClick, coordinates, coordinatesArray }) {
+export default function GoogleMapsComponent({ handleMapClick, coordinates, coordinatesArray, index }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -33,7 +33,7 @@ export default function GoogleMapsComponent({ handleMapClick, coordinates, coord
       const { Place } = await loader.importLibrary('places');
 
       const mapOPtions = {
-        center,
+        center: coordinates ? coordinates : center,
         zoom: 17,
         mapId: 'NEXT_MAP',
       }
@@ -97,7 +97,7 @@ export default function GoogleMapsComponent({ handleMapClick, coordinates, coord
 
 
   return (
-    <div className="w-[100%] h-[100%]" ref={mapsRef}>
+    <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
       {/* Hidden container for marker content */}
       <div style={{ display: "none" }}>
         <div ref={markerRef}>
