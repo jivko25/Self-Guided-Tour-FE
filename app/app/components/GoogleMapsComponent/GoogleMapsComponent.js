@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, index }) {
+export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, index, locationId }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -49,12 +49,18 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
       const map = new Map(mapsRef.current, mapOPtions);
 
       const handleClick = async (e) => {
+        // Stop default behavior
         e.stop();
+
+        // closing InfoWindows when another location is selected
         if (currentInfoWindowRef.current) {
           currentInfoWindowRef.current.close();
         }
 
-        if (e.placeId && getLocationInfo) {
+        const placeId = e.placeId;
+
+        if (placeId && getLocationInfo) {
+          // Getting locations name and setting the data for the context
           const place = new Place({ id: e?.placeId });
           await place.fetchFields({ fields: ["displayName"] });
           const { latLng } = e;
@@ -62,21 +68,25 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           const lng = latLng.lng();
 
           const location = place.displayName;
-          setData({ latitude: lat, longitude: lng, location });
-          
+          setData({ placeId: placeId, latitude: lat, longitude: lng, location });
+
+          // Adds marker to the selected location
           const marker = new AdvancedMarkerElement({
             map,
             position: { lat, lng },
             content: markerRef.current,
           });
-          
+
+          // Adding text to the current Info Windows
           infoWindowRef.current.children[0].firstChild.value = location
 
+          // Creating the Info Window instance with the html
           const infoWindow = new InfoWindow({
             content: infoWindowRef.current,
-            headerDisabled: true,
+            headerDisabled: true, // disables the default close button
           });
 
+          // Saving reverences to the opened marker and Info Window and add them to the map
           currentInfoWindowRef.current = infoWindow;
           currentMarkerRef.current = marker;
           infoWindow.open(map, marker);
@@ -84,8 +94,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
       }
 
-      map.addListener('click', handleClick);
-
+      // Add market to a specific coordinates
       if (coordinates) {
         const marker = new AdvancedMarkerElement({
           map,
@@ -93,6 +102,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         });
       }
 
+      // Add multiple markers from array of coordinates
       if (coordinatesArray && coordinatesArray.length > 0) {
         coordinatesArray.forEach((coordinates) => {
           const marker = new AdvancedMarkerElement({
@@ -102,10 +112,37 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         });
       }
 
+      // Add marker based on location id
+      if (locationId) {
+        const place = new Place({ id: locationId });
+        await place.fetchFields({ fields: ["location"] });
+        const { lat, lng } = place.location;
+        const latitude = lat();
+        const longitude = lng();
+
+        const newMapOptions = {
+          center: { lat: latitude, lng: longitude },
+          zoom: 17,
+          mapId: 'NEXT_MAP',
+        }
+
+        // Setting new map options
+        map.setOptions(newMapOptions)
+
+        const marker = new AdvancedMarkerElement({
+          map,
+          position: { lat: latitude, lng: longitude },
+          content: markerRef.current,
+        });
+      }
+
+      map.addListener('click', handleClick);
+
     }
 
+    //initialize map
     initMaps();
-  }, []);
+  }, [locationId]);
 
 
   return (

@@ -8,15 +8,20 @@ import InputField from "../InputField/InputField.jsx";
 const Step2 = () => {
   const { formData, updateFormData, updateStep2Data, nextStep, prevStep } = useCreateTour();
   const [data, setData] = useState({});
+  const editIdRef = useRef('');
   const drag = useRef(0);
   const dragOver = useRef(0);
 
-  useEffect(() => {
-    setData([...formData?.step2Data]);
-  }, [formData]);
+  // useEffect(() => {
+  //   setData([...formData?.step2Data]);
+  // }, [formData]);
 
   const getLocationInfo = useCallback(
     (newData) => {
+      if (editIdRef.current) {
+        updateFormData({step2Data: [...formData.step2Data.filter(loc => loc.placeId !== editIdRef.current)]});
+        editIdRef.current = '';
+      }
       updateStep2Data(newData);
       setData(newData);
     },
@@ -29,6 +34,13 @@ const Step2 = () => {
     locations[drag.current] = locations[dragOver.current];
     locations[dragOver.current] = temp;
     updateFormData({step2Data: [...locations]});
+  }
+
+  const handleEdit = (e) => {
+    const placeId = e.target.id;
+    const locationData = formData.step2Data.find((loc) => loc.placeId === placeId);
+    editIdRef.current = placeId
+    setData(locationData);
   }
 
   return (
@@ -54,7 +66,7 @@ const Step2 = () => {
             className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-[834px] web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent getLocationInfo={getLocationInfo} />
+            <GoogleMapsComponent getLocationInfo={getLocationInfo} locationId={editIdRef.current}/>
           </section>
           <section className="flex flex-wrap gap-6 web:mt-[20px]">
             <InputField
@@ -88,7 +100,7 @@ const Step2 = () => {
                 Once you’ve added locations on the map, they’ll appear in the
                 list below.
               </p>
-              {formData.step2Data.map(({ location }, index) => (
+              {formData.step2Data.map(({ placeId, location }, index) => (
                 <LocationComponent
                   key={index}
                   count={index + 1}
@@ -98,6 +110,8 @@ const Step2 = () => {
                   onDragEnter={() => (dragOver.current = index)}
                   onDragEnd={handleSort}
                   onDragOver={(e) => e.preventDefault()}
+                  handleEdit={handleEdit}
+                  placeId={placeId}
                 />
               ))}
             </section>
