@@ -138,22 +138,6 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
       map.addListener('click', handleClick);
 
-      if (coordinates) {
-        const marker = new AdvancedMarkerElement({
-          map,
-          position: coordinates,
-        });
-      }
-
-      if (coordinatesArray && coordinatesArray.length > 0) {
-        coordinatesArray.forEach((coordinates) => {
-          const marker = new AdvancedMarkerElement({
-            map,
-            position: coordinates,
-          });
-        });
-      }
-
     }
 
     //initialize map
