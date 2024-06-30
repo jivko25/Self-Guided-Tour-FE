@@ -124,10 +124,8 @@ const Step3 = () => {
         tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[676px]
         phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]"
         >
-          {/* Content that hides in a web type */}
           <DescriptionTabletPhone />
-
-          {/* MAP */}
+          
           <GoogleMapsComponent handleMapClick={handleMapClick} />
 
         </div>
