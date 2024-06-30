@@ -71,9 +71,7 @@ const Step3 = () => {
   };
 
   return (
-    <div
-      className="flex flex-col w-full web:h-[85vh] "
-    >
+    <div className="flex flex-col w-full web:h-[85vh] ">
       {/* Main container for inputs and maps, files for web */}
       <div
         className="flex w-full justify-center items-center
@@ -81,16 +79,13 @@ const Step3 = () => {
        tablet:h-full tablet:flex-col-reverse 
        phone:h-full phone:flex-col-reverse"
       >
-
         {/* DescriptionWeb, LocationInput, FileUpload, MediaPreviewWebPhone */}
         <div
           className="flex flex-col items-center w-full
         web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
         tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]"
         >
-
           <DescriptionWeb />
-
 
           <section
             className="flex items-center flex-col w-full justify-center 
@@ -99,9 +94,7 @@ const Step3 = () => {
           >
             <LocationInput inputs={inputs} handleChange={handleChange} />
             <FileUpload handleChange={handleChange} />
-
           </section>
-
 
           <section
             className="hidden flex-col items-center justify-center w-full web:max-w-[581px] h-full
@@ -125,11 +118,9 @@ const Step3 = () => {
         phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]"
         >
           <DescriptionTabletPhone />
-          
+
           <GoogleMapsComponent handleMapClick={handleMapClick} />
-
         </div>
-
       </div>
 
       {/* NavigationButtons, MediaPreviewTablet */}
@@ -138,15 +129,7 @@ const Step3 = () => {
           web:justify-start web:items-start
           tablet:justify-center tablet:items-center"
       >
-        <div
-          className="flex items-start  w-full h-[138px]  bg-neutral-50 border-t border-gray-200 
-            web:w-[50%] web:justify-start web:ml-[0px] web:gap-[324px]
-            tablet:justify-center tablet:gap-[324px]
-            phone:justify-center"
-        >
-          <NavigationButtons prevStep={prevStep} handleFinish={handleFinish}/>
-
-        </div>
+        <NavigationButtons prevStep={prevStep} handleFinish={handleFinish} />
 
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
@@ -159,9 +142,7 @@ const Step3 = () => {
             isVideo={isVideo}
           />
         </div>
-        
       </div>
-
     </div>
   );
 };
