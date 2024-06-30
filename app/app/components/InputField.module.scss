@@ -6,7 +6,7 @@
     flex-direction: column;
     justify-content: center;
     overflow-wrap: break-word;
-    width: 288px;
+    // width: 288px;
     font-weight: 400;
 
     label {
@@ -62,13 +62,13 @@
 
 @media (min-width: 393px) {
     .input-field {
-        width: 320px;
+        // width: 320px;
     }
 }
 
 @media (min-width: 834px) {
     .input-field {
-        width: 400px;
+        // width: 400px;
 
         label {
             font-size: var.$font-size-md;
@@ -76,7 +76,7 @@
 
         input {
             height: 60px;
-        padding-left: 10px;
+            padding-left: 10px;
 
         }
     }
