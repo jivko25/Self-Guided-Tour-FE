@@ -5,7 +5,12 @@ const CreateTourContext = createContext();
 export const CreateTourProvider = ({ children }) => {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
-    step1Data: "",
+    step1Data:  {
+      tour: "",
+      destination: "",
+      duration: "",
+      price: "",
+    },
     step2Data: [],
     step3Data: "",
     step4Data: "",
