@@ -53,7 +53,7 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo }) {
                   url={URL.createObjectURL(file)}
                   width={269}
                   height={240}
-                  className="tablet:rounded-[5px] tablet:w-[279px] tablet:h-60  phone:w-[269px] phone:h-60 phone:rounded-[5px]"
+                  className="web:rounded-[5px] web:w-[279px] web:h-60  phone:w-[269px] phone:h-60 phone:rounded-[5px]"
                   controls={true}
                 />
               )}
