@@ -5,7 +5,7 @@ import {
 } from "../context/createTourContext.jsx";
 import Step1 from "../components/CreateTourSteps/Step1.jsx";
 import Step2 from "../components/CreateTourSteps/Step2.jsx";
-import Step3 from "../components/CreateTourSteps/Step3.jsx";
+import Step3 from "../components/CreateTourSteps/Step3/Step3.jsx";
 import Step4 from "../components/CreateTourSteps/Step4.jsx";
 import Stepper from "../components/Stepper/Stepper.jsx";
 
@@ -27,7 +27,7 @@ const MultiStepForm = () => {
     }
   };
 
-  return <div className="w-[100%]  web:relative">{renderStep()}</div>;
+  return <div className="w-[100%] h-full web:relative">{renderStep()}</div>;
 };
 
 export default function App() {
