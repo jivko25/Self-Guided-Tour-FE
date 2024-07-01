@@ -3,7 +3,7 @@ import Btn from "../Buttons/Btn.jsx";
 import ButtonGoogle from "../Buttons/ButtonGoogle";
 
 import * as React from "react";
-import InputField from "../InputField";
+import InputField from "../InputField/InputField.jsx";
 
 import { loginUser } from "@/app/actions/authActions";
 import { useFormState } from "react-dom";
@@ -36,12 +36,13 @@ const LoginForm = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   return (
-    <div className="flex flex-col items-center justify-start h-full w-full">
+    <div className="flex flex-col items-center justify-start  w-full">
       <h2 className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
       web:text-[32px]
       tablet:text-[32px]
       phone:text-[24px]
       smallPhone:text-[24px]
+      text-[24px]
       ">
         Sign In
       </h2>
@@ -50,7 +51,8 @@ const LoginForm = () => {
         web:w-[582px] web:min-h-[602px] 
         tablet:w-[582px] tablet:min-h-[602px] 
         phone:w-[361px] phone:min-h-[441px] 
-        smallPhone:w-full smallPhone:min-h-[451px]"
+        smallPhone:w-full smallPhone:min-h-[451px]
+        w-full min-h-[451px]"
         action={loginAction}
       >
         <div
@@ -59,6 +61,7 @@ const LoginForm = () => {
             tablet:w-[400px] tablet:h-[60px]
             phone:w-[320px] phone:h-[43px] 
             smallPhone:w-[288px] smallPhone:h-[48px]
+            w-[288px] h-[48px]
             sm:w-72 sm:h-[43px]
             md:w-80 md:h-[43px]
             lg:w-[400px] lg:h-[60px]
@@ -78,11 +81,12 @@ const LoginForm = () => {
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
+            w-[126px] h-[1px]
           "
           ></div>
 
           <div className="text-center text-zinc-400 font-medium font-['Inter Tight']
-          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px]
+          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px] text-[10px]
           ">
             OR
           </div>
@@ -93,6 +97,7 @@ const LoginForm = () => {
             tablet:w-[183px] tablet:h-[1px]
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
+            w-[126px] h-[1px]
           "
           ></div>
         </div>
@@ -100,6 +105,7 @@ const LoginForm = () => {
         <InputField
           id="email"
           label="Email Address"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="email"
           type="email"
           value={email}
@@ -112,6 +118,7 @@ const LoginForm = () => {
         <InputField
           id="password"
           label="Password"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="password"
           type="password"
           value={password}
@@ -127,6 +134,7 @@ const LoginForm = () => {
         tablet:w-[400px] tablet:h-[43px]
         phone:w-80 phone:h-[43px] 
         smallPhone:w-72 smallPhone:h-[43px]
+        w-72 h-[43px]
         "
         >
           <Btn type="submit" variant="filled" text="Sign In" fullWidth />

@@ -1,0 +1,10 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icons / file-tray-full-outline">
+<path id="Vector" d="M18 3.75H6C4.78125 3.75 3.98438 4.40625 3.75 5.625L2.25 12.75V18C2.25173 18.5962 2.48934 19.1675 2.91092 19.5891C3.3325 20.0107 3.9038 20.2483 4.5 20.25H19.5C20.0962 20.2483 20.6675 20.0107 21.0891 19.5891C21.5107 19.1675 21.7483 18.5962 21.75 18V12.75L20.25 5.625C20.0156 4.35938 19.1719 3.75 18 3.75Z" stroke="white" stroke-linejoin="round"/>
+<path id="Vector_2" d="M2.25 12.75H9" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M15 12.75H21.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M9 12.75C9 13.5456 9.31607 14.3087 9.87868 14.8713C10.4413 15.4339 11.2044 15.75 12 15.75C12.7956 15.75 13.5587 15.4339 14.1213 14.8713C14.6839 14.3087 15 13.5456 15 12.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M6.75 6.75H17.25" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_6" d="M6 9.75H18" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

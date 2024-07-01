@@ -23,7 +23,7 @@ export default async function RootLayout({ children }) {
         <AuthProvider>
           <Header isAuthenticated={session}/>
           {children}
-          <Footer/>
+          {/* <Footer/> */}
         </AuthProvider>
       </body>
     </html>
