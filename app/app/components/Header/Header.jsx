@@ -28,12 +28,10 @@ export default function Header({ isAuthenticated }) {
 
   return (
     <>
-      {/* Показваме Web компонента само при ширина на екрана по-голяма от 834px */}
       <header className="hidden web:flex w-full  items-center justify-center h-100px py-9">
         <Web isAuthenticated={session} />
       </header>
 
-      {/* Показваме Tablet компонента само при ширина на екрана под 834px */}
       <header className="hidden tablet:flex web:hidden items-center justify-center w-full h-100px">
         <Tablet isAuthenticated={session} />
       </header>
