@@ -3,7 +3,7 @@ import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect, useRef } from "react";
 import FileTray from "../../public/svg/file-tray.svg";
 import Visualize from "../../public/svg/image-outline.svg";
-import InputField from "../InputField.jsx";
+import InputField from "../InputField/InputField.jsx";
 import Btn from "../Buttons/Btn.jsx";
 import { Input } from "postcss";
 
