@@ -8,6 +8,7 @@ const Step1NextBtn = () => {
         <div className="
     relative web:w-[1920px] web:h-[138px] 
     tablet:w-[834px] tablet:h-[100px]
+    phone:hidden tablet:block
     border-t border-[#E7EAED] ">
 
             <Btn
