@@ -38,7 +38,6 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
       const { Map, InfoWindow } = await loader.importLibrary('maps');
       const { AdvancedMarkerElement } = await loader.importLibrary('marker');
-      const { Place } = await loader.importLibrary('places');
 
       const mapOPtions = {
         center: coordinates ? coordinates : center,
@@ -57,17 +56,28 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           currentInfoWindowRef.current.close();
         }
 
-        const placeId = e.placeId;
+        let placeId = e.placeId || '';
 
-        if (placeId && getLocationInfo) {
-          // Getting locations name and setting the data for the context
-          const place = new Place({ id: e?.placeId });
-          await place.fetchFields({ fields: ["displayName"] });
+        if (getLocationInfo) {
+          let place = '';
+          let location = '';
           const { latLng } = e;
           const lat = latLng.lat();
           const lng = latLng.lng();
 
-          const location = place.displayName;
+          if (placeId !== '') {
+            // Getting locations name and setting the data for the context if location id exists
+            const { Place } = await loader.importLibrary('places');
+            place = new Place({ id: e?.placeId });
+            await place.fetchFields({ fields: ["displayName"] });
+            location = place.displayName;
+          } else {
+            const { Geocoder } = await loader.importLibrary('geocoding');
+            const geocoding = new Geocoder();
+            const { results } = await geocoding.geocode({ location: { lat, lng } });
+            placeId = results[0].place_id;
+          }
+
           setData({ placeId: placeId, latitude: lat, longitude: lng, location });
 
           // Adds marker to the selected location

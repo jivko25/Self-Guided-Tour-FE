@@ -1,20 +1,16 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
 
 const Step2 = () => {
-  const { formData, updateFormData, updateStep2Data, nextStep, prevStep } = useCreateTour();
-  const [data, setData] = useState({});
+  const { formData, updateFormData, updateStep2Data, nextStep, prevStep, goToStep } = useCreateTour();
+  const [data, setData] = useState({placeId: '', location: '', latitude: '', longitude: ''});
   const editIdRef = useRef('');
   const drag = useRef(0);
   const dragOver = useRef(0);
-
-  // useEffect(() => {
-  //   setData([...formData?.step2Data]);
-  // }, [formData]);
 
   const getLocationInfo = useCallback(
     (newData) => {
@@ -36,11 +32,8 @@ const Step2 = () => {
     updateFormData({step2Data: [...locations]});
   }
 
-  const handleEdit = (e) => {
-    const placeId = e.target.id;
-    const locationData = formData.step2Data.find((loc) => loc.placeId === placeId);
-    editIdRef.current = placeId
-    setData(locationData);
+  const handleAddInfo = () => {
+    goToStep(2);
   }
 
   return (
@@ -48,7 +41,7 @@ const Step2 = () => {
       <section
         className="w-[100%] flex flex-col align-center gap-4 text-[14px]
                         mb-[30px] font-medium text-[#081120] text-[14px] web:text-[16px]
-                        px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[60px] 
+                        px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[64px] 
                         web:h-[582px]"
       >
         <div className=" web:mr-[870px] overflow-y-scroll web:pr-[30px]">
@@ -66,7 +59,7 @@ const Step2 = () => {
             className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-[834px] web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent getLocationInfo={getLocationInfo} locationId={editIdRef.current}/>
+            <GoogleMapsComponent getLocationInfo={getLocationInfo} />
           </section>
           <section className="flex flex-wrap gap-6 web:mt-[20px]">
             <InputField
@@ -110,8 +103,8 @@ const Step2 = () => {
                   onDragEnter={() => (dragOver.current = index)}
                   onDragEnd={handleSort}
                   onDragOver={(e) => e.preventDefault()}
-                  handleEdit={handleEdit}
                   placeId={placeId}
+                  handleAddInfo={handleAddInfo}
                 />
               ))}
             </section>
