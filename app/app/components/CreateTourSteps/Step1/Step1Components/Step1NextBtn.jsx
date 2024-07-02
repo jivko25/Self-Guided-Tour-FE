@@ -21,7 +21,6 @@ const Step1NextBtn = () => {
                 text="Next"
                 onClick={nextStep}
             />
-
         </div>
     )
 }

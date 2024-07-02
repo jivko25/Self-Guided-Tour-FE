@@ -10,7 +10,8 @@ const StepHeader = ({title, description, step}) => {
   </header>
   <p className="max-w-[296px] tablet:max-w-[425px] font-normal">
     {description}
-  </p></div>
+  </p>
+  </div>
   )
 }
 
