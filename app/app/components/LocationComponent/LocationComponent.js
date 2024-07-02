@@ -12,7 +12,7 @@ export default function LocationComponent({ count, text , draggable, onDragStart
     }, [placeId]);
 
     return (
-        <div className="mt-[20px] border border-[0.5px] borcer-color-[#CECECE] rounded-md cursor-move" draggable={draggable} onDragStart={onDragStart} onDragEnter={onDragEnter} onDragEnd={onDragEnd} onDragOver={onDragOver}>
+        <div className="mt-[4px] border border-[0.5px] borcer-color-[#CECECE] rounded-md cursor-move" draggable={draggable} onDragStart={onDragStart} onDragEnter={onDragEnter} onDragEnd={onDragEnd} onDragOver={onDragOver}>
             <div className="flex flex-row items-center">
                 <div
                     className="bg-[#617086] text-center text-[#FFFFFF] w-[35px] h-[60px] content-center text-[16px]
@@ -26,7 +26,6 @@ export default function LocationComponent({ count, text , draggable, onDragStart
                 </p>}
                 <Link href={path}>
                 <Image
-                    id={placeId}
                     className="pr-[10px] cursor-pointer"
                     src={pencil}
                     width={36}

@@ -1,14 +1,27 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef } from "react";
 import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
 
 const Step2 = () => {
-  const { formData, updateFormData, updateStep2Data, nextStep, prevStep, goToStep } = useCreateTour();
-  const [data, setData] = useState({placeId: '', location: '', latitude: '', longitude: ''});
-  const editIdRef = useRef('');
+  const {
+    formData,
+    updateFormData,
+    updateStep2Data,
+    nextStep,
+    prevStep,
+    goToStep,
+  } = useCreateTour();
+
+  const [data, setData] = useState({
+    placeId: "",
+    location: "",
+    latitude: "",
+    longitude: "",
+  });
+
   const drag = useRef(0);
   const dragOver = useRef(0);
 
@@ -28,18 +41,18 @@ const Step2 = () => {
     const temp = locations[drag.current];
     locations[drag.current] = locations[dragOver.current];
     locations[dragOver.current] = temp;
-    updateFormData({step2Data: [...locations]});
-  }
+    updateFormData({ step2Data: [...locations] });
+  };
 
   const handleAddInfo = () => {
     goToStep(2);
-  }
+  };
 
   return (
     <>
       <section
-        className="w-[100%] flex flex-col align-center gap-4 text-[14px]
-                        mb-[30px] font-medium text-[#081120] text-[14px] web:text-[16px]
+        className="w-[100%] flex flex-col align-center text-[14px]
+                        mb-[30px] web:mb-0 font-medium text-[#081120] text-[14px] web:text-[16px]
                         px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[64px] 
                         web:h-[582px] web:w-1/2"
       >
@@ -111,22 +124,24 @@ const Step2 = () => {
         </div>
       </section>
       <div className="border-t border-[#E7EAED]">
-        <div
-          className="my-[50px] flex flex-row justify-center tablet:justify-between tablet:px-[125px] web:px-0
-                    web:mr-[960px] font-bold"
-        >
-          <Btn
-            className="text-[16px] w-[128px] h-[43px] self-center hidden tablet:block"
-            variant="transparent"
-            text="Prev"
-            onClick={prevStep}
-          />
-          <Btn
-            className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[128px] h-[43px] self-center"
-            variant="transparent"
-            text="Next"
-            onClick={nextStep}
-          />
+        <div className="web:w-1/2">
+          <div
+            className="my-[30px] flex flex-row justify-center tablet:justify-between tablet:px-[125px] web:px-0
+                    web:w-[100%] web:pr-[125px] font-bold"
+          >
+            <Btn
+              className="text-[16px] w-[177px] tablet:w-[128px] h-[43px] self-center hidden tablet:block"
+              variant="transparent"
+              text="Prev"
+              onClick={prevStep}
+            />
+            <Btn
+              className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[128px] h-[43px] self-center"
+              variant="transparent"
+              text="Next"
+              onClick={nextStep}
+            />
+          </div>
         </div>
       </div>
     </>
