@@ -14,9 +14,8 @@ const Step2 = () => {
 
   const getLocationInfo = useCallback(
     (newData) => {
-      if (editIdRef.current) {
-        updateFormData({step2Data: [...formData.step2Data.filter(loc => loc.placeId !== editIdRef.current)]});
-        editIdRef.current = '';
+      if (!newData?.location) {
+        return;
       }
       updateStep2Data(newData);
       setData(newData);
