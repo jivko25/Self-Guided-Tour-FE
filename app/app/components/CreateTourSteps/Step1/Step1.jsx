@@ -93,9 +93,7 @@ const Step1 = () => {
           required
           createTour={true}
         />
-
       <Btn className="tablet:hidden text-[16px] border-b-2 border-b-[#E8B600] w-[100px] h-[43px] self-center " variant="transparent" text="Next" onClick={nextStep} /> 
-
       </div>
   );
 };
