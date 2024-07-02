@@ -41,9 +41,9 @@ const Step2 = () => {
         className="w-[100%] flex flex-col align-center gap-4 text-[14px]
                         mb-[30px] font-medium text-[#081120] text-[14px] web:text-[16px]
                         px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[64px] 
-                        web:h-[582px]"
+                        web:h-[582px] web:w-1/2"
       >
-        <div className=" web:mr-[870px] overflow-y-scroll web:pr-[30px]">
+        <div className="overflow-y-scroll web:pr-[40px] we:w-[100%] web:mr-[24px]">
           <header className="flex flex-row justify-between">
             <h2 className="text-[20px] web:text-[24px]">Plan your route</h2>
             <span className="mt-[7px] tablet:mt-0 text-[#E8B600]">
@@ -55,7 +55,7 @@ const Step2 = () => {
             tour.
           </p>
           <section
-            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-[834px] web:h-[582px] 
+            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
             <GoogleMapsComponent getLocationInfo={getLocationInfo} />
