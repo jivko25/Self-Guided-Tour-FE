@@ -51,9 +51,9 @@ const Step2 = () => {
   return (
     <>
       <section
-        className="w-[100%] flex flex-col align-center text-[14px]
+        className="w-[100%] flex flex-col mt-[20px] align-center text-[14px]
                         mb-[30px] web:mb-0 font-medium text-[#081120] text-[14px] web:text-[16px]
-                        px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[64px] 
+                        px-[8px] phone:px-[16px] tablet:px-[125px] web:px-[64px] 
                         web:h-[582px] web:w-1/2"
       >
         <div className="overflow-y-scroll web:pr-[40px] we:w-[100%] web:mr-[24px]">
@@ -68,12 +68,12 @@ const Step2 = () => {
             tour.
           </p>
           <section
-            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-1/2 web:h-[582px] 
+            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] mt-[25px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
             <GoogleMapsComponent getLocationInfo={getLocationInfo} />
           </section>
-          <section className="flex flex-wrap gap-6 web:mt-[20px]">
+          <section className="flex flex-wrap gap-6 mt-[30px] tablet:mt-[20px]">
             <InputField
               classes="w-[100%] shrink-0"
               label="Location"
@@ -96,7 +96,7 @@ const Step2 = () => {
           {formData.step2Data.length > 0 && (
             <section
               className="flex flex-col text-center text-[14px] tablet:text-left tablet:text-[16px] 
-                          text-[#13294B] justify-center mt-[20px]"
+                          text-[#13294B] justify-center mt-[36px] web:mt-[64px]"
             >
               <h2 className="text-[#081120] text-[20px] web:text-[24px]">
                 Your locations
@@ -123,7 +123,7 @@ const Step2 = () => {
           )}
         </div>
       </section>
-      <div className="border-t border-[#E7EAED] mb-[130px] tablet:mb-0">
+      <div className="tablet:border-t border-[#E7EAED] mb-[130px] tablet:mb-0">
         <div className="web:w-1/2">
           <div
             className="my-[30px] flex flex-row justify-center tablet:justify-between tablet:px-[130px] web:px-0
@@ -136,7 +136,7 @@ const Step2 = () => {
               onClick={prevStep}
             />
             <Btn
-              className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[128px] h-[43px] self-center"
+              className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Next"
               onClick={nextStep}
