@@ -34,6 +34,7 @@ const MultiStepForm = () => {
     {step===0 && <Step1NextBtn/> }
     </>
     )
+
 };
 
 export default function App() {
