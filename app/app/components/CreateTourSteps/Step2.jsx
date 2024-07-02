@@ -123,10 +123,10 @@ const Step2 = () => {
           )}
         </div>
       </section>
-      <div className="border-t border-[#E7EAED]">
+      <div className="border-t border-[#E7EAED] mb-[130px] tablet:mb-0">
         <div className="web:w-1/2">
           <div
-            className="my-[30px] flex flex-row justify-center tablet:justify-between tablet:px-[125px] web:px-0
+            className="my-[30px] flex flex-row justify-center tablet:justify-between tablet:px-[110px] web:px-0
                     web:w-[100%] web:pr-[125px] font-bold"
           >
             <Btn
