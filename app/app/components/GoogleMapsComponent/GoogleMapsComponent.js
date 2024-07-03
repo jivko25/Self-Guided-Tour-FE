@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, index, locationId }) {
+export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, coordinatesRef, index, locationId }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -46,10 +46,14 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
       }
 
       const map = new Map(mapsRef.current, mapOPtions);
+      const { Place } = await loader.importLibrary('places');
 
       const handleClick = async (e) => {
         // Stop default behavior
         e.stop();
+        const { latLng } = e;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
 
         // closing InfoWindows when another location is selected
         if (currentInfoWindowRef.current) {
@@ -61,13 +65,9 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         if (getLocationInfo) {
           let place = '';
           let location = '';
-          const { latLng } = e;
-          const lat = latLng.lat();
-          const lng = latLng.lng();
 
           if (placeId !== '') {
             // Getting locations name and setting the data for the context if location id exists
-            const { Place } = await loader.importLibrary('places');
             place = new Place({ id: e?.placeId });
             await place.fetchFields({ fields: ["displayName"] });
             location = place.displayName;
@@ -100,6 +100,16 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           currentInfoWindowRef.current = infoWindow;
           currentMarkerRef.current = marker;
           infoWindow.open(map, marker);
+
+          if (coordinatesRef && coordinatesRef.current.length > 0) {
+            coordinatesRef.current.forEach(loc => {
+              const marker = new AdvancedMarkerElement({
+                map,
+                position: {lat: loc.latitude, lng: loc.longitude},
+              });
+            });
+          }
+
         }
 
       }
@@ -109,6 +119,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         const marker = new AdvancedMarkerElement({
           map,
           position: coordinates,
+          content: markerRef.current
         });
       }
 
@@ -118,6 +129,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           const marker = new AdvancedMarkerElement({
             map,
             position: coordinates,
+            content: markerRef.current
           });
         });
       }

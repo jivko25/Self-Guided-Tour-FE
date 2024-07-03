@@ -24,6 +24,7 @@ const Step2 = () => {
 
   const drag = useRef(0);
   const dragOver = useRef(0);
+  const coordinatesRef = useRef([]);
 
   const getLocationInfo = useCallback(
     (newData) => {
@@ -31,6 +32,7 @@ const Step2 = () => {
         return;
       }
       updateStep2Data(newData);
+      coordinatesRef.current.push(newData);
       setData(newData);
     },
     [updateStep2Data]
@@ -71,7 +73,7 @@ const Step2 = () => {
             className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] mt-[25px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent getLocationInfo={getLocationInfo} />
+            <GoogleMapsComponent getLocationInfo={getLocationInfo} coordinatesRef={coordinatesRef}/>
           </section>
           <section className="flex flex-wrap gap-6 mt-[30px] tablet:mt-[20px]">
             <InputField
