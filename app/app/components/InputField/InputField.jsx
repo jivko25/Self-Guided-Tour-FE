@@ -62,11 +62,11 @@ export default function InputField({
   return (
     <div className={`${createTour ? styles['tour-input-field'] : styles['input-field']} ${classes}`}>
       {label && <label htmlFor={id}>{label}
-         <HelpIconInfo
+         {createTour && <HelpIconInfo
         styles={styles['help-icon']}
         id={id}
         content={content}
-        />
+        />}
         </label>}
       <div className={styles["input-wrapper"]}>
         <input
