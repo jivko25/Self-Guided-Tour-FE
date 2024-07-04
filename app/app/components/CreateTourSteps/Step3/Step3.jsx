@@ -37,14 +37,20 @@ const Step3 = () => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
       const fileArray = Array.from(files);
+      const validFiles = fileArray.filter(file => file.size <= 5 * 1024 * 1024); // 5MB in bytes
+
+      if (validFiles.length !== fileArray.length) {
+        alert("Some files exceed the 5MB limit and were not added.");
+      }
+
       setInputs((prevInputs) => ({
         ...prevInputs,
-        addFields: [...prevInputs.addFields, ...fileArray],
+        addFields: [...prevInputs.addFields, ...validFiles],
       }));
       updateFormData({
         step3Data: {
           ...inputs,
-          addFields: [...inputs.addFields, ...fileArray],
+          addFields: [...inputs.addFields, ...validFiles],
         },
       });
     } else {
