@@ -11,16 +11,6 @@ const Step4 = () => {
   const { formData, updateFormData, nextStep } = useCreateTour();
   const [input, setInput] = useState(formData.step1Data);
 
-  useEffect(() => {
-    setInput(formData.step1Data);
-  }, [formData.step1Data]);
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setInput(newValue);
-    updateFormData({ step1Data: newValue });
-  };
-
   const imageInputRef = useRef(null);
 
   const handleImageUpload = () => {
