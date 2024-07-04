@@ -10,8 +10,9 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo }) {
       <div
         className="
       web:grid web:grid-cols-2 web:gap-4 web:w-full web:h-full web:pl-[0px] web:overflow-hidden web:mr-[0px]
-      phone:flex phone:overflow-x-scroll phone:overflow-hidden phone:mr-[20px] phone:w-full phone:pl-[20px]
+      phone:flex  phone:mr-[20px] phone:w-full phone:pl-[20px] phone:overflow-x-auto
       "
+      
       >
         {inputs.addFields.length > 0 &&
           inputs.addFields.map((file, index) => (
