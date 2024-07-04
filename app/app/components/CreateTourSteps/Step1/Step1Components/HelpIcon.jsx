@@ -17,7 +17,7 @@ const HelpIconInfo = ({
           <ReactTooltip
           id={id}
           place="right"
-          variant="info"
+          variant="warning"
           content={content}
         />
         </>
