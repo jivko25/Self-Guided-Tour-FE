@@ -1,9 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
 import styles from "./InputField.module.scss";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import EyeIcon from "../../public/icon-eye.svg";
-import HelpIcon from '../../public/help-circle-outline.svg';
+import HelpIconInfo from "../CreateTourSteps/Step1/Step1Components/HelpIcon";
+
 
 export default function InputField({
   id,
@@ -19,13 +20,15 @@ export default function InputField({
   required,
   disabled,
   readOnly,
-  createTour=false,
+  createTour,
+  content,
   ...otherProps
 }) {
   const [inputValue, setInputValue] = useState("");
   const [inputErr, setInputErr] = useState("");
   const [inputType, setInputType] = useState(type);
-  const [isCreateTour, setIsCreateTour]=useState(createTour);
+  
+
 
   useEffect(() => {
     if (value) {
@@ -37,6 +40,7 @@ export default function InputField({
     } else {
       setInputErr("");
     }
+   
   }, [type, error, setInputErr, value]);
 
   const handleChange = (e) => {
@@ -54,20 +58,16 @@ export default function InputField({
     }
   };
 
-  const handleShowHelp = () => {
-    alert('help')
-  };
+ 
   return (
-    <div className={`${isCreateTour? styles['tour-input-field'] : styles['input-field']} ${classes}`}>
+    <div className={`${createTour ? styles['tour-input-field'] : styles['input-field']} ${classes}`}>
       {label && <label htmlFor={id}>{label}
-      {(name==="tour" || name==="destination"|| name==="duration"|| name==="price") && (
-          <p
-            className={styles['help-icon']}
-            onClick={handleShowHelp}
-          >
-            <Image src={HelpIcon} width={24} height={24} alt="Help icon" />
-          </p>
-        )}</label>}
+         <HelpIconInfo
+        styles={styles['help-icon']}
+        id={id}
+        content={content}
+        />
+        </label>}
       <div className={styles["input-wrapper"]}>
         <input
           className={styles[inputErr]}
