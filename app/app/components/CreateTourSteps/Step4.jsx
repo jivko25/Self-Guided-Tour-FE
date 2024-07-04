@@ -34,25 +34,27 @@ const Step4 = () => {
       title: "Tour Title",
       description:
         "Be sure to grab the first attention with top-notch title. Fit your keywords for the tour, location and major attractions in whole 80 characters.",
-      value: "Sofia Theaters",
+      value: formData.step1Data.tour,
     },
     {
       title: "Destination",
       description:
         "You have a favorite place in your hometown or you accidentally came across a hidden jem? Share it with others to make it popular!",
-      value: "Sofia, Bulgaria",
+      value: formData.step1Data.destination,
     },
     {
       title: "Tour Duration",
       description:
         "Let others know how much time they will need for your tour, so they can prepare and fully enjoy it.",
-      value: "90min",
+      value: formData.step1Data.duration
+        ? `${formData.step1Data.duration} min`
+        : "",
     },
     {
       title: "Price",
       description:
         "The price is up to you - we will charge a small fee for our services and you can enjoy the financial benefits of your walking experience.",
-      value: "9.99 USD",
+      value: formData.step1Data.price ? `${formData.step1Data.price} USD` : "",
     },
   ];
 
@@ -62,7 +64,7 @@ const Step4 = () => {
         <h2 className="w-52 text-gray-900 text-xl font-medium leading-[30px] tablet:text-2xl tablet:w-fit">
           Review and publish your tour
         </h2>
-        <span className="text-yellow-500 text-sm font-medium leading-[21px]">
+        <span className="text-yellow-500 text-sm font-medium leading-[21px] web:text-base">
           Step 4 of 4
         </span>
       </header>
