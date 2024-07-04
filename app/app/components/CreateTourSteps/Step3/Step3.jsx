@@ -90,13 +90,18 @@ const Step3 = () => {
           className="flex flex-col items-center w-full
         web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
         tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]"
+        style={{
+          '::-webkit-scrollbar': { display: 'none' },
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none'
+          }}
         >
           <DescriptionWeb />
 
           <section
             className="flex items-center flex-col w-full justify-center 
-          tablet:pt-[30px]
-          phone:pt-[30px]"
+          tablet:pt-[10px]
+          phone:pt-[10px]"
           >
             <LocationInput inputs={inputs} handleChange={handleChange} />
             <FileUpload handleChange={handleChange} />
@@ -107,6 +112,7 @@ const Step3 = () => {
           web:flex web:ml-[0px]
           phone:flex phone:ml-[30px]
           tablet:hidden"
+          
           >
             <MediaPreviewWebPhone
               inputs={inputs}
@@ -120,7 +126,7 @@ const Step3 = () => {
         <div
           className="flex flex-col rounded-[5px] w-full 
         web:h-full web:max-w-[50%] web:max-h-[691px] 
-        tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[676px]
+        tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[696px] tablet:mb-[20px]
         phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]"
         >
           <DescriptionTabletPhone />
