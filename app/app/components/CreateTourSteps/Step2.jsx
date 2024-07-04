@@ -73,7 +73,7 @@ const Step2 = () => {
             className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] mt-[24px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent getLocationInfo={getLocationInfo} coordinatesRef={coordinatesRef}/>
+            <GoogleMapsComponent getLocationInfo={getLocationInfo} coordinatesRef={coordinatesRef} />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
             <InputField
@@ -81,18 +81,21 @@ const Step2 = () => {
               label="Location"
               name="location"
               value={data?.location}
+              readOnly={true}
             />
             <InputField
               classes="w-[100%] tablet:flex-1 shrink mt-[24px] tablet:mt-0"
               label="Latitude"
               name="latitude"
               value={data?.latitude}
+              readOnly={true}
             />
             <InputField
               classes="w-[100%] tablet:flex-1 shrink mt-[24px] tablet:mt-0"
               label="Longitude"
               name="longitude"
               value={data?.longitude}
+              readOnly={true}
             />
           </section>
           {formData.step2Data.length > 0 && (
@@ -132,17 +135,17 @@ const Step2 = () => {
                     web:w-[100%] web:pr-[125px] font-bold"
           >
             <Btn
-              className="text-[16px] w-[177px] tablet:w-[128px] h-[43px] self-center hidden tablet:block"
+              className="text-[16px] w-[177px] tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Prev"
               onClick={prevStep}
             />
-            <Btn
+            {/* <Btn
               className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Next"
               onClick={nextStep}
-            />
+            /> */}
           </div>
         </div>
       </div>

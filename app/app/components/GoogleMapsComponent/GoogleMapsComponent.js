@@ -101,11 +101,14 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           currentMarkerRef.current = marker;
           infoWindow.open(map, marker);
 
+          // showing all selected markers
           if (coordinatesRef && coordinatesRef.current.length > 0) {
-            coordinatesRef.current.forEach(loc => {
-              const marker = new AdvancedMarkerElement({
+            coordinatesRef.current.forEach((loc) => {
+              const markerContent = createCustomMarker('#575757');
+              new AdvancedMarkerElement({
                 map,
-                position: {lat: loc.latitude, lng: loc.longitude},
+                position: { lat: loc.latitude, lng: loc.longitude },
+                content: markerContent
               });
             });
           }
@@ -116,7 +119,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
       // Add market to a specific coordinates
       if (coordinates) {
-        const marker = new AdvancedMarkerElement({
+        new AdvancedMarkerElement({
           map,
           position: coordinates,
           content: markerRef.current
@@ -126,10 +129,11 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
       // Add multiple markers from array of coordinates
       if (coordinatesArray && coordinatesArray.length > 0) {
         coordinatesArray.forEach((coordinates) => {
-          const marker = new AdvancedMarkerElement({
+          const markerContent = createCustomMarker('#E30505');
+          new AdvancedMarkerElement({
             map,
             position: coordinates,
-            content: markerRef.current
+            content: markerContent
           });
         });
       }
@@ -167,6 +171,40 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
   }, [locationId]);
 
 
+  const createCustomMarker = (color) => {
+    // Create container element for the marker
+    const container = document.createElement('div');
+    container.style.width = '40px';
+    container.style.height = '40px';
+    container.style.position = 'relative';
+
+    // Create SVG element
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '40');
+    svg.setAttribute('height', '40');
+    svg.setAttribute('viewBox', '0 0 40 40');
+    svg.setAttribute('fill', 'none');
+
+    // Create path elements for the SVG
+    const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path1.setAttribute('d', 'M20 17.5C21.3807 17.5 22.5 16.3807 22.5 15C22.5 13.6193 21.3807 12.5 20 12.5C18.6193 12.5 17.5 13.6193 17.5 15C17.5 16.3807 18.6193 17.5 20 17.5Z');
+    path1.setAttribute('fill', color);
+
+    const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path2.setAttribute('d', 'M20 2.5C13.1078 2.5 7.5 7.86328 7.5 14.4531C7.5 17.5914 8.93047 21.7648 11.7516 26.8578C14.0172 30.9469 16.6383 34.6445 18.0016 36.4844C18.2319 36.7987 18.5331 37.0544 18.8807 37.2306C19.2284 37.4069 19.6126 37.4987 20.0023 37.4987C20.3921 37.4987 20.7763 37.4069 21.1239 37.2306C21.4716 37.0544 21.7728 36.7987 22.0031 36.4844C23.3641 34.6445 25.9875 30.9469 28.2531 26.8578C31.0695 21.7664 32.5 17.593 32.5 14.4531C32.5 7.86328 26.8922 2.5 20 2.5ZM20 20C19.0111 20 18.0444 19.7068 17.2221 19.1573C16.3999 18.6079 15.759 17.827 15.3806 16.9134C15.0022 15.9998 14.9031 14.9945 15.0961 14.0245C15.289 13.0546 15.7652 12.1637 16.4645 11.4645C17.1637 10.7652 18.0546 10.289 19.0245 10.0961C19.9945 9.90315 20.9998 10.0022 21.9134 10.3806C22.827 10.759 23.6079 11.3999 24.1573 12.2221C24.7068 13.0444 25 14.0111 25 15C24.9986 16.3256 24.4713 17.5966 23.5339 18.5339C22.5966 19.4713 21.3256 19.9986 20 20Z');
+    path2.setAttribute('fill', color);
+
+    // Append path elements to the SVG
+    svg.appendChild(path1);
+    svg.appendChild(path2);
+
+    // Append SVG to container
+    container.appendChild(svg);
+
+    return container;
+  };
+
+
   return (
     <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
       {/* Hidden container for marker content */}
@@ -185,7 +223,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         <div ref={infoWindowRef} className={"w-[162px] h-[85px]"}>
           <div>
             <textarea className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
-                                resize-none focus:outline-none rounded-sm text-[#808080]" placeholder='Location name'>
+                                resize-none focus:outline-none rounded-sm text-[#13294B]" placeholder='Location name'>
             </textarea>
             <div className='flex justify-around mt-[10px] text-[#4285F4]'>
               <button onClick={handleSave}>Save</button>
