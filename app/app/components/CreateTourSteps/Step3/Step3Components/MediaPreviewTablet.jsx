@@ -12,7 +12,7 @@ function MediaPreviewTablet({ inputs, isImage, isVideo }) {
           inputs.addFields.map((file, index) => (
             <div
               key={index}
-              className={`mb-4 ${index === 0 ? "tablet:col-span-2" : ""}`}
+              className={`mb-4 ${isImage(file) && index === 0 ? "tablet:col-span-2" : ""}`}
             >
               {isImage(file) && (
                 <Image
@@ -25,15 +25,6 @@ function MediaPreviewTablet({ inputs, isImage, isVideo }) {
                   alt="Uploaded Media"
                 />
               )}
-            </div>
-          ))}
-      </div>
-
-      {/* VIDEO */}
-      <div className="tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:w-full tablet:h-full ">
-        {inputs.addFields.length > 0 &&
-          inputs.addFields.map((file, index) => (
-            <div key={index}  className={` ${index === 0 ? "tablet:col-span-2" : ""}`}>
               {isVideo(file) && (
                 <ReactPlayer
                   url={URL.createObjectURL(file)}
