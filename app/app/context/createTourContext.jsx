@@ -5,7 +5,7 @@ const CreateTourContext = createContext();
 export const CreateTourProvider = ({ children }) => {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
-    step1Data:  {
+    step1Data: {
       tour: "",
       destination: "",
       duration: "",
@@ -13,9 +13,14 @@ export const CreateTourProvider = ({ children }) => {
     },
     step2Data: [],
     step3Data: "",
-    step4Data: "",
+    step4Data: {
+      summary: "",
+    },
   });
 
+  console.log(formData.step4Data);
+
+  console.log(formData);
   const nextStep = () => setStep((prevStep) => prevStep + 1);
   const prevStep = () => setStep((prevStep) => prevStep - 1);
   const goToStep = (stepIndex) => setStep(stepIndex);
@@ -25,14 +30,23 @@ export const CreateTourProvider = ({ children }) => {
   };
 
   const updateStep2Data = (newData) => {
-    setFormData(prevData => ({...prevData,
-      step2Data: [...prevData.step2Data, newData]
+    setFormData((prevData) => ({
+      ...prevData,
+      step2Data: [...prevData.step2Data, newData],
     }));
-  }
+  };
 
   return (
     <CreateTourContext.Provider
-      value={{ step, formData, nextStep, prevStep, goToStep, updateFormData, updateStep2Data }}
+      value={{
+        step,
+        formData,
+        nextStep,
+        prevStep,
+        goToStep,
+        updateFormData,
+        updateStep2Data,
+      }}
     >
       {children}
     </CreateTourContext.Provider>

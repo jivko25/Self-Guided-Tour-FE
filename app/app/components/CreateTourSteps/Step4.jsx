@@ -1,15 +1,40 @@
 import Image from "next/image.js";
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect, useRef } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import FileTray from "../../public/svg/file-tray.svg";
 import Visualize from "../../public/svg/image-outline.svg";
 import InputField from "../InputField/InputField.jsx";
 import Btn from "../Buttons/Btn.jsx";
-import { Input } from "postcss";
 
 const Step4 = () => {
-  const { formData, updateFormData, nextStep } = useCreateTour();
-  const [input, setInput] = useState(formData.step1Data);
+  const { formData, updateFormData } = useCreateTour();
+
+  const TourSummarySchema = Yup.object().shape({
+    summary: Yup.string().required("Summary is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      summary: formData.step4Data.summary,
+    },
+    validationSchema: TourSummarySchema,
+    onSubmit: (values) => {
+      updateFormData({
+        step4Data: {
+          ...formData.step4Data,
+          summary: values.summary,
+        },
+      });
+    },
+  });
+
+  const handleSummaryChange = (e) => {
+    formik.handleChange(e);
+    formik.setFieldTouched("summary", true, false);
+    formik.handleSubmit();
+  };
 
   const imageInputRef = useRef(null);
 
@@ -140,20 +165,21 @@ const Step4 = () => {
             <br />
           </p>
         </div>
-        <textarea
-          className=" text-blue-950 text-sm font-normal w-11/12 mx-auto leading-[21px] web:w-full web:mt-10 web:text-base"
-          id="summary"
-          name="summary"
-          rows="6"
-          cols="6"
-          disabled
-        >
-          The Ivan Vazov National Theatre is Bulgaria's national theatre, as
-          well as the oldest and most authoritative theatre in the country and
-          one of the important landmarks of Sofia, the capital of Bulgaria. It
-          is located in the center of the city, with the facade facing the City
-          Garden.
-        </textarea>
+        <div className="w-full">
+          <textarea
+            className="text-blue-950 text-sm font-normal border-2 p-2 w-11/12 mx-auto leading-[21px] web:w-full web:mt-10 web:text-base"
+            id="summary"
+            name="summary"
+            rows="6"
+            cols="6"
+            value={formik.values.summary}
+            onChange={handleSummaryChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.errors.summary && formik.touched.summary && (
+            <div className="text-red-500 text-sm">{formik.errors.summary}</div>
+          )}
+        </div>
       </section>
       <section className="flex flex-col gap-4 tablet:flex-row">
         <div className="tablet:w-[183px] tablet:order-2 web:w-[278px]">
