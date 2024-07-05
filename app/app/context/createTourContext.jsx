@@ -15,6 +15,7 @@ export const CreateTourProvider = ({ children }) => {
     step3Data: "",
     step4Data: {
       summary: "",
+      thumbnailImage: null,
     },
   });
 
