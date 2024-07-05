@@ -198,7 +198,7 @@ const Step4 = () => {
           )}
         </div>
       </section>
-      <section className="flex flex-col gap-4 tablet:flex-row">
+      <section className="flex h-40 flex-col gap-4 tablet:h-fit tablet:flex-row">
         <div className="tablet:w-[183px] tablet:order-2 web:w-[278px]">
           <Btn fullWidth variant="filled" text="Publish Tour" />
         </div>
