@@ -44,6 +44,22 @@ const Step4 = () => {
     }
   };
 
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateFormData({
+          step4Data: {
+            ...formData.step4Data,
+            thumbnailImage: reader.result, // Save the base64 image string
+          },
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const sectionsData = [
     {
       title: "Tour Title",
@@ -102,6 +118,7 @@ const Step4 = () => {
             name="imageInput"
             type="file"
             ref={imageInputRef}
+            onChange={handleImageChange}
             className="hidden"
           />
           <div className="flex items-center  mx-auto w-[83px]   h-10 bg-neutral-50 rounded-[5px] border border-stone-300 tablet:h-[60px] tablet:w-full  ">
