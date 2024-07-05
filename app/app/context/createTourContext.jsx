@@ -9,13 +9,18 @@ export const CreateTourProvider = ({ children }) => {
       tour: "",
       destination: "",
       duration: "",
-      price: ""
+      price: "",
     },
     step2Data: [],
     step3Data: "",
-    step4Data: "",
+    step4Data: {
+      summary: "",
+    },
   });
 
+  console.log(formData.step4Data);
+
+  console.log(formData);
   const nextStep = () => setStep((prevStep) => prevStep + 1);
   const prevStep = () => setStep((prevStep) => prevStep - 1);
   const goToStep = (stepIndex) => setStep(stepIndex);
@@ -25,15 +30,23 @@ export const CreateTourProvider = ({ children }) => {
   };
 
   const updateStep2Data = (newData) => {
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      step2Data: [...prevData.step2Data, newData]
+      step2Data: [...prevData.step2Data, newData],
     }));
-  }
+  };
 
   return (
     <CreateTourContext.Provider
-      value={{ step, formData, nextStep, prevStep, goToStep, updateFormData, updateStep2Data }}
+      value={{
+        step,
+        formData,
+        nextStep,
+        prevStep,
+        goToStep,
+        updateFormData,
+        updateStep2Data,
+      }}
     >
       {children}
     </CreateTourContext.Provider>
