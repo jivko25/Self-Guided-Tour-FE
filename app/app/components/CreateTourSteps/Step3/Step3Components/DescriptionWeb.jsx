@@ -4,7 +4,7 @@ import React from "react";
 function DescriptionWeb() {
   return (
     <section
-      className="hidden items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]
+      className="hidden items-center justify-between w-full max-w-[581px] pt-[5px] pb-[5px]
           web:flex
           tablet:hidden
           phone:hidden"
