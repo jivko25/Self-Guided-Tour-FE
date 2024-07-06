@@ -17,6 +17,7 @@ const Step3 = () => {
   const { formData, updateFormData, prevStep } = useCreateTour();
   const [inputs, setInputs] = useState({
     locationName: formData.step3Data.locationName || "",
+    locationCity: formData.step3Data.locationCity || "",
     locationDescription: formData.step3Data.locationDescription || "",
     addFields: formData.step3Data.addFields || [],
   });
@@ -24,6 +25,7 @@ const Step3 = () => {
   useEffect(() => {
     setInputs({
       locationName: formData.step3Data.locationName || "",
+      locationCity: formData.step3Data.locationCity || "",
       locationDescription: formData.step3Data.locationDescription || "",
       addFields: formData.step3Data.addFields || [],
     });
