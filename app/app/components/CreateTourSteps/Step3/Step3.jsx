@@ -93,9 +93,9 @@ const Step3 = () => {
         web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
         tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]"
         style={{
-          '::-webkit-scrollbar': { display: 'none' },
-          '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none'
+          '::WebkitScrollbar': { display: 'none' },
+          'MsOverflowStyle': 'none',
+          'ScrollbarWidth': 'none'
           }}
         >
           <DescriptionWeb />
