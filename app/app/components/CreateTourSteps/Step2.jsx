@@ -1,26 +1,34 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useCallback, useRef } from "react";
 import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
 
 const Step2 = () => {
-  const { formData, updateFormData, updateStep2Data, nextStep, prevStep } = useCreateTour();
-  const [data, setData] = useState({});
-  const editIdRef = useRef('');
+  const {
+    formData,
+    updateFormData,
+    updateStep2Data,
+    nextStep,
+    prevStep,
+    goToStep,
+  } = useCreateTour();
+
+  const [data, setData] = useState({
+    placeId: "",
+    location: "",
+    latitude: "",
+    longitude: "",
+  });
+
   const drag = useRef(0);
   const dragOver = useRef(0);
 
-  // useEffect(() => {
-  //   setData([...formData?.step2Data]);
-  // }, [formData]);
-
   const getLocationInfo = useCallback(
     (newData) => {
-      if (editIdRef.current) {
-        updateFormData({step2Data: [...formData.step2Data.filter(loc => loc.placeId !== editIdRef.current)]});
-        editIdRef.current = '';
+      if (!newData?.location) {
+        return;
       }
       updateStep2Data(newData);
       setData(newData);
@@ -33,25 +41,22 @@ const Step2 = () => {
     const temp = locations[drag.current];
     locations[drag.current] = locations[dragOver.current];
     locations[dragOver.current] = temp;
-    updateFormData({step2Data: [...locations]});
-  }
+    updateFormData({ step2Data: [...locations] });
+  };
 
-  const handleEdit = (e) => {
-    const placeId = e.target.id;
-    const locationData = formData.step2Data.find((loc) => loc.placeId === placeId);
-    editIdRef.current = placeId
-    setData(locationData);
-  }
+  const handleAddInfo = () => {
+    goToStep(2);
+  };
 
   return (
     <>
       <section
-        className="w-[100%] flex flex-col align-center gap-4 text-[14px]
-                        mb-[30px] font-medium text-[#081120] text-[14px] web:text-[16px]
-                        px-[8px] phone:px-[16px] tablet:mt-[115px] tablet:px-[125px] web:mt-0 web:px-[60px] 
-                        web:h-[582px]"
+        className="w-[100%] flex flex-col mt-[20px] align-center text-[14px]
+                        mb-[30px] web:mb-0 font-medium text-[#081120] text-[14px] web:text-[16px]
+                        px-[8px] phone:px-[16px] tablet:px-[125px] web:px-[64px] 
+                        web:h-[582px] web:w-1/2"
       >
-        <div className=" web:mr-[870px] overflow-y-scroll web:pr-[30px]">
+        <div className="overflow-y-scroll web:pr-[40px] we:w-[100%] web:mr-[24px]">
           <header className="flex flex-row justify-between">
             <h2 className="text-[20px] web:text-[24px]">Plan your route</h2>
             <span className="mt-[7px] tablet:mt-0 text-[#E8B600]">
@@ -63,12 +68,12 @@ const Step2 = () => {
             tour.
           </p>
           <section
-            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] web:w-[834px] web:h-[582px] 
+            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] mt-[25px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent getLocationInfo={getLocationInfo} locationId={editIdRef.current}/>
+            <GoogleMapsComponent getLocationInfo={getLocationInfo} />
           </section>
-          <section className="flex flex-wrap gap-6 web:mt-[20px]">
+          <section className="flex flex-wrap gap-6 mt-[30px] tablet:mt-[20px]">
             <InputField
               classes="w-[100%] shrink-0"
               label="Location"
@@ -91,7 +96,7 @@ const Step2 = () => {
           {formData.step2Data.length > 0 && (
             <section
               className="flex flex-col text-center text-[14px] tablet:text-left tablet:text-[16px] 
-                          text-[#13294B] justify-center mt-[20px]"
+                          text-[#13294B] justify-center mt-[36px] web:mt-[64px]"
             >
               <h2 className="text-[#081120] text-[20px] web:text-[24px]">
                 Your locations
@@ -110,31 +115,33 @@ const Step2 = () => {
                   onDragEnter={() => (dragOver.current = index)}
                   onDragEnd={handleSort}
                   onDragOver={(e) => e.preventDefault()}
-                  handleEdit={handleEdit}
                   placeId={placeId}
+                  handleAddInfo={handleAddInfo}
                 />
               ))}
             </section>
           )}
         </div>
       </section>
-      <div className="border-t border-[#E7EAED]">
-        <div
-          className="my-[50px] flex flex-row justify-center tablet:justify-between tablet:px-[125px] web:px-0
-                    web:mr-[960px] font-bold"
-        >
-          <Btn
-            className="text-[16px] w-[128px] h-[43px] self-center hidden tablet:block"
-            variant="transparent"
-            text="Prev"
-            onClick={prevStep}
-          />
-          <Btn
-            className="text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[128px] h-[43px] self-center"
-            variant="transparent"
-            text="Next"
-            onClick={nextStep}
-          />
+      <div className="tablet:border-t border-[#E7EAED] mb-[130px] tablet:mb-0">
+        <div className="web:w-1/2">
+          <div
+            className="my-[30px] flex flex-row justify-center tablet:justify-between tablet:px-[130px] web:px-0
+                    web:w-[100%] web:pr-[125px] font-bold"
+          >
+            <Btn
+              className="text-[16px] w-[177px] tablet:w-[128px] h-[43px] self-center hidden tablet:block"
+              variant="transparent"
+              text="Prev"
+              onClick={prevStep}
+            />
+            <Btn
+              className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
+              variant="transparent"
+              text="Next"
+              onClick={nextStep}
+            />
+          </div>
         </div>
       </div>
     </>
