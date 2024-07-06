@@ -31,6 +31,32 @@ function LocationInput({ inputs, handleChange }) {
       </div>
 
       <div
+        className="flex items-center justify-start flex-col mb-[30px] w-full 
+            web:max-w-[581px] 
+            tablet:max-w-[581px] 
+            phone:max-w-[361px]"
+      >
+        <label
+          className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
+          htmlFor="locationCity"
+        >
+          Location City
+        </label>
+        <input
+          id="locationCity"
+          name="locationCity"
+          type="text"
+          value={inputs.locationCity}
+          onChange={handleChange}
+          className="bg-neutral-50 rounded border border-stone-300 w-full h-[60px]
+                web:max-w-[581px]
+                tablet:max-w-[581px] 
+                phone:max-w-[361px]"
+          required
+        />
+      </div>
+
+      <div
         className="flex items-center flex-col w-full mb-[20px] 
             web:max-w-[581px] 
             tablet:max-w-[581px] 
