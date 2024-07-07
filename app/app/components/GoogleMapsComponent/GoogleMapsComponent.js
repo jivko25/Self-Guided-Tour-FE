@@ -152,7 +152,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
     //initialize map
     initMaps();
-  }, [locationId]);
+  }, [locationId, coordinates]);
 
 
   return (
