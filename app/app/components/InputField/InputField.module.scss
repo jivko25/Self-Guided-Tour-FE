@@ -1,4 +1,4 @@
-@use '../../styles/variables.module'as var;
+@use '../../styles/variables.module' as var;
 
 .input-field {
     display: flex;
@@ -91,6 +91,16 @@
         outline: none;
     }
 
+   ::placeholder {
+        font-family: Inter;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        text-align: left;
+        color:#808080;
+
+    }
+
     input.error {
         border-color: var.$color-error;
         color: var.$color-error;
@@ -108,10 +118,11 @@
         color: #575757;
     }
 }
+
 .help-icon {
     display: inline-block;
     margin-left: 0.3rem;
-margin-bottom: -0.3rem;
+    margin-bottom: -0.3rem;
     cursor: pointer;
 }
 
@@ -135,6 +146,7 @@ margin-bottom: -0.3rem;
 
         }
     }
+
     .tour-input-field {
         width: 582px;
 
