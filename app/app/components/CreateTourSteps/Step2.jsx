@@ -24,6 +24,7 @@ const Step2 = () => {
 
   const drag = useRef(0);
   const dragOver = useRef(0);
+  const coordinatesRef = useRef([]);
 
   const getLocationInfo = useCallback(
     (newData) => {
@@ -31,6 +32,7 @@ const Step2 = () => {
         return;
       }
       updateStep2Data(newData);
+      coordinatesRef.current.push(newData);
       setData(newData);
     },
     [updateStep2Data]
@@ -51,9 +53,9 @@ const Step2 = () => {
   return (
     <>
       <section
-        className="w-[100%] flex flex-col mt-[20px] align-center text-[14px]
+        className="w-[100%] flex flex-col mt-[36px] align-center text-[14px]
                         mb-[30px] web:mb-0 font-medium text-[#081120] text-[14px] web:text-[16px]
-                        px-[8px] phone:px-[16px] tablet:px-[125px] web:px-[64px] 
+                        px-[8px] phone:px-[16px] tablet:px-[125px] web:px-[56px] 
                         web:h-[582px] web:w-1/2"
       >
         <div className="overflow-y-scroll web:pr-[40px] we:w-[100%] web:mr-[24px]">
@@ -63,34 +65,37 @@ const Step2 = () => {
               Step 2 of 4
             </span>
           </header>
-          <p className="max-w-[296px] tablet:max-w-[425px] font-normal">
+          <p className="max-w-[296px] tablet:max-w-[425px] font-normal mt-[12px]">
             Choose locations on the map, give them titles and add them to your
             tour.
           </p>
           <section
-            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[20px] mt-[25px] web:w-1/2 web:h-[582px] 
+            className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] mt-[24px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent getLocationInfo={getLocationInfo} />
+            <GoogleMapsComponent getLocationInfo={getLocationInfo} coordinatesRef={coordinatesRef} />
           </section>
-          <section className="flex flex-wrap gap-6 mt-[30px] tablet:mt-[20px]">
+          <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
             <InputField
               classes="w-[100%] shrink-0"
               label="Location"
               name="location"
               value={data?.location}
+              readOnly={true}
             />
             <InputField
-              classes="w-[100%] tablet:flex-1 shrink"
+              classes="w-[100%] tablet:flex-1 shrink mt-[24px] tablet:mt-0"
               label="Latitude"
               name="latitude"
               value={data?.latitude}
+              readOnly={true}
             />
             <InputField
-              classes="w-[100%] tablet:flex-1 shrink"
+              classes="w-[100%] tablet:flex-1 shrink mt-[24px] tablet:mt-0"
               label="Longitude"
               name="longitude"
               value={data?.longitude}
+              readOnly={true}
             />
           </section>
           {formData.step2Data.length > 0 && (
@@ -101,7 +106,7 @@ const Step2 = () => {
               <h2 className="text-[#081120] text-[20px] web:text-[24px]">
                 Your locations
               </h2>
-              <p className="px-[20px] tablet:px-0 mt-[14px] mb-[18px] font-normal tablet:max-w-[425px] tablet:mb-[10px]">
+              <p className="px-[20px] tablet:px-0 mt-[12px] mb-[24px] font-normal tablet:max-w-[425px] ">
                 Once you’ve added locations on the map, they’ll appear in the
                 list below.
               </p>
@@ -126,21 +131,21 @@ const Step2 = () => {
       <div className="tablet:border-t border-[#E7EAED] mb-[130px] tablet:mb-0">
         <div className="web:w-1/2">
           <div
-            className="my-[30px] flex flex-row justify-center tablet:justify-between tablet:px-[130px] web:px-0
+            className="mt-[64px] tablet:mt-[19px] tablet:mb-[38px] web:mt-[36px] web:mb-[59px] flex flex-row justify-center tablet:justify-between tablet:px-[130px] web:px-0
                     web:w-[100%] web:pr-[125px] font-bold"
           >
             <Btn
-              className="text-[16px] w-[177px] tablet:w-[128px] h-[43px] self-center hidden tablet:block"
+              className="text-[16px] w-[177px] tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Prev"
               onClick={prevStep}
             />
-            <Btn
+            {/* <Btn
               className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Next"
               onClick={nextStep}
-            />
+            /> */}
           </div>
         </div>
       </div>
