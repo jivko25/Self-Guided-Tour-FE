@@ -11,22 +11,47 @@ import Btn from "../Buttons/Btn.jsx";
 const Step4 = () => {
   const { formData, updateFormData } = useCreateTour();
 
+  const [imageName, setImageName] = useState("You can upload image up to 1MB");
+
+  const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/webp"];
+  const FILE_SIZE = 1024 * 1024; // 1MB
+
+  // TODO: Schemas could be exported to util
   const TourSummarySchema = Yup.object().shape({
     summary: Yup.string().required("Summary is required"),
+    thumbnailImage: Yup.mixed()
+      .required("A file is required")
+      .test(
+        "fileSize",
+        "File can't be more than 1MB",
+        (value) => value && value.size <= FILE_SIZE
+      )
+      .test(
+        "fileFormat",
+        "Unsupported Format",
+        (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      ),
   });
 
   const formik = useFormik({
     initialValues: {
       summary: formData.step4Data.summary,
+      thumbnailImage: formData.step4Data.thumbnailImage || null,
     },
     validationSchema: TourSummarySchema,
     onSubmit: (values) => {
-      updateFormData({
-        step4Data: {
-          ...formData.step4Data,
-          summary: values.summary,
-        },
-      });
+      // The converter could be exported to Context and used to convert each image/video/audio to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        updateFormData({
+          step4Data: {
+            ...formData.step4Data,
+            summary: values.summary,
+            thumbnailImage: reader.result, // Save the base64 image string
+          },
+        });
+      };
+      reader.readAsDataURL(values.thumbnailImage);
     },
   });
 
@@ -45,19 +70,10 @@ const Step4 = () => {
   };
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateFormData({
-          step4Data: {
-            ...formData.step4Data,
-            thumbnailImage: reader.result, // Save the base64 image string
-          },
-        });
-      };
-      reader.readAsDataURL(file);
-    }
+    const file = event.currentTarget.files[0];
+    formik.setFieldValue("thumbnailImage", file);
+    formik.setFieldTouched("thumbnailImage", true, false);
+    setImageName(file.name);
   };
 
   const sectionsData = [
@@ -123,7 +139,7 @@ const Step4 = () => {
           />
           <div className="flex items-center  mx-auto w-[83px]   h-10 bg-neutral-50 rounded-[5px] border border-stone-300 tablet:h-[60px] tablet:w-full  ">
             <span className="hidden p-2 text-zinc-500 text-base font-normal  leading-normal tablet:block">
-              You can upload image up to 1MB
+              {imageName}
             </span>
             <label
               htmlFor="imageInput"
@@ -132,12 +148,18 @@ const Step4 = () => {
               <Btn
                 id="fileInput"
                 fullWidth
+                type="button"
                 text="Upload"
                 onClick={handleImageUpload}
                 className="h-full"
               />
             </label>
           </div>
+          {formik.errors.thumbnailImage && formik.touched.thumbnailImage && (
+            <div className="text-red-500 text-sm">
+              {formik.errors.thumbnailImage}
+            </div>
+          )}
         </div>
       </section>
       <section>
