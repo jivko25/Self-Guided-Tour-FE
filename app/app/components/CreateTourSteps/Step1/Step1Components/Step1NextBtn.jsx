@@ -15,7 +15,7 @@ const Step1NextBtn = () => {
                 className="
         absolute web:left-[1151px] web:top-[36px]
         tablet:left-[608px] tablet:top-[19px]
-        phone:left-[-100px] phone:top-[100px]
+        phone:hidden tablet:block
         font-semibold text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[100px] web:w[100px] h-[43px] "
                 variant="transparent"
                 text="Next"
@@ -26,3 +26,4 @@ const Step1NextBtn = () => {
 }
 
 export default Step1NextBtn
+

@@ -4,7 +4,7 @@ import React from "react";
 function DescriptionWeb() {
   return (
     <section
-      className="hidden items-center justify-between w-full max-w-[581px] pt-[50px] pb-[30px]
+      className="hidden items-center justify-between w-full max-w-[581px] pt-[5px] pb-[5px] 
           web:flex
           tablet:hidden
           phone:hidden"
@@ -18,7 +18,7 @@ function DescriptionWeb() {
           other travelers know more about it.
         </p>
       </div>
-      <p className="text-yellow-500 text-base font-medium leading-normal">
+      <p className="text-yellow-500 text-base font-medium leading-normal mb-[20px]">
         Step 3 of 4
       </p>
     </section>

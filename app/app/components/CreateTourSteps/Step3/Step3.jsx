@@ -1,7 +1,7 @@
 "use client";
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import GoogleMapsComponent from "../../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationInput from "./Step3Components/LocationInput.jsx";
 import FileUpload from "./Step3Components/FileUpload.jsx";
@@ -15,15 +15,33 @@ const Step3 = () => {
   const pathname = usePathname();
 
   const { formData, updateFormData, prevStep } = useCreateTour();
+
+  const searchParams = useSearchParams();
+  const placeId = searchParams.get("placeId");
+  const [current, setCurrent] = useState({});
+
   const [inputs, setInputs] = useState({
     locationName: formData.step3Data.locationName || "",
+    locationCity: formData.step3Data.locationCity || "",
     locationDescription: formData.step3Data.locationDescription || "",
     addFields: formData.step3Data.addFields || [],
   });
 
   useEffect(() => {
+    if (placeId) {
+      const result = formData.step2Data.filter(
+        (loc) => loc.placeId === placeId
+      );
+      if (result.length > 0) {
+        setCurrent({ ...current, ...result[0] });
+      }
+    }
+  }, [placeId, setCurrent, formData.step2Data]);
+
+  useEffect(() => {
     setInputs({
       locationName: formData.step3Data.locationName || "",
+      locationCity: formData.step3Data.locationCity || "",
       locationDescription: formData.step3Data.locationDescription || "",
       addFields: formData.step3Data.addFields || [],
     });
@@ -37,14 +55,22 @@ const Step3 = () => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
       const fileArray = Array.from(files);
+      const validFiles = fileArray.filter(
+        (file) => file.size <= 5 * 1024 * 1024
+      ); // 5MB in bytes
+
+      if (validFiles.length !== fileArray.length) {
+        alert("Some files exceed the 5MB limit and were not added.");
+      }
+
       setInputs((prevInputs) => ({
         ...prevInputs,
-        addFields: [...prevInputs.addFields, ...fileArray],
+        addFields: [...prevInputs.addFields, ...validFiles],
       }));
       updateFormData({
         step3Data: {
           ...inputs,
-          addFields: [...inputs.addFields, ...fileArray],
+          addFields: [...inputs.addFields, ...validFiles],
         },
       });
     } else {
@@ -62,14 +88,6 @@ const Step3 = () => {
   // Function to check if a file is a video
   const isVideo = (file) => file.type.startsWith("video");
 
-  const handleMapClick = (newData) => {
-    updateFormData({
-      ...formData,
-      step3Data: { ...formData.step3Data, ...newData },
-    });
-    console.log(formData);
-  };
-
   return (
     <div className="flex flex-col w-full web:h-[85vh] ">
       {/* Main container for inputs and maps, files for web */}
@@ -77,20 +95,29 @@ const Step3 = () => {
         className="flex w-full justify-center items-center
        web:h-full web:flex-row web:max-h-[691px] 
        tablet:h-full tablet:flex-col-reverse 
-       phone:h-full phone:flex-col-reverse"
+       phone:h-full phone:flex-col-reverse
+       smallPhone:h-full smallPhone:flex-col-reverse"
       >
         {/* DescriptionWeb, LocationInput, FileUpload, MediaPreviewWebPhone */}
         <div
           className="flex flex-col items-center w-full
         web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
-        tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]"
+        tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]
+        phone:w-full
+        "
+          style={{
+            "::WebkitScrollbar": { display: "none" },
+            MsOverflowStyle: "none",
+            ScrollbarWidth: "none",
+          }}
         >
           <DescriptionWeb />
 
           <section
             className="flex items-center flex-col w-full justify-center 
-          tablet:pt-[30px]
-          phone:pt-[30px]"
+          tablet:pt-[10px]
+          phone:pt-[10px]
+          smallPhone:pt-[10px]"
           >
             <LocationInput inputs={inputs} handleChange={handleChange} />
             <FileUpload handleChange={handleChange} />
@@ -100,6 +127,7 @@ const Step3 = () => {
             className="hidden flex-col items-center justify-center w-full web:max-w-[581px] h-full
           web:flex web:ml-[0px]
           phone:flex phone:ml-[30px]
+          smallPhone:flex smallPhone:ml-[30px]
           tablet:hidden"
           >
             <MediaPreviewWebPhone
@@ -114,12 +142,19 @@ const Step3 = () => {
         <div
           className="flex flex-col rounded-[5px] w-full 
         web:h-full web:max-w-[50%] web:max-h-[691px] 
-        tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[676px]
-        phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]"
+        tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[696px] tablet:mb-[20px]
+        phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]
+        smallPhone:items-center smallPhone:justify-center smallPhone:h-screen smallPhone:max-w-[290px] smallPhone:max-h-[400px]"
         >
           <DescriptionTabletPhone />
 
-          <GoogleMapsComponent handleMapClick={handleMapClick} />
+          <GoogleMapsComponent
+            coordinates={
+              current.placeId
+                ? { lat: current.latitude, lng: current.longitude }
+                : null
+            }
+          />
         </div>
       </div>
 

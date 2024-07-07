@@ -16,9 +16,10 @@
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.0",
     "react-player": "^2.16.0",
+    "react-tooltip": "^5.27.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
