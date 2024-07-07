@@ -46,8 +46,11 @@ function FileUpload({ handleChange }) {
           </div>
           <label
             htmlFor="addInput"
-            className="flex bg-blue-950 text-white border-2 rounded-md border-transparent justify-center items-center text-center font-medium h-full w-full max-w-[128px] cursor-pointer
-            smallPhone:max-w-[100px]
+            className="flex bg-blue-950 text-base text-white border-2 rounded-md border-transparent justify-center items-center text-center font-medium h-full w-full cursor-pointer
+            web:max-w-[128px]
+            tablet:max-w-[128px]
+            phone:max-w-[79px] 
+            smallPhone:max-w-[79px] 
             "
           >
             Upload
