@@ -13,7 +13,11 @@ function FileUpload({ handleChange }) {
             "
       >
         <label
-          className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
+          className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal
+          web:text-base tablet:text-base
+          phone:text-sm
+          smallPhone:text-sm
+          "
           htmlFor="addInput"
         >
           Add Fields
