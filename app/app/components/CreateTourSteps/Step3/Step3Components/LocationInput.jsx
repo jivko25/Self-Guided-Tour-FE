@@ -12,7 +12,8 @@ function LocationInput({ inputs, handleChange }) {
             smallPhone:max-w-[288px]"
       >
         <label
-          className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
+          className="flex justify-start w-full text-gray-900 font-medium leading-normal web:text-base tablet:text-base phone:text-sm
+          smallPhone:text-sm"
           htmlFor="locationName"
         >
           Location Name
@@ -40,7 +41,8 @@ function LocationInput({ inputs, handleChange }) {
             smallPhone:max-w-[288px]"
       >
         <label
-          className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
+          className="flex justify-start w-full text-gray-900 font-medium leading-normal web:text-base tablet:text-base phone:text-sm
+          smallPhone:text-sm"
           htmlFor="locationCity"
         >
           Location City
@@ -68,7 +70,8 @@ function LocationInput({ inputs, handleChange }) {
             smallPhone:max-w-[288px]"
       >
         <label
-          className="flex justify-start w-full text-gray-900 text-base font-medium leading-normal"
+          className="flex justify-start w-full text-gray-900 font-medium leading-normal web:text-base tablet:text-base phone:text-sm
+          smallPhone:text-sm"
           htmlFor="locationDescription"
         >
           Location Description
