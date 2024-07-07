@@ -1,7 +1,7 @@
 "use client";
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import GoogleMapsComponent from "../../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationInput from "./Step3Components/LocationInput.jsx";
 import FileUpload from "./Step3Components/FileUpload.jsx";
@@ -15,12 +15,28 @@ const Step3 = () => {
   const pathname = usePathname();
 
   const { formData, updateFormData, prevStep } = useCreateTour();
+
+  const searchParams = useSearchParams();
+  const placeId = searchParams.get("placeId");
+  const [current, setCurrent] = useState({});
+
   const [inputs, setInputs] = useState({
     locationName: formData.step3Data.locationName || "",
     locationCity: formData.step3Data.locationCity || "",
     locationDescription: formData.step3Data.locationDescription || "",
     addFields: formData.step3Data.addFields || [],
   });
+
+  useEffect(() => {
+    if (placeId) {
+      const result = formData.step2Data.filter(
+        (loc) => loc.placeId === placeId
+      );
+      if (result.length > 0) {
+        setCurrent({ ...current, ...result[0] });
+      }
+    }
+  }, [placeId, setCurrent, formData.step2Data]);
 
   useEffect(() => {
     setInputs({
@@ -39,7 +55,9 @@ const Step3 = () => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
       const fileArray = Array.from(files);
-      const validFiles = fileArray.filter(file => file.size <= 5 * 1024 * 1024); // 5MB in bytes
+      const validFiles = fileArray.filter(
+        (file) => file.size <= 5 * 1024 * 1024
+      ); // 5MB in bytes
 
       if (validFiles.length !== fileArray.length) {
         alert("Some files exceed the 5MB limit and were not added.");
@@ -70,14 +88,6 @@ const Step3 = () => {
   // Function to check if a file is a video
   const isVideo = (file) => file.type.startsWith("video");
 
-  const handleMapClick = (newData) => {
-    updateFormData({
-      ...formData,
-      step3Data: { ...formData.step3Data, ...newData },
-    });
-    console.log(formData);
-  };
-
   return (
     <div className="flex flex-col w-full web:h-[85vh] ">
       {/* Main container for inputs and maps, files for web */}
@@ -95,10 +105,10 @@ const Step3 = () => {
         tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]
         phone:w-full
         "
-        style={{
-          '::WebkitScrollbar': { display: 'none' },
-          'MsOverflowStyle': 'none',
-          'ScrollbarWidth': 'none'
+          style={{
+            "::WebkitScrollbar": { display: "none" },
+            MsOverflowStyle: "none",
+            ScrollbarWidth: "none",
           }}
         >
           <DescriptionWeb />
@@ -119,7 +129,6 @@ const Step3 = () => {
           phone:flex phone:ml-[30px]
           smallPhone:flex smallPhone:ml-[30px]
           tablet:hidden"
-          
           >
             <MediaPreviewWebPhone
               inputs={inputs}
@@ -139,7 +148,13 @@ const Step3 = () => {
         >
           <DescriptionTabletPhone />
 
-          <GoogleMapsComponent handleMapClick={handleMapClick} />
+          <GoogleMapsComponent
+            coordinates={
+              current.placeId
+                ? { lat: current.latitude, lng: current.longitude }
+                : null
+            }
+          />
         </div>
       </div>
 
