@@ -1,6 +1,7 @@
 import React from "react";
 import LoginForm from "../components/LoginForm/LoginForm";
 
+
 export default function SignIn() {
   return (
     <section className="flex relative items-center justify-center flex-col  w-full bg-cover min-h-screen">
