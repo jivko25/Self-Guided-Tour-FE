@@ -4,19 +4,26 @@ import Tablet from "./Tablet/Tablet";
 import HeaderMobile from "./HeaderMobile.jsx";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { getUserSession, logoutUser, validateToken } from "@/app/actions/authActions";
 
-export default function Header({ isAuthenticated }) {
+export default function Header() {
   const { session, setSession } = useAuth();
   const [headerVisible, setHeaderVisible] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   
   useEffect(() => {
-    if (isAuthenticated) {
-      setSession(isAuthenticated);
-    } else {
-      setSession(false);
-    }
+    validateToken().then(data => {
+      if (data?.error) {
+        console.log(data.error);
+        router.push('/');
+      }
+    });
+
+    getUserSession().then(result => {
+      setSession(result);
+    });
     
     // handle mobile menu visibility
     if (pathname === '/sign-in' || pathname === '/create-account') {
@@ -24,12 +31,22 @@ export default function Header({ isAuthenticated }) {
     } else {
       setHeaderVisible(false);
     }
-  }, [setSession, isAuthenticated, pathname, setHeaderVisible]);
+  }, [setSession, pathname, setHeaderVisible, getUserSession, validateToken]);
+
+  const handleLogout = async () => {
+    const result = await logoutUser();
+
+    if (result.error) {
+      console.log(result.error);
+    } else {
+      setSession(false);
+    }
+  }
 
   return (
     <>
       <header className="hidden web:flex w-full  items-center justify-center h-100px py-9">
-        <Web isAuthenticated={session} />
+        <Web isAuthenticated={session} handleLogout={handleLogout}/>
       </header>
 
       <header className="hidden tablet:flex web:hidden items-center justify-center w-full h-100px">
