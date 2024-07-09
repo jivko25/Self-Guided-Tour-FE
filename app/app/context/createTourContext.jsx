@@ -69,11 +69,16 @@ export const CreateTourProvider = ({ children }) => {
     setFormData((prevData) => ({ ...prevData, ...newData }));
   };
 
-  const updateStep2Data = (newData) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      step2Data: [...prevData.step2Data, newData],
-    }));
+  const updateStep2Data = (newData, index) => {
+    setFormData((prevData) => {
+      const step2Data = [...prevData.step2Data];
+      step2Data[index] = {
+        ...step2Data[index],
+        ...newData,
+        stopOrder: index + 1,
+      };
+      return { ...prevData, step2Data };
+    });
   };
 
   return (
