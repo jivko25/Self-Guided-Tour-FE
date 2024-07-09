@@ -21,7 +21,7 @@ const Step3 = () => {
   const [current, setCurrent] = useState({});
 
   const [inputs, setInputs] = useState({
-    locationName: formData.step3Data.locationName || "",
+    locationName: "",
     locationCity: formData.step3Data.locationCity || "",
     locationDescription: formData.step3Data.locationDescription || "",
     addFields: formData.step3Data.addFields || [],
@@ -34,19 +34,24 @@ const Step3 = () => {
       );
       if (result.length > 0) {
         setCurrent({ ...current, ...result[0] });
+        console.log(result[0].location);
+        setInputs((prevInputs) => ({
+          ...prevInputs,
+          locationName: result[0].location || "",
+        }));
       }
     }
-  }, [placeId, setCurrent, formData.step2Data]);
+  }, [placeId, setCurrent, setInputs, formData.step2Data]);
 
-  console.log(current);
+  console.log(inputs);
 
   useEffect(() => {
-    setInputs({
-      locationName: formData.step3Data.locationName || "",
+    setInputs((prevInputs) => ({
+      locationName: prevInputs.locationName || formData.step3Data.locationName,
       locationCity: formData.step3Data.locationCity || "",
       locationDescription: formData.step3Data.locationDescription || "",
       addFields: formData.step3Data.addFields || [],
-    });
+    }));
   }, [formData.step3Data]);
 
   const handleFinish = () => {
@@ -121,11 +126,7 @@ const Step3 = () => {
           phone:pt-[10px]
           smallPhone:pt-[10px]"
           >
-            <LocationInput
-              inputs={inputs}
-              currentLocation={current.location}
-              handleChange={handleChange}
-            />
+            <LocationInput inputs={inputs} handleChange={handleChange} />
             <FileUpload handleChange={handleChange} />
           </section>
 

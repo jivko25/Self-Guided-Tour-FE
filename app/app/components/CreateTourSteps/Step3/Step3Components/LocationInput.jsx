@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-function LocationInput({ inputs, currentLocation, handleChange }) {
+function LocationInput({ inputs, handleChange }) {
   return (
     <>
       <div
@@ -22,7 +22,7 @@ function LocationInput({ inputs, currentLocation, handleChange }) {
           id="locationName"
           name="locationName"
           type="text"
-          value={currentLocation}
+          value={inputs.locationName}
           onChange={handleChange}
           className="bg-neutral-50 rounded border border-stone-300 w-full h-[60px] pl-[10px]
                 web:max-w-[581px]
