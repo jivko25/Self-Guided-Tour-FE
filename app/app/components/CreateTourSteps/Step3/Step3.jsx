@@ -47,10 +47,8 @@ const Step3 = () => {
   }, [placeId]);
 
   const handleFinish = () => {
-    const { locationName, ...updatedInputs } = inputs; // Destructure locationName from inputs
-    console.log(updatedInputs);
-    updateStep2Data({ ...updatedInputs, location: locationName }, placeId); // Update step2Data without locationName
-    goToStep(1);
+    const { locationName, ...updatedInputs } = inputs;
+    updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
   };
 
   const handleChange = (e) => {
