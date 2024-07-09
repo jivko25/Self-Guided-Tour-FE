@@ -48,7 +48,6 @@ export const CreateTourProvider = ({ children }) => {
         const userConfirmed = window.confirm(
           "Do you want to load the saved draft?"
         );
-        console.log(userConfirmed);
         if (userConfirmed) {
           setFormData(JSON.parse(savedData));
         } else {

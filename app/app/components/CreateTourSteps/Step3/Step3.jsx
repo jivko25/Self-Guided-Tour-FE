@@ -38,6 +38,8 @@ const Step3 = () => {
     }
   }, [placeId, setCurrent, formData.step2Data]);
 
+  console.log(current);
+
   useEffect(() => {
     setInputs({
       locationName: formData.step3Data.locationName || "",
@@ -119,7 +121,11 @@ const Step3 = () => {
           phone:pt-[10px]
           smallPhone:pt-[10px]"
           >
-            <LocationInput inputs={inputs} handleChange={handleChange} />
+            <LocationInput
+              inputs={inputs}
+              currentLocation={current.location}
+              handleChange={handleChange}
+            />
             <FileUpload handleChange={handleChange} />
           </section>
 
