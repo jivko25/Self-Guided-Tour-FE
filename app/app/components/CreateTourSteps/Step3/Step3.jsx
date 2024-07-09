@@ -14,7 +14,8 @@ import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
 const Step3 = () => {
   const pathname = usePathname();
 
-  const { formData, updateFormData, prevStep } = useCreateTour();
+  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
+    useCreateTour();
 
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
@@ -22,40 +23,34 @@ const Step3 = () => {
 
   const [inputs, setInputs] = useState({
     locationName: "",
-    locationCity: formData.step3Data.locationCity || "",
-    locationDescription: formData.step3Data.locationDescription || "",
-    addFields: formData.step3Data.addFields || [],
+    placeId: "",
+    locationCity: "",
+    locationDescription: "",
+    addFields: [],
   });
 
   useEffect(() => {
     if (placeId) {
-      const result = formData.step2Data.filter(
-        (loc) => loc.placeId === placeId
-      );
-      if (result.length > 0) {
-        setCurrent({ ...current, ...result[0] });
-        console.log(result[0].location);
+      const result = formData.step2Data.find((loc) => loc.placeId === placeId);
+      if (result) {
+        setCurrent(result);
         setInputs((prevInputs) => ({
           ...prevInputs,
-          locationName: result[0].location || "",
+          placeId: result.placeId || "",
+          locationName: result.location || "",
+          locationCity: result.locationCity || "",
+          locationDescription: result.locationDescription || "",
+          addFields: result.addFields || [],
         }));
       }
     }
-  }, [placeId, setCurrent, setInputs, formData.step2Data]);
-
-  console.log(inputs);
-
-  useEffect(() => {
-    setInputs((prevInputs) => ({
-      locationName: prevInputs.locationName || formData.step3Data.locationName,
-      locationCity: formData.step3Data.locationCity || "",
-      locationDescription: formData.step3Data.locationDescription || "",
-      addFields: formData.step3Data.addFields || [],
-    }));
-  }, [formData.step3Data]);
+  }, [placeId]);
 
   const handleFinish = () => {
-    alert("Form submitted!");
+    const { locationName, ...updatedInputs } = inputs; // Destructure locationName from inputs
+    console.log(updatedInputs);
+    updateStep2Data({ ...updatedInputs, location: locationName }, placeId); // Update step2Data without locationName
+    goToStep(1);
   };
 
   const handleChange = (e) => {
@@ -85,7 +80,6 @@ const Step3 = () => {
         ...prevInputs,
         [name]: value,
       }));
-      updateFormData({ step3Data: { ...inputs, [name]: value } });
     }
   };
 
