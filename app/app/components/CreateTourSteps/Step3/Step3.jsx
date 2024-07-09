@@ -49,6 +49,7 @@ const Step3 = () => {
   const handleFinish = () => {
     const { locationName, ...updatedInputs } = inputs;
     updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
+    goToStep(1);
   };
 
   const handleChange = (e) => {
