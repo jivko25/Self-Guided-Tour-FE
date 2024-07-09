@@ -67,15 +67,22 @@ export const CreateTourProvider = ({ children }) => {
   const updateFormData = (newData) => {
     setFormData((prevData) => ({ ...prevData, ...newData }));
   };
-
-  const updateStep2Data = (newData, index) => {
+  const updateStep2Data = (newData, identifier) => {
     setFormData((prevData) => {
       const step2Data = [...prevData.step2Data];
-      step2Data[index] = {
-        ...step2Data[index],
-        ...newData,
-        stopOrder: index + 1,
-      };
+      const index =
+        typeof identifier === "number"
+          ? identifier
+          : step2Data.findIndex((item) => item.placeId === identifier);
+
+      if (index !== -1) {
+        step2Data[index] = {
+          ...step2Data[index],
+          ...newData,
+          stopOrder: index + 1,
+        };
+      }
+
       return { ...prevData, step2Data };
     });
   };
