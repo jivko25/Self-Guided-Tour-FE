@@ -1,11 +1,16 @@
 "use client";
 import Link from "next/link";
 import Button from "../../Buttons/Button";
-import { logoutUser } from "@/app/actions/authActions";
 import Btn from "../../Buttons/Btn.jsx";
 import { usePathname } from "next/navigation";
-export default function Web({ isAuthenticated }) {
+export default function Web({ isAuthenticated, handleLogout }) {
   const pathname = usePathname();
+
+  const logout = () => {
+    if (handleLogout) {
+      handleLogout();
+    }
+  }
 
   const signInButtonClass =
     pathname === "/"
@@ -62,7 +67,7 @@ export default function Web({ isAuthenticated }) {
                 variant="secondary-outlined"
                 text="Logout"
                 type={"submit"}
-                onClick={logoutUser}
+                onClick={logout}
               />
             </div>
           </>
