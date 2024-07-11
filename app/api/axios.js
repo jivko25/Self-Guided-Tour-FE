@@ -29,3 +29,25 @@ export const axiosAuth = Axios.create({
   },
   httpsAgent: agent, // to be removed for production
 });
+
+export const axiosTour = Axios.create({
+  baseURL: `${BASE_URL}/Tour/`,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+  httpsAgent: agent, // to be removed for production
+});
+
+// Interceptor to add access token to requests
+axiosTour.interceptors.request.use(
+  (config) => {
+    const session = getCookie("session");
+    if (session && session.accessToken) {
+      config.headers["Authorization"] = `Bearer ${session.accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
