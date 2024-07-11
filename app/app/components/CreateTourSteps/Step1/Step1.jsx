@@ -32,7 +32,7 @@ const Step1 = () => {
 
   return (
     <div className="flex justify-center flex-col gap-5 
-     web:w-[582px] web:h-[632px] tablet:h-[657px] ">
+     web:w-[582px] web:h-[632px] tablet:h-[657px] h-[600px]">
 
       <SteapHeader
         title={"Let's get started!"}
@@ -98,7 +98,7 @@ const Step1 = () => {
         createTour={true}
       />
 
-<Btn className="tablet: hidden smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600]  h-[43px] self-center"
+<Btn className=" smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600]  h-[43px] self-center tablet:hidden "
               variant="transparent"
               text="Next"
               onClick={nextStep}
