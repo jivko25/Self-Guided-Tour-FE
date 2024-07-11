@@ -33,11 +33,11 @@ const RegisterForm = ({ userId }) => {
       redirect("/");
     } else {
       if (typeof formState.error === "object") {
-        setErrors({ ...formState.error.errors });
-      } else if (formState.error){
+        setErrors({ ...formState.error });
+      } else if (formState.error) {
         setErrors((state) => ({ ...state, Email: formState.error }));
       } else {
-        if (formState !== '') {
+        if (formState !== "") {
           console.log(formState);
         }
       }
