@@ -7,8 +7,8 @@ import { headers } from "next/headers";
 
 /**
  * Hanldes user register
- * @param {*} prev 
- * @param {*} formData 
+ * @param {*} prev
+ * @param {*} formData
  * @returns {object
  */
 export async function registerUser(prev, formData) {
@@ -27,15 +27,15 @@ export async function registerUser(prev, formData) {
     });
     data = true;
   } catch (err) {
-    error = err.response?.data?.Message;
+    error = err.response?.data?.errors;
   }
   return { data, error };
 }
 
 /**
  * Hanles user log in
- * @param {*} prev 
- * @param {*} formData 
+ * @param {*} prev
+ * @param {*} formData
  * @returns {object}
  */
 export async function loginUser(prev, formData) {
@@ -47,7 +47,7 @@ export async function loginUser(prev, formData) {
     const response = await axiosAuth.post("login", {
       ...fData,
     });
-  
+
     setCookie("session", {
       accessToken: response.data.accessToken,
       accessTokenExpiration: response.data.accessTokenExpiration,
@@ -55,7 +55,7 @@ export async function loginUser(prev, formData) {
     });
     data = true;
   } catch (err) {
-    error = err.response?.data?.Message;
+    error = err.response?.data?.message;
   }
 
   return { data, error };
@@ -63,7 +63,7 @@ export async function loginUser(prev, formData) {
 
 /**
  * Handles googles log in.
- * @param {*} resp 
+ * @param {*} resp
  * @returns {object}
  */
 export async function externalLoginUser(resp) {
@@ -81,7 +81,7 @@ export async function externalLoginUser(resp) {
     });
     respData.data = true;
   } catch (err) {
-    respData.error = err.response?.data?.Message;
+    respData.error = err.response?.data?.message;
   }
   return respData;
 }
@@ -111,7 +111,7 @@ export async function logoutUser() {
 
     redirect("/");
   } catch (err) {
-    error = err.response?.data?.Message;
+    error = err.response?.data?.message;
   }
   return { error };
 }
@@ -130,14 +130,14 @@ export async function getUserSession() {
  * @returns {undefined | string}
  */
 export async function validateToken() {
-  const session = getCookie('session');
+  const session = getCookie("session");
 
-  if (session === null || (Date.now() < session?.accessTokenExpiration)) {
+  if (session === null || Date.now() < session?.accessTokenExpiration) {
     return;
   }
 
   try {
-    const response = await axiosAuth.post('refresh', {
+    const response = await axiosAuth.post("refresh", {
       refreshToken: session.refreshToken,
     });
 
@@ -147,6 +147,6 @@ export async function validateToken() {
       refreshToken: response.data.refreshToken,
     });
   } catch (err) {
-    return {error: err.response.data.Message};
+    return { error: err.response.data.message };
   }
 }
