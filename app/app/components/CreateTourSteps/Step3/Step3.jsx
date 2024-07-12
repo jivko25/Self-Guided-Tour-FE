@@ -89,18 +89,18 @@ const Step3 = () => {
   const isVideo = (file) => file.type.startsWith("video");
 
   return (
-    <div className="flex flex-col w-full web:h-[85vh] ">
+    <div className="flex flex-col w-full web:h-[100vh] ">
       {/* Main container for inputs and maps, files for web */}
       <div
-        className="flex w-full justify-center items-center
-       web:h-full web:flex-row web:max-h-[691px] 
-       tablet:h-full tablet:flex-col-reverse 
-       phone:h-full phone:flex-col-reverse
-       smallPhone:h-full smallPhone:flex-col-reverse"
+        className="flex w-full justify-center items-center h-full
+       web:flex-row web:max-h-[691px] 
+       tablet:flex-col-reverse 
+       phone:flex-col-reverse
+       smallPhone:flex-col-reverse"
       >
         {/* DescriptionWeb, LocationInput, FileUpload, MediaPreviewWebPhone */}
         <div
-          className="flex flex-col items-center w-full
+          className="flex flex-col items-center w-full web:h-full
         web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
         tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]
         phone:w-full

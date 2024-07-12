@@ -209,7 +209,7 @@ const RegisterForm = ({ userId }) => {
         w-72 h-[43px]
         "
         >
-          <Btn type="submit" variant="filled" text="Sign In" fullWidth />
+          <Btn type="submit" variant="filled" text="Create account" fullWidth />
         </div>
       </form>
     </div>

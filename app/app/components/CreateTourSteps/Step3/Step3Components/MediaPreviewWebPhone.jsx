@@ -28,6 +28,7 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo }) {
                   src={URL.createObjectURL(file)}
                   width={269}
                   height={240}
+                  objectFit="cover"
                   className={`${
                     index === 0
                       ? "web:w-full web:h-60"
@@ -41,6 +42,7 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo }) {
                   url={URL.createObjectURL(file)}
                   width={269}
                   height={240}
+                  borderRadius={5}
                   className="web:rounded-[5px] web:w-[279px] web:h-60 phone:w-[269px] phone:h-60 phone:rounded-[5px] smallPhone:w-[269px] smallPhone:h-[150px] smallPhone:rounded-[5px]"
                   controls={true}
                 />
