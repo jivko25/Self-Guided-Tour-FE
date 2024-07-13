@@ -1,12 +1,12 @@
 import Axios from "axios";
 import https from "https";
+import { parseJwt, getCookie } from "@/app/utils/cookieUtils.js";
+
 //TODO: Get the base url from the env
 const BASE_URL =
   process.env.NEXT_PUBLIC_NODE_ENV === "production"
     ? `${process.env.NEXT_PUBLIC_BASE_URL}/api`
     : "https://localhost:7038/api";
-
-console.log(BASE_URL);
 
 // to be removed for production
 const agent = new https.Agent({
@@ -35,6 +35,7 @@ export const axiosTour = Axios.create({
   headers: {
     "Content-Type": "multipart/form-data",
   },
+  withCredentials: true,
   httpsAgent: agent, // to be removed for production
 });
 
@@ -42,6 +43,7 @@ export const axiosTour = Axios.create({
 axiosTour.interceptors.request.use(
   (config) => {
     const session = getCookie("session");
+
     if (session && session.accessToken) {
       config.headers["Authorization"] = `Bearer ${session.accessToken}`;
     }
