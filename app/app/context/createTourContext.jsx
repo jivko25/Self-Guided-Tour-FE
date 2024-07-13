@@ -1,5 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { createTour } from "../actions/tourActions.js";
 
 const LOCAL_STORAGE_KEY = "savedTourFormData";
 
@@ -58,7 +59,6 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
-  console.log(formData);
 
   const nextStep = () => setStep((prevStep) => prevStep + 1);
   const prevStep = () => setStep((prevStep) => prevStep - 1);
@@ -87,6 +87,43 @@ export const CreateTourProvider = ({ children }) => {
     });
   };
 
+  const handlePublishTour = async () => {
+    const tourData = {
+      title: formData.step1Data.tour,
+      summary: formData.step4Data.summary,
+      price: formData.step1Data.price,
+      destination: formData.step1Data.destination,
+      thumbnailImage: formData.step4Data.thumbnailImage,
+      estimatedDuration: formData.step1Data.duration,
+      landmarks: formData.step2Data.map((landmark) => {
+        const resources = [];
+        landmark.addFields.forEach((data) => {
+          resources.push(data);
+        });
+
+        return {
+          latitude: landmark.latitude,
+          longitude: landmark.longitude,
+          city: landmark.locationCity,
+          locationName: landmark.location,
+          stopOrder: landmark.stopOrder,
+          description: landmark.locationDescription,
+          resources: resources,
+        };
+      }),
+    };
+
+    const { data, error } = await createTour(tourData);
+
+    if (error) {
+      // TODO : Handle error (e.g., display a notification)
+      console.error(error);
+    } else {
+      // TODO:  Handle success (e.g., redirect to the tour page)
+      console.log(data);
+    }
+  };
+
   return (
     <CreateTourContext.Provider
       value={{
@@ -97,6 +134,7 @@ export const CreateTourProvider = ({ children }) => {
         goToStep,
         updateFormData,
         updateStep2Data,
+        handlePublishTour,
       }}
     >
       {children}
