@@ -9,7 +9,7 @@ import InputField from "../InputField/InputField.jsx";
 import Btn from "../Buttons/Btn.jsx";
 
 const Step4 = () => {
-  const { formData, updateFormData } = useCreateTour();
+  const { formData, updateFormData, handlePublishTour } = useCreateTour();
 
   const [imageName, setImageName] = useState("You can upload image up to 1MB");
 
@@ -33,25 +33,20 @@ const Step4 = () => {
       ),
   });
 
-  const formik = useFormik({
+const formik = useFormik({
     initialValues: {
       summary: formData.step4Data.summary,
       thumbnailImage: formData.step4Data.thumbnailImage || null,
     },
     validationSchema: TourSummarySchema,
     onSubmit: (values) => {
-      // The converter could be exported to Context and used to convert each image/video/audio to base64
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updateFormData({
-          step4Data: {
-            ...formData.step4Data,
-            summary: values.summary,
-            thumbnailImage: reader.result, // Save the base64 image string
-          },
-        });
-      };
-      reader.readAsDataURL(values.thumbnailImage);
+      updateFormData({
+        step4Data: {
+          ...formData.step4Data,
+          summary: values.summary,
+          thumbnailImage: values.thumbnailImage, 
+        },
+      });
     },
   });
 
@@ -222,7 +217,12 @@ const Step4 = () => {
       </section>
       <section className="flex h-40 flex-col gap-4 tablet:h-fit tablet:flex-row">
         <div className="tablet:w-[183px] tablet:order-2 web:w-[278px]">
-          <Btn fullWidth variant="filled" text="Publish Tour" />
+          <Btn
+            fullWidth
+            variant="filled"
+            text="Publish Tour"
+            onClick={handlePublishTour}
+          />
         </div>
         <div className="tablet:w-[183px]">
           <Btn fullWidth variant="outlined" text="Preview" />
