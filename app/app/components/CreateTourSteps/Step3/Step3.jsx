@@ -14,41 +14,42 @@ import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
 const Step3 = () => {
   const pathname = usePathname();
 
-  const { formData, updateFormData, prevStep } = useCreateTour();
+  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
+    useCreateTour();
 
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
   const [current, setCurrent] = useState({});
 
   const [inputs, setInputs] = useState({
-    locationName: formData.step3Data.locationName || "",
-    locationCity: formData.step3Data.locationCity || "",
-    locationDescription: formData.step3Data.locationDescription || "",
-    addFields: formData.step3Data.addFields || [],
+    locationName: "",
+    placeId: "",
+    locationCity: "",
+    locationDescription: "",
+    addFields: [],
   });
 
   useEffect(() => {
     if (placeId) {
-      const result = formData.step2Data.filter(
-        (loc) => loc.placeId === placeId
-      );
-      if (result.length > 0) {
-        setCurrent({ ...current, ...result[0] });
+      const result = formData.step2Data.find((loc) => loc.placeId === placeId);
+      if (result) {
+        setCurrent(result);
+        setInputs((prevInputs) => ({
+          ...prevInputs,
+          placeId: result.placeId || "",
+          locationName: result.location || "",
+          locationCity: result.locationCity || "",
+          locationDescription: result.locationDescription || "",
+          addFields: result.addFields || [],
+        }));
       }
     }
-  }, [placeId, setCurrent, formData.step2Data]);
-
-  useEffect(() => {
-    setInputs({
-      locationName: formData.step3Data.locationName || "",
-      locationCity: formData.step3Data.locationCity || "",
-      locationDescription: formData.step3Data.locationDescription || "",
-      addFields: formData.step3Data.addFields || [],
-    });
-  }, [formData.step3Data]);
+  }, [placeId]);
 
   const handleFinish = () => {
-    alert("Form submitted!");
+    const { locationName, ...updatedInputs } = inputs;
+    updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
+    goToStep(1);
   };
 
   const handleChange = (e) => {
@@ -78,7 +79,6 @@ const Step3 = () => {
         ...prevInputs,
         [name]: value,
       }));
-      updateFormData({ step3Data: { ...inputs, [name]: value } });
     }
   };
 

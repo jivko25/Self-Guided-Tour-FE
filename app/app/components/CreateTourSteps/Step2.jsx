@@ -31,11 +31,11 @@ const Step2 = () => {
       if (!newData?.location) {
         return;
       }
-      updateStep2Data(newData);
+      updateStep2Data(newData, formData.step2Data.length); // pass index as length of step2Data
       coordinatesRef.current.push(newData);
       setData(newData);
     },
-    [updateStep2Data]
+    [updateStep2Data, formData.step2Data.length]
   );
 
   const handleSort = () => {
@@ -43,7 +43,12 @@ const Step2 = () => {
     const temp = locations[drag.current];
     locations[drag.current] = locations[dragOver.current];
     locations[dragOver.current] = temp;
-    updateFormData({ step2Data: [...locations] });
+    updateFormData({
+      step2Data: locations.map((loc, index) => ({
+        ...loc,
+        stopOrder: index + 1,
+      })),
+    });
   };
 
   const handleAddInfo = () => {
@@ -73,7 +78,10 @@ const Step2 = () => {
             className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] mt-[24px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent getLocationInfo={getLocationInfo} coordinatesRef={coordinatesRef} />
+            <GoogleMapsComponent
+              getLocationInfo={getLocationInfo}
+              coordinatesRef={coordinatesRef}
+            />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
             <InputField

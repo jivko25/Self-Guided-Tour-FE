@@ -1,24 +1,59 @@
 import Image from "next/image.js";
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect, useRef } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import FileTray from "../../public/svg/file-tray.svg";
 import Visualize from "../../public/svg/image-outline.svg";
 import InputField from "../InputField/InputField.jsx";
 import Btn from "../Buttons/Btn.jsx";
-import { Input } from "postcss";
 
 const Step4 = () => {
-  const { formData, updateFormData, nextStep } = useCreateTour();
-  const [input, setInput] = useState(formData.step1Data);
+  const { formData, updateFormData, handlePublishTour } = useCreateTour();
 
-  useEffect(() => {
-    setInput(formData.step1Data);
-  }, [formData.step1Data]);
+  const [imageName, setImageName] = useState("You can upload image up to 1MB");
 
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setInput(newValue);
-    updateFormData({ step1Data: newValue });
+  const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/webp"];
+  const FILE_SIZE = 1024 * 1024; // 1MB
+
+  // TODO: Schemas could be exported to util
+  const TourSummarySchema = Yup.object().shape({
+    summary: Yup.string().required("Summary is required"),
+    thumbnailImage: Yup.mixed()
+      .required("A file is required")
+      .test(
+        "fileSize",
+        "File can't be more than 1MB",
+        (value) => value && value.size <= FILE_SIZE
+      )
+      .test(
+        "fileFormat",
+        "Unsupported Format",
+        (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      ),
+  });
+
+const formik = useFormik({
+    initialValues: {
+      summary: formData.step4Data.summary,
+      thumbnailImage: formData.step4Data.thumbnailImage || null,
+    },
+    validationSchema: TourSummarySchema,
+    onSubmit: (values) => {
+      updateFormData({
+        step4Data: {
+          ...formData.step4Data,
+          summary: values.summary,
+          thumbnailImage: values.thumbnailImage, 
+        },
+      });
+    },
+  });
+
+  const handleSummaryChange = (e) => {
+    formik.handleChange(e);
+    formik.setFieldTouched("summary", true, false);
+    formik.handleSubmit();
   };
 
   const imageInputRef = useRef(null);
@@ -29,30 +64,39 @@ const Step4 = () => {
     }
   };
 
+  const handleImageChange = (event) => {
+    const file = event.currentTarget.files[0];
+    formik.setFieldValue("thumbnailImage", file);
+    formik.setFieldTouched("thumbnailImage", true, false);
+    setImageName(file.name);
+  };
+
   const sectionsData = [
     {
       title: "Tour Title",
       description:
         "Be sure to grab the first attention with top-notch title. Fit your keywords for the tour, location and major attractions in whole 80 characters.",
-      value: "Sofia Theaters",
+      value: formData.step1Data.tour,
     },
     {
       title: "Destination",
       description:
         "You have a favorite place in your hometown or you accidentally came across a hidden jem? Share it with others to make it popular!",
-      value: "Sofia, Bulgaria",
+      value: formData.step1Data.destination,
     },
     {
       title: "Tour Duration",
       description:
         "Let others know how much time they will need for your tour, so they can prepare and fully enjoy it.",
-      value: "90min",
+      value: formData.step1Data.duration
+        ? `${formData.step1Data.duration} min`
+        : "",
     },
     {
       title: "Price",
       description:
         "The price is up to you - we will charge a small fee for our services and you can enjoy the financial benefits of your walking experience.",
-      value: "9.99 USD",
+      value: formData.step1Data.price ? `${formData.step1Data.price} USD` : "",
     },
   ];
 
@@ -62,7 +106,7 @@ const Step4 = () => {
         <h2 className="w-52 text-gray-900 text-xl font-medium leading-[30px] tablet:text-2xl tablet:w-fit">
           Review and publish your tour
         </h2>
-        <span className="text-yellow-500 text-sm font-medium leading-[21px]">
+        <span className="text-yellow-500 text-sm font-medium leading-[21px] web:text-base">
           Step 4 of 4
         </span>
       </header>
@@ -85,11 +129,12 @@ const Step4 = () => {
             name="imageInput"
             type="file"
             ref={imageInputRef}
+            onChange={handleImageChange}
             className="hidden"
           />
           <div className="flex items-center  mx-auto w-[83px]   h-10 bg-neutral-50 rounded-[5px] border border-stone-300 tablet:h-[60px] tablet:w-full  ">
             <span className="hidden p-2 text-zinc-500 text-base font-normal  leading-normal tablet:block">
-              You can upload image up to 1MB
+              {imageName}
             </span>
             <label
               htmlFor="imageInput"
@@ -98,12 +143,18 @@ const Step4 = () => {
               <Btn
                 id="fileInput"
                 fullWidth
+                type="button"
                 text="Upload"
                 onClick={handleImageUpload}
                 className="h-full"
               />
             </label>
           </div>
+          {formik.errors.thumbnailImage && formik.touched.thumbnailImage && (
+            <div className="text-red-500 text-sm">
+              {formik.errors.thumbnailImage}
+            </div>
+          )}
         </div>
       </section>
       <section>
@@ -148,24 +199,30 @@ const Step4 = () => {
             <br />
           </p>
         </div>
-        <textarea
-          className=" text-blue-950 text-sm font-normal w-11/12 mx-auto leading-[21px] web:w-full web:mt-10 web:text-base"
-          id="summary"
-          name="summary"
-          rows="6"
-          cols="6"
-          disabled
-        >
-          The Ivan Vazov National Theatre is Bulgaria's national theatre, as
-          well as the oldest and most authoritative theatre in the country and
-          one of the important landmarks of Sofia, the capital of Bulgaria. It
-          is located in the center of the city, with the facade facing the City
-          Garden.
-        </textarea>
+        <div className="w-full">
+          <textarea
+            className="text-blue-950 text-sm font-normal border-2 p-2 w-11/12 mx-auto leading-[21px] web:w-full web:mt-10 web:text-base"
+            id="summary"
+            name="summary"
+            rows="6"
+            cols="6"
+            value={formik.values.summary}
+            onChange={handleSummaryChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.errors.summary && formik.touched.summary && (
+            <div className="text-red-500 text-sm">{formik.errors.summary}</div>
+          )}
+        </div>
       </section>
-      <section className="flex flex-col gap-4 tablet:flex-row">
+      <section className="flex h-40 flex-col gap-4 tablet:h-fit tablet:flex-row">
         <div className="tablet:w-[183px] tablet:order-2 web:w-[278px]">
-          <Btn fullWidth variant="filled" text="Publish Tour" />
+          <Btn
+            fullWidth
+            variant="filled"
+            text="Publish Tour"
+            onClick={handlePublishTour}
+          />
         </div>
         <div className="tablet:w-[183px]">
           <Btn fullWidth variant="outlined" text="Preview" />
