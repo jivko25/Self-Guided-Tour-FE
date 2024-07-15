@@ -9,7 +9,7 @@ import { headers } from "next/headers";
  * Hanldes user register
  * @param {*} prev
  * @param {*} formData
- * @returns {object
+ * @returns {object}
  */
 export async function registerUser(prev, formData) {
   const fData = Object.fromEntries(formData);
