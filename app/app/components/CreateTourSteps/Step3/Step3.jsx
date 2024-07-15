@@ -14,41 +14,42 @@ import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
 const Step3 = () => {
   const pathname = usePathname();
 
-  const { formData, updateFormData, prevStep } = useCreateTour();
+  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
+    useCreateTour();
 
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
   const [current, setCurrent] = useState({});
 
   const [inputs, setInputs] = useState({
-    locationName: formData.step3Data.locationName || "",
-    locationCity: formData.step3Data.locationCity || "",
-    locationDescription: formData.step3Data.locationDescription || "",
-    addFields: formData.step3Data.addFields || [],
+    locationName: "",
+    placeId: "",
+    locationCity: "",
+    locationDescription: "",
+    addFields: [],
   });
 
   useEffect(() => {
     if (placeId) {
-      const result = formData.step2Data.filter(
-        (loc) => loc.placeId === placeId
-      );
-      if (result.length > 0) {
-        setCurrent({ ...current, ...result[0] });
+      const result = formData.step2Data.find((loc) => loc.placeId === placeId);
+      if (result) {
+        setCurrent(result);
+        setInputs((prevInputs) => ({
+          ...prevInputs,
+          placeId: result.placeId || "",
+          locationName: result.location || "",
+          locationCity: result.locationCity || "",
+          locationDescription: result.locationDescription || "",
+          addFields: result.addFields || [],
+        }));
       }
     }
-  }, [placeId, setCurrent, formData.step2Data]);
-
-  useEffect(() => {
-    setInputs({
-      locationName: formData.step3Data.locationName || "",
-      locationCity: formData.step3Data.locationCity || "",
-      locationDescription: formData.step3Data.locationDescription || "",
-      addFields: formData.step3Data.addFields || [],
-    });
-  }, [formData.step3Data]);
+  }, [placeId]);
 
   const handleFinish = () => {
-    alert("Form submitted!");
+    const { locationName, ...updatedInputs } = inputs;
+    updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
+    goToStep(1);
   };
 
   const handleChange = (e) => {
@@ -78,7 +79,6 @@ const Step3 = () => {
         ...prevInputs,
         [name]: value,
       }));
-      updateFormData({ step3Data: { ...inputs, [name]: value } });
     }
   };
 
@@ -89,18 +89,18 @@ const Step3 = () => {
   const isVideo = (file) => file.type.startsWith("video");
 
   return (
-    <div className="flex flex-col w-full web:h-[85vh] ">
+    <div className="flex flex-col w-full web:h-[100vh] ">
       {/* Main container for inputs and maps, files for web */}
       <div
-        className="flex w-full justify-center items-center
-       web:h-full web:flex-row web:max-h-[691px] 
-       tablet:h-full tablet:flex-col-reverse 
-       phone:h-full phone:flex-col-reverse
-       smallPhone:h-full smallPhone:flex-col-reverse"
+        className="flex w-full justify-center items-center h-full
+       web:flex-row web:max-h-[691px] 
+       tablet:flex-col-reverse 
+       phone:flex-col-reverse
+       smallPhone:flex-col-reverse"
       >
         {/* DescriptionWeb, LocationInput, FileUpload, MediaPreviewWebPhone */}
         <div
-          className="flex flex-col items-center w-full
+          className="flex flex-col items-center w-full web:h-full
         web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
         tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]
         phone:w-full

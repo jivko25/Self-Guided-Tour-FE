@@ -5,7 +5,7 @@ function FileUpload({ handleChange }) {
   return (
     <>
       <div
-        className="flex items-center flex-col mb-[30px] w-full 
+        className="flex items-center flex-col mb-[20px] w-full 
             web:max-w-[581px]
             tablet:max-w-[581px]
             phone:max-w-[361px]

@@ -13,7 +13,15 @@ const steps = [
 ];
 
 export default function Stepper() {
-  const { step, goToStep } = useCreateTour();
+  const { step, goToStep, previousStep } = useCreateTour();
+
+  const handleStepClick = (index) => {
+    if (index === 2 && previousStep !== 1) {
+      alert("You can only access Step 3 from Step 2's edit button.");
+      return;
+    }
+    goToStep(index);
+  };
 
   return (
     <nav
@@ -29,7 +37,7 @@ export default function Stepper() {
           <li
             key={index}
             className="flex flex-col items-center cursor-pointer"
-            onClick={() => goToStep(index)}
+            onClick={() => handleStepClick(index)}
           >
             <span
               className={`w-10 h-10 ${

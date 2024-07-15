@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import React from "react";
 
 function LocationInput({ inputs, handleChange }) {
   return (
     <>
       <div
-        className="flex items-center justify-start flex-col mb-[30px] w-full
+        className="flex items-center justify-start flex-col mb-[20px] w-full
             web:max-w-[581px] 
             tablet:max-w-[581px] 
             phone:max-w-[361px]
@@ -34,7 +34,7 @@ function LocationInput({ inputs, handleChange }) {
       </div>
 
       <div
-        className="flex items-center justify-start flex-col mb-[30px] w-full 
+        className="flex items-center justify-start flex-col mb-[20px] w-full 
             web:max-w-[581px] 
             tablet:max-w-[581px] 
             phone:max-w-[361px]

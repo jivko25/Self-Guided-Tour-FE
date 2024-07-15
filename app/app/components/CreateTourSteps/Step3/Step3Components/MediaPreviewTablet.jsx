@@ -18,6 +18,7 @@ function MediaPreviewTablet({ inputs, isImage, isVideo }) {
                 <Image
                   src={URL.createObjectURL(file)}
                   width={index === 0 ? 858 : 279}
+                  objectFit="cover"
                   height={240}
                   className={`rounded-[5px] ${
                     index === 0 ? "tablet:w-full tablet:h-60" : "tablet:w-[279px] tablet:h-60"
@@ -29,6 +30,7 @@ function MediaPreviewTablet({ inputs, isImage, isVideo }) {
                 <ReactPlayer
                   url={URL.createObjectURL(file)}
                   width={279}
+                  borderRadius={5}
                   height={240}
                   className="tablet:rounded-[5px] tablet:w-[279px] tablet:h-60"
                   controls={true}

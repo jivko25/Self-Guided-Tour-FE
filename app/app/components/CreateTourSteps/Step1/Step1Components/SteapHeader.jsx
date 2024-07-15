@@ -11,7 +11,7 @@ const SteapHeader = ({
                 <h2 className="text-[20px] tablet:text-[24px]  
                 font-medium leading-9 text-[#081120]">{title}</h2>
 
-                <span className="mt-[7px] tablet:mt-[15px]
+                <span className="mt-[15px] 
                 text-[14px] tablet:text-[16px] font-medium text-[#E8B600]">
                     {`Step ${step} of 4`}
                 </span>
