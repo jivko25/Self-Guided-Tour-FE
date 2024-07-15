@@ -4,15 +4,16 @@ import { Loader } from "@googlemaps/js-api-loader"
 import locationmarker from "../../public/svg/locationmarker.svg";
 import Image from 'next/image';
 
-const center = { lat: 42.698334, lng: 23.319941 }
+let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, coordinatesRef, index, locationId }) {
+export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
   const currentInfoWindowRef = useRef(null);
   const currentMarkerRef = useRef(null);
   const [data, setData] = useState({});
+  let libraries = null;
 
   const handleSave = () => {
     const textAreaValue = currentInfoWindowRef.current.content.children[0].firstChild.value;
@@ -36,17 +37,22 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         version: "weekly",
       });
 
-      const { Map, InfoWindow } = await loader.importLibrary('maps');
-      const { AdvancedMarkerElement } = await loader.importLibrary('marker');
+      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place }] = await loadLibraries(loader);
+
+      if (coordinates && coordinates.lat) {
+        center = coordinates;
+      } else if (createCoordinates && createCoordinates.length > 0) {
+        const lastLocation = createCoordinates[createCoordinates.length - 1]
+        center = {lat: lastLocation.latitude, lng: lastLocation.longitude};
+      }
 
       const mapOPtions = {
-        center: coordinates ? coordinates : center,
+        center: center,
         zoom: 17,
         mapId: 'NEXT_MAP',
       }
 
       const map = new Map(mapsRef.current, mapOPtions);
-      const { Place } = await loader.importLibrary('places');
 
       const handleClick = async (e) => {
         // Stop default behavior
@@ -101,19 +107,21 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
           currentMarkerRef.current = marker;
           infoWindow.open(map, marker);
 
-          // showing all selected markers
-          if (coordinatesRef && coordinatesRef.current.length > 0) {
-            coordinatesRef.current.forEach((loc) => {
-              const markerContent = createCustomMarker('#575757');
-              new AdvancedMarkerElement({
-                map,
-                position: { lat: loc.latitude, lng: loc.longitude },
-                content: markerContent
-              });
-            });
-          }
-
         }
+
+      }
+
+      // showing all selected markers in create page
+      if (createCoordinates && createCoordinates.length > 0) {
+        createCoordinates.forEach((loc) => {
+          const markerContent = createCustomMarker('#575757');
+          new AdvancedMarkerElement({
+            map,
+            position: { lat: loc.latitude, lng: loc.longitude },
+            content: markerContent
+          });
+
+        });
 
       }
 
@@ -155,7 +163,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         // Setting new map options
         map.setOptions(newMapOptions)
 
-        const marker = new AdvancedMarkerElement({
+        new AdvancedMarkerElement({
           map,
           position: { lat: latitude, lng: longitude },
           content: markerRef.current,
@@ -168,9 +176,30 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
     //initialize map
     initMaps();
-  }, [locationId, coordinates]);
+  }, [locationId, coordinates, createCoordinates]);
 
+  /**
+   * Heper function for loading google api libraries
+   * @param {object} loader 
+   * @returns 
+   */
+  async function loadLibraries(loader) {
+    if (!libraries) {
+      libraries = await Promise.all([
+        loader.importLibrary('maps'),
+        loader.importLibrary('marker'),
+        loader.importLibrary('places')
+      ]);
+    }
 
+    return libraries;
+  }
+
+  /**
+   * Helper function for creating custom markers
+   * @param {string} color 
+   * @returns 
+   */
   const createCustomMarker = (color) => {
     // Create container element for the marker
     const container = document.createElement('div');

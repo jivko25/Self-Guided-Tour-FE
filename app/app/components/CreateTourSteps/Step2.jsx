@@ -10,7 +10,6 @@ const Step2 = () => {
     formData,
     updateFormData,
     updateStep2Data,
-    nextStep,
     prevStep,
     goToStep,
   } = useCreateTour();
@@ -25,6 +24,7 @@ const Step2 = () => {
   const drag = useRef(0);
   const dragOver = useRef(0);
   const coordinatesRef = useRef([]);
+  const [createCoordinates, setCreateCoordinates] = useState([]);
 
   const getLocationInfo = useCallback(
     (newData) => {
@@ -33,6 +33,7 @@ const Step2 = () => {
       }
       updateStep2Data(newData, formData.step2Data.length); // pass index as length of step2Data
       coordinatesRef.current.push(newData);
+      setCreateCoordinates([...createCoordinates, newData]);
       setData(newData);
     },
     [updateStep2Data, formData.step2Data.length]
@@ -54,6 +55,19 @@ const Step2 = () => {
   const handleAddInfo = () => {
     goToStep(2);
   };
+
+  const handleDeleteLocation = (placeId) => {
+    const placeIndex = coordinatesRef.current.findIndex(loc => loc.placeId === placeId);
+
+    if (placeIndex !== -1) {
+        coordinatesRef.current.splice(placeIndex, 1);
+        setCreateCoordinates([...createCoordinates.filter(c => c.placeId !== placeId)]);
+    }
+
+    updateFormData({
+      step2Data: formData.step2Data.filter(loc => loc.placeId !== placeId),
+    });
+  }
 
   return (
     <>
@@ -80,7 +94,7 @@ const Step2 = () => {
           >
             <GoogleMapsComponent
               getLocationInfo={getLocationInfo}
-              coordinatesRef={coordinatesRef}
+              createCoordinates={createCoordinates}
             />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
@@ -114,7 +128,7 @@ const Step2 = () => {
               <h2 className="text-[#081120] text-[20px] web:text-[24px]">
                 Your locations
               </h2>
-              <p className="px-[20px] tablet:px-0 mt-[12px] mb-[24px] font-normal tablet:max-w-[425px] ">
+              <p className="px-[10px] tablet:px-0 mt-[12px] mb-[24px] font-normal tablet:max-w-[425px]">
                 Once you’ve added locations on the map, they’ll appear in the
                 list below.
               </p>
@@ -130,6 +144,7 @@ const Step2 = () => {
                   onDragOver={(e) => e.preventDefault()}
                   placeId={placeId}
                   handleAddInfo={handleAddInfo}
+                  handleDeleteLocation={handleDeleteLocation}
                 />
               ))}
             </section>
