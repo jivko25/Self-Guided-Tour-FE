@@ -147,6 +147,6 @@ export async function validateToken() {
       refreshToken: response.data.refreshToken,
     });
   } catch (err) {
-    return { error: err.response.data.message };
+    return { error: err.response?.data?.message };
   }
 }
