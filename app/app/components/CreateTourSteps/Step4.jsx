@@ -10,8 +10,11 @@ import Btn from "../Buttons/Btn.jsx";
 
 const Step4 = () => {
   const { formData, updateFormData, handlePublishTour } = useCreateTour();
+  formData.step4Data.thumbnailImage.name;
 
-  const [imageName, setImageName] = useState("You can upload image up to 1MB");
+  const [imageName, setImageName] = useState(
+    formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
+  );
 
   const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/webp"];
   const FILE_SIZE = 1024 * 1024; // 1MB
@@ -33,27 +36,24 @@ const Step4 = () => {
       ),
   });
 
-const formik = useFormik({
+  const formik = useFormik({
     initialValues: {
       summary: formData.step4Data.summary,
       thumbnailImage: formData.step4Data.thumbnailImage || null,
     },
     validationSchema: TourSummarySchema,
-    onSubmit: (values) => {
-      updateFormData({
-        step4Data: {
-          ...formData.step4Data,
-          summary: values.summary,
-          thumbnailImage: values.thumbnailImage, 
-        },
-      });
-    },
+    onSubmit: () => {},
   });
 
   const handleSummaryChange = (e) => {
     formik.handleChange(e);
     formik.setFieldTouched("summary", true, false);
-    formik.handleSubmit();
+    updateFormData({
+      step4Data: {
+        ...formData.step4Data,
+        summary: e.target.value,
+      },
+    });
   };
 
   const imageInputRef = useRef(null);
@@ -69,6 +69,12 @@ const formik = useFormik({
     formik.setFieldValue("thumbnailImage", file);
     formik.setFieldTouched("thumbnailImage", true, false);
     setImageName(file.name);
+    updateFormData({
+      step4Data: {
+        ...formData.step4Data,
+        thumbnailImage: file,
+      },
+    });
   };
 
   const sectionsData = [
