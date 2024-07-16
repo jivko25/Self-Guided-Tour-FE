@@ -1,5 +1,5 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationComponent from "../LocationComponent/LocationComponent.js";
@@ -25,6 +25,12 @@ const Step2 = () => {
   const dragOver = useRef(0);
   const coordinatesRef = useRef([]);
   const [createCoordinates, setCreateCoordinates] = useState([]);
+
+  useEffect(() => {
+    if (formData.step2Data.length > 0) {
+      setCreateCoordinates([...formData.step2Data]);
+    }
+  }, [formData.step2Data, setCreateCoordinates]);
 
   const getLocationInfo = useCallback(
     (newData) => {
@@ -123,7 +129,7 @@ const Step2 = () => {
           {formData.step2Data.length > 0 && (
             <section
               className="flex flex-col text-center text-[14px] tablet:text-left tablet:text-[16px] 
-                          text-[#13294B] justify-center mt-[36px] web:mt-[64px]"
+                          text-[#13294B] justify-center mt-[36px] web:mt-[64px] web:mb-[24px]"
             >
               <h2 className="text-[#081120] text-[20px] web:text-[24px]">
                 Your locations
