@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour } from "../actions/tourActions.js";
+import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 
 const LOCAL_STORAGE_KEY = "savedTourFormData";
 
@@ -15,7 +16,6 @@ export const CreateTourProvider = ({ children }) => {
       price: "",
     },
     step2Data: [],
-    step3Data: "",
     step4Data: {
       summary: "",
       thumbnailImage: null,
@@ -38,7 +38,10 @@ export const CreateTourProvider = ({ children }) => {
   // Currently it saves everytime formData changes , but it's a better idea to save it with a Save Draft Button
   useEffect(() => {
     if (hasPrompted.current) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(formData));
+      // Filter files from formData
+      const filteredData = filterOutAddFields(formData);
+
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(filteredData));
     }
   }, [formData]);
 
@@ -47,7 +50,7 @@ export const CreateTourProvider = ({ children }) => {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (savedData) {
         const userConfirmed = window.confirm(
-          "Do you want to load the saved draft?"
+          "Do you want to load the saved draft? Note that you will need to add the files again."
         );
         if (userConfirmed) {
           setFormData(JSON.parse(savedData));
@@ -58,7 +61,6 @@ export const CreateTourProvider = ({ children }) => {
       hasPrompted.current = true; // Ensure this runs only once
     }
   }, []);
-
 
   const nextStep = () => setStep((prevStep) => prevStep + 1);
   const prevStep = () => setStep((prevStep) => prevStep - 1);
