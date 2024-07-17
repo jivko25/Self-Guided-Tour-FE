@@ -19,7 +19,7 @@ const Step3 = () => {
 
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
-  const [current, setCurrent] = useState({});
+  const [coordinates, setCoordinates] = useState(null);
 
   const [inputs, setInputs] = useState({
     locationName: "",
@@ -33,7 +33,7 @@ const Step3 = () => {
     if (placeId) {
       const result = formData.step2Data.find((loc) => loc.placeId === placeId);
       if (result) {
-        setCurrent(result);
+        setCoordinates({ lat: result.latitude, lng: result.longitude });
         setInputs((prevInputs) => ({
           ...prevInputs,
           placeId: result.placeId || "",
@@ -149,11 +149,7 @@ const Step3 = () => {
           <DescriptionTabletPhone />
 
           <GoogleMapsComponent
-            coordinates={
-              current.placeId
-                ? { lat: current.latitude, lng: current.longitude }
-                : null
-            }
+            coordinates={coordinates}
           />
         </div>
       </div>
