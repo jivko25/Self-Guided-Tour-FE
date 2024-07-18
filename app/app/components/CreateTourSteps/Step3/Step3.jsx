@@ -52,7 +52,7 @@ const Step3 = () => {
       !inputs.locationCity ||
       !inputs.locationDescription ||
       !inputs.locationName ||
-      inputs.addFields.length < 0
+      inputs.addFields.length === 0
     ) {
       alert("Please fill all the required fields");
       return;
