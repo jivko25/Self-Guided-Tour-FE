@@ -1,25 +1,26 @@
 "use client";
 import Btn from "../Buttons/Btn.jsx";
 import ButtonGoogle from "../Buttons/ButtonGoogle";
-import * as React from "react";
+import { useState } from "react";
 import InputField from "../InputField/InputField.jsx";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { registerUser } from "@/app/actions/authActions";
 import { useAuth } from "@/app/context/authContext";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = ({ userId }) => {
-  const [formState, registerAction] = useFormState(registerUser, "");
-  const { setSession } = useAuth();
-  const [errors, setErrors] = React.useState({
+  // const [formState, registerAction] = useFormState(registerUser, "");
+  const { setSession, registerUser } = useAuth();
+  const router = useRouter();
+  const [errors, setErrors] = useState({
     Email: "",
     Name: "",
     Password: "",
     RepeatPassword: "",
   });
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     creator: userId,
     email: "",
     name: "",
@@ -27,22 +28,22 @@ const RegisterForm = ({ userId }) => {
     repeatPassword: "",
   });
 
-  React.useEffect(() => {
-    if (formState.data === true) {
-      setSession(formState.data);
-      redirect("/");
-    } else {
-      if (typeof formState.error === "object") {
-        setErrors({ ...formState.error });
-      } else if (formState.error) {
-        setErrors((state) => ({ ...state, Email: formState.error }));
-      } else {
-        if (formState !== "") {
-          console.log(formState);
-        }
-      }
-    }
-  }, [formState, setSession, setErrors]);
+  // React.useEffect(() => {
+  //   if (formState.data === true) {
+  //     setSession(formState.data);
+  //     redirect("/");
+  //   } else {
+  //     if (typeof formState.error === "object") {
+  //       setErrors({ ...formState.error });
+  //     } else if (formState.error) {
+  //       setErrors((state) => ({ ...state, Email: formState.error }));
+  //     } else {
+  //       if (formState !== "") {
+  //         console.log(formState);
+  //       }
+  //     }
+  //   }
+  // }, [formState, setSession, setErrors]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,7 +53,24 @@ const RegisterForm = ({ userId }) => {
     });
   };
 
-  // const password = watch("password", "");
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+
+    const result = await registerUser(formData);
+
+    if (result.data) {
+      setSession(result.data);
+      router.replace("/");
+    } else {
+      if (typeof result.error === "object") {
+        setErrors({ ...result.error });
+      } else if (result.error) {
+        setErrors((state) => ({ ...state, Email: result.error }));
+      } else {
+          console.log(result);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
@@ -74,7 +92,7 @@ const RegisterForm = ({ userId }) => {
         phone:w-[361px] phone:min-h-[713px] 
         smallPhone:w-full smallPhone:min-h-[673px]
         w-full min-h-[673px]"
-        action={registerAction}
+        onSubmit={handleRegisterSubmit}
       >
         <div
           className=" text-center 

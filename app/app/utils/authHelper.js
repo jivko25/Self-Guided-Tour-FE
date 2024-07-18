@@ -1,25 +1,23 @@
-"server-only";
-
-import { cookies } from "next/headers";
 import { decodeToken, generateToken } from "./jwt";
+import Cookies from "js-cookie";
 
-export function setCookie(name, data) {
-  const jwt = generateToken(data);
-  cookies().set(name, jwt, {
-    httpOnly: false,
+export function setCookie(name, token) {
+  // const jwt = generateToken(data);
+  Cookies.set(name, `Bearer ${token}`, {
     secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24 * 30,
+    expires: 60 * 60 * 24 * 30,
     sameSite: "Strict",
+    
   });
 }
 
 export function getCookie(name) {
-  const cookie = cookies().get(name);
+  const cookie = Cookies().get(name);
   return cookie ? decodeToken(cookie.value) : null;
 }
 
 export function deleteCookie(name) {
-  cookies().set(name, "", {
+  Cookies.set(name, "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     maxAge: -1,
