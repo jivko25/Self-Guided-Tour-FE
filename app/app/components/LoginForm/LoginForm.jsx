@@ -5,45 +5,58 @@ import ButtonGoogle from "../Buttons/ButtonGoogle";
 import * as React from "react";
 import InputField from "../InputField/InputField.jsx";
 
-import { loginUser } from "@/app/actions/authActions";
-import { useFormState } from "react-dom";
 import { useAuth } from "@/app/context/authContext";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [error, setError] = React.useState("");
-  const [formState, loginAction] = useFormState(loginUser, "");
-  const { session, setSession } = useAuth();
+  const { session, setSession, loginUser } = useAuth();
+  const router = useRouter();
+  // const [formState, loginAction] = useFormState(loginUser, "");
 
-  React.useEffect(() => {
-    if (formState.data === true) {
-      setSession(formState.data);
-      redirect("/");
-    } else {
-      if (formState.error) {
-        setError(formState.error);
-      } else {
-        if (formState !== '') {
-          console.log(formState);
-        }
-      }
-    }
-  }, [formState, setSession, setError]);
+  // React.useEffect(() => {
+  //   if (formState.data === true) {
+  //     setSession(formState.data);
+  //     redirect("/");
+  //   } else {
+  //     if (formState.error) {
+  //       setError(formState.error);
+  //     } else {
+  //       if (formState !== '') {
+  //         console.log(formState);
+  //       }
+  //     }
+  //   }
+  // }, [formState, setSession, setError]);
 
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    const result = await loginUser({ email, password });
+
+    if (result.data) {
+      setSession(result.data);
+      router.replace("/");
+    } else if (result.error) {
+      setError(result.error);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-start  w-full">
-      <h2 className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
+      <h2
+        className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
       web:text-[32px]
       tablet:text-[32px]
       phone:text-[24px]
       smallPhone:text-[24px]
       text-[24px]
-      ">
+      "
+      >
         Sign In
       </h2>
       <form
@@ -53,7 +66,7 @@ const LoginForm = () => {
         phone:w-[361px] phone:min-h-[441px] 
         smallPhone:w-full smallPhone:min-h-[451px]
         w-full min-h-[451px]"
-        action={loginAction}
+        onSubmit={handleLoginSubmit}
       >
         <div
           className="
@@ -85,9 +98,11 @@ const LoginForm = () => {
           "
           ></div>
 
-          <div className="text-center text-zinc-400 font-medium font-['Inter Tight']
+          <div
+            className="text-center text-zinc-400 font-medium font-['Inter Tight']
           web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px] text-[10px]
-          ">
+          "
+          >
             OR
           </div>
 
