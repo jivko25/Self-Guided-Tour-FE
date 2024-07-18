@@ -13,16 +13,16 @@ export default function Header() {
   const router = useRouter();
   
   useEffect(() => {
-    validateToken().then(data => {
-      if (data?.error) {
-        console.log(data.error);
-        router.push('/');
-      }
-    });
+    // validateToken().then(data => {
+    //   if (data?.error) {
+    //     console.log(data.error);
+    //     router.push('/');
+    //   }
+    // });
 
-    getUserSession().then(result => {
-      setSession(result);
-    });
+    // getUserSession().then(result => {
+    //   setSession(result);
+    // });
     
     // handle mobile menu visibility
     if (pathname === '/sign-in' || pathname === '/create-account') {
