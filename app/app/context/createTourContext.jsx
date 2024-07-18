@@ -2,6 +2,10 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
+import {
+  validateStep,
+  canProceedToStep,
+} from "../utils/wizardStepValidations.js";
 
 const LOCAL_STORAGE_KEY = "savedTourFormData";
 
@@ -16,6 +20,7 @@ export const CreateTourProvider = ({ children }) => {
       price: "",
     },
     step2Data: [],
+    step3Data: "",
     step4Data: {
       summary: "",
       thumbnailImage: null,
@@ -35,7 +40,7 @@ export const CreateTourProvider = ({ children }) => {
   const [formData, setFormData] = useState(loadInitialState());
   const hasPrompted = useRef(false); // Use a ref to ensure the prompt only happens once
 
-  // Currently it saves everytime formData changes , but it's a better idea to save it with a Save Draft Button
+  // Currently it saves every time formData changes, but it's a better idea to save it with a Save Draft Button
   useEffect(() => {
     if (hasPrompted.current) {
       // Filter files from formData
@@ -62,13 +67,30 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
-  const nextStep = () => setStep((prevStep) => prevStep + 1);
+  const nextStep = () => {
+    if (validateStep(step, formData)) {
+      setStep((prevStep) => prevStep + 1);
+    } else {
+      alert("Please fill in all required fields before proceeding.");
+    }
+  };
+
   const prevStep = () => setStep((prevStep) => prevStep - 1);
-  const goToStep = (stepIndex) => setStep(stepIndex);
+
+  const goToStep = (stepIndex) => {
+    if (canProceedToStep(stepIndex, formData)) {
+      setStep(stepIndex);
+    } else {
+      alert(
+        "Please fill in all required fields in previous steps before proceeding."
+      );
+    }
+  };
 
   const updateFormData = (newData) => {
     setFormData((prevData) => ({ ...prevData, ...newData }));
   };
+
   const updateStep2Data = (newData, identifier) => {
     setFormData((prevData) => {
       const step2Data = [...prevData.step2Data];
@@ -114,6 +136,11 @@ export const CreateTourProvider = ({ children }) => {
         };
       }),
     };
+
+    if (!tourData.summary || !tourData.thumbnailImage) {
+      alert("Missing thumbnail image or summary");
+      return;
+    }
 
     const { data, error } = await createTour(tourData);
 
