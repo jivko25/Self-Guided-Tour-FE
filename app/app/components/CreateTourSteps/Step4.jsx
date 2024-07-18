@@ -10,7 +10,6 @@ import Btn from "../Buttons/Btn.jsx";
 
 const Step4 = () => {
   const { formData, updateFormData, handlePublishTour } = useCreateTour();
-  formData.step4Data.thumbnailImage.name;
 
   const [imageName, setImageName] = useState(
     formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
