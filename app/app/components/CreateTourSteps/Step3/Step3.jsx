@@ -48,6 +48,15 @@ const Step3 = () => {
 
   const handleFinish = () => {
     const { locationName, ...updatedInputs } = inputs;
+    if (
+      !inputs.locationCity ||
+      !inputs.locationDescription ||
+      !inputs.locationName ||
+      inputs.addFields.length < 0
+    ) {
+      alert("Please fill all the required fields");
+      return;
+    }
     updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
     goToStep(1);
   };
@@ -148,9 +157,7 @@ const Step3 = () => {
         >
           <DescriptionTabletPhone />
 
-          <GoogleMapsComponent
-            coordinates={coordinates}
-          />
+          <GoogleMapsComponent coordinates={coordinates} />
         </div>
       </div>
 
