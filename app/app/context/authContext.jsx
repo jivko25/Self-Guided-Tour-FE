@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import PropTypes from "prop-types";
-import { getCookie, setCookie } from "../utils/authHelper";
+import { getCookie, setCookie, deleteCookie } from "../utils/authHelper";
 import { axiosAuth } from "@/api/axios";
 
 export const AuthContext = createContext();
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosAuth.post("register", {
         ...formData,
       });
-      setCookie("authorization", response.data.accessToken);
+      setCookie("session", response.data.accessToken);
       data = true;
     } catch (err) {
       error = err.response?.data?.errors;
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosAuth.post("login", {
         ...formData,
       });
-      setCookie("authorization", response.data.accessToken);
+      setCookie("session", response.data.accessToken);
       data = true;
     } catch (err) {
       error = err.response?.data?.message;
@@ -67,10 +67,9 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const session = getCookie("session");
-
       const response = await axiosAuth.delete("logout", {
         headers: {
-          authorization: `Bearer ${session.accessToken}`,
+          authorization: `Bearer ${session}`,
         },
       });
 
