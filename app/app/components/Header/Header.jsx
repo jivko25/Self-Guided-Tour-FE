@@ -5,10 +5,10 @@ import HeaderMobile from "./HeaderMobile.jsx";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext";
 import { usePathname, useRouter } from "next/navigation";
-import { getUserSession, logoutUser, validateToken } from "@/app/actions/authActions";
+// import { getUserSession, logoutUser, validateToken } from "@/app/actions/authActions";
 
 export default function Header() {
-  const { session, setSession } = useAuth();
+  const { session, setSession, logoutUser, getUserSession, validateToken } = useAuth();
   const [headerVisible, setHeaderVisible] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -21,9 +21,9 @@ export default function Header() {
     //   }
     // });
 
-    // getUserSession().then(result => {
-    //   setSession(result);
-    // });
+    getUserSession().then(result => {
+      setSession(result);
+    });
     
     // handle mobile menu visibility
     if (pathname === '/sign-in' || pathname === '/create-account') {
