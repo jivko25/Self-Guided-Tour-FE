@@ -20,9 +20,9 @@ export default function Header() {
     //   }
     // });
 
-    // getUserSession().then(result => {
-    //   setSession(result);
-    // });
+    getUserSession().then(result => {
+      setSession(result);
+    });
     
     // handle mobile menu visibility
     if (pathname === '/sign-in' || pathname === '/create-account') {
