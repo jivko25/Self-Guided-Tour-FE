@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export function setCookie(name, token) {
   // const jwt = generateToken(data);
-  Cookies.set(name, `Bearer ${token}`, {
+  Cookies.set(name, token, {
     secure: process.env.NODE_ENV === "production",
     expires: 60 * 60 * 24 * 30,
     sameSite: "Strict",
@@ -12,16 +12,14 @@ export function setCookie(name, token) {
 }
 
 export function getCookie(name) {
-  const cookie = Cookies().get(name);
-  return cookie ? decodeToken(cookie.value) : null;
+  const cookie = Cookies.get(name);
+  return cookie ? cookie : null;
 }
 
 export function deleteCookie(name) {
-  Cookies.set(name, "", {
-    httpOnly: true,
+  Cookies.remove(name, {
     secure: process.env.NODE_ENV === "production",
-    maxAge: -1,
-    sameSite: "strict",
-    path: "/",
-  });
+    expires: -1,
+    sameSite: "Strict",
+  })
 }
