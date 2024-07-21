@@ -90,7 +90,7 @@ async function externalLoginUser(resp) {
       const session = JSON.parse(getCookie("session"));
       const response = await axiosAuth.delete("logout", {
         headers: {
-          authorization: `Bearer ${session}`,
+          authorization: `Bearer ${session.accessToken}`,
         },
       });
 
