@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(false);
 
   /**
-   * Hanldes user register - TODO
+   * Hanldes user register
    * @param {*} prev
    * @param {*} formData
    * @returns {object}
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosAuth.post("register", {
         ...formData,
       });
-      setCookie("session", response.data.accessToken);
+      setCookie("session", JSON.stringify(response.data));
       data = true;
     } catch (err) {
       error = err.response?.data?.errors;
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   /**
-   * Hanles user log in - TODO
+   * Hanles user log in
    * @param {*} prev
    * @param {*} formData
    * @returns {object}
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosAuth.post("login", {
         ...formData,
       });
-      setCookie("session", response.data.accessToken);
+      setCookie("session", JSON.stringify(response.data));
       data = true;
     } catch (err) {
       error = err.response?.data?.message;
@@ -66,10 +66,10 @@ export const AuthProvider = ({ children }) => {
     let error = null;
 
     try {
-      const session = getCookie("session");
+      const session = JSON.parse(getCookie("session"));
       const response = await axiosAuth.delete("logout", {
         headers: {
-          authorization: `Bearer ${session}`,
+          authorization: `Bearer ${session.accessToken}`,
         },
       });
 
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   /**
-   * Returns information if the user is logged in or not - TODO
+   * Returns information if the user is logged in or not
    * @returns {boolean}
    */
   async function getUserSession() {
@@ -96,12 +96,12 @@ export const AuthProvider = ({ children }) => {
   }
 
   /**
-   * Validates and requests new access token if needed - TODO
+   * Validates and requests new access token if needed
    * @returns {undefined | string}
    */
   async function validateToken() {
-    const session = getCookie("session");
-
+    const session = JSON.parse(getCookie("session"));
+    
     if (session === null || Date.now() < session?.accessTokenExpiration) {
       return;
     }
@@ -111,11 +111,7 @@ export const AuthProvider = ({ children }) => {
         refreshToken: session.refreshToken,
       });
 
-      setCookie("session", {
-        accessToken: response.data.accessToken,
-        accessTokenExpiration: response.data.accessTokenExpiration,
-        refreshToken: response.data.refreshToken,
-      });
+      setCookie("session", JSON.stringify(response.data));
     } catch (err) {
       return { error: err.response?.data?.message };
     }

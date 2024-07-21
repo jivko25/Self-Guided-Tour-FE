@@ -254,12 +254,7 @@ export const CreateTourProvider = ({ children }) => {
     let error = null;
 
     try {
-      const token = getCookie('session');
-      const response = await axiosTour.post("/create-tour", formData, {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      });
+      const response = await axiosTour.post("/create-tour", formData);
       
       data = response.data;
     } catch (err) {

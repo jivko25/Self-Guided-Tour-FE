@@ -1,3 +1,4 @@
+import { getCookie } from "@/app/utils/authHelper";
 import Axios from "axios";
 import https from "https";
 import { setupSessionInterceptors } from "./interceptors";
@@ -7,7 +8,6 @@ const BASE_URL =
     ? `${process.env.NEXT_PUBLIC_BASE_URL}/api`
     : "https://localhost:7038/api";
 
-// to be removed for production
 const agent = new https.Agent({
   rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false,
 });
@@ -26,7 +26,7 @@ export const axiosAuth = Axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  httpsAgent: agent, // to be removed for production
+  httpsAgent: agent, 
 });
 
 export const axiosTour = Axios.create({

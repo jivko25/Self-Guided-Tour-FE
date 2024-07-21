@@ -1,12 +1,10 @@
-import { decodeToken, generateToken } from "./jwt";
 import Cookies from "js-cookie";
 
 export function setCookie(name, token) {
-  // const jwt = generateToken(data);
   Cookies.set(name, token, {
     secure: process.env.NODE_ENV === "production",
     expires: 60 * 60 * 24 * 30,
-    sameSite: "Strict",
+    sameSite: (process.env.NODE_ENV === "production") ? 'None' : 'Strict',
     
   });
 }
@@ -20,6 +18,6 @@ export function deleteCookie(name) {
   Cookies.remove(name, {
     secure: process.env.NODE_ENV === "production",
     expires: -1,
-    sameSite: "Strict",
+    sameSite: (process.env.NODE_ENV === "production") ? 'None' : 'Strict',
   })
 }
