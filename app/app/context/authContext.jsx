@@ -57,6 +57,27 @@ export const AuthProvider = ({ children }) => {
   }
 
   /**
+ * Handles googles log in.
+ * @param {*} resp
+ * @returns {object}
+ */
+async function externalLoginUser(resp) {
+  const respData = { data: null, error: null };
+  try {
+    const { access_token } = resp;
+    const response = await axiosAuth.post("google-signin", {
+      idToken: access_token,
+    });
+
+    setCookie("session", JSON.stringify(response.data));
+    respData.data = true;
+  } catch (err) {
+    respData.error = err.response?.data?.message;
+  }
+  return respData;
+}
+
+  /**
    * TODO
    * Logouts user. Returns object with prop 'error' containing null on success or error message on failure
    * @returns {object}
@@ -124,7 +145,8 @@ export const AuthProvider = ({ children }) => {
     loginUser,
     logoutUser,
     getUserSession,
-    validateToken
+    validateToken,
+    externalLoginUser
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
