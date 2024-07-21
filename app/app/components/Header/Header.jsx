@@ -5,7 +5,6 @@ import HeaderMobile from "./HeaderMobile.jsx";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext";
 import { usePathname, useRouter } from "next/navigation";
-// import { getUserSession, logoutUser, validateToken } from "@/app/actions/authActions";
 
 export default function Header() {
   const { session, setSession, logoutUser, getUserSession, validateToken } = useAuth();
@@ -14,12 +13,12 @@ export default function Header() {
   const router = useRouter();
   
   useEffect(() => {
-    // validateToken().then(data => {
-    //   if (data?.error) {
-    //     console.log(data.error);
-    //     router.push('/');
-    //   }
-    // });
+    validateToken().then(data => {
+      if (data?.error) {
+        console.log(data.error);
+        router.push('/');
+      }
+    });
 
     getUserSession().then(result => {
       setSession(result);
