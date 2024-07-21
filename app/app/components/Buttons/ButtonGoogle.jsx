@@ -72,7 +72,6 @@
 // }
 "use client";
 import { GoogleOAuthProvider, useGoogleLogin } from "@react-oauth/google";
-import { externalLoginUser } from "@/app/actions/authActions";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/authContext";
 
@@ -124,7 +123,7 @@ function GoogleButton({ onLoginSuccess }) {
 
 export default function ButtonGoogle() {
   const router = useRouter();
-  const { setSession } = useAuth();
+  const { setSession, externalLoginUser } = useAuth();
   async function handleLoginSuccess(response) {
     try {
       const resp = await externalLoginUser(response);
