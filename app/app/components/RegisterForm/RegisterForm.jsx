@@ -4,8 +4,6 @@ import ButtonGoogle from "../Buttons/ButtonGoogle";
 import { useState } from "react";
 import InputField from "../InputField/InputField.jsx";
 import Link from "next/link";
-import { useFormState } from "react-dom";
-import { registerUser } from "@/app/actions/authActions";
 import { useAuth } from "@/app/context/authContext";
 import { useRouter } from "next/navigation";
 

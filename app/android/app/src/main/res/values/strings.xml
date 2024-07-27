@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">jauntster</string>
+    <string name="title_activity_main">jauntster</string>
+    <string name="package_name">com.jauntster.app</string>
+    <string name="custom_url_scheme">com.jauntster.app</string>
+</resources>
