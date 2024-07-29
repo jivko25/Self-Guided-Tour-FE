@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import StarRating from "../../StarRating/StarRating";
 import IconsBar from "./IconsBar";
+import Button from "../../Buttons/Button";
 
 const tour = {
   title: "Sofia theaters",
@@ -31,6 +33,13 @@ function TourCard() {
             duration={tour.duration}
             location={tour.location}
           />
+        </div>
+        <div className="flex justify-between m-6">
+          <p>Total</p>
+          <h2>USD {tour.price}</h2>
+        </div>
+        <div className=" text-center">
+          <Button text="Confirm and pay" />
         </div>
       </div>
     </section>
