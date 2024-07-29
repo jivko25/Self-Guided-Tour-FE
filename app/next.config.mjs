@@ -22,6 +22,9 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    domains: ["selfguidedstorage.blob.core.windows.net"],
+  },
 };
 
 export default nextConfig;
