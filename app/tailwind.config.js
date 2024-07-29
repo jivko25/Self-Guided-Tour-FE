@@ -9,18 +9,20 @@ module.exports = {
   theme: {
     extend: {
       content: {
-        'custom-image': 'url("../public/images/headerImg.jpeg")',
+        "custom-image": 'url("../public/images/headerImg.jpeg")',
       },
       backgroundImage: {
         "custom-image": "url('../public/images/headerImg.jpeg')",
       },
-      
     },
     screens: {
       phone: "393px",
       tablet: "768px",
       web: "1280px",
       smallPhone: "320px",
+    },
+    borderColor: {
+      tourCard: "#D1D0D8",
     },
   },
   plugins: [],
