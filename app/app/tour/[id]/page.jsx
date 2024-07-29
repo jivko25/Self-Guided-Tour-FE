@@ -8,6 +8,7 @@ function TourDetails() {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col w-full max-w-[1000px]">
+        
         <div>
           <h1 className="text-[#081120] text-[39px] font-medium font-['Inter'] leading-[58.50px]">
             Sofia Theaters
@@ -17,6 +18,7 @@ function TourDetails() {
             4.8
           </span>
         </div>
+
         <div className="grid grid-cols-4 grid-rows-2 gap-4 w-full max-w-[894] h-full max-h-[520px]">
           <img
             className="col-span-2 row-span-2 object-cover w-[582px] h-[500px] rounded-tl-[15px] rounded-bl-[15px]"
@@ -44,6 +46,7 @@ function TourDetails() {
             alt="Image 3"
           />
         </div>
+        
       </div>
 
       <div className="flex items-center justify-evenly w-full h-[200px]">
@@ -104,12 +107,12 @@ function TourDetails() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center gap-[50px] h-[500px]">
         <h1 className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9">
           How Jauntster works
         </h1>
         <div className="flex gap-[30px]">
-          <div className="flex items-center justify-evenly  w-[733px] h-[278px] bg-neutral-50 rounded-[5px] border border-[#d1d0d8]">
+          <div className="flex items-center justify-evenly w-[733px] h-[278px] bg-neutral-50 rounded-[5px] border border-[#d1d0d8]">
             <img src="" alt="" />
             <div className="mt-[30px]">
               <h1 className="mb-[20px] text-[#081120] text-xl font-medium font-['Inter'] leading-[30px]">
@@ -123,7 +126,7 @@ function TourDetails() {
               </p>
             </div>
           </div>
-          <div className="flex items-center justify-evenly  w-[733px] h-[278px] bg-neutral-50 rounded-[5px] border border-[#d1d0d8]">
+          <div className="flex items-center justify-evenly w-[733px] h-[278px] bg-neutral-50 rounded-[5px] border border-[#d1d0d8]">
             <img src="" alt="" />
             <div className="mt-[30px]">
               <h1 className="mb-[20px] text-[#081120] text-xl font-medium font-['Inter'] leading-[30px]">
