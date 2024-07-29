@@ -147,6 +147,7 @@ export async function validateToken() {
       refreshToken: response.data.refreshToken,
     });
   } catch (err) {
+    deleteCookie("session");
     return { error: err.response?.data?.message };
   }
 }
