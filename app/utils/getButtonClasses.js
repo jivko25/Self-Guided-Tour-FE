@@ -4,6 +4,8 @@ export default function getButtonClasses(variant) {
       return "bg-blue-950   text-white";
     case "primary-long":
       return "w-[400px]   bg-blue-950  text-white";
+    case "primary-very-long":
+      return "w-full   bg-blue-950  text-white";
     case "secondary":
       return "w-72   bg-neutral-50 rounded-md border border-blue-950   text-gray-900  phone:w-80 tablet:w-[182px]";
     case "secondary-short":
