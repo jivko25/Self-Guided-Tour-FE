@@ -2,11 +2,10 @@ import Image from "next/image";
 import Walk from "../../../public/svg/walk.svg";
 import Time from "../../../public/svg/time.svg";
 import Location from "../../../public/svg/location-sharp.svg";
-function IconsBar({ tourType, duration, location }) {
+function IconsBar({ tourType, duration, location, styles }) {
   return (
     <ul
-      style={{ borderColor: "#D1D0D8" }}
-      className="flex justify-between border-b pb-6  border-b-tourCard  m-auto"
+      className={`flex justify-between border-b pb-6 border-b-[#D1D0D8] m-auto ${styles}`}
     >
       <li className="flex justify-center items-center gap-1">
         <Image src={Walk} />
