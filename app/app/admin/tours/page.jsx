@@ -33,15 +33,15 @@ const PendingTours = () => {
   };
 
   return (
-    <div className="container max-w-[1349px] mx-auto p-4 font-['Inter']">
+    <div className="container max-w-[1349px] my-16 mx-auto p-4 font-['Inter']">
       <AdminPanelTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <table className="min-w-full bg-white border">
         <thead>
-          <tr className="h-12 bg-[#b6bdc7] rounded-tr-[5px]">
-            <th className="py-2 px-4 border-b text-[#081120] text-[13px] font-semibold  leading-none">
+          <tr className="h-12 bg-[#b6bdc7]">
+            <th className="py-2 px-4 border-b text-[#081120] text-[13px] font-semibold  leading-none ">
               Tour Name
             </th>
-            <th className="py-2 px-4 border-b text-[#081120] text-[13px] font-semibold  leading-none">
+            <th className="py-2 px-4 border-b text-[#081120] text-[13px] font-semibold  leading-none rounded-tr-[5px]">
               Actions
             </th>
           </tr>

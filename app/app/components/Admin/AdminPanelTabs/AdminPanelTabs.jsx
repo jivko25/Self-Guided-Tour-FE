@@ -6,7 +6,7 @@ export default function AdminPanelTabs({ activeTab, setActiveTab }) {
       {adminTabs.map((tab, index) => (
         <div
           key={index}
-          className={`w-[120px] h-[53px] pl-[13px] pr-[19px] pt-[19px] pb-[18px] cursor-pointer   border-t border-r border-[#dbd8d8]  ${
+          className={`w-[120px] h-[53px] pl-[13px] pr-[19px] pt-[19px] pb-[18px] cursor-pointer   border-r border-t border-[#dbd8d8] ${
             activeTab === tab ? "bg-[#b6bdc7]" : "bg-white"
           } rounded-tl-[5px] rounded-tr-[5px] border-b border-neutral-50 justify-start items-center inline-flex`}
           onClick={() => setActiveTab(tab)}
