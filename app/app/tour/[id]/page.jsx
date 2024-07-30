@@ -6,10 +6,10 @@ function TourDetails() {
   const param = useParams();
   const searchParams = useSearchParams();
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex flex-col w-full max-w-[1000px]">
+    <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col w-[65%] justify-center items-center">
         
-        <div>
+        <div className="flex justify-start items-center w-full">
           <h1 className="text-[#081120] text-[39px] font-medium font-['Inter'] leading-[58.50px]">
             Sofia Theaters
           </h1>
@@ -19,29 +19,29 @@ function TourDetails() {
           </span>
         </div>
 
-        <div className="grid grid-cols-4 grid-rows-2 gap-4 w-full max-w-[894] h-full max-h-[520px]">
+        <div className="grid grid-cols-4 grid-rows-2  gap-4 w-full  h-full max-h-[520px] items-center justify-center">
           <img
-            className="col-span-2 row-span-2 object-cover w-[582px] h-[500px] rounded-tl-[15px] rounded-bl-[15px]"
+            className="col-span-2 row-span-2 object-cover rounded-tl-[15px] rounded-bl-[15px]"
             src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Main Image"
           />
           <img
-            className="object-cover w-[431px] h-[244px]"
+            className="object-cover "
             src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Image 1"
           />
           <img
-            className="object-cover w-[431px] h-[244px] rounded-tr-[15px]"
+            className="object-cover rounded-tr-[15px]"
             src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Image 2"
           />
           <img
-            className="object-cover w-[431px] h-[244px] "
+            className="object-cover  "
             src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Image 3"
           />
           <img
-            className="object-cover w-[431px] h-[244px] rounded-br-[15px]"
+            className="object-cover rounded-br-[15px]"
             src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Image 3"
           />
