@@ -21,9 +21,6 @@ module.exports = {
       web: "1280px",
       smallPhone: "320px",
     },
-    borderColor: {
-      tourCard: "#D1D0D8",
-    },
   },
   plugins: [],
 };
