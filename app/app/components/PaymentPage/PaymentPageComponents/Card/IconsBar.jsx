@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Walk from "../../../public/svg/walk.svg";
-import Time from "../../../public/svg/time.svg";
-import Location from "../../../public/svg/location-sharp.svg";
+import Walk from "../../../../public/svg/walk.svg";
+import Time from "../../../../public/svg/time.svg";
+import Location from "../../../../public/svg/location-sharp.svg";
 function IconsBar({ tourType, duration, location, styles }) {
   return (
     <ul

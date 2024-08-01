@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import StarRating from "../../StarRating/StarRating";
-import IconsBar from "./IconsBar";
+import IconsBar from "./Card/IconsBar";
 import Button from "../../Buttons/Button";
 
 const tour = {
