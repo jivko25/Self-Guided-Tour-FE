@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 
+import { hostname } from "os";
 import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -23,7 +24,12 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["selfguidedstorage.blob.core.windows.net"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "selfguidedstorage.blob.core.windows.net",
+      },
+    ],
   },
 };
 
