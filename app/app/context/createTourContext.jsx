@@ -254,7 +254,9 @@ export const CreateTourProvider = ({ children }) => {
     let error = null;
 
     try {
-      const response = await axiosTour.post("/create-tour", formData);
+      const response = await axiosTour.post("/create-tour", formData, {
+        withCredentials: false,
+      });
       
       data = response.data;
     } catch (err) {
