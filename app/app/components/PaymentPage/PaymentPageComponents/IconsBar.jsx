@@ -5,7 +5,7 @@ import Location from "../../../public/svg/location-sharp.svg";
 function IconsBar({ tourType, duration, location, styles }) {
   return (
     <ul
-      className={`flex justify-between border-b pb-6 border-b-[#D1D0D8] ${styles} gap-4`}
+      className={`flex justify-between border-b pb-6 border-b-[#D1D0D8] ${styles} gap-4 text-nowrap h-[64px] w-[534px]`}
     >
       <li className="flex justify-center items-center gap-1">
         <Image src={Walk} />
