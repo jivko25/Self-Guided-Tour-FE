@@ -85,7 +85,7 @@ async function externalLoginUser(resp) {
   async function logoutUser() {
     let data = null;
     let error = null;
-
+    console.log('here');
     try {
       const session = JSON.parse(getCookie("session"));
       const response = await axiosAuth.delete("logout", {

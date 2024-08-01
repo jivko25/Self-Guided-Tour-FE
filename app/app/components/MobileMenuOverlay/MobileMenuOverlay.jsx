@@ -7,6 +7,7 @@ import MobileMenuOverlayUser from "./MobileMenuOverlayUser.jsx";
 export default function MobileMenuOverlay({
   menuOverlayVisible,
   isAuthenticated,
+  handleLogout
 }) {
 
   return (
@@ -27,7 +28,7 @@ export default function MobileMenuOverlay({
         </Link>
         <div className="flex flex-col phone:mb-32 ">
           {isAuthenticated ? (
-            <MobileMenuOverlayUser menuOverlayVisible={menuOverlayVisible}/>
+            <MobileMenuOverlayUser menuOverlayVisible={menuOverlayVisible} handleLogout={handleLogout}/>
           ) : (
             <MobileMenuOverlayGuest menuOverlayVisible={menuOverlayVisible}/>
           )}
