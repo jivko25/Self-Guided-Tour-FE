@@ -16,11 +16,11 @@ function TourCard() {
   return (
     <section
       className=" hidden web:flex flex-col  shrink-0 self-start
-                w-[582] max-h-[524] rounded-xl 
+                w-[582] max-h-[524] rounded-[15px] 
                 border border-[#D1D0D8] text-[#081120] "
     >
       <Image
-        className="rounded-xl  max-h-[161px] object-center object-cover "
+        className=" rounded-b-[5px] rounded-t-[15px] max-h-[161px] object-center object-cover "
         src="https://selfguidedstorage.blob.core.windows.net/landmark-resources/ec1c648c-d033-41f4-a73e-abe0046a15f2.jpg"
         alt={tour.title}
         width={582}
