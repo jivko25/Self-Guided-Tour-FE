@@ -6,13 +6,13 @@ function PaymentIcons({ className }) {
   return (
     <ul className={` flex gap-9 items-center ${className}`}>
       <li>
-        <Image src={Visa} />
+        <Image src={Visa} alt="Visa" />
       </li>
       <li>
-        <Image src={Mastercard} />
+        <Image src={Mastercard} alt="Mastercard" />
       </li>
       <li>
-        <Image src={Maestro} />
+        <Image src={Maestro} alt="Maestro" />
       </li>
     </ul>
   );
