@@ -29,6 +29,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "selfguidedstorage.blob.core.windows.net",
       },
+      {
+        protocol: "https",
+        hostname: "jauntstermvpblob.blob.core.windows.net",
+      },
     ],
   },
 };
