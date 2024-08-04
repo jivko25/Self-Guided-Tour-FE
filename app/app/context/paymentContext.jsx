@@ -9,7 +9,7 @@ const initialState = {
   expiryDate: "",
   cvc: "",
   country: "",
-  tour: {},
+  tour: null,
   isLoading: false,
 };
 function reducer(state, action) {

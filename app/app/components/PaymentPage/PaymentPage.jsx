@@ -2,7 +2,6 @@
 import PaymentForm from "./PaymentPageComponents/PaymentForm";
 import TourCard from "./PaymentPageComponents/TourCard";
 import { useRouter } from "next/navigation";
-
 import CloseButton from "../Buttons/CloseButton";
 import { PaymentProvider } from "@/app/context/paymentContext";
 function PaymentPage() {

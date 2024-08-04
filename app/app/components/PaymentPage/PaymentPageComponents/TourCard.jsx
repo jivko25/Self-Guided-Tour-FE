@@ -6,12 +6,13 @@ import Button from "../../Buttons/Button";
 import { usePaymentContext } from "@/app/context/paymentContext";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import TourCardSkeleton from "./Card/TourCardSkeleton";
 //Todo: Add this fields to the tour DTO
 const tourAverageRating = 4.6;
 const tourType = "Walking tour";
 
 function TourCard() {
-  const { getTourData, tour } = usePaymentContext();
+  const { getTourData, tour, isLoading } = usePaymentContext();
   const searchParams = useSearchParams();
 
   const tourId = searchParams.get("tourId");
@@ -26,6 +27,9 @@ function TourCard() {
     },
     []
   );
+  if (isLoading || !tour) {
+    return <TourCardSkeleton />;
+  }
   return (
     <section
       className=" hidden web:flex flex-col  shrink-0 self-start
@@ -38,6 +42,8 @@ function TourCard() {
         alt={tour?.title}
         width={582}
         height={161}
+        priority={true}
+        quality={100}
       />
       <div className=" m-5 mb-7 mt-4">
         <div className=" flex flex-row justify-between text-[24px] m-2 font-medium  ">
