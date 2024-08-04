@@ -16,20 +16,24 @@ function TourCard() {
   const searchParams = useSearchParams();
 
   const tourId = searchParams.get("tourId");
+
   if (tourId === undefined || tourId === null || tourId === "") {
     throw new Error(
       "Payment page must have a tourId passed as a query parameter!"
     );
   }
+
   useEffect(
     () => async () => {
       const data = await getTourData(tourId);
     },
-    []
+    [tourId]
   );
+
   if (isLoading || !tour) {
     return <TourCardSkeleton />;
   }
+
   return (
     <section
       className=" hidden web:flex flex-col  shrink-0 self-start
