@@ -13,7 +13,7 @@ function TourDetails() {
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex flex-col  justify-center items-center
-      web:w-[80%]
+      web:w-[80%] web:mt-[30px]
       ">
         <div className="flex justify-start items-center w-full gap-[30px]">
           <h1 className="text-[#081120] text-[39px] font-medium font-['Inter'] leading-[58.50px]">
@@ -123,7 +123,7 @@ function TourDetails() {
             <h2 className="text-[#081120] text-[31px] font-medium font-['Inter']  mb-[20px]">
               Sofia Theaters Tour
             </h2>
-            <div className="flex">
+            <div className="flex gap-[10px]">
               <Star />
               <Star />
               <Star />
