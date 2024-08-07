@@ -1,9 +1,22 @@
 "use client";
+// TODOS
+// 1. Add loading state while fetching
+// 2. Show Error messages with better design
+// 3. Implement Pagination functionality
+// 4. Show success or error popup message when the admin approves or declines a tour
+// 5. Must be discussed how Approved and Declined tours should look like in the table and their functionality
+// 6. Admin should have menu in navigation to access the admin page
 
 import { useState, useEffect } from "react";
 import Image from "next/image.js";
 
 import AdminPanelTabs from "@/app/components/Admin/AdminPanelTabs/AdminPanelTabs.jsx";
+
+import {
+  getAllToursByStatus,
+  approveTourById,
+  declineTourById,
+} from "@/app/actions/adminActions.js";
 
 import CheckmarkIcon from "../../public/svg/checkmark.svg";
 import CloseIcon from "../../public/svg/close-red.svg";
@@ -14,27 +27,54 @@ import TourStatus from "@/app/components/TourStatus/TourStatus.jsx";
 const PendingTours = () => {
   const [tours, setTours] = useState([]);
   const [activeTab, setActiveTab] = useState("Under Review");
+  const [error, setError] = useState("");
 
+  const fetchTours = async (status) => {
+    const { data, error } = await getAllToursByStatus(status);
+    if (data) {
+      setTours(data);
+      // clear the previous error if there was any
+      setError("");
+    } else {
+      setError(error);
+    }
+  };
+
+  // Fetch tours depending on active tab
   useEffect(() => {
-    // Dummy data for pending tours
-    const dummyTours = [
-      { id: 1, name: "Tour A" },
-      { id: 2, name: "Tour B" },
-      { id: 3, name: "Tour C" },
-    ];
-    setTours(dummyTours);
-  }, []);
+    let status;
+    switch (activeTab) {
+      case "Approved":
+        status = 1;
+        break;
+      case "Declined":
+        status = 2;
+        break;
+      default:
+        status = 0; // Under Review
+    }
+    fetchTours(status);
+  }, [activeTab]);
 
-  const handleAccept = (tourId) => {
-    // Implement the accept logic here
-    console.log("Accepted tour with ID:", tourId);
+  const handleAccept = async (tourId) => {
+    const { data, error } = await approveTourById(tourId);
+    if (data) {
+      setTours((prevTours) => prevTours.filter((tour) => tour.id !== tourId));
+    } else {
+      setError(error);
+    }
   };
 
-  const handleDecline = (tourId) => {
-    // Implement the decline logic here
-    console.log("Declined tour with ID:", tourId);
+  const handleDecline = async (tourId) => {
+    const { data, error } = await declineTourById(tourId);
+    if (data) {
+      setTours((prevTours) => prevTours.filter((tour) => tour.id !== tourId));
+    } else {
+      setError(error);
+    }
   };
 
+  // Mapping table headers , using DRY method
   const tableHeaders = [
     { label: "Tour Title", additionalClasses: "" },
     { label: "Date", additionalClasses: "smallPhone:hidden tablet:table-cell" },
@@ -66,48 +106,61 @@ const PendingTours = () => {
           </tr>
         </thead>
         <tbody className="p-4">
-          {tours.map((tour) => (
-            <tr key={tour.id} className="border-b-2 ">
-              <td className=" text-center  ">{tour.name}</td>
-              <td className="text-center smallPhone:hidden tablet:table-cell ">
-                01.01.2024
-              </td>
-              <td className="text-center smallPhone:hidden web:table-cell ">
-                Ivan Ivanov
-              </td>
-              <td className="text-center smallPhone:hidden tablet:table-cell ">
-                <TourStatus status="Under Review" />
-              </td>
-              <td className="py-2   text-center  ">
-                <button
-                  className="w-[38px] h-[30px] rounded-[5px] border-2 border-[#027e00] mr-6 tablet:h-10 tablet:w-[48px]"
-                  onClick={() => handleAccept(tour.id)}
-                >
-                  <Image
-                    src={CheckmarkIcon}
-                    className="mx-auto"
-                    width={24}
-                    height={24}
-                  />
-                </button>
-                <button
-                  className="w-[38px] h-[30px] rounded-[5px] border-2 border-[#e80000] tablet:h-10 tablet:w-[48px]"
-                  onClick={() => handleDecline(tour.id)}
-                >
-                  <Image
-                    src={CloseIcon}
-                    className="mx-auto"
-                    width={24}
-                    height={24}
-                  />
-                </button>
+          {error ? (
+            <tr>
+              <td
+                colSpan={tableHeaders.length}
+                className="text-center py-4 font-bold text-red-700"
+              >
+                {error}
               </td>
             </tr>
-          ))}
+          ) : (
+            tours.map((tour) => (
+              <tr key={tour.id} className="border-b-2 ">
+                <td className=" text-center  ">{tour.title}</td>
+                <td className="text-center smallPhone:hidden tablet:table-cell ">
+                  {tour.createdAt}
+                </td>
+                <td className="text-center smallPhone:hidden web:table-cell ">
+                  {tour.creatorName}
+                </td>
+                <td className="text-center smallPhone:hidden tablet:table-cell ">
+                  <TourStatus status={tour.status} />
+                </td>
+                <td className="py-2   text-center  ">
+                  <button
+                    className="w-[38px] h-[30px] rounded-[5px] border-2 border-[#027e00] mr-6 tablet:h-10 tablet:w-[48px]"
+                    onClick={() => handleAccept(tour.id)}
+                  >
+                    <Image
+                      src={CheckmarkIcon}
+                      className="mx-auto"
+                      width={24}
+                      height={24}
+                      alt="Accept"
+                    />
+                  </button>
+                  <button
+                    className="w-[38px] h-[30px] rounded-[5px] border-2 border-[#e80000] tablet:h-10 tablet:w-[48px]"
+                    onClick={() => handleDecline(tour.id)}
+                  >
+                    <Image
+                      src={CloseIcon}
+                      className="mx-auto"
+                      width={24}
+                      height={24}
+                      alt="Decline"
+                    />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
       <MobilePagination />
-      <WebPagination />
+      <WebPagination toursLength={tours.length} />
     </div>
   );
 };
