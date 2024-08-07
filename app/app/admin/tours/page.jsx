@@ -1,11 +1,12 @@
 "use client";
 // TODOS
-// 1. Add loading state while fetching
-// 2. Show Error messages with better design
-// 3. Implement Pagination functionality
-// 4. Show success or error popup message when the admin approves or declines a tour
-// 5. Must be discussed how Approved and Declined tours should look like in the table and their functionality
-// 6. Admin should have menu in navigation to access the admin page
+// 1. Redirect the admin to details page when a tour row or name is clicked
+// 2. Add loading state while fetching
+// 3. Show Error messages with better design
+// 4. Implement Pagination functionality
+// 5. Show success or error popup message when the admin approves or declines a tour
+// 6. Must be discussed how Approved and Declined tours should look like in the table and their functionality
+// 7. Admin should have menu in navigation to access the admin page
 
 import { useState, useEffect } from "react";
 import Image from "next/image.js";
