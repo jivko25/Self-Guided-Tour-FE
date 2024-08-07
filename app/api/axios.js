@@ -39,17 +39,30 @@ export const axiosTour = Axios.create({
   httpsAgent: agent, // to be removed for production
 });
 
-// Interceptor to add access token to requests
-axiosTour.interceptors.request.use(
-  (config) => {
-    const session = getCookie("session");
-
-    if (session && session.accessToken) {
-      config.headers["Authorization"] = `Bearer ${session.accessToken}`;
-    }
-    return config;
+export const axiosAdmin = Axios.create({
+  baseURL: `${BASE_URL}/Admin/`,
+  headers: {
+    "Content-Type": "application/json",
   },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  httpsAgent: agent, // to be removed for production
+});
+
+const attachTokenInterceptor = (instance) => {
+  instance.interceptors.request.use(
+    (config) => {
+      const session = getCookie("session");
+
+      if (session && session.accessToken) {
+        config.headers["Authorization"] = `Bearer ${session.accessToken}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+};
+
+// Attach the interceptor to axiosTour and axiosAdmin
+attachTokenInterceptor(axiosTour);
+attachTokenInterceptor(axiosAdmin);
