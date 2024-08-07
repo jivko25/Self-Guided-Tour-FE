@@ -4,11 +4,13 @@ import PrevPageIcon from "../../../public/svg/chevron-left.svg";
 import NextPageIcon from "../../../public/svg/chevron-right.svg";
 import DownIcon from "../../../public/svg/chevron-down.svg";
 
-export default function WebPagination() {
+export default function WebPagination({ toursLength }) {
   return (
     <div className="w-full h-[60px] flex justify-between items-center px-10 py-4 bg-[#b6bdc7] text-[#081120]  text-base font-normal rounded-tl-[5px] rounded-tr-[5px] smallPhone:hidden tablet:flex ">
       <section className="ml-10">
-        <p>3 of 200 results</p>
+        <p>
+          {toursLength} of {toursLength} results
+        </p>
       </section>
       <section className="flex gap-4 align-baseline  ">
         <p className="my-auto">You are on page</p>
