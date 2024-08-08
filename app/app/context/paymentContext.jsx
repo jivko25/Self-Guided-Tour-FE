@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import { axios } from "@/api/axios";
+import { useSearchParams } from "next/navigation";
 
 const PaymentContext = createContext();
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   country: "",
   tour: null,
   isLoading: false,
+  clientSecret: "",
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -30,12 +32,16 @@ function reducer(state, action) {
       return { ...state, country: action.payload };
     case "email":
       return { ...state, email: action.payload };
+    case "clientSecret/loaded":
+      return { ...state, clientSecret: action.payload, isLoading: false };
+
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
 export const PaymentProvider = ({ children }) => {
+  const searchParams = useSearchParams();
   const [
     {
       cardNumber,
@@ -46,6 +52,7 @@ export const PaymentProvider = ({ children }) => {
       isLoading,
       country,
       email,
+      clientSecret,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -60,6 +67,26 @@ export const PaymentProvider = ({ children }) => {
       alert("Error getting tour data", error);
     }
   }
+  async function getStripeClientSecretAsync(id) {
+    if (!id) return;
+    try {
+      dispatch({ type: "loading" });
+      const response = await axios.post(`/payment/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const { clientSecret } = response?.data?.result;
+      dispatch({ type: "clientSecret/loaded", payload: clientSecret });
+      return clientSecret;
+    } catch (error) {
+      console.log(error);
+      alert("Error getting stripe client secret", error);
+    }
+  }
+  function getTourId() {
+    return searchParams.get("tourId");
+  }
   return (
     <PaymentContext.Provider
       value={{
@@ -73,6 +100,9 @@ export const PaymentProvider = ({ children }) => {
         isLoading,
         country,
         email,
+        getStripeClientSecretAsync,
+        clientSecret,
+        getTourId,
       }}
     >
       {children}
