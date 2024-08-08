@@ -12,22 +12,13 @@ const tourAverageRating = 4.6;
 const tourType = "Walking tour";
 
 function TourCard() {
-  const { getTourData, tour, isLoading } = usePaymentContext();
-  const searchParams = useSearchParams();
-
-  const tourId = searchParams.get("tourId");
-
-  if (tourId === undefined || tourId === null || tourId === "") {
-    throw new Error(
-      "Payment page must have a tourId passed as a query parameter!"
-    );
-  }
-
+  const { getTourData, tour, isLoading, getTourId } = usePaymentContext();
+  const tourId = getTourId();
   useEffect(
     () => async () => {
       const data = await getTourData(tourId);
     },
-    [tourId]
+    []
   );
 
   if (isLoading || !tour) {
