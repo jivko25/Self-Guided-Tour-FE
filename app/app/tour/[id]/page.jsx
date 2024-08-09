@@ -6,6 +6,7 @@ import Star from "@/app/components/Svg/Star";
 import Walk from "@/app/components/Svg/walk";
 import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
+import Btn from "../../components/Buttons/Btn";
 
 function TourDetails() {
   const param = useParams();
@@ -80,7 +81,7 @@ function TourDetails() {
       <div
         className="flex items-center justify-around  border-b-2  border-[#d1d0d8] 
         web:h-[250px] web:w-[80%]
-        tablet:flex-row-reverse tablet:h-[250px] tablet:w-[90%]
+        tablet:flex-row-reverse tablet:h-[250px] tablet:w-[95%] tablet:justify-center tablet:gap-[20px]
         "
       >
         <div className="flex">
@@ -128,25 +129,29 @@ function TourDetails() {
       </div>
 
       <div
-        className="flex justify-between flex-start border-b-2 border-[#d1d0d8] 
-      web:w-[80%] web:mt-[100px] web:flex-row
-      tablet:flex-col-reverse tablet:w-[80%]  tablet:mt-[50px] tablet:gap-[100px]
+        className="flex justify-between flex-start border-b-2 border-[#d1d0d8]
+      web:w-[80%] web:mt-[100px] web:pb-[100px] web:flex-row web:items-start web:pt-[0px]
+      tablet:flex-col-reverse tablet:w-[95%]  tablet:pt-[70px] tablet:pb-[70px] tablet:gap-[100px] tablet:items-center
       "
       >
         <div
-          className="flex flex-col  h-full 
-        web:gap-[50px] web:w-[733px]
+          className="flex flex-col h-full flex-wrap 
+        web:gap-[50px] web:w-full web:max-w-[733px]
+        tablet:w-[584px]
         "
         >
-          <div className="">
+          <div className="tablet:mb-[40px] h-full">
             <h3
               className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9  
             web:mb-[20px]
+            tablet:mb-[20px]
             "
             >
               About the tour
             </h3>
-            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal ">
+            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal 
+            web:w-full 
+            web:max-w-[733px]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
               atque tenetur quos in esse ipsam eos officiis, asperiores facilis
               ad alias sint quod mollitia doloribus ipsa facere quas sunt
@@ -156,24 +161,35 @@ function TourDetails() {
               facere quas sunt consequatur.
             </p>
           </div>
-          <div className="web:w-[430px] web:h-[315px]">
-            <h3 className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9 web:mb-[20px]">
+          
+
+          <div className="tablet:h-full tablet:mb-[20px]">
+            <h3 className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9 
+            web:mb-[20px] 
+            tablet:mb-[20px]">
               Directions to starting point
             </h3>
-            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal">
+            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal 
+            web:w-full 
+            web:max-w-[733px]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
               atque tenetur quos in esse ipsam eos officiis, asperiores facilis
               ad alias sint quod mollitia doloribus ipsa facere quas sunt
               consequatur.
             </p>
           </div>
+
         </div>
 
-        <div className="flex flex-col  h-full items-start justify-center web:gap-[30px] web:w-[430px]">
+        <div className="hidden web:hidden tablet:block border-b-2 border-[#d1d0d8] w-full my-4"></div>
+
+        <div className="flex flex-col h-full flex-wrap items-start justify-center  
+        web:gap-[30px] web:w-[430px] 
+        tablet:w-[584px]">
           <div
             className="flex 
           web:items-start web:flex-col 
-          tablet:flex-row tablet:gap-[20px] tablet:items-center"
+          tablet:flex-row tablet:gap-[20px] tablet:justify-center"
           >
             <h2
               className="text-[#081120] font-medium font-['Inter']  
@@ -183,7 +199,7 @@ function TourDetails() {
             >
               Sofia Theaters Tour
             </h2>
-            <div className="flex gap-[10px]">
+            <div className="flex gap-[10px] tablet:mt-[5px]">
               <Star />
               <Star />
               <Star />
@@ -192,24 +208,32 @@ function TourDetails() {
             </div>
           </div>
 
-          <div className="flex web:flex-col tablet:flex-col-reverse">
-            <p className="text-[#081120] font-medium font-['Inter'] web:mb-[10px] web:text-2xl tablet:text-xl">
-              <span>USD</span> <span>9.99</span>
+          <div className="flex web:flex-col tablet:flex-col-reverse ">
+            <p className="flex gap-[10px] text-[#081120] font-medium font-['Inter'] 
+            web:mb-[10px] web:flex-row web:text-2xl 
+            tablet:text-xl target:flex-row-reverse tablet:mb-[20px]
+            ">
+              <span>USD</span><span>9.99</span>
             </p>
-            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal web:mb-[30px] web:w-[430px]">
+            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal web:mb-[30px] web:w-[430px] tablet:mb-[20px] tablet:w-[430px]">
               Explore the beautiful buildings and green parks of Sofia’s biggest
               theaters. Take a walk trough a beautiful sightseeing in the
               historical center of the city.
             </p>
           </div>
-          <button
+          {/* <button
             className="rounded-[5px] px-4 py-3 bg-[#13294b]  text-center text-white text-base font-semibold font-['Inter'] 
             web:w-[430px] web:h-11
             "
           >
             Buy Tour
-          </button>
+          </button> */}
+
+          <div className="web:w-[430px] tablet:w-[282px]">
+          <Btn type="submit" variant="filled" text="Buy Tour" fullWidth />
+            </div>
         </div>
+
       </div>
 
       <div
@@ -222,7 +246,7 @@ function TourDetails() {
           How Jauntster works
         </h1>
         <div
-          className="flex 
+          className="flex flex-wrap justify-center
         web:gap-[30px] web:flex-row
         tablet:flex-col
         "
