@@ -13,6 +13,7 @@ function TourDetails() {
   const searchParams = useSearchParams();
   return (
     <div className="flex flex-col items-center w-full">
+
       <div
         className="flex flex-col justify-center items-center
       web:w-[80%] web:mt-[30px]
@@ -78,10 +79,13 @@ function TourDetails() {
         </div>
       </div>
 
+      {/* ------------------------------------------------------------------------------------------------------------------------ */}
+
       <div
-        className="flex items-center justify-around  border-b-2  border-[#d1d0d8] 
-        web:h-[250px] web:w-[80%]
-        tablet:flex-row-reverse tablet:h-[250px] tablet:w-[95%] tablet:justify-center tablet:gap-[20px]
+        className="flex border-b-2  border-[#d1d0d8] 
+        web:h-[250px] web:w-[80%] web:justify-around web:items-center
+        tablet:flex-row-reverse tablet:h-[250px] tablet:w-[95%] tablet:justify-center tablet:gap-[20px] tablet:web:items-center
+        phone:flex-col-reverse phone:items-start phone:justify-center phone:gap-[20px] phone:w-[95%] phone:py-[40px]
         "
       >
         <div className="flex">
@@ -105,6 +109,7 @@ function TourDetails() {
             </p>
           </div>
         </div>
+
         <div className="flex">
           <LocationSharp />
           <div>
@@ -128,30 +133,41 @@ function TourDetails() {
         </div>
       </div>
 
+      {/* ------------------------------------------------------------------------------------------------------------------------ */}
+
       <div
         className="flex justify-between flex-start border-b-2 border-[#d1d0d8]
       web:w-[80%] web:mt-[100px] web:pb-[100px] web:flex-row web:items-start web:pt-[0px]
-      tablet:flex-col-reverse tablet:w-[95%]  tablet:pt-[70px] tablet:pb-[70px] tablet:gap-[100px] tablet:items-center
+      tablet:flex-col-reverse tablet:w-[95%] tablet:pt-[70px] tablet:pb-[70px] tablet:gap-[100px] tablet:items-center
+      phone:flex-col-reverse phone:w-[95%] phone:pt-[20px] phone:pb-[20px] phone:gap-[100px] phone:items-center
+
       "
       >
         <div
-          className="flex flex-col h-full flex-wrap 
-        web:gap-[50px] web:w-full web:max-w-[733px]
-        tablet:w-[584px]
+          className="flex flex-col h-full flex-wrap w-full
+        web:gap-[50px] web:max-w-[733px]
+        tablet:max-w-[584px]
+        phone:max-w-[95%]
+
         "
         >
-          <div className="tablet:mb-[40px] h-full">
+          <div className="tablet:mb-[40px] phone:mb-[40px] h-full">
             <h3
-              className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9  
-            web:mb-[20px]
-            tablet:mb-[20px]
+              className="text-[#081120] font-medium font-['Inter'] leading-9  
+            web:mb-[20px] web:text-2xl
+            tablet:mb-[20px] tablet:text-2xl
+            phone:mb-[20px] phone:text-base
             "
             >
               About the tour
             </h3>
-            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal 
-            web:w-full 
-            web:max-w-[733px]">
+            <p
+              className="text-[#13294b] font-normal font-['Inter'] leading-normal 
+            web:w-full web:text-base 
+            web:max-w-[733px] tablet:text-base 
+            phone:max-w-full phone:text-sm
+            "
+            >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
               atque tenetur quos in esse ipsam eos officiis, asperiores facilis
               ad alias sint quod mollitia doloribus ipsa facere quas sunt
@@ -161,45 +177,60 @@ function TourDetails() {
               facere quas sunt consequatur.
             </p>
           </div>
-          
 
-          <div className="tablet:h-full tablet:mb-[20px]">
-            <h3 className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9 
-            web:mb-[20px] 
-            tablet:mb-[20px]">
+          <div className="
+          tablet:h-full tablet:mb-[20px] 
+          phone:h-full phone:mb-[20px]">
+            <h3
+              className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9 
+            web:mb-[20px] web:text-2xl
+            tablet:mb-[20px] tablet:text-2xl
+            phone:mb-[20px] phone:text-base
+            "
+            >
               Directions to starting point
             </h3>
-            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal 
-            web:w-full 
-            web:max-w-[733px]">
+            <p
+              className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal 
+            web:w-full web:text-base 
+            web:max-w-[733px] tablet:text-base 
+            phone:max-w-full phone:text-sm
+            "
+            >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
               atque tenetur quos in esse ipsam eos officiis, asperiores facilis
               ad alias sint quod mollitia doloribus ipsa facere quas sunt
               consequatur.
             </p>
           </div>
-
         </div>
 
         <div className="hidden web:hidden tablet:block border-b-2 border-[#d1d0d8] w-full my-4"></div>
 
-        <div className="flex flex-col h-full flex-wrap items-start justify-center  
+        <div
+          className="flex flex-col h-full flex-wrap items-start justify-center  
         web:gap-[30px] web:w-[430px] 
-        tablet:w-[584px]">
+        tablet:w-[584px]
+        phone:w-full
+        "
+        >
           <div
             className="flex 
           web:items-start web:flex-col 
-          tablet:flex-row tablet:gap-[20px] tablet:justify-center"
+          tablet:flex-row tablet:gap-[20px] tablet:justify-center
+          phone:flex-col phone:mb-[20px]
+          "
           >
             <h2
               className="text-[#081120] font-medium font-['Inter']  
             web:text-[31px] web:mb-[20px]
             tablet:text-2xl tablet:mb-[20px]
+            phone:text-xl phone:mb-[10px]
             "
             >
               Sofia Theaters Tour
             </h2>
-            <div className="flex gap-[10px] tablet:mt-[5px]">
+            <div className="flex gap-[10px] tablet:mt-[5px] ">
               <Star />
               <Star />
               <Star />
@@ -208,14 +239,25 @@ function TourDetails() {
             </div>
           </div>
 
-          <div className="flex web:flex-col tablet:flex-col-reverse ">
-            <p className="flex gap-[10px] text-[#081120] font-medium font-['Inter'] 
+          <div className="flex 
+          web:flex-col 
+          tablet:flex-col-reverse 
+          phone:flex-col-reverse">
+            <p
+              className="flex gap-[10px] text-[#081120] font-medium font-['Inter'] 
             web:mb-[10px] web:flex-row web:text-2xl 
             tablet:text-xl target:flex-row-reverse tablet:mb-[20px]
-            ">
-              <span>USD</span><span>9.99</span>
+            phone:mb-[30px] phone:flex-row-reverse
+            "
+            >
+              <span>USD</span>
+              <span>9.99</span>
             </p>
-            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal web:mb-[30px] web:w-[430px] tablet:mb-[20px] tablet:w-[430px]">
+            <p className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal 
+            web:mb-[30px] web:w-[430px] 
+            tablet:mb-[20px] tablet:w-[430px]
+            phone:mb-[10px]
+            ">
               Explore the beautiful buildings and green parks of Sofia’s biggest
               theaters. Take a walk trough a beautiful sightseeing in the
               historical center of the city.
@@ -229,42 +271,55 @@ function TourDetails() {
             Buy Tour
           </button> */}
 
-          <div className="web:w-[430px] tablet:w-[282px]">
-          <Btn type="submit" variant="filled" text="Buy Tour" fullWidth />
-            </div>
+          <div className="web:w-[430px] tablet:w-[282px] phone:w-[361px]">
+            <Btn type="submit" variant="filled" text="Buy Tour" fullWidth />
+          </div>
         </div>
-
       </div>
 
+      {/* ------------------------------------------------------------------------------------------------------------------------ */}
+
       <div
-        className="flex flex-col items-center 
-      web:mt-[100px] web:gap-[50px] web:h-[500px]
+        className="flex flex-col items-center h-full mb-[50px]
+      web:mt-[100px] web:gap-[50px] 
+      tablet:m-[50px]
       
       "
       >
-        <h1 className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9">
+        <h1 className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9 tablet:mb-[100px]">
           How Jauntster works
         </h1>
+
         <div
-          className="flex flex-wrap justify-center
+          className="flex justify-center
         web:gap-[30px] web:flex-row
-        tablet:flex-col
+        tablet:flex-col tablet:gap-[100px]
+        phone:flex-col phone:gap-[100px]
         "
         >
           <div
             className="flex items-center justify-evenly  bg-neutral-50 rounded-[5px] border border-[#d1d0d8] relative
           web:w-[733px] web:h-[278px]
+          tablet:w-[583px] tablet:h-[278px]
           "
           >
             <div
-              className="absolute flex bg-[#E7EAED] rounded-full 
-            web:top-[-50px] web:px-[15px] web:py-[30px]
+              className="absolute flex bg-[#E7EAED] rounded-full items-center justify-center gap-[1px]
+            top-[-50px] px-[15px] py-[30px]
+            web:h-[100px] web:w-[100px] web:top-[-50px]
+            tablet:h-[100px] tablet:w-[100px] tablet:top-[-50px]
+            phone:h-[80px] phone:w-[80px] phone:top-[-40px]
             "
             >
               <ArrowUndoOutline />
               <ArrowRedoOutline />
             </div>
-            <div className="web:mt-[30px]">
+
+            <div
+              className="flex flex-col 
+            web:mt-[30px] web: items-center
+            tablet:mt-[10px]"
+            >
               <h1
                 className=" text-[#081120] text-xl font-medium font-['Inter'] leading-[30px]
               web:mb-[20px]
@@ -274,7 +329,8 @@ function TourDetails() {
               </h1>
               <p
                 className="text-[#13294b] text-base font-normal font-['Inter'] leading-normal
-              web:w-[667px] web:h-[95px]
+              web:w-[667px] web:h-[95px] web:text-center
+              tablet:w-[535px] tablet:h-[95px]
               "
               >
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque
@@ -285,42 +341,10 @@ function TourDetails() {
             </div>
           </div>
 
-          <div
-            className="flex items-center justify-evenly bg-neutral-50 rounded-[5px] border border-[#d1d0d8] relative
-          web:w-[733px] web:h-[278px]
-          "
-          >
-            <div
-              className="absolute flex bg-[#E7EAED] rounded-full 
-            web:top-[-50px] web:px-[15px] web:py-[30px]
-            "
-            >
-              <ArrowUndoOutline />
-              <ArrowRedoOutline />
-            </div>
-
-            <div className="web:mt-[30px]">
-              <h1
-                className=" text-[#081120] text-xl font-medium font-['Inter'] leading-[30px]
-              web:mb-[20px]
-              "
-              >
-                How to get the most of the tour and its story
-              </h1>
-              <p
-                className="text-[#13294b] text-base font-normal font-['Inter'] leading-normal
-              web:w-[667px] web:h-[95px]
-              "
-              >
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque
-                hic laudantium ex ut labore eius quas quidem, optio eos porro
-                dolores officiis iure molestias! Tempore ut optio placeat fugit
-                excepturi?
-              </p>
-            </div>
-          </div>
+   
         </div>
       </div>
+      
     </div>
   );
 }
