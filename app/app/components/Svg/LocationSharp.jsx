@@ -1,10 +1,9 @@
 import React from "react";
 
-function LocationSharp() {
+function LocationSharp({className}) {
   return (
     <svg
-      width="50"
-      height="50"
+      className={className}
       viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
