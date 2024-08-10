@@ -267,23 +267,13 @@ function TourDetails() {
               <span>9.99</span>
             </p>
             <p
-              className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal w-full
-            web:mb-[10px] web:max-w-[430px] 
-            tablet:mb-[20px] tablet:max-w-[430px]
-            phone:mb-[10px] phone:text-sm
+              className=" text-[#13294b] font-normal font-['Inter'] leading-normal w-full
+            web:mb-[10px] web:max-w-[430px] web:text-base
+            tablet:mb-[20px] tablet:max-w-[430px] tablet:text-base 
+            phone:mb-[10px] phone:text-sm 
             "
             >
               Explore the beautiful buildings and green parks of Sofia’s biggest
-              theaters. Take a walk trough a beautiful sightseeing in the
-              historical center of the city.Explore the beautiful buildings and
-              green parks of Sofia’s biggest theaters. Take a walk trough a
-              beautiful sightseeing in the historical center of the city.Explore
-              the beautiful buildings and green parks of Sofia’s biggest
-              theaters. Take a walk trough a beautiful sightseeing in the
-              historical center of the city.Explore the beautiful buildings and
-              green parks of Sofia’s biggest theaters. Take a walk trough a
-              beautiful sightseeing in the historical center of the city.Explore
-              the beautiful buildings and green parks of Sofia’s biggest
               theaters. Take a walk trough a beautiful sightseeing in the
               historical center of the city.
             </p>
