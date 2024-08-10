@@ -5,29 +5,36 @@ import LocationSharp from "@/app/components/Svg/LocationSharp";
 import Star from "@/app/components/Svg/Star";
 import Walk from "@/app/components/Svg/walk";
 import { useParams, useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Btn from "../../components/Buttons/Btn";
-import {axiosTour} from '../../../api/axios'
+import { axiosTour } from "../../../api/axios";
 function TourDetails() {
-  const {id}= useParams();
-  // const searchParams = useSearchParams();
+  const { id } = useParams();
+  const [tour, setTour] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchTourDetails = async () => {
       try {
-        const res = await axiosTour.get(`/${id}`)
-        console.log(res);
-        
-        const data = await res.json()
-        console.log(data);
-        
+        const res = await axiosTour.get(`/${id}`);
+        setTour(res.data.result);
       } catch (err) {
         console.log(err);
-        
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchTourDetails()
-  });
+    fetchTourDetails();
+  }, [id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!tour) return <p>No tour data found</p>;
+
+  const { title, price, destination, estimatedDuration, thumbnailImageUrl, status } = tour;
+
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -52,7 +59,7 @@ function TourDetails() {
           phone:text-[25px]
           "
           >
-            Sofia Theaters
+            {title}
           </h1>
           <div className="flex gap-[10px]">
             <Star />
@@ -119,7 +126,7 @@ function TourDetails() {
             phone:text-base
             "
             >
-              This is a 2.5km walking tour
+              This is a {estimatedDuration}km walking tour
             </h2>
             <p
               className="text-[#13294b] font-normal font-['Inter']
@@ -153,7 +160,7 @@ function TourDetails() {
             phone:text-sm
             "
             >
-              Sofia is the capital of Bulgaria
+              {destination} is the capital of Bulgaria
             </p>
           </div>
         </div>
@@ -282,8 +289,9 @@ function TourDetails() {
             "
             >
               <span>USD</span>
-              <span>9.99</span>
+              <span>{price}</span>
             </p>
+            
             <p
               className=" text-[#13294b] font-normal font-['Inter'] leading-normal w-full
             web:mb-[10px] web:max-w-[430px] web:text-base
