@@ -5,12 +5,30 @@ import LocationSharp from "@/app/components/Svg/LocationSharp";
 import Star from "@/app/components/Svg/Star";
 import Walk from "@/app/components/Svg/walk";
 import { useParams, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import Btn from "../../components/Buttons/Btn";
-
+import {axiosTour} from '../../../api/axios'
 function TourDetails() {
-  const param = useParams();
-  const searchParams = useSearchParams();
+  const {id}= useParams();
+  // const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const fetchTourDetails = async () => {
+      try {
+        const res = await axiosTour.get(`/${id}`)
+        console.log(res);
+        
+        const data = await res.json()
+        console.log(data);
+        
+      } catch (err) {
+        console.log(err);
+        
+      }
+    };
+    fetchTourDetails()
+  });
+
   return (
     <div className="flex flex-col items-center w-full">
       <div
