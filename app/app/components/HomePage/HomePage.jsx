@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import Search from "@/app/components/Search/Search";
+import Card from "../Card/Card";
+import headerImg from "../../public/images/headerImg.jpeg";
 
 function HomePage() {
   return (
@@ -42,6 +44,15 @@ function HomePage() {
           
         </div>
       </section>
+      
+      <Card 
+        imageSrc={headerImg} 
+        location={"SOFIA"} 
+        name={'Card title'}
+        description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et porro earum alias aliquam illo voluptate aut, distinctio cumque minima velit corrupti repellat iste placeat laudantium corporis blanditiis nisi voluptas vero?'}
+        price={'EUR 165'}
+        rating={'5.0'}
+        />
     </div>
   );
 }
