@@ -5,7 +5,7 @@ import { PaymentProvider } from "../context/paymentContext";
 function Payment() {
   return (
     <PaymentProvider>
-      <PaymentPage />;
+      <PaymentPage />
     </PaymentProvider>
   );
 }
