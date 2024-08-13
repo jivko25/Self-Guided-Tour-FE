@@ -19,6 +19,7 @@ function TourDetails() {
       try {
         const res = await axiosTour.get(`/${id}`);
         setTour(res.data.result);
+        console.log(res.data.result);
       } catch (err) {
         console.log(err);
         setError(err.message);
@@ -33,8 +34,16 @@ function TourDetails() {
   if (error) return <p>Error: {error}</p>;
   if (!tour) return <p>No tour data found</p>;
 
-  const { title, price, destination, estimatedDuration, thumbnailImageUrl, status } = tour;
+  const {
+    title,
+    price,
+    destination,
+    estimatedDuration,
+    thumbnailImageUrl,
+    status,
+    summary
 
+  } = tour;
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -126,7 +135,7 @@ function TourDetails() {
             phone:text-base
             "
             >
-              This is a {estimatedDuration}km walking tour
+              This is a 2.5km walking tour
             </h2>
             <p
               className="text-[#13294b] font-normal font-['Inter']
@@ -135,7 +144,7 @@ function TourDetails() {
             phone:text-sm
             "
             >
-              To complete it you will need average of 90min.
+              To complete it you will need average of {estimatedDuration}min.
             </p>
           </div>
         </div>
@@ -151,7 +160,7 @@ function TourDetails() {
 
             "
             >
-              This tour is located in Sofia
+              This tour is located in {destination} 
             </h2>
             <p
               className="text-[#13294b]font-normal font-['Inter']
@@ -199,16 +208,7 @@ function TourDetails() {
             phone:max-w-full phone:text-sm
             "
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-              atque tenetur quos in esse ipsam eos officiis, asperiores facilis
-              ad alias sint quod mollitia doloribus ipsa facere quas sunt
-              consequatur.Lorem ipsum dolor sit amet consectetur adipisicing
-              elit. Quidem atque tenetur quos in esse ipsam eos officiis,
-              asperiores facilis ad alias sint quod mollitia doloribus ipsa
-              facere quas sunt consequatur.Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Quidem atque tenetur quos in esse
-              ipsam eos officiis, asperiores facilis ad alias sint quod mollitia
-              doloribus ipsa facere quas sunt consequatur.
+              {summary}
             </p>
           </div>
 
@@ -264,7 +264,7 @@ function TourDetails() {
             phone:text-xl phone:mb-[10px]
             "
             >
-              Sofia Theaters Tour
+              {destination} Theaters Tour
             </h2>
             <div className="flex gap-[10px] tablet:mt-[5px] ">
               <Star />
@@ -291,7 +291,7 @@ function TourDetails() {
               <span>USD</span>
               <span>{price}</span>
             </p>
-            
+
             <p
               className=" text-[#13294b] font-normal font-['Inter'] leading-normal w-full
             web:mb-[10px] web:max-w-[430px] web:text-base
