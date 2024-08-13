@@ -17,9 +17,8 @@ export default function Btn({
     transparent: "bg-transparent text-gray-900 border-transparent",
   };
 
-  const commonClasses = `h-11 px-4 py-3 justify-center items-center inline-flex text-center font-medium ${
-    fullWidth ? "w-full" : "w-fit"
-  } ${variantClasses[variant]} ${className || ""}`;
+  const commonClasses = `h-11 px-4 py-3 justify-center items-center inline-flex text-center font-medium 
+  ${fullWidth ? "w-full" : "w-fit"} ${variantClasses[variant]} ${className || ""}`;
 
   if (link) {
     return (

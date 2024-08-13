@@ -1,5 +1,5 @@
 export const validateStep = (step, formData, targetStep) => {
-  console.log(formData);
+
   const isObjectFilled = (obj) => {
     for (let key in obj) {
       if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
@@ -13,13 +13,14 @@ export const validateStep = (step, formData, targetStep) => {
   };
 
   switch (step) {
-    case 0:
-      return (
-        formData.step1Data.tour &&
-        formData.step1Data.destination &&
-        formData.step1Data.duration &&
-        formData.step1Data.price
-      );
+    // case 0:
+    //   return (
+    //     formData.step1Data.tour &&
+    //     formData.step1Data.destination &&
+    //     formData.step1Data.duration &&
+    //     formData.step1Data.tourType &&
+    //     formData.step1Data.price
+    //   );
     case 1:
     case 1:
       // Only validate the full details if the target step is 4
