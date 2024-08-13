@@ -40,7 +40,7 @@ function HomePage() {
         phone:absolute phone:bottom-[-20px]
         smallPhone:absolute smallPhone:bottom-[-25px]"
         >
-          <Search variant="default" />
+          {/* <Search variant="default" /> */}
           
         </div>
       </section>
