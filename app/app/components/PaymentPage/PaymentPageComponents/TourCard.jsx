@@ -2,17 +2,26 @@
 import Image from "next/image";
 import StarRating from "../../StarRating/StarRating";
 import IconsBar from "./Card/IconsBar";
-import Button from "../../Buttons/Button";
 import { usePaymentContext } from "@/app/context/paymentContext";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import TourCardSkeleton from "./Card/TourCardSkeleton";
+import { useElements, useStripe } from "@stripe/react-stripe-js";
+import Btn from "../../Buttons/Btn";
 //Todo: Add this fields to the tour DTO
 const tourAverageRating = 4.6;
 const tourType = "Walking tour";
 
 function TourCard() {
-  const { getTourData, tour, isLoading, getTourId } = usePaymentContext();
+  const {
+    getTourData,
+    tour,
+    isLoading,
+    getTourId,
+    handleSubmit,
+    isStripeLoading,
+  } = usePaymentContext();
+  const stripe = useStripe();
+  const elements = useElements();
   const tourId = getTourId();
   useEffect(
     () => async () => {
@@ -58,7 +67,12 @@ function TourCard() {
           <h2>USD {tour?.price}</h2>
         </div>
         <div className=" text-center">
-          <Button variant="primary-very-long" text="Confirm and pay" />
+          <Btn
+            onClick={() => handleSubmit(stripe, elements)}
+            variant="filled"
+            text="Confirm and pay"
+            className={`${isStripeLoading ? "animate-pulse" : ""} w-full`}
+          />
         </div>
       </div>
     </section>
