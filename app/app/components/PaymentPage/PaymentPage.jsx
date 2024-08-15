@@ -7,27 +7,44 @@ import CheckoutForm from "./PaymentPageComponents/Form/CheckoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
 function PaymentPage() {
   const {
-    getStripeClientSecretAsync,
+    getPaymentIntent,
     handleClose,
     dispatch,
     clientSecret,
     getTourId,
+    getTourData,
+    addFreeTourToUser,
   } = usePaymentContext();
+  const router = useRouter();
   const tourId = getTourId();
   const options = {
     clientSecret,
     appearance,
   };
+
+  // Check if the tour is free, if so, redirect to success page
   useEffect(
     () => async () => {
-      const response = await getStripeClientSecretAsync(tourId);
-      console.log(response);
+      if (!tourId) return;
+      const { price } = await getTourData(tourId);
+      if (price === 0) {
+        await addFreeTourToUser(tourId);
+        router.push("/payment/success");
+      }
+    },
+    []
+  );
+
+  useEffect(
+    () => async () => {
+      await getPaymentIntent(tourId);
     },
     []
   );
