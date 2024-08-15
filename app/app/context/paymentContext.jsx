@@ -1,13 +1,14 @@
 import { createContext, useContext, useReducer } from "react";
 import { axios } from "@/api/axios";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useElements, useStripe } from "@stripe/react-stripe-js";
+import { get } from "react-hook-form";
 
 const PaymentContext = createContext();
 const initialState = {
   tour: null,
   isLoading: false,
   clientSecret: "",
+  paymentIntentId: "",
   isStripeLoading: false,
   message: "",
 };
@@ -20,8 +21,13 @@ function reducer(state, action) {
       return { ...state, isStripeLoading: true };
     case "tour/loaded":
       return { ...state, tour: action.payload, isLoading: false };
-    case "clientSecret/loaded":
-      return { ...state, clientSecret: action.payload, isLoading: false };
+    case "paymentIntent/loaded":
+      return {
+        ...state,
+        clientSecret: action.payload?.clientSecret,
+        paymentIntentId: action.payload?.paymentIntentId,
+        isLoading: false,
+      };
     case "loaded":
       return { ...state, isLoading: false };
     case "stripe/loaded":
@@ -38,7 +44,14 @@ export const PaymentProvider = ({ children }) => {
   const router = useRouter();
 
   const [
-    { tour, isLoading, clientSecret, isStripeLoading, message },
+    {
+      tour,
+      isLoading,
+      clientSecret,
+      isStripeLoading,
+      message,
+      paymentIntentId,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
   async function getTourData(id) {
@@ -55,7 +68,7 @@ export const PaymentProvider = ({ children }) => {
       alert("Error getting tour data", error);
     }
   }
-  async function getStripeClientSecretAsync(id) {
+  async function getPaymentIntent(id) {
     if (!id) return;
     try {
       dispatch({ type: "loading" });
@@ -64,9 +77,11 @@ export const PaymentProvider = ({ children }) => {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
-      const { clientSecret } = response?.data?.result;
-      dispatch({ type: "clientSecret/loaded", payload: clientSecret });
+      const { clientSecret, paymentIntentId } = response?.data?.result;
+      dispatch({
+        type: "paymentIntent/loaded",
+        payload: { clientSecret, paymentIntentId },
+      });
       return clientSecret;
     } catch (error) {
       if (error.response?.status === 401) {
@@ -78,6 +93,28 @@ export const PaymentProvider = ({ children }) => {
   }
   function getTourId() {
     return searchParams.get("tourId");
+  }
+  async function addFreeTourToUser(tourId) {
+    try {
+      dispatch({ type: "loading" });
+      const response = await axios.post(
+        `/payment/free/${tourId}`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch({ type: "loaded" });
+      return response;
+    } catch (error) {
+      if (error.response?.status === 401) {
+        throw new Error("Unauthorized, please login");
+      }
+      console.log(error);
+      alert("Error adding free tour to user", error);
+    }
   }
   function handleClose() {
     router.back();
@@ -97,24 +134,27 @@ export const PaymentProvider = ({ children }) => {
         // Make sure to change this to your payment completion page
         return_url:
           process.env.NEXT_PUBLIC_NODE_ENV === "production"
-            ? `${process.env.NEXT_PUBLIC_BASE_URL}/payment/success`
-            : "http://localhost:3000/payment/success",
+            ? `${
+                process.env.NEXT_VERCEL_URL
+              }/payment/success?tourId=${getTourId()}`
+            : "http://localhost:3000/payment/success?tourId=" + getTourId(),
       },
     });
-
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      dispatch({ type: "message", payload: error.message });
-    } else {
-      dispatch({ type: "message", payload: "An unexpected error occurred." });
+    if (error) {
+      if (error.type === "card_error" || error.type === "validation_error") {
+        dispatch({ type: "message", payload: error.message });
+      } else {
+        dispatch({ type: "message", payload: "An unexpected error occurred." });
+      }
     }
-
     dispatch({ type: "stripe/loaded" });
   };
+
   return (
     <PaymentContext.Provider
       value={{
@@ -122,13 +162,15 @@ export const PaymentProvider = ({ children }) => {
         tour,
         getTourData,
         isLoading,
-        getStripeClientSecretAsync,
+        getPaymentIntent,
         clientSecret,
         getTourId,
         handleClose,
         handleSubmit,
         isStripeLoading,
         message,
+        paymentIntentId,
+        addFreeTourToUser,
       }}
     >
       {children}

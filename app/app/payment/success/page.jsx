@@ -2,9 +2,12 @@
 import Image from "next/image";
 import imgSrc from "../../public/images/BoughtTour.png";
 import Btn from "@/app/components/Buttons/Btn";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 function Success() {
   const router = useRouter();
+
+  useEffect(() => {});
   return (
     <section className="flex flex-col justify-center items-center  text-[#081120] web:mt-9 tablet:mt-36 smallPhone:mt-24 ">
       <h1 className=" tablet:text-3xl smallPhone:text-xl font-medium text-center smallPhone:w-3/5">
@@ -19,6 +22,7 @@ function Success() {
         src={imgSrc}
         width={568}
         height={435}
+        priority={true}
         alt="Tour Bought Succesffully"
         className="mt-9 web:w-[700px] web:h-[466px]
                         smallPhone:w-[393px] smallPhone:h-[286px]"
