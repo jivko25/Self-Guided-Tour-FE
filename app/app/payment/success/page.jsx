@@ -2,12 +2,10 @@
 import Image from "next/image";
 import imgSrc from "../../public/images/BoughtTour.png";
 import Btn from "@/app/components/Buttons/Btn";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 function Success() {
   const router = useRouter();
 
-  useEffect(() => {});
   return (
     <section className="flex flex-col justify-center items-center  text-[#081120] web:mt-9 tablet:mt-36 smallPhone:mt-24 ">
       <h1 className=" tablet:text-3xl smallPhone:text-xl font-medium text-center smallPhone:w-3/5">

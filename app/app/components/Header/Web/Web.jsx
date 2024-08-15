@@ -31,7 +31,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
           type="button"
           variant="transparent"
           text="Explore"
-          link={{ pathname: "/payment", query: { tourId: 3 } }}
+          link="/explore"
         />
         {!isAuthenticated && (
           <div className="mr-[30px]">

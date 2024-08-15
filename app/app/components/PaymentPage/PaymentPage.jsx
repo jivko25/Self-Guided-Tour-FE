@@ -16,7 +16,6 @@ function PaymentPage() {
   const {
     getPaymentIntent,
     handleClose,
-    dispatch,
     clientSecret,
     getTourId,
     getTourData,
@@ -41,7 +40,7 @@ function PaymentPage() {
     },
     []
   );
-
+  //Create a payment intent, required for stripe
   useEffect(
     () => async () => {
       await getPaymentIntent(tourId);
@@ -67,7 +66,6 @@ function PaymentPage() {
           <CloseButton onClick={handleClose} />
         </div>
         <div className="flex  gap-16  justify-center">
-          {/* <PaymentForm onClose={handleClose} /> */}
           <CheckoutForm />
           <TourCard />
         </div>

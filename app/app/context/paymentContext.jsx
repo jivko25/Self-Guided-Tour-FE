@@ -1,7 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import { axios } from "@/api/axios";
 import { useSearchParams, useRouter } from "next/navigation";
-import { get } from "react-hook-form";
 
 const PaymentContext = createContext();
 const initialState = {
@@ -68,6 +67,7 @@ export const PaymentProvider = ({ children }) => {
       alert("Error getting tour data", error);
     }
   }
+  // Creates Payment Intent
   async function getPaymentIntent(id) {
     if (!id) return;
     try {
@@ -131,7 +131,7 @@ export const PaymentProvider = ({ children }) => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
+        // Return URL where the customer should be redirected after the payment is processed.
         return_url:
           process.env.NEXT_PUBLIC_NODE_ENV === "production"
             ? `${
@@ -141,10 +141,7 @@ export const PaymentProvider = ({ children }) => {
       },
     });
     // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
+    // confirming the payment. Otherwise, your customer will be redirected
     if (error) {
       if (error.type === "card_error" || error.type === "validation_error") {
         dispatch({ type: "message", payload: error.message });

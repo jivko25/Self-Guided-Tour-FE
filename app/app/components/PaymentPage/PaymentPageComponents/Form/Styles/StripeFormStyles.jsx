@@ -4,7 +4,6 @@ export const appearance = {
     fontFamily: "Inter, sans-serif",
     fontLineHeight: ".5",
     borderRadius: "1px",
-    accessibleColorOnColorPrimary: "#262626",
     gridRowSpacing: "4rem",
     spacingUnit: "0.4rem",
   },
