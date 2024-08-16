@@ -33,7 +33,7 @@ function PaymentPage() {
     () => async () => {
       if (!tourId) return;
       const { price } = await getTourData(tourId);
-      if (price === 0) {
+      if (price && price === 0) {
         await addFreeTourToUser(tourId);
         router.push("/payment/success");
       }
