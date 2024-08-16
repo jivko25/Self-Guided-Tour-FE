@@ -212,7 +212,7 @@ function TourDetails() {
             </p>
           </div>
 
-          <div
+          {/* <div
             className="
           tablet:h-full tablet:mb-[20px] 
           phone:h-full phone:mb-[20px]"
@@ -238,7 +238,7 @@ function TourDetails() {
               ad alias sint quod mollitia doloribus ipsa facere quas sunt
               consequatur.
             </p>
-          </div>
+          </div> */}
         </div>
 
         <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 phone:my-[0px]"></div>
