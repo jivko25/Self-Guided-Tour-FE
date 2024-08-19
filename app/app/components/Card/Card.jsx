@@ -24,6 +24,7 @@ export default function Card({
               src={imageSrc}
               alt="Card image"
               fill={true}
+              sizes="(max-width: 1280px) 50vw, 33vw"
               className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px]"
               style={{ objectFit: "cover" }}
             />
@@ -37,6 +38,7 @@ export default function Card({
                       src={userImg}
                       alt="User image"
                       fill={true}
+                      sizes="(max-width: 1280px) 20vw, 10vw"
                       className="rounded-full"
                       style={{ objectFit: "cover" }}
                     />
@@ -75,6 +77,7 @@ export default function Card({
               src={imageSrc}
               alt="Card image"
               fill={true}
+              sizes="(max-width: 1280px) 50vw, 33vw"
               className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px]"
               style={{ objectFit: "cover" }}
             />
