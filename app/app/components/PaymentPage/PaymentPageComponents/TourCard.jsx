@@ -9,7 +9,6 @@ import { useElements, useStripe } from "@stripe/react-stripe-js";
 import Btn from "../../Buttons/Btn";
 //Todo: Add this fields to the tour DTO
 const tourAverageRating = 4.6;
-const tourType = "Walking tour";
 
 function TourCard() {
   const {
@@ -56,7 +55,7 @@ function TourCard() {
         </div>
 
         <IconsBar
-          tourType={tourType}
+          tourType={tour?.tourType}
           duration={tour?.estimatedDuration}
           location={tour?.destination}
           styles="mt-7"

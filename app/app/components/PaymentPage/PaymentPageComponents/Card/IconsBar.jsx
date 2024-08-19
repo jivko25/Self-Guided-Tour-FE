@@ -9,7 +9,7 @@ function IconsBar({ tourType, duration, location, styles }) {
     >
       <li className="flex justify-center items-center gap-1">
         <Image src={Walk} alt="Walk" />
-        <p>{tourType}</p>
+        <p>{tourType} tour</p>
       </li>
       <li className="flex justify-center items-center gap-1">
         <Image src={Time} alt="Time" />

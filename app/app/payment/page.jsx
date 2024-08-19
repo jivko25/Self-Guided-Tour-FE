@@ -1,12 +1,15 @@
 "use client";
+import { Suspense } from "react";
 import PaymentPage from "../components/PaymentPage/PaymentPage";
 import { PaymentProvider } from "../context/paymentContext";
 
 function Payment() {
   return (
-    <PaymentProvider>
-      <PaymentPage />
-    </PaymentProvider>
+    <Suspense>
+      <PaymentProvider>
+        <PaymentPage />
+      </PaymentProvider>
+    </Suspense>
   );
 }
 
