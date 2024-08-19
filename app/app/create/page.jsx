@@ -8,7 +8,6 @@ import Step2 from "../components/CreateTourSteps/Step2.jsx";
 import Step3 from "../components/CreateTourSteps/Step3/Step3.jsx";
 import Step4 from "../components/CreateTourSteps/Step4.jsx";
 import Stepper from "../components/Stepper/Stepper.jsx";
-import Step1NextBtn from "../components/CreateTourSteps/Step1/Step1Components/Step1NextBtn.jsx";
 
 const MultiStepForm = () => {
   const { step } = useCreateTour();
@@ -30,8 +29,7 @@ const MultiStepForm = () => {
 
   return(
     <>
-    <div className={`${step===0? "" : "w-[100%] h-full web:relative"}`}>{renderStep()}</div>
-    {step===0 && <Step1NextBtn/> }
+    <div className={`${step===0? "flex flex-col justify-center items-center" : "w-[100%] h-full web:relative"}`}>{renderStep()}</div>
     </>
     )
 

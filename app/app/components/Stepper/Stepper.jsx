@@ -4,6 +4,7 @@ import Create from "../../public/svg/create-stepper.svg";
 import Location from "../../public/svg/location-stepper.svg";
 import Visualize from "../../public/svg/image-stepper.svg";
 import Overview from "../../public/svg/checkbox-stepper.svg";
+import { usePopup } from "@/app/context/popupContext.jsx";
 
 const steps = [
   { src: Create, alt: "Create your tour", text: "Create your tour" },
@@ -14,10 +15,15 @@ const steps = [
 
 export default function Stepper() {
   const { step, goToStep, previousStep } = useCreateTour();
+  const popup=usePopup()
 
   const handleStepClick = (index) => {
     if (index === 2 && previousStep !== 1) {
-      alert("You can only access Step 3 from Step 2's edit button.");
+      popup({
+        type: 'ERROR',
+        message: "You can only access Step 3 from Step 2's edit button.",
+      });
+      // alert("You can only access Step 3 from Step 2's edit button.");
       return;
     }
     goToStep(index);
