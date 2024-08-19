@@ -30,7 +30,7 @@ export const axiosAuth = Axios.create({
 });
 
 export const axiosTour = Axios.create({
-  baseURL: `${BASE_URL}/Tour/`,
+  baseURL: `${BASE_URL}/Tour`,
   headers: {
     "Content-Type": "multipart/form-data",
   },
