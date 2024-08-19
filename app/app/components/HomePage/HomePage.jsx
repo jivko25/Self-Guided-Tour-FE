@@ -45,17 +45,6 @@ function HomePage() {
         </div>
       </section>
       
-      <Card 
-        imageSrc={headerImg} 
-        userImg={headerImg}
-        location={"SOFIA"} 
-        title={'Card title'}
-        description={'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et porro earum alias aliquam illo voluptate aut, distinctio cumque minima velit corrupti repellat iste placeat laudantium corporis blanditiis nisi voluptas vero?'}
-        price={'EUR 165'}
-        rating={'5.0'}
-        testimonial={true}
-        userName={'John'}
-        />
     </div>
   );
 }
