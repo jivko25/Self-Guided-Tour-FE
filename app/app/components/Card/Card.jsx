@@ -19,11 +19,12 @@ export default function Card({
         <div
           className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
         >
-          <div className="mb-[6px] tablet:mb-[24px] w-full h-[110px] tablet:h-[257px] web:h-[450px]">
+          <div className="mb-[6px] rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px] tablet:mb-[24px] w-full h-[110px] tablet:h-[257px] web:h-[450px] relative">
             <Image
               src={imageSrc}
               alt="Card image"
-              className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px] w-full h-[110px] tablet:h-[257px] web:h-[450px]"
+              fill={true}
+              className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px]"
               style={{ objectFit: "cover" }}
             />
           </div>
@@ -31,12 +32,15 @@ export default function Card({
             <div className="flex justify-between items-center text-[13px] tablet:text-[16px] mb-[36px] tablet:mb-[18px] pr-[6px] tablet:pr-[16px]">
               <div className="flex flex-row items-center w-[151px]">
                 {userImg ? (
-                  <Image
-                    src={userImg}
-                    alt="User image"
-                    className="hidden tablet:block tablet:mr-[8px] web-[12px] rounded-full tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px]"
-                    style={{ objectFit: "cover" }}
-                  />
+                  <div className="hidden tablet:block rounded-full tablet:mr-[8px] tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] relative">
+                    <Image
+                      src={userImg}
+                      alt="User image"
+                      fill={true}
+                      className="rounded-full"
+                      style={{ objectFit: "cover" }}
+                    />
+                  </div>
                 ) : (
                   <div className="hidden tablet:flex justify-center items-center tablet:mr-[8px] web-[12px] rounded-full tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] bg-[#617086] text-[#FFFFFF] text-[20px]">
                       {`${userName?.toUpperCase()[0]}`}
@@ -66,11 +70,12 @@ export default function Card({
         <div
           className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[492px] web:w-[430px] web:h-[522px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
         >
-          <div className="mb-[6px] tablet:mb-[8.5px] w-full h-[110px] tablet:h-[262px] web:h-[256px]">
+          <div className="mb-[6px] tablet:mb-[8.5px] w-full h-[110px] tablet:h-[262px] web:h-[256px] relative">
             <Image
               src={imageSrc}
               alt="Card image"
-              className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px] w-full h-[110px] tablet:h-[262px] web:h-[256px]"
+              fill={true}
+              className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px]"
               style={{ objectFit: "cover" }}
             />
           </div>
