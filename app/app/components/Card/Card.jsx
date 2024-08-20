@@ -26,6 +26,7 @@ export default function Card({
               fill={true}
               sizes="(max-width: 1280px) 50vw, 33vw"
               className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px]"
+              priority={true}
               style={{ objectFit: "cover" }}
             />
           </div>
@@ -40,6 +41,7 @@ export default function Card({
                       fill={true}
                       sizes="(max-width: 1280px) 20vw, 10vw"
                       className="rounded-full"
+                      priority={true}
                       style={{ objectFit: "cover" }}
                     />
                   </div>
@@ -79,6 +81,7 @@ export default function Card({
               fill={true}
               sizes="(max-width: 1280px) 50vw, 33vw"
               className="rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px]"
+              priority={true}
               style={{ objectFit: "cover" }}
             />
           </div>
