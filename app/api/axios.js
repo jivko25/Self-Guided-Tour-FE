@@ -1,7 +1,6 @@
 import Axios from "axios";
 import https from "https";
-import { parseJwt, getCookie } from "@/app/utils/cookieUtils.js";
-
+import { setupSessionInterceptors } from "./interceptors";
 //TODO: Get the base url from the env
 const BASE_URL =
   process.env.NEXT_PUBLIC_NODE_ENV === "production"
@@ -18,7 +17,7 @@ export const axios = Axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
+  //withCredentials: true, TODO: Uncomment when we setup CORS
 });
 
 //TODO: Add axios private instance for the auth
@@ -35,21 +34,19 @@ export const axiosTour = Axios.create({
   headers: {
     "Content-Type": "multipart/form-data",
   },
-  withCredentials: true,
+  //withCredentials: true, TODO: Uncomment when we setup CORS
   httpsAgent: agent, // to be removed for production
 });
 
-// Interceptor to add access token to requests
-axiosTour.interceptors.request.use(
-  (config) => {
-    const session = getCookie("session");
-
-    if (session && session.accessToken) {
-      config.headers["Authorization"] = `Bearer ${session.accessToken}`;
-    }
-    return config;
+export const axiosAdmin = Axios.create({
+  baseURL: `${BASE_URL}/Admin/`,
+  headers: {
+    "Content-Type": "application/json",
   },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+  httpsAgent: agent, // to be removed for production
+});
+
+// Attach the interceptor to axios, axiosTour and axiosAdmin
+setupSessionInterceptors(axios);
+setupSessionInterceptors(axiosTour);
+setupSessionInterceptors(axiosAdmin);

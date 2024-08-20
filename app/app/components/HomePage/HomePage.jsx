@@ -24,7 +24,8 @@ import DESCRIBE from "../../public/Home/Group 39.svg"
 import REVIEW from "../../public/Home/Group 44.svg"
 
 import CARDTOUR from "../../public/Home/card-tours.svg"
-
+import Card from "../Card/Card";
+import headerImg from "../../public/images/headerImg.jpeg";
 
 function HomePage() {
   return (
@@ -66,8 +67,6 @@ function HomePage() {
 
         </div>
       </section>
-
-      {/* Be Independent */}
       <div className="flex flex-row  space-x-5 justify-center mt-[100px] web:w-[1187px] w-[783px] h-[172px]">
         <div className="flex flex-row web:w-[582px] w-[383px] h-[172px] 
         justify-center items-center border-[1px] border-[#D1D0D8] rounded-[15px]" >
@@ -277,9 +276,5 @@ function HomePage() {
       </div>
 
       {/* Testimonials Heading */}
-
-    </div>
-  );
-}
 
 export default HomePage;

@@ -11,18 +11,20 @@ export const metadata = {
 };
 import { AuthProvider } from "./context/authContext";
 import Footer from "./components/Footer";
+import { PopupProvider } from "./context/popupContext";
 
 export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} bg-neutral-50 flex flex-col items-center min-h-screen`}
-      >
+      <body className={`${inter.className} bg-neutral-50 flex flex-col items-center min-h-screen`}>
+      <div id="createModal"/>
         <AuthProvider>
+          <PopupProvider>
           <Header />
           {children}
           {/* <Footer/> */}
+          </PopupProvider>
         </AuthProvider>
       </body>
     </html>

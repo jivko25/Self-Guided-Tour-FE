@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 
+import { hostname } from "os";
 import path from "path";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -21,6 +22,18 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "selfguidedstorage.blob.core.windows.net",
+      },
+      {
+        protocol: "https",
+        hostname: "jauntstermvpblob.blob.core.windows.net",
+      },
+    ],
   },
 };
 
