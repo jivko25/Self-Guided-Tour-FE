@@ -10,14 +10,12 @@ export default function Web({ isAuthenticated, handleLogout }) {
     if (handleLogout) {
       handleLogout();
     }
-  }
+  };
 
   const signInButtonClass =
     pathname === "/"
       ? "h-11 px-4 py-3 justify-center items-center flex text-center font-medium text-gray-900 rounded-md border-2 border-neutral-50 bg-neutral-50"
       : "h-11 px-4 py-3 justify-center items-center flex text-center font-medium bg-neutral text-gray-900 border-2 rounded-md border-blue-950";
-
-   
 
   return (
     <nav className="flex items-center w-full h-full justify-around">

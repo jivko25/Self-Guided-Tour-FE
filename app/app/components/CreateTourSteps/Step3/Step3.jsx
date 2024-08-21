@@ -10,9 +10,11 @@ import DescriptionTabletPhone from "./Step3Components/DescriptionTabletPhone.jsx
 import MediaPreviewTablet from "./Step3Components/MediaPreviewTablet.jsx";
 import MediaPreviewWebPhone from "./Step3Components/MediaPreviewWebPhone.jsx";
 import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
+import { usePopup } from "@/app/context/popupContext.jsx";
 
 const Step3 = () => {
   const pathname = usePathname();
+  const popup=usePopup()
 
   const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
     useCreateTour();
@@ -54,6 +56,10 @@ const Step3 = () => {
       !inputs.locationName ||
       inputs.addFields.length === 0
     ) {
+      popup({
+        type: 'ERROR',
+        message: "Please fill all the required fields",
+      });
       alert("Please fill all the required fields");
       return;
     }
@@ -70,7 +76,11 @@ const Step3 = () => {
       ); // 5MB in bytes
 
       if (validFiles.length !== fileArray.length) {
-        alert("Some files exceed the 5MB limit and were not added.");
+        popup({
+          type: 'ERROR',
+          message: "Some files exceed the 5MB limit and were not added.",
+        });
+        // alert("Some files exceed the 5MB limit and were not added.");
       }
 
       setInputs((prevInputs) => ({
