@@ -8,6 +8,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import Btn from "../../components/Buttons/Btn";
 import { axiosTour } from "../../../api/axios";
+import './tour.scss'
 
 function TourDetails() {
   const { id } = useParams();
@@ -45,14 +46,7 @@ function TourDetails() {
   } = tour;
 
   console.log(landmarks);
-  
 
-  const imageStyles = [
-    "object-cover web:w-full web:rounded-[0px] tablet:rounded-[0px] web:h-full tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
-    "object-cover web:w-full web:h-full web:rounded-tr-[15px] web:rounded-[0px] tablet:rounded-[0px] tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
-    "object-cover web:w-full web:h-full web:rounded-bl-[0px] tablet:h-[180px] tablet:rounded-bl-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
-    "object-cover web:w-full web:h-full web:rounded-br-[15px] tablet:h-[180px] tablet:rounded-br-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
-  ];
   return (
     <div className="flex flex-col items-center w-full">
       <div
@@ -88,9 +82,9 @@ function TourDetails() {
 
         <div
           className="
-        web:grid  web:grid-cols-4 web:grid-rows-2 web:gap-4 web:w-full web:h-full web:max-h-[520px] web:items-center web:justify-center
+        web:grid web:grid-cols-4 web:grid-rows-2 web:gap-4 web:w-full web:h-full web:max-h-[520px] web:items-center web:justify-center
         tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:w-full tablet:h-full tablet:items-center tablet:justify-center 
-        phone:flex  phone:mr-[20px] phone:w-full phone:pl-[20px] phone:overflow-x-auto phone:gap-[20px] 
+        phone:flex phone:w-full phone:overflow-x-auto 
         "
           style={{
             "::WebkitScrollbar": { display: "none" },
@@ -99,9 +93,7 @@ function TourDetails() {
           }}
         >
           <img
-            className="web:w-full web:h-full web:max-h-[520px] web:col-span-2 web:row-span-2 web:object-cover web:rounded-tl-[15px] web:rounded-bl-[15px] web:tablet:rounded-tr-[0px] web:rounded-none
-            tablet:col-span-2 tablet:w-[100%] tablet:h-[260px] tablet:rounded-tl-[15px] tablet:rounded-tr-[15px] tablet:rounded-none
-            phone:w-[361px] phone:h-[260px] "
+            className="tourCoverImg"
             src={thumbnailImageUrl}
             alt="Cover Image"
           />
@@ -111,9 +103,7 @@ function TourDetails() {
                 ? landmark.resources.map((resource, resourceIndex) => (
                     <img
                       key={resource.resourceId}
-                      className={`${
-                        imageStyles[resourceIndex % imageStyles.length]
-                      }`}
+                      className="tourImages"
                       src={resource.resourceUrl}
                       alt={`Landmark Image ${index + 1}`}
                     />
