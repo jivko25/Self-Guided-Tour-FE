@@ -45,6 +45,7 @@ function TourDetails() {
   } = tour;
 
   console.log(landmarks);
+  
 
   const imageStyles = [
     "object-cover web:w-full web:rounded-[0px] tablet:rounded-[0px] web:h-full tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
@@ -104,26 +105,21 @@ function TourDetails() {
             src={thumbnailImageUrl}
             alt="Cover Image"
           />
-          {landmarks.map((landmark) => (
-            <div key={landmark.landmarkId} className="space-y-4">
-              {landmark.resources.map((resource, index) =>
-                resource.resourceType === "Image" ? (
-                  <div key={resource.resourceId} className="flex-shrink-0">
+          {landmarks &&
+            landmarks.flatMap((landmark, index) =>
+              landmark.resources
+                ? landmark.resources.map((resource, resourceIndex) => (
                     <img
+                      key={resource.resourceId}
+                      className={`${
+                        imageStyles[resourceIndex % imageStyles.length]
+                      }`}
                       src={resource.resourceUrl}
-                      alt={landmark.locationName}
-                      className={imageStyles[index % imageStyles.length]} // Apply style based on index
+                      alt={`Landmark Image ${index + 1}`}
                     />
-                    <p className="text-sm text-gray-500">
-                      Resource ID: {resource.resourceId}
-                    </p>
-                    <p className="text-xs text-gray-400">Index: {index}</p>{" "}
-                    {/* Display index */}
-                  </div>
-                ) : null
-              )}
-            </div>
-          ))}
+                  ))
+                : []
+            )}
         </div>
       </div>
 
