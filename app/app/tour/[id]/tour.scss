@@ -1,0 +1,80 @@
+@import "../../responsive.scss";
+
+.tourCoverImg {
+  grid-column: span 2;
+  grid-row: span 2;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+
+  @include smallPhone {
+    width: 361px;
+    height: 260px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  @include mobile {
+    width: 361px;
+    height: 260px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  @include tablet {
+    width: 100%;
+    height: 350px;
+    border-radius: 15px 15px 0px 0px;
+  }
+
+  @include web {
+    width: 100%;
+    height: 500px;
+    border-radius: 15px 0px 0px 15px;
+  }
+}
+
+.tourImages {
+  object-fit: cover;
+
+  @include smallPhone {
+    width: 361px;
+    height: 260px;
+    border-radius: 5px;
+    margin-right: 10px;
+
+  }
+
+  @include mobile {
+    width: 361px;
+    height: 260px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+
+  @include tablet {
+    width: 100%;
+    height: 280px;
+
+    &:nth-last-of-type(2) {
+      border-radius: 0px 0px 0px 15px;
+    }
+
+    &:last-of-type {
+      border-radius: 0px 0px 15px 0px;
+    }
+  }
+
+  @include web {
+    width: 100%;
+    height: 244px;
+
+    &:nth-last-of-type(3) {
+      border-radius: 0px 15px 0px 0px;
+    }
+
+    &:last-of-type {
+      border-radius: 0px 0px 15px 0px;
+    }
+  }
+}
