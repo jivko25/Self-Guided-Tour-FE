@@ -14,7 +14,7 @@ import { usePopup } from "@/app/context/popupContext.jsx";
 
 const Step3 = () => {
   const pathname = usePathname();
-  const popup=usePopup()
+  const popup = usePopup();
 
   const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
     useCreateTour();
@@ -50,17 +50,11 @@ const Step3 = () => {
 
   const handleFinish = () => {
     const { locationName, ...updatedInputs } = inputs;
-    if (
-      !inputs.locationCity ||
-      !inputs.locationDescription ||
-      !inputs.locationName ||
-      inputs.addFields.length === 0
-    ) {
+    if (!inputs.locationName) {
       popup({
-        type: 'ERROR',
+        type: "ERROR",
         message: "Please fill all the required fields",
       });
-      alert("Please fill all the required fields");
       return;
     }
     updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
@@ -77,7 +71,7 @@ const Step3 = () => {
 
       if (validFiles.length !== fileArray.length) {
         popup({
-          type: 'ERROR',
+          type: "ERROR",
           message: "Some files exceed the 5MB limit and were not added.",
         });
         // alert("Some files exceed the 5MB limit and were not added.");
