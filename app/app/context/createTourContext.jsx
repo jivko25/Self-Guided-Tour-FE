@@ -71,11 +71,11 @@ export const CreateTourProvider = ({ children }) => {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const data = JSON.parse(savedData);
 
-      if (data.step1Data.tour !== '' ||
-        data.step1Data.destination !== '' ||
-        data.step1Data.duration !== '' ||
-        data.step1Data.price !== '' ||
-        data.step1Data.tourType !== ''
+      if (data?.step1Data?.tour !== '' ||
+        data?.step1Data?.destination !== '' ||
+        data?.step1Data?.duration !== '' ||
+        data?.step1Data?.price !== '' ||
+        data?.step1Data?.tourType !== ''
       ) { 
         setOpenModal(true)
       }
