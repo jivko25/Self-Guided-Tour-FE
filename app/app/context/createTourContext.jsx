@@ -38,14 +38,14 @@ export const CreateTourProvider = ({ children }) => {
   //   return emptyFormData; // Return empty form data during SSR
   // };
 
-  const popup = usePopup()
+  const popup = usePopup();
 
   const [openModal, setOpenModal] = useState(false);
 
   const [step, setStep] = useState(0);
   // const [formData, setFormData] = useState(loadInitialState());
   const [formData, setFormData] = useState(emptyFormData);
-  const [localStorageData, setLocalStorageData]=useState(false)
+  const [localStorageData, setLocalStorageData] = useState(false);
   const hasPrompted = useRef(false); // Use a ref to ensure the prompt only happens once
 
   // Currently it saves every time formData changes, but it's a better idea to save it with a Save Draft Button
@@ -56,45 +56,44 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, [formData]);
 
-  useEffect(()=>{
-    if(localStorageData){
+  useEffect(() => {
+    if (localStorageData) {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const newData = JSON.parse(savedData);
-      
-      setFormData((prevData) => ({ ...prevData, ...newData }));
 
+      setFormData((prevData) => ({ ...prevData, ...newData }));
     }
-  },[localStorageData])
+  }, [localStorageData]);
 
   useEffect(() => {
     if (!hasPrompted.current) {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const data = JSON.parse(savedData);
 
-      if (data?.step1Data?.tour !== '' ||
-        data?.step1Data?.destination !== '' ||
-        data?.step1Data?.duration !== '' ||
-        data?.step1Data?.price !== '' ||
-        data?.step1Data?.tourType !== ''
-      ) { 
-        setOpenModal(true)
+      if (
+        data?.step1Data?.tour !== "" ||
+        data?.step1Data?.destination !== "" ||
+        data?.step1Data?.duration !== "" ||
+        data?.step1Data?.price !== "" ||
+        data?.step1Data?.tourType !== ""
+      ) {
+        setOpenModal(true);
       }
     }
   }, []);
 
   const onCloseModal = () => {
     setFormData(() => emptyFormData);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(emptyFormData))
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(emptyFormData));
     setOpenModal(false);
-  }
+  };
 
   const nextStep = () => {
     if (validateStep(step, formData)) {
       setStep((prevStep) => prevStep + 1);
-
     } else {
       popup({
-        type: 'ERROR',
+        type: "ERROR",
         message: "Please fill in all required fields before proceeding.",
       });
     }
@@ -107,17 +106,16 @@ export const CreateTourProvider = ({ children }) => {
       setStep(stepIndex);
     } else {
       popup({
-        type: 'ERROR',
-        message: "Please fill in all required fields in previous steps before proceeding.",
+        type: "ERROR",
+        message:
+          "Please fill in all required fields in previous steps before proceeding.",
       });
     }
   };
   const updateSavedFormData = () => {
-    setLocalStorageData(true)
-    setOpenModal(false)
-  }
-
-
+    setLocalStorageData(true);
+    setOpenModal(false);
+  };
 
   const updateFormData = (newData) => {
     setFormData((prevData) => ({ ...prevData, ...newData }));
@@ -145,13 +143,13 @@ export const CreateTourProvider = ({ children }) => {
     hasPrompted.current = true;
   };
 
-  const updateStep1Data=(newData)=>{
-    setFormData((prevData)=>{
-      const step1Data={...newData}
+  const updateStep1Data = (newData) => {
+    setFormData((prevData) => {
+      const step1Data = { ...newData };
       return { ...prevData, step1Data };
     });
     hasPrompted.current = true;
-  }
+  };
 
   const handlePublishTour = async () => {
     const tourData = {
@@ -181,7 +179,7 @@ export const CreateTourProvider = ({ children }) => {
 
     if (!tourData.summary || !tourData.thumbnailImage) {
       popup({
-        type: 'ERROR',
+        type: "ERROR",
         message: "Missing thumbnail image or summary",
       });
 
@@ -193,7 +191,7 @@ export const CreateTourProvider = ({ children }) => {
     if (error) {
       // TODO : Handle error (e.g., display a notification)
       popup({
-        type: 'ERROR',
+        type: "ERROR",
         message: error.message,
       });
       // console.error(error);
@@ -203,6 +201,7 @@ export const CreateTourProvider = ({ children }) => {
     }
   };
 
+  console.log(formData);
   return (
     <CreateTourContext.Provider
       value={{

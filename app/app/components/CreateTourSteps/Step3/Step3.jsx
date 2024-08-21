@@ -171,7 +171,7 @@ const Step3 = () => {
           web:justify-start web:items-start
           tablet:justify-center tablet:items-center"
       >
-        <NavigationButtons prevStep={prevStep} handleFinish={handleFinish} />
+        <NavigationButtons  handleFinish={handleFinish} />
 
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
