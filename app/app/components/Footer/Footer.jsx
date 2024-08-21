@@ -9,12 +9,12 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[474px] bg-[#13294b] px-[20%]">
+    <div className="hidden web:flex web:py-[0%] tablet:flex tablet:py-[10%] flex-col items-center justify-center w-full min-h-[474px] bg-[#13294b] web:px-[20%] tablet:px-[3%]">
       <h1 className="flex w-full max-w-[1336px] text-center text-white text-[31px] font-medium font-['Inter'] mb-[55px] mt-[35px]">
         LOGO
       </h1>
-      <section className="flex w-full max-w-[1336px] gap-[100px] flex-wrap">
-        <ul className="flex flex-col flex-1 gap-[30px] mr-[100px]">
+      <section className="flex w-full max-w-[1336px] web:gap-[100px] tablet:gap-[30px]">
+        <ul className="flex flex-col flex-1 gap-[30px] web:mr-[10%] tablet:mr-[40px]">
           <li className="flex items-center justify-start gap-[10px]">
             <CallOutline />
             <p className="text-white text-base font-normal font-['Inter']">
