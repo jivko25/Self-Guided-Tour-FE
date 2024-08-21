@@ -11,14 +11,14 @@ function NavigationButtons({ prevStep, handleFinish }) {
             phone:justify-center phone:mb-[50px] phone:pt-[20px]
             smallPhone:justify-center smallPhone:pt-[0px]"
     >
-      <Btn
+      {/* <Btn
         variant="transparent"
         className="hidden text-center text-gray-900 text-base font-semibold px-4 py-3 w-[128px] h-[43px] justify-center items-center border-b-2 border-neutral-50
         web:inline-flex  
         tablet:inline-flex"
         text="Prev"
         onClick={prevStep}
-      />
+      /> */}
       <Btn
         variant="fullWidth"
         className="text-center text-gray-900 text-base font-semibold justify-center items-center flex border-b-2 border-yellow-500 h-[43px]
