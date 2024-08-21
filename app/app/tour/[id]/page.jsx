@@ -47,7 +47,7 @@ function TourDetails() {
   const imageStyles = [
     "object-cover web:w-full web:rounded-[0px] tablet:rounded-[0px] web:h-full tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
     "object-cover web:w-full web:h-full web:rounded-tr-[15px] web:rounded-[0px] tablet:rounded-[0px] tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
-    "object-cover web:w-full web:h-full web:rounded-bl-[0px]  tablet:h-[180px] tablet:rounded-bl-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
+    "object-cover web:w-full web:h-full web:rounded-bl-[0px] tablet:h-[180px] tablet:rounded-bl-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
     "object-cover web:w-full web:h-full web:rounded-br-[15px] tablet:h-[180px] tablet:rounded-br-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
   ];
   return (
