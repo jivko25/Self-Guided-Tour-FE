@@ -6,7 +6,8 @@ import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
 
 const Step2 = () => {
-  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } = useCreateTour();
+  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
+    useCreateTour();
 
   const [data, setData] = useState({
     placeId: "",
@@ -14,6 +15,7 @@ const Step2 = () => {
     latitude: "",
     longitude: "",
   });
+
 
   const drag = useRef(0);
   const dragOver = useRef(0);
@@ -136,7 +138,7 @@ const Step2 = () => {
                 Once you’ve added locations on the map, they’ll appear in the
                 list below.
               </p>
-              {formData.step2Data.map(({ placeId, location }, index) => (
+              {/* {formData.step2Data.map(({ placeId, location }, index) => (
                 <LocationComponent
                   key={index}
                   count={index + 1}
@@ -147,6 +149,20 @@ const Step2 = () => {
                   onDragEnd={handleSort}
                   onDragOver={(e) => e.preventDefault()}
                   placeId={placeId}
+                  handleAddInfo={handleAddInfo}
+                  handleDeleteLocation={handleDeleteLocation}
+                />
+              ))} */}
+              {formData.step2Data.map((location, index) => (
+                <LocationComponent
+                  key={location.placeId}
+                  count={index + 1}
+                  location={location} // Pass the entire location object
+                  draggable
+                  onDragStart={() => (drag.current = index)}
+                  onDragEnter={() => (dragOver.current = index)}
+                  onDragEnd={handleSort}
+                  onDragOver={(e) => e.preventDefault()}
                   handleAddInfo={handleAddInfo}
                   handleDeleteLocation={handleDeleteLocation}
                 />
