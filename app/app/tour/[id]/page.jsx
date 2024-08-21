@@ -3,7 +3,7 @@ import ArrowRedoOutline from "@/app/components/Svg/ArrowRedoOutline";
 import ArrowUndoOutline from "@/app/components/Svg/ArrowUndoOutline";
 import LocationSharp from "@/app/components/Svg/LocationSharp";
 import Star from "@/app/components/Svg/Star";
-import Walk from "@/app/components/Svg/walk";
+import Walk from "@/app/components/Svg/Walk";
 import { useParams, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import Btn from "../../components/Buttons/Btn";
@@ -43,6 +43,8 @@ function TourDetails() {
     status,
     summary,
   } = tour;
+
+  console.log(landmarks);
 
   const imageStyles = [
     "object-cover web:w-full web:rounded-[0px] tablet:rounded-[0px] web:h-full tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
@@ -102,21 +104,26 @@ function TourDetails() {
             src={thumbnailImageUrl}
             alt="Cover Image"
           />
-          {landmarks &&
-            landmarks.flatMap((landmark, index) =>
-              landmark.resources
-                ? landmark.resources.map((resource, resourceIndex) => (
+          {landmarks.map((landmark) => (
+            <div key={landmark.landmarkId} className="space-y-4">
+              {landmark.resources.map((resource, index) =>
+                resource.resourceType === "Image" ? (
+                  <div key={resource.resourceId} className="flex-shrink-0">
                     <img
-                      key={resource.resourceId}
-                      className={`${
-                        imageStyles[resourceIndex % imageStyles.length]
-                      }`}
                       src={resource.resourceUrl}
-                      alt={`Landmark Image ${index + 1}`}
+                      alt={landmark.locationName}
+                      className={imageStyles[index % imageStyles.length]} // Apply style based on index
                     />
-                  ))
-                : []
-            )}
+                    <p className="text-sm text-gray-500">
+                      Resource ID: {resource.resourceId}
+                    </p>
+                    <p className="text-xs text-gray-400">Index: {index}</p>{" "}
+                    {/* Display index */}
+                  </div>
+                ) : null
+              )}
+            </div>
+          ))}
         </div>
       </div>
 
