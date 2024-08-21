@@ -14,16 +14,31 @@ const steps = [
 ];
 
 export default function Stepper() {
-  const { step, goToStep, previousStep } = useCreateTour();
-  const popup=usePopup()
-
+  const { step, goToStep, previousStep, formData } = useCreateTour();
+  const popup = usePopup();
   const handleStepClick = (index) => {
+    // First, check if Step 1 data is filled before proceeding to any further steps
+    const isStep1Filled =
+      formData.step1Data.tour &&
+      formData.step1Data.destination &&
+      formData.step1Data.duration &&
+      formData.step1Data.tourType &&
+      formData.step1Data.price;
+
+    if (!isStep1Filled && index > 0) {
+      popup({
+        type: "ERROR",
+        message:
+          "Please fill in all required fields in Step 1 before proceeding to other steps.",
+      });
+      return;
+    }
     if (index === 2 && previousStep !== 1) {
       popup({
-        type: 'ERROR',
+        type: "ERROR",
         message: "You can only access Step 3 from Step 2's edit button.",
       });
-      // alert("You can only access Step 3 from Step 2's edit button.");
+
       return;
     }
     goToStep(index);
