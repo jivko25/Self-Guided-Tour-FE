@@ -1,5 +1,4 @@
 export const validateStep = (step, formData, targetStep) => {
-
   const isObjectFilled = (obj) => {
     for (let key in obj) {
       if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
@@ -13,7 +12,7 @@ export const validateStep = (step, formData, targetStep) => {
   };
 
   switch (step) {
-    // case 0:
+    // case 1:
     //   return (
     //     formData.step1Data.tour &&
     //     formData.step1Data.destination &&
@@ -21,8 +20,7 @@ export const validateStep = (step, formData, targetStep) => {
     //     formData.step1Data.tourType &&
     //     formData.step1Data.price
     //   );
-    case 1:
-    case 1:
+    case 2:
       // Only validate the full details if the target step is 4
       if (targetStep === 3) {
         return (
@@ -31,19 +29,18 @@ export const validateStep = (step, formData, targetStep) => {
             isObjectFilled({
               location: loc.location,
               placeId: loc.placeId,
-              locationCity: loc.locationCity,
-              locationDescription: loc.locationDescription,
               latitude: loc.latitude,
               longitude: loc.longitude,
-              addFields: loc.addFields,
+              // locationCity: loc.locationCity,
+              // locationDescription: loc.locationDescription,
+              // addFields: loc.addFields,
             })
           )
         );
-      } else {
-        // Otherwise, just check if step2Data is not empty
-        return formData.step2Data.length > 0;
       }
-    case 2:
+    case 3:
+      return formData.step2Data.length > 0;
+    case 4:
       return (
         formData.step3Data.locationName &&
         formData.step3Data.locationCity &&

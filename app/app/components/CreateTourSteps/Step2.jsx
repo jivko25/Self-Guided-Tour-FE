@@ -6,13 +6,7 @@ import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
 
 const Step2 = () => {
-  const {
-    formData,
-    updateFormData,
-    updateStep2Data,
-    prevStep,
-    goToStep,
-  } = useCreateTour();
+  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } = useCreateTour();
 
   const [data, setData] = useState({
     placeId: "",
@@ -63,17 +57,21 @@ const Step2 = () => {
   };
 
   const handleDeleteLocation = (placeId) => {
-    const placeIndex = coordinatesRef.current.findIndex(loc => loc.placeId === placeId);
+    const placeIndex = coordinatesRef.current.findIndex(
+      (loc) => loc.placeId === placeId
+    );
 
     if (placeIndex !== -1) {
-        coordinatesRef.current.splice(placeIndex, 1);
-        setCreateCoordinates([...createCoordinates.filter(c => c.placeId !== placeId)]);
+      coordinatesRef.current.splice(placeIndex, 1);
+      setCreateCoordinates([
+        ...createCoordinates.filter((c) => c.placeId !== placeId),
+      ]);
     }
 
     updateFormData({
-      step2Data: formData.step2Data.filter(loc => loc.placeId !== placeId),
+      step2Data: formData.step2Data.filter((loc) => loc.placeId !== placeId),
     });
-  }
+  };
 
   return (
     <>
@@ -169,12 +167,12 @@ const Step2 = () => {
               text="Prev"
               onClick={prevStep}
             />
-            {/* <Btn
+            <Btn
               className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Next"
-              onClick={nextStep}
-            /> */}
+              onClick={() => goToStep(3)}
+            />
           </div>
         </div>
       </div>
