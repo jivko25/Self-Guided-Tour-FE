@@ -90,8 +90,8 @@ export default function Card({
           </div>
           <div className="flex flex-col pl-[8px] tablet:pl-[24px] pb-[12px] web:pb-[24px] tablet:pr-[12px] web:pr-[8px] text-[#13294B]">
             <div className="flex justify-between text-[13px] tablet:text-[16px] mb-[6px] web:mb-[18px] pr-[6px] tablet:pr-[16px]">
-              <span className="w-[151px]">{location}</span>
-              <div className="w-[143px] flex justify-end">
+              <span className="w-[151px] overflow-hidden">{location}</span>
+              <div className="w-[60px] flex justify-end">
                 <span className="text-[#E8B600]">{rating}</span>
                 <Image
                   src={Star}
