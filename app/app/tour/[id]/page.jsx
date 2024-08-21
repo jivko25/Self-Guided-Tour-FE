@@ -52,7 +52,6 @@ function TourDetails() {
   ];
   return (
     <div className="flex flex-col items-center w-full">
-    
       <div
         className="flex flex-col justify-center items-center
       web:w-[80%] web:mt-[30px]
@@ -83,7 +82,6 @@ function TourDetails() {
             </span>
           </div>
         </div>
-
 
         <div
           className="
@@ -310,7 +308,7 @@ function TourDetails() {
               historical center of the city.
             </p>
           </div>
-        
+
           <div className="web:w-[430px] tablet:w-[282px] phone:w-[361px]">
             <Btn type="submit" variant="filled" text="Buy Tour" fullWidth />
           </div>
@@ -452,10 +450,11 @@ function TourDetails() {
   );
 }
 
-export default function TourDetailsWrapper() {
+function TourDetailsWrapper() {
   return (
     <Suspense fallback={<p>Loading Tour Details...</p>}>
       <TourDetails />
     </Suspense>
   );
 }
+export default TourDetailsWrapper;
