@@ -5,7 +5,7 @@ import LocationSharp from "@/app/components/Svg/LocationSharp";
 import Star from "@/app/components/Svg/Star";
 import Walk from "@/app/components/Svg/walk";
 import { useParams, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Btn from "../../components/Buttons/Btn";
 import { axiosTour } from "../../../api/axios";
 
@@ -45,13 +45,14 @@ function TourDetails() {
   } = tour;
 
   const imageStyles = [
-    "object-cover web:w-full web:rounded-[0px] tablet:rounded-[0px] web:h-full tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]  border-2 border-black",
-    "object-cover web:w-full web:h-full web:rounded-tr-[15px] web:rounded-[0px] tablet:rounded-[0px] tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]  border-2 border-black",
-    "object-cover web:w-full web:h-full web:rounded-bl-[0px] web:rounded-[0px] tablet:rounded-[0px] tablet:h-[180px] tablet:rounded-bl-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]  border-2 border-black",
-    "object-cover web:w-full web:h-full web:rounded-br-[15px]  tablet:rounded-[0px] tablet:h-[180px] tablet:rounded-br-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px] border-2 border-black",
+    "object-cover web:w-full web:rounded-[0px] tablet:rounded-[0px] web:h-full tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
+    "object-cover web:w-full web:h-full web:rounded-tr-[15px] web:rounded-[0px] tablet:rounded-[0px] tablet:h-[180px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
+    "object-cover web:w-full web:h-full web:rounded-bl-[0px]  tablet:h-[180px] tablet:rounded-bl-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
+    "object-cover web:w-full web:h-full web:rounded-br-[15px] tablet:h-[180px] tablet:rounded-br-[15px] phone:w-[361px] phone:h-[260px] phone:rounded-[5px]",
   ];
   return (
     <div className="flex flex-col items-center w-full">
+    
       <div
         className="flex flex-col justify-center items-center
       web:w-[80%] web:mt-[30px]
@@ -98,7 +99,7 @@ function TourDetails() {
         >
           <img
             className="web:w-full web:h-full web:max-h-[520px] web:col-span-2 web:row-span-2 web:object-cover web:rounded-tl-[15px] web:rounded-bl-[15px] web:tablet:rounded-tr-[0px] web:rounded-none
-            tablet:col-span-2 tablet:w-full tablet:h-[260px] tablet:rounded-tl-[15px] tablet:rounded-tr-[15px] tablet:rounded-none border-black border-2
+            tablet:col-span-2 tablet:w-[100%] tablet:h-[260px] tablet:rounded-tl-[15px] tablet:rounded-tr-[15px] tablet:rounded-none
             phone:w-[361px] phone:h-[260px] "
             src={thumbnailImageUrl}
             alt="Cover Image"
@@ -309,14 +310,7 @@ function TourDetails() {
               historical center of the city.
             </p>
           </div>
-          {/* <button
-            className="rounded-[5px] px-4 py-3 bg-[#13294b]  text-center text-white text-base font-semibold font-['Inter'] 
-            web:w-[430px] web:h-11
-            "
-          >
-            Buy Tour
-          </button> */}
-
+        
           <div className="web:w-[430px] tablet:w-[282px] phone:w-[361px]">
             <Btn type="submit" variant="filled" text="Buy Tour" fullWidth />
           </div>
@@ -458,4 +452,10 @@ function TourDetails() {
   );
 }
 
-export default TourDetails;
+export default function TourDetailsWrapper() {
+  return (
+    <Suspense fallback={<p>Loading Tour Details...</p>}>
+      <TourDetails />
+    </Suspense>
+  );
+}
