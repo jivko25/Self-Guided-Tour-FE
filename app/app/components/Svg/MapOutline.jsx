@@ -1,8 +1,9 @@
 import React from "react";
 
-function MapOutline() {
+function MapOutline({ className }) {
   return (
     <svg
+      className={`${className}`}
       width="24"
       height="24"
       viewBox="0 0 24 24"
@@ -16,6 +17,8 @@ function MapOutline() {
           stroke="white"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className="stroke-current"
+          strokeMiterlimit="10"
         />
         <path
           id="Vector_2"
@@ -23,6 +26,8 @@ function MapOutline() {
           stroke="white"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className="stroke-current"
+          strokeMiterlimit="10"
         />
         <path
           id="Vector_3"
@@ -30,6 +35,8 @@ function MapOutline() {
           stroke="white"
           strokeLinecap="round"
           strokeLinejoin="round"
+          className="stroke-current"
+          strokeMiterlimit="10"
         />
       </g>
     </svg>
