@@ -87,7 +87,7 @@ const Step2 = () => {
       popup({
         type: "ERROR",
         message:
-          "Please fill required fields in your locations before proceeding to next step !",
+          "Required fields are missing in one or more locations. Fill them in to continue !",
       });
       return;
     }
