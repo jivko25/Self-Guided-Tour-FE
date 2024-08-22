@@ -50,12 +50,20 @@ const Step3 = () => {
 
   const handleFinish = () => {
     const { locationName, ...updatedInputs } = inputs;
-    if (!inputs.locationName) {
+    if (
+      !locationName ||
+      !inputs.locationCity ||
+      inputs.addFields.length === 0
+    ) {
       popup({
         type: "ERROR",
-        message: "Please fill all the required fields",
+        message: "Please fill out the required info !",
       });
-      return;
+    } else {
+      popup({
+        type: "SUCCESS",
+        message: "Good job required fields are filled !",
+      });
     }
     updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
     goToStep(1);
@@ -171,7 +179,7 @@ const Step3 = () => {
           web:justify-start web:items-start
           tablet:justify-center tablet:items-center"
       >
-        <NavigationButtons  handleFinish={handleFinish} />
+        <NavigationButtons handleFinish={handleFinish} />
 
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
