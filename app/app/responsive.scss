@@ -1,5 +1,5 @@
 @mixin smallPhone {
-  @media (min-width: 320px) and (max-width: 392px) {
+  @media (min-width: 320px) and (max-width: 393px) {
     @content;
   }
 }
