@@ -16,7 +16,6 @@ const Step2 = () => {
     longitude: "",
   });
 
-
   const drag = useRef(0);
   const dragOver = useRef(0);
   const coordinatesRef = useRef([]);

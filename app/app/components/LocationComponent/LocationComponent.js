@@ -2,8 +2,11 @@
 import Link from "next/link";
 import pencil from "../../public/svg/pencil.svg";
 import trashcan from "../../public/svg/trash.svg";
+import CheckmarkIcon from "../../public/svg/checkmark-circle.svg";
+import AlertIcon from "../../public/alert-circle-outline.svg";
 import Image from "next/image.js";
 import { useEffect, useState } from "react";
+import Tooltip from "../Tooltip/Tooltip.jsx";
 
 export default function LocationComponent({
   count,
@@ -17,8 +20,6 @@ export default function LocationComponent({
   location,
 }) {
   const [path, setPath] = useState("create");
-
-  console.log(location);
 
   useEffect(() => {
     setPath(`create?placeId=${location.placeId}`);
@@ -36,10 +37,22 @@ export default function LocationComponent({
     !location.locationDescription ||
     (location.addFields && location.addFields.length === 0);
 
+  // Determine tooltip properties based on missing info
+  const tooltipProps = hasMissingInfo
+    ? {
+        icon: AlertIcon,
+        type: "warning",
+        text: "Missing information !",
+      }
+    : {
+        icon: CheckmarkIcon,
+        type: "success",
+        text: "Just perfect !",
+      };
+
   return (
-    
     <div
-      className={`mt-[4px] border rounded-md cursor-move ${
+      className={`mt-[4px] w-[90%] border rounded-md cursor-move ${
         hasMissingInfo ? "border-red-800 border-2" : "border-color-[#CECECE]"
       }`}
       draggable={draggable}
@@ -80,6 +93,9 @@ export default function LocationComponent({
             alt="trashcan"
             onClick={handleDelete}
           />
+        </div>
+        <div className="absolute right-[-30px] top-1/2 transform -translate-y-1/2">
+          <Tooltip {...tooltipProps} />
         </div>
       </div>
     </div>
