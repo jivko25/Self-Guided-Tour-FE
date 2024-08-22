@@ -201,7 +201,6 @@ export const CreateTourProvider = ({ children }) => {
     }
   };
 
-  console.log(formData);
   return (
     <CreateTourContext.Provider
       value={{
