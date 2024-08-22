@@ -13,6 +13,12 @@ export default function Footer() {
   const pathname = usePathname();
   const isTourPage = pathname.startsWith("/tour/");
 
+  const specialPages = ["/sign-in", "/create-account", "/create"];
+  const isSpecialPage = specialPages.some(page => pathname.startsWith(page));
+
+  const hiddenFooter= isSpecialPage ? "web:hidden tablet:hidden" : "web:flex tablet:flex"
+
+
   const footerColors =
   isTourPage
     ? "text-[#13294b] bg-white"
@@ -24,7 +30,7 @@ export default function Footer() {
     : "text-white";
 
   return (
-    <div className={`hidden web:flex web:py-[0%] tablet:flex tablet:py-[10%] flex-col items-center justify-center w-full min-h-[474px] web:px-[20%] tablet:px-[3%] ${footerColors}`}>
+    <div className={`hidden web:py-[0%] tablet:flex tablet:py-[10%] flex-col items-center justify-center w-full min-h-[474px] web:px-[20%] tablet:px-[3%] ${footerColors } ${hiddenFooter}`}>
       <h1 className="flex w-full max-w-[1336px] text-center text-[31px] font-medium font-['Inter'] mb-[55px] mt-[35px]">
         LOGO
       </h1>
@@ -32,7 +38,7 @@ export default function Footer() {
         <ul className="flex flex-col flex-1 gap-[30px] web:mr-[10%] tablet:mr-[40px]">
           <li className="flex items-center justify-start gap-[10px]">
             <CallOutline  className={iconColors}/>
-            <p className="text-base font-normal font-['Inter']">
+            <p className="text-base font-normal font-['Inter'] mt-[10px]">
               Call +359 899 999 999
             </p>
           </li>
@@ -48,30 +54,30 @@ export default function Footer() {
           </li>
           <li className="flex items-center justify-start gap-[10px]">
             <MapOutline  className={iconColors}/>
-            <p className="text-base font-normal font-['Inter']">About Us</p>
+            <p className="text-base font-normal font-['Inter'] cursor-pointer">About Us</p>
           </li>
         </ul>
         <div className="flex flex-col flex-1">
           <Link
-            href=""
-            className="text-base font-normal font-['Inter'] mb-[30px]"
+            href="/explore"
+            className="text-base font-medium font-['Inter'] mb-[20px] cursor-pointer"
           >
             Explore
           </Link>
           <div className="flex flex-col gap-[10px]">
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Sofia
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Plovdiv
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Veliko Tarnovo
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Ruse
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Burgas
             </Link>
           </div>
@@ -79,27 +85,27 @@ export default function Footer() {
         <div className="flex flex-col flex-1">
           <Link
             href=""
-            className="text-base font-normal font-['Inter'] mb-[30px]"
+            className="text-base font-medium font-['Inter'] mb-[20px] cursor-pointer"
           >
             Menu
           </Link>
           <div className="flex flex-col gap-[10px]">
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Search
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Account
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="/create" className="text-base font-normal font-['Inter'] cursor-pointer">
               Create Tour
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter']">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               My Tours
             </Link>
           </div>
         </div>
         <div className="flex flex-col flex-1">
-          <p className="text-base font-normal font-['Inter'] mb-[30px]">
+          <p className="text-base font-medium font-['Inter'] mb-[20px]">
             Stay in Touch
           </p>
           <div className="flex gap-[20px]">
