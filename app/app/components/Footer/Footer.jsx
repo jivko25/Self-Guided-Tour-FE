@@ -118,6 +118,7 @@ export default function Footer() {
             <a href="#">
               <Linkedin  className={iconColors}/>
             </a>
+            
           </div>
         </div>
       </section>
