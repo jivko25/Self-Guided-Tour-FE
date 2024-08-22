@@ -94,7 +94,7 @@ export const CreateTourProvider = ({ children }) => {
     } else {
       popup({
         type: "ERROR",
-        message: "Please fill in all required fields before proceeding.",
+        message: "Please fill in all required fields before proceeding !",
       });
     }
   };
@@ -108,7 +108,7 @@ export const CreateTourProvider = ({ children }) => {
       popup({
         type: "ERROR",
         message:
-          "Please fill in all required fields in previous steps before proceeding.",
+          "Please fill all required fields and add at least one location to continue !",
       });
     }
   };

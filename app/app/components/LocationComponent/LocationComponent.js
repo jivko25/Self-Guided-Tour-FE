@@ -41,7 +41,7 @@ export default function LocationComponent({
     ? {
         icon: AlertIcon,
         type: "warning",
-        text: "Missing information !",
+        text: "Missing fields !",
       }
     : {
         icon: CheckmarkIcon,
