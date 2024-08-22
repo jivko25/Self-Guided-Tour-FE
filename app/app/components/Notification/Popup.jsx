@@ -34,7 +34,7 @@ const Popup = (props) => {
       </p>
 
       <h3
-        className={`ml-[0.3rem] tablet:ml-[1rem] text-[16px] font-semibold tablet:text-[20px] tablet:font-medium ${
+        className={`ml-[0.3rem] px-4 tablet:ml-[1rem] text-[16px] font-semibold tablet:text-[20px] tablet:font-medium ${
           props.type === "SUCCESS" ? "text-[#037E00]" : "text-[#AA0000]"
         }`}
       >
