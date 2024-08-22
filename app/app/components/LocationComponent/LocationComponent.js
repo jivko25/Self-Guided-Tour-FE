@@ -53,7 +53,7 @@ export default function LocationComponent({
   return (
     <div
       className={`mt-[4px] w-[90%] border rounded-md cursor-move ${
-        hasMissingInfo ? "border-red-800 border-2" : "border-color-[#CECECE]"
+        hasMissingInfo ? "border-red-400 border" : "border-color-[#CECECE]"
       }`}
       draggable={draggable}
       onDragStart={onDragStart}
