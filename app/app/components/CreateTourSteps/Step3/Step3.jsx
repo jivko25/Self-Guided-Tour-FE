@@ -57,7 +57,7 @@ const Step3 = () => {
     ) {
       popup({
         type: "ERROR",
-        message: "Please fill out the required info !",
+        message: "Please fill out the required fields !",
       });
     } else {
       popup({
