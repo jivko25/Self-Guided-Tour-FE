@@ -34,7 +34,6 @@ export default function LocationComponent({
   // Check if any of the specified fields are empty
   const hasMissingInfo =
     !location.locationCity ||
-    !location.locationDescription ||
     (location.addFields && location.addFields.length === 0);
 
   // Determine tooltip properties based on missing info

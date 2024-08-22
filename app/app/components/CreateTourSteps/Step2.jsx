@@ -4,10 +4,16 @@ import Btn from "../Buttons/Btn.jsx";
 import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
+import { usePopup } from "@/app/context/popupContext.jsx";
+import {
+  isArrayOfObjFilled,
+  isObjectFilled,
+} from "@/app/utils/wizardStepValidations.js";
 
 const Step2 = () => {
   const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
     useCreateTour();
+  const popup = usePopup();
 
   const [data, setData] = useState({
     placeId: "",
@@ -72,6 +78,20 @@ const Step2 = () => {
     updateFormData({
       step2Data: formData.step2Data.filter((loc) => loc.placeId !== placeId),
     });
+  };
+
+  const handleNextStep = () => {
+    const allFieldsFilled = isArrayOfObjFilled(formData.step2Data);
+
+    if (allFieldsFilled === false) {
+      popup({
+        type: "ERROR",
+        message:
+          "Please fill required fields in your locations before proceeding to next step !",
+      });
+      return;
+    }
+    goToStep(3);
   };
 
   return (
@@ -186,7 +206,7 @@ const Step2 = () => {
               className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Next"
-              onClick={() => goToStep(3)}
+              onClick={handleNextStep}
             />
           </div>
         </div>
