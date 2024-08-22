@@ -123,5 +123,4 @@ export default function Footer() {
       </section>
     </div>
   );
-  
 }
