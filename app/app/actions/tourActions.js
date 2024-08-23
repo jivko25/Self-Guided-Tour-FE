@@ -12,6 +12,7 @@ export async function createTour(tourData) {
   formData.append("Title", tourData.title);
   formData.append("Summary", tourData.summary);
   formData.append("Price", tourData.price);
+  formData.append("TypeTour", tourData.tourType);
   formData.append("Destination", tourData.destination);
   formData.append("ThumbnailImage", tourData.thumbnailImage);
   formData.append("EstimatedDuration", tourData.estimatedDuration);
