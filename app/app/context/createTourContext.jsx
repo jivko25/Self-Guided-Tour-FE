@@ -200,15 +200,18 @@ export const CreateTourProvider = ({ children }) => {
     const { data, error } = await createTour(tourData);
 
     if (error) {
-      // TODO : Handle error (e.g., display a notification)
-      popup({
-        type: "ERROR",
-        message: error.message,
+      // Iterate over the errors and create a popup for each one
+      Object.entries(error.errors).forEach(([field, messages]) => {
+        popup({
+          type: "ERROR",
+          message: `${field}: ${messages}`,
+        });
       });
-      // console.error(error);
     } else {
-      // TODO:  Handle success (e.g., redirect to the tour page)
-      console.log(data);
+      popup({
+        type: "SUCCESS",
+        message: "Your tour has been successfully created",
+      });
     }
   };
 
