@@ -50,7 +50,7 @@ export default function Card({
               style={{ objectFit: "cover" }}
             />
           </div>
-          <div className="flex flex-col pl-[8px] justify-center tablet:pl-[24px] pb-[12px] tablet:pb-[36px] tablet:pr-[17px] pr-[8px] tablet:pr-[24px] text-[#13294B]">
+          <div className="flex flex-col ml-[8px] justify-center tablet:ml-[24px] mb-[12px] tablet:mb-[36px] tablet:mr-[17px] pr-[8px] tablet:mr-[24px] text-[#13294B]">
             <div className="flex justify-between items-center text-[13px] tablet:text-[16px] mb-[36px] tablet:mb-[18px] pr-[6px] tablet:pr-[16px]">
               <div className="flex flex-row items-center w-[151px]">
                 {creatorImg ? (
@@ -98,7 +98,7 @@ export default function Card({
         </div>
       ) : (
         <div
-          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[492px] web:w-[430px] web:h-[522px] bg-[#FAFAFA] hover:bg-[#FFFFFF] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
+          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[492px] web:w-[430px] web:h-[522px] bg-[#FAFAFA] hover:duration-500 hover:-translate-y-[10px] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] cursor-pointer ${classes}`}
           onClick={onclick}
         >
           <div className="mb-[6px] tablet:mb-[8.5px] w-full h-[110px] tablet:h-[262px] web:h-[256px] relative">
