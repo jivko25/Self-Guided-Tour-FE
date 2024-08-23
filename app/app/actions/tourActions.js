@@ -39,7 +39,7 @@ export async function createTour(tourData) {
 
     data = response.data;
   } catch (err) {
-    error = err.response?.data?.Message;
+    error = err.response?.data
   }
 
   return { data, error };
