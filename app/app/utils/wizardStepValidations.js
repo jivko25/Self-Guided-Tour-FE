@@ -1,6 +1,4 @@
 export const isArrayOfObjFilled = (input) => {
-  console.log("Input to isObjectFilled:", input);
-
   // Function to check if a single object is fully filled
   const checkObjectFilled = (obj) => {
     // Check for required fields and non-empty values
@@ -34,7 +32,6 @@ export const isArrayOfObjFilled = (input) => {
   };
 
   // If the input is an array, check each object in the array
-  console.log(Array.isArray(input));
   if (Array.isArray(input)) {
     return input.length > 0 && input.every(checkObjectFilled);
   }
