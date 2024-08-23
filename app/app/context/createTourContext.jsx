@@ -150,12 +150,23 @@ export const CreateTourProvider = ({ children }) => {
     });
     hasPrompted.current = true;
   };
-
   const handlePublishTour = async () => {
+    const tourTypeOptions = [
+      { id: 0, label: "Walking Tour" },
+      { id: 1, label: "Cycling Tour" },
+      { id: 2, label: "Driving Tour" },
+    ];
+
+    // Find the corresponding ID for the selected tour type
+    const selectedTourType = tourTypeOptions.find(
+      (option) => option.label === formData.step1Data.tourType
+    );
+
     const tourData = {
       title: formData.step1Data.tour,
       summary: formData.step4Data.summary,
       price: formData.step1Data.price,
+      tourType: selectedTourType ? selectedTourType.id : null, // Use the id if found
       destination: formData.step1Data.destination,
       thumbnailImage: formData.step4Data.thumbnailImage,
       estimatedDuration: formData.step1Data.duration,
