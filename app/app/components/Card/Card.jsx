@@ -36,7 +36,7 @@ export default function Card({
     <>
       {testimonial ? (
         <div
-          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[340px] webl:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
+          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[330px] webl:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
           onClick={onclick}
         >
           <div className="mb-[6px] rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px] tablet:mb-[24px] w-full h-[110px] tablet:h-[257px] web:h-[450px] relative">
@@ -130,7 +130,7 @@ export default function Card({
               {title}
             </span>
             <div className="hidden tablet:block tablet:h-[90px] web:h-[108px]">
-              <p className="hidden tablet:line-clamp-4">{description}</p>
+              <p className="hidden tablet:line-clamp-4 break-words">{description}</p>
             </div>
             <span className="text-[#081120] text-[16px] tablet:text-[20px] font-medium mt-[12px]">
               {price}

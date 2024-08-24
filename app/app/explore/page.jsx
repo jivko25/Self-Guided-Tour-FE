@@ -4,63 +4,95 @@ import { useEffect, useState } from "react";
 import Card from "../components/Card/Card";
 import Search from "../components/Search/Search";
 import { useRouter, useSearchParams } from "next/navigation";
-import ButtonRound from "../components/Buttons/ButonRound";
+import ButtonRound from "../components/Buttons/ButtonRound";
 import { usePopup } from "@/app/context/popupContext.jsx";
 
 export default function Explore() {
-  const page = useSearchParams().get('page') || 1;
+  const page = useSearchParams().get("page") || 1;
+  const search = useSearchParams().get("search") || "";
+  const [totalPages, setTotalPages] = useState(1);
+  const [query, setQuery] = useState("");
   const [tours, setTours] = useState([]);
-  const [pageSize, setPageSize] = useState(12);
-  const [searchTerm, setSearchTerm] = useState();
+  // const [searchTerm, setSearchTerm] = useState(search);
   const router = useRouter();
   const popup = usePopup();
 
   useEffect(() => {
+    if (search) {
+      setQuery(`?pageSize=12&pageNumber=${page}&searchTerm=${search}`);
+    } else {
+      setQuery(`?pageSize=12&pageNumber=${page}`);
+    }
+  }, [page, search]);
 
-    axiosTour
-      .get(`?pageSize=${pageSize}&pageNumber=${page}`)
-      .then((data) => {
+  useEffect(() => {
+    if (query) {
+      axiosTour
+        .get(query)
+        .then((data) => {
           const dataResult = data.data.result;
-          setTours([...data.data.result.tours]);
-      })
-      .catch((err) => {
-        const errors = err.response.data.errors;
-        for (const key in errors) {
-          popup({
-            type: "ERROR",
-            message: errors[key],
-          });
-        }
-        
-      });
-  }, [page]);
+          setTotalPages(dataResult.totalPages);
+          console.log("OLD:");
+          console.log(tours);
+          console.log("NEW:");
+          console.log(dataResult.tours);
+
+          setTours(dataResult.tours);
+        })
+        .catch((err) => {
+          const errors = err.response.data.errors;
+          for (const key in errors) {
+            popup({
+              type: "ERROR",
+              message: errors[key],
+            });
+          }
+        });
+    }
+  }, [query, setTours, setTotalPages]);
 
   const handlePrevPage = () => {
-    if (page <= 1) {
-      return;
+    if (page > 1) {
+      handleURLParams(Number(page) - 1, search);
     }
-    router.push(`?page=${Number(page) - 1}`);
   };
 
   const handleNextPage = () => {
-    router.push(`?page=${Number(page) + 1}`);
+    const nextPage = Number(page) + 1;
+    if (nextPage <= totalPages) {
+      handleURLParams(nextPage, search);
+    }
   };
+
+  const handleSearch = (input) => {
+    handleURLParams(1, input);
+  };
+
+  const handleURLParams = (page, search) => {
+    let params = `?page=${page}`;
+
+    if (search) {
+      params += `&search=${search}`;
+    }
+
+    router.push(params);
+  };
+
   return (
     <div className="flex flex-col items-center mt-20 mb-20 tablet:mt-40 tablet:mb-0">
       <h1 className="mb-6 tablet:mb-16 text-xl tablet:text-3xl web:text-[39px] font-medium">
         Discover your next exciting trip
       </h1>
       <div className="mb-4 tablet:mb-[108px] web:mb-[136px]">
-        <Search />
+        <Search onSearch={handleSearch} searchValue={search} />
       </div>
       <h2 className="hidden web:inline-block self-start mb-9 text-[31px] font-medium">
         Explore Top Rated trips
       </h2>
       <div className="grid grid-cols-1 phone:grid-cols-2 web:grid-cols-4 webl:grid-cols-4 gap-x-[9px] tablet:gap-x-5 web:gap-x-6 gap-y-6 tablet:gap-y-16 mb-16 web:mb-[108px]">
-        {tours.length > 0 &&
+        {tours.length > 0 ? (
           tours.map((tour) => (
             <Card
-              classes={"cursor-pointer"}
               key={tour.tourId}
               title={tour.title}
               imageSrc={tour.thumbnailImageUrl}
@@ -70,7 +102,12 @@ export default function Explore() {
               rating={4.5}
               onclick={() => router.push(`/tour/${tour.tourId}`)}
             />
-          ))}
+          ))
+        ) : (
+          <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl  font-medium">
+            No results found
+          </h3>
+        )}
       </div>
       <div className="mb-[108px] tablet:mb-[236px] flex flex-row gap-x-16">
         <ButtonRound type="button" direction="left" onclick={handlePrevPage} />
