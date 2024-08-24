@@ -6,6 +6,19 @@ import Search from "../components/Search/Search";
 import { useRouter, useSearchParams } from "next/navigation";
 import ButtonRound from "../components/Buttons/ButtonRound";
 import { usePopup } from "@/app/context/popupContext.jsx";
+import Sort from "../components/Sort/Sort";
+
+import ArrowDown from "../public/svg/arrow-down.svg";
+import ArrowUp from "../public/svg/arrow-up.svg";
+
+const sortOprions = [
+  // {label: "Sort By", value: "", icon: ""},
+  { label: "Newest", value: "newest", sr: ""},
+  { label: "Price Low", value: "minPrice", icon: ArrowDown },
+  { label: "Price High", value: "maxPrice", icon: ArrowUp},
+  { label: "Rating", value: "averageRating", icon: ""},
+  { label: "Most Purchased", value: "mostBought", icon: ""},
+];
 
 export default function Explore() {
   const page = useSearchParams().get("page") || 1;
@@ -13,7 +26,6 @@ export default function Explore() {
   const [totalPages, setTotalPages] = useState(1);
   const [query, setQuery] = useState("");
   const [tours, setTours] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState(search);
   const router = useRouter();
   const popup = usePopup();
 
@@ -32,11 +44,6 @@ export default function Explore() {
         .then((data) => {
           const dataResult = data.data.result;
           setTotalPages(dataResult.totalPages);
-          console.log("OLD:");
-          console.log(tours);
-          console.log("NEW:");
-          console.log(dataResult.tours);
-
           setTours(dataResult.tours);
         })
         .catch((err) => {
@@ -83,13 +90,14 @@ export default function Explore() {
       <h1 className="mb-6 tablet:mb-16 text-xl tablet:text-3xl web:text-[39px] font-medium">
         Discover your next exciting trip
       </h1>
-      <div className="mb-4 tablet:mb-[108px] web:mb-[136px]">
-        <Search onSearch={handleSearch} searchValue={search} />
+      <div className="mb-16 tablet:mb-[108px] web:mb-[136px] flex flex-col tablet:flex-row items-center gap-[21px] z-50">
+        <Search onSearch={handleSearch} searchValue={search} placeholder={'Search trip by typing a destination'} />
+        <Sort options={sortOprions} />
       </div>
       <h2 className="hidden web:inline-block self-start mb-9 text-[31px] font-medium">
         Explore Top Rated trips
       </h2>
-      <div className="grid grid-cols-1 phone:grid-cols-2 web:grid-cols-4 webl:grid-cols-4 gap-x-[9px] tablet:gap-x-5 web:gap-x-6 gap-y-6 tablet:gap-y-16 mb-16 web:mb-[108px]">
+      <div className="grid phone:grid-cols-2 web:grid-cols-4 webl:grid-cols-4 gap-x-[9px] tablet:gap-x-5 web:gap-x-6 gap-y-6 tablet:gap-y-16 mb-16 web:mb-[108px]">
         {tours.length > 0 ? (
           tours.map((tour) => (
             <Card
@@ -104,8 +112,8 @@ export default function Explore() {
             />
           ))
         ) : (
-          <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl  font-medium">
-            No results found
+          <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl">
+            "{search}" - No results found
           </h3>
         )}
       </div>

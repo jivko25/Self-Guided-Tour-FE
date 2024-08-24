@@ -26,7 +26,7 @@ const SearchIcon = ({ className }) => (
   </svg>
 );
 
-const Search = ({ variant = "default",searchValue, onSearch, handleNavClose }) => {
+const Search = ({ variant = "default", searchValue, placeholder, onSearch, handleNavClose }) => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -114,6 +114,7 @@ const Search = ({ variant = "default",searchValue, onSearch, handleNavClose }) =
               : inputTabletNavigationSearchStyles
           }
           type="text"
+          placeholder={placeholder}
           value={query}
           onChange={handleInputChange}
         />
