@@ -1,11 +1,28 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChevronDownSemibold from "../../public/svg/chevron-down-semibold.svg";
 
-export default function Sort({ options }) {
+export default function Sort({ options, handleSelect, selected = ''}) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
+  useEffect(() => {
+    if (handleSelect) {
+      handleSelect(selectedOption);
+    }
+  }, [selectedOption, handleSelect]);
+
+  useEffect(() => {
+    if (selected) {
+      const option = options.filter(opt => opt.value == selected);
+      
+      if (option.length > 0) {
+        setSelectedOption(option[0]);
+      }
+    }
+
+    return () => {setSelectedOption(null)};
+  }, [selected]);
 
   return (
     <div className="items-center gap-1 w-[170px] h-[36px] tablet:w-[181px] tablet:h-[60px] web:w-[200px] border border-[#D1D0D8] rounded-[5px] bg-[#FAFAFA]">
