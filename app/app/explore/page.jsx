@@ -12,7 +12,6 @@ import ArrowDown from "../public/svg/arrow-down.svg";
 import ArrowUp from "../public/svg/arrow-up.svg";
 
 const sortOprions = [
-  // {label: "Sort By", value: "", icon: ""},
   { label: "Newest", value: "newest", sr: "" },
   { label: "Price Low", value: "minPrice", icon: ArrowDown },
   { label: "Price High", value: "maxPrice", icon: ArrowUp },
@@ -28,17 +27,20 @@ export default function Explore() {
   const [query, setQuery] = useState("");
   const [tours, setTours] = useState([]);
   const [selectedSort, setSelectedSort] = useState(null);
+  const [isLoading, setIsloading] = useState(true);
   const router = useRouter();
   const popup = usePopup();
 
   useEffect(() => {
     if (search && sort) {
-      setQuery(`?pageSize=12&pageNumber=${page}&searchTerm=${search}&sortBy=${sort}`);
+      setQuery(
+        `?pageSize=12&pageNumber=${page}&searchTerm=${search}&sortBy=${sort}`
+      );
       setSelectedSort(sort);
     } else if (sort) {
       setQuery(`?pageSize=12&pageNumber=${page}&sortBy=${sort}`);
       setSelectedSort(sort);
-    }else if (search) {
+    } else if (search) {
       setQuery(`?pageSize=12&pageNumber=${page}&searchTerm=${search}`);
     } else {
       setQuery(`?pageSize=12&pageNumber=${page}`);
@@ -58,6 +60,7 @@ export default function Explore() {
   }, [selectedSort]);
 
   const getTours = async (query) => {
+    setIsloading(true);
     try {
       const response = await axiosTour.get(query);
       const dataResult = await response.data.result;
@@ -65,6 +68,7 @@ export default function Explore() {
       setTours(dataResult.tours);
     } catch (err) {
       const errors = err?.response?.data?.errors;
+
       for (const key in errors) {
         popup({
           type: "ERROR",
@@ -72,6 +76,7 @@ export default function Explore() {
         });
       }
     }
+    setIsloading(false);
   };
 
   const handlePrevPage = () => {
@@ -120,15 +125,17 @@ export default function Explore() {
           searchValue={search}
           placeholder={"Search trip by typing a destination"}
         />
-        <Sort options={sortOprions} handleSelect={handleSelect} selected={sort}/>
+        <Sort
+          options={sortOprions}
+          handleSelect={handleSelect}
+          selected={sort}
+        />
       </div>
       <h2 className="hidden web:inline-block self-start mb-9 text-[31px] font-medium">
         Explore Top Rated trips
       </h2>
-      <Suspense fallback={<h1>Loading..</h1>}>
         <div className="grid phone:grid-cols-2 web:grid-cols-4 webl:grid-cols-4 gap-x-[9px] tablet:gap-x-5 web:gap-x-6 gap-y-6 tablet:gap-y-16 mb-16 web:mb-[108px]">
-          {
-            // tours.length > 0 ? (
+          {(tours.length > 0 && !isLoading) &&
             tours.map((tour) => (
               <Card
                 key={tour.tourId}
@@ -140,15 +147,14 @@ export default function Explore() {
                 rating={4.5}
                 onclick={() => router.push(`/tour/${tour.tourId}`)}
               />
-            ))
-            // ) : (
-            //   <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl">
-            //     "{search}" - No results found
-            //   </h3>
-            // )
-          }
+            ))}
+
+          {tours.length == 0 && !isLoading && (
+            <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl">
+              "{search}" - No results found
+            </h3>
+          )}
         </div>
-      </Suspense>
       <div className="mb-[108px] tablet:mb-[236px] flex flex-row gap-x-16">
         <ButtonRound type="button" direction="left" onclick={handlePrevPage} />
         <ButtonRound type="button" direction="right" onclick={handleNextPage} />
