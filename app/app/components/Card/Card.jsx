@@ -2,44 +2,47 @@
 import Image from "next/image";
 import StarRating from "../StarRating/StarRating";
 import { useEffect, useState } from "react";
+import { useWindowWidth } from "@/app/utils/hooks";
 
 export default function Card({
   testimonial = false,
   imageSrc,
-  location = '',
-  title = '',
+  location = "",
+  title = "",
   description,
   price,
   rating,
   classes,
-  creatorName = '',
+  creatorName = "",
   creatorImg,
   onclick,
 }) {
+  const windowWidth = useWindowWidth();
   const [isWeb, setIsWeb] = useState(false);
 
   useEffect(() => {
-      handleWindowResize();
-      window.addEventListener("resize", handleWindowResize);
-  }, []);
-
-  const handleWindowResize = () => {
-    if ((typeof window !== 'undefined')) {
-      if (window.innerWidth >= 1280) {
-        setIsWeb(true);
-      } else {
-        setIsWeb(false);
-      }
+    // console.log(windowWidth);
+    
+    if (windowWidth >= 1280) {
+      setIsWeb(true);
+    } else {
+      setIsWeb(false);
     }
-  };
+  }, [windowWidth]);
+
   return (
     <>
       {testimonial ? (
         <div
-          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[325px] webl:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
+          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[325px] 
+                      webl:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] 
+                      tablet:rounded-[15px] ${classes}`}
           onClick={onclick}
         >
-          <div className="mb-[6px] rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px] tablet:mb-[24px] w-full h-[110px] tablet:h-[257px] web:h-[450px] relative">
+          <div
+            className="mb-[6px] rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px] 
+                          tablet:mb-[24px] w-full h-[110px] tablet:h-[257px] web:h-[450px] relative"
+          >
             <Image
               src={imageSrc}
               alt="Card image"
@@ -50,7 +53,10 @@ export default function Card({
               style={{ objectFit: "cover" }}
             />
           </div>
-          <div className="flex flex-col ml-[8px] justify-center tablet:ml-[24px] mb-[12px] tablet:mb-[36px] tablet:mr-[17px] pr-[8px] tablet:mr-[24px] text-[#13294B]">
+          <div
+            className="flex flex-col ml-[8px] justify-center tablet:ml-[24px] mb-[12px] 
+                          tablet:mb-[36px] tablet:mr-[17px] pr-[8px] tablet:mr-[24px] text-[#13294B]"
+          >
             <div className="flex justify-between items-center text-[13px] tablet:text-[16px] mb-[36px] tablet:mb-[18px] pr-[6px] tablet:pr-[16px]">
               <div className="flex flex-row items-center w-[151px]">
                 {creatorImg ? (
@@ -66,7 +72,11 @@ export default function Card({
                     />
                   </div>
                 ) : (
-                  <div className="hidden tablet:flex justify-center items-center tablet:mr-[8px] web-[12px] rounded-full tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] bg-[#617086] text-[#FFFFFF] text-[20px]">
+                  <div
+                    className="hidden tablet:flex justify-center items-center tablet:mr-[8px] 
+                                  web-[12px] rounded-full tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] 
+                                  bg-[#617086] text-[#FFFFFF] text-[20px]"
+                  >
                     {creatorName && `${creatorName?.toUpperCase()[0]}`}
                   </div>
                 )}
@@ -79,26 +89,30 @@ export default function Card({
                   <StarRating
                     starsCount={isWeb ? Math.floor(Number(rating)) : 1}
                     rating={rating}
-                    maxRating={isWeb ? 5 : ''}
+                    maxRating={isWeb ? 5 : ""}
                     textLeft={false}
                     textColor="#13294B"
-                    classes={'text-[13px] tablet:text-[16px]'}
+                    classes={"text-[13px] tablet:text-[16px]"}
                   />
                 </div>
               )}
             </div>
             <div className="hidden tablet:block tablet:h-[90px] web:h-[125px] tablet:mb-[12px]">
-              <p className="hidden tablet:line-clamp-3 web:line-clamp-5">
+              <p className="hidden tablet:line-clamp-3 web:line-clamp-5 break-words">
                 {description}
               </p>
             </div>
             <span className="self-center inline-block w-full border-b-[1px] border-b-[#D1D0D8]"></span>
-            <p className="mt-[6px] web:ml-[12px]">{title && title.toUpperCase()}</p>
+            <p className="mt-[6px] web:ml-[12px]">
+              {title && title.toUpperCase()}
+            </p>
           </div>
         </div>
       ) : (
         <div
-          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[492px] web:w-[325px] webl:w-[430px] web:h-[522px] bg-[#FAFAFA] hover:duration-500 hover:-translate-y-[10px] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] cursor-pointer ${classes}`}
+          className={`w-[176px] h-[224px] tablet:w-[383px] tablet:h-[492px] web:w-[325px] 
+                      webl:w-[430px] web:h-[522px] bg-[#FAFAFA] hover:duration-500 hover:-translate-y-[10px] 
+                      border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] cursor-pointer ${classes}`}
           onClick={onclick}
         >
           <div className="mb-[6px] tablet:mb-[8.5px] w-full h-[110px] tablet:h-[262px] web:h-[256px] relative">
@@ -121,7 +135,7 @@ export default function Card({
                 <div className="w-[60px] flex justify-end">
                   <StarRating
                     rating={rating}
-                    classes={'text-[13px] tablet:text-[16px]'}
+                    classes={"text-[13px] tablet:text-[16px]"}
                   />
                 </div>
               )}
@@ -130,7 +144,9 @@ export default function Card({
               {title}
             </span>
             <div className="hidden tablet:block tablet:h-[90px] web:h-[108px]">
-              <p className="hidden tablet:line-clamp-4 break-words">{description}</p>
+              <p className="hidden tablet:line-clamp-4 break-words">
+                {description}
+              </p>
             </div>
             <span className="text-[#081120] text-[16px] tablet:text-[20px] font-medium mt-[12px]">
               {price}

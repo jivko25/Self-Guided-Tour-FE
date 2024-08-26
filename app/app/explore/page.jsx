@@ -10,6 +10,7 @@ import Sort from "../components/Sort/Sort";
 
 import ArrowDown from "../public/svg/arrow-down.svg";
 import ArrowUp from "../public/svg/arrow-up.svg";
+import { useWindowWidth } from "../utils/hooks";
 
 const sortOprions = [
   { label: "Newest", value: "newest", sr: "" },
@@ -23,13 +24,16 @@ export default function Explore() {
   let page = useSearchParams().get("page") || 1;
   let search = useSearchParams().get("search") || "";
   let sort = useSearchParams().get("sort") || "";
-  const [totalPages, setTotalPages] = useState(1);
   const [query, setQuery] = useState("");
   const [tours, setTours] = useState([]);
-  const [selectedSort, setSelectedSort] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsloading] = useState(true);
+  const [isPlaceholder, setisPlaceHolder] = useState(false);
+  const [selectedSort, setSelectedSort] = useState(null);
   const router = useRouter();
   const popup = usePopup();
+  const windowWidth = useWindowWidth();
+
 
   useEffect(() => {
     if (search && sort) {
@@ -58,6 +62,14 @@ export default function Explore() {
 
     return () => setSelectedSort(null);
   }, [selectedSort]);
+
+  useEffect(() => {
+    if (windowWidth > 768) {
+      setisPlaceHolder(true);
+    } else {
+      setisPlaceHolder(false);
+    }
+  }, [windowWidth]);
 
   const getTours = async (query) => {
     setIsloading(true);
@@ -120,11 +132,13 @@ export default function Explore() {
         Discover your next exciting trip
       </h1>
       <div className="mb-16 tablet:mb-[108px] web:mb-[136px] flex flex-col tablet:flex-row items-center gap-[21px] z-50">
-        <Search
-          onSearch={handleSearch}
-          searchValue={search}
-          placeholder={"Search trip by typing a destination"}
-        />
+        <div className="tablet:max-w-[484px] web:max-w-full">
+          <Search
+            onSearch={handleSearch}
+            searchValue={search}
+            placeholder={isPlaceholder ? "Search trip by typing a destination or title" : ''}
+          />
+        </div>
         <Sort
           options={sortOprions}
           handleSelect={handleSelect}
@@ -156,8 +170,8 @@ export default function Explore() {
           )}
         </div>
       <div className="mb-[108px] tablet:mb-[236px] flex flex-row gap-x-16">
-        <ButtonRound type="button" direction="left" onclick={handlePrevPage} />
-        <ButtonRound type="button" direction="right" onclick={handleNextPage} />
+        <ButtonRound classes={'w-[60px] h-[60px]'} type="button" direction="left" onclick={handlePrevPage} />
+        <ButtonRound classes={'w-[60px] h-[60px]'} type="button" direction="right" onclick={handleNextPage} />
       </div>
     </div>
   );
