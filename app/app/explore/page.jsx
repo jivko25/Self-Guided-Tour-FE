@@ -1,6 +1,6 @@
 "use client";
 import { axiosTour } from "@/api/axios";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/Card/Card";
 import Search from "../components/Search/Search";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -54,7 +54,7 @@ export default function Explore() {
   }, [query]);
 
   useEffect(() => {
-    handleURLParams(page, search, selectedSort);
+    handleURLParams(1, search, selectedSort);
 
     return () => setSelectedSort(null);
   }, [selectedSort]);

@@ -36,7 +36,7 @@ export default function Card({
     <>
       {testimonial ? (
         <div
-          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[330px] webl:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
+          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[325px] webl:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] ${classes}`}
           onClick={onclick}
         >
           <div className="mb-[6px] rounded-t-[5px] tablet:rounded-t-[15px] rounded-b-[5px] tablet:mb-[24px] w-full h-[110px] tablet:h-[257px] web:h-[450px] relative">
@@ -98,7 +98,7 @@ export default function Card({
         </div>
       ) : (
         <div
-          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[492px] web:w-[340px] webl:w-[430px] web:h-[522px] bg-[#FAFAFA] hover:duration-500 hover:-translate-y-[10px] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] cursor-pointer ${classes}`}
+          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[492px] web:w-[325px] webl:w-[430px] web:h-[522px] bg-[#FAFAFA] hover:duration-500 hover:-translate-y-[10px] border border-[#D1D0D8] rounded-[5px] tablet:rounded-[15px] cursor-pointer ${classes}`}
           onClick={onclick}
         >
           <div className="mb-[6px] tablet:mb-[8.5px] w-full h-[110px] tablet:h-[262px] web:h-[256px] relative">
