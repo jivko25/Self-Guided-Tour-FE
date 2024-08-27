@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const SearchIcon = ({ className }) => (
   <svg
@@ -26,17 +26,23 @@ const SearchIcon = ({ className }) => (
   </svg>
 );
 
-const Search = ({ variant = "default", handleNavClose }) => {
+const Search = ({ variant = "default", searchValue, placeholder, onSearch, handleNavClose }) => {
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    if (searchValue) {
+      setQuery(searchValue);
+    }
+  },[searchValue]);
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
   };
 
   const handleSearch = () => {
-    // if (onSearch) {
-    //   onSearch(query);
-    // }
+    if (onSearch) {
+      onSearch(query);
+    }
 
     if (handleNavClose) {
       handleNavClose();
@@ -108,11 +114,13 @@ const Search = ({ variant = "default", handleNavClose }) => {
               : inputTabletNavigationSearchStyles
           }
           type="text"
+          placeholder={placeholder}
           value={query}
           onChange={handleInputChange}
         />
         <button
           onClick={handleSearch}
+          type="button"
           className={
             variant === "default"
               ? buttonDefaultStyles
