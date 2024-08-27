@@ -13,10 +13,9 @@ import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
 import { usePopup } from "@/app/context/popupContext.jsx";
 
 const Step3 = () => {
-  const pathname = usePathname();
   const popup = usePopup();
 
-  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
+  const { formData, updateFormData, updateStep2Data, goToStep } =
     useCreateTour();
 
   const searchParams = useSearchParams();
@@ -30,6 +29,9 @@ const Step3 = () => {
     locationDescription: "",
     addFields: [],
   });
+  const [descriptionCharCount, setDescriptionCharCount] = useState(
+    inputs.locationDescription.length || 0
+  );
 
   useEffect(() => {
     if (placeId) {
@@ -69,6 +71,23 @@ const Step3 = () => {
     goToStep(1);
   };
 
+  const handleRemoveMedia = (index) => {
+    const updatedAddFields = inputs.addFields.filter((_, i) => i !== index);
+
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      addFields: updatedAddFields,
+    }));
+
+    updateStep2Data(
+      {
+        ...inputs,
+        addFields: updatedAddFields,
+      },
+      placeId
+    );
+  };
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
@@ -100,6 +119,9 @@ const Step3 = () => {
         ...prevInputs,
         [name]: value,
       }));
+    }
+    if (name === "locationDescription") {
+      setDescriptionCharCount(value.length);
     }
   };
 
@@ -140,7 +162,11 @@ const Step3 = () => {
           phone:pt-[10px]
           smallPhone:pt-[10px]"
           >
-            <LocationInput inputs={inputs} handleChange={handleChange} />
+            <LocationInput
+              inputs={inputs}
+              handleChange={handleChange}
+              charactersCount={descriptionCharCount}
+            />
             <FileUpload handleChange={handleChange} />
           </section>
 
@@ -155,6 +181,7 @@ const Step3 = () => {
               inputs={inputs}
               isImage={isImage}
               isVideo={isVideo}
+              onRemove={handleRemoveMedia}
             />
           </section>
         </div>
@@ -190,6 +217,7 @@ const Step3 = () => {
             inputs={inputs}
             isImage={isImage}
             isVideo={isVideo}
+            onRemove={handleRemoveMedia}
           />
         </div>
       </div>

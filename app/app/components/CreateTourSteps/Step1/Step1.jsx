@@ -79,7 +79,7 @@ const Step1 = () => {
     <>
       <div
         className={`flex justify-center flex-col gap-5  tablet:w-[582px] ${
-          onType ? "h-[1050px]" : "h-[756px]"
+          onType ? "h-[1050px] mt-40 mb-6" : "h-[756px]"
         } h-[753px]`}
       >
         <StepHeader
@@ -131,7 +131,7 @@ const Step1 = () => {
           required={true}
           createTour={true}
         />
-        <div className="relative">
+        <div className={`relative`}>
           <InputField
             id="tourType"
             label="Tour Type"

@@ -2,8 +2,9 @@
 import Image from "next/image";
 import ReactPlayer from "react-player";
 import React from "react";
+import CloseIcon from "../../../../public/svg/close-red.svg";
 
-function MediaPreviewWebPhone({ inputs, isImage, isVideo }) {
+function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
   return (
     <>
       {/* IMAGES */}
@@ -13,22 +14,26 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo }) {
       phone:flex  phone:mr-[20px] phone:w-full phone:pl-[20px] phone:overflow-x-auto
       smallPhone:flex  smallPhone:mr-[20px] smallPhone:w-full smallPhone:pl-[20px] smallPhone:overflow-x-auto
       "
-      
       >
         {inputs.addFields.length > 0 &&
           inputs.addFields.map((file, index) => (
             <div
               key={index}
-              className={`${
+              className={`relative ${
                 isImage(file) && index === 0 ? "web:col-span-2" : ""
               } mb-1 phone:flex-shrink-0 phone:mr-[10px] smallPhone:flex-shrink-0 smallPhone:mr-[10px] web:mr-[0px] `}
             >
+              <button
+                className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-30 rounded-full p-1 z-10 hover:bg-opacity-100"
+                onClick={() => onRemove(index)}
+              >
+                <Image alt="remove-image" src={CloseIcon} height={24} width={24} />
+              </button>
               {isImage(file) && (
                 <Image
                   src={URL.createObjectURL(file)}
                   width={269}
                   height={240}
-                  objectFit="cover"
                   className={`${
                     index === 0
                       ? "web:w-full web:h-60"

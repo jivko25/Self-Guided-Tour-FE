@@ -14,9 +14,21 @@ const Step4 = () => {
   const [imageName, setImageName] = useState(
     formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
   );
+  console.log(formData.step4Data.description?.length);
+  const [summaryCharCount, setSummaryCharCount] = useState(
+    formData.step4Data.summary?.length || 0
+  );
 
-  const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/webp"];
+  const SUPPORTED_FORMATS = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/svg+xml",
+    "image/avif",
+  ];
   const FILE_SIZE = 1024 * 1024; // 1MB
+
+  console.log(formData);
 
   // TODO: Schemas could be exported to util
   const TourSummarySchema = Yup.object().shape({
@@ -30,7 +42,7 @@ const Step4 = () => {
       )
       .test(
         "fileFormat",
-        "Unsupported Format",
+        "Unsupported file format. Please upload an image in one of the following formats: JPEG, PNG, WEBP, SVG, or AVIF.",
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
   });
@@ -47,6 +59,7 @@ const Step4 = () => {
   const handleSummaryChange = (e) => {
     formik.handleChange(e);
     formik.setFieldTouched("summary", true, false);
+    setSummaryCharCount(e.target.value.length);
     updateFormData({
       step4Data: {
         ...formData.step4Data,
@@ -137,7 +150,7 @@ const Step4 = () => {
             onChange={handleImageChange}
             className="hidden"
           />
-          <div className="flex items-center  mx-auto w-[83px]   h-10 bg-neutral-50 rounded-[5px] border border-stone-300 tablet:h-[60px] tablet:w-full  ">
+          <div className="relative flex items-center  mx-auto w-[83px]   h-10 bg-neutral-50 rounded-[5px] border border-stone-300 tablet:h-[60px] tablet:w-full  ">
             <span className="hidden p-2 text-zinc-500 text-base font-normal  leading-normal tablet:block">
               {imageName}
             </span>
@@ -155,6 +168,7 @@ const Step4 = () => {
               />
             </label>
           </div>
+
           {formik.errors.thumbnailImage && formik.touched.thumbnailImage && (
             <div className="text-red-500 text-sm">
               {formik.errors.thumbnailImage}
@@ -214,10 +228,14 @@ const Step4 = () => {
             value={formik.values.summary}
             onChange={handleSummaryChange}
             onBlur={formik.handleBlur}
+            maxLength={500}
           />
           {formik.errors.summary && formik.touched.summary && (
             <div className="text-red-500 text-sm">{formik.errors.summary}</div>
           )}
+          <div className="w-full flex justify-end text-sm text-gray-500 mt-2">
+            {summaryCharCount}/500
+          </div>
         </div>
       </section>
       <section className="flex h-40 flex-col gap-4 tablet:h-fit tablet:flex-row">
