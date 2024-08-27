@@ -69,6 +69,25 @@ const Step3 = () => {
     goToStep(1);
   };
 
+  const handleRemoveMedia = (index) => {
+    const updatedAddFields = inputs.addFields.filter((_, i) => i !== index);
+
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      addFields: updatedAddFields,
+    }));
+
+    updateStep2Data(
+      {
+        ...inputs,
+        addFields: updatedAddFields,
+      },
+      placeId
+    );
+  };
+
+  console.log(formData);
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
@@ -155,6 +174,7 @@ const Step3 = () => {
               inputs={inputs}
               isImage={isImage}
               isVideo={isVideo}
+              onRemove={handleRemoveMedia}
             />
           </section>
         </div>
@@ -190,6 +210,7 @@ const Step3 = () => {
             inputs={inputs}
             isImage={isImage}
             isVideo={isVideo}
+            onRemove={handleRemoveMedia}
           />
         </div>
       </div>

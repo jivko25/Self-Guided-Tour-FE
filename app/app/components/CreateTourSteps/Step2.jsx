@@ -15,6 +15,8 @@ const Step2 = () => {
     useCreateTour();
   const popup = usePopup();
 
+  console.log(formData);
+
   const [data, setData] = useState({
     placeId: "",
     location: "",
