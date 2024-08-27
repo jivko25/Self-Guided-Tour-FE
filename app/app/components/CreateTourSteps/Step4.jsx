@@ -14,9 +14,9 @@ const Step4 = () => {
   const [imageName, setImageName] = useState(
     formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
   );
-
+  console.log(formData.step4Data.description?.length);
   const [summaryCharCount, setSummaryCharCount] = useState(
-    formData.step4Data.description?.length || 0
+    formData.step4Data.summary?.length || 0
   );
 
   const SUPPORTED_FORMATS = [
@@ -27,6 +27,8 @@ const Step4 = () => {
     "image/avif",
   ];
   const FILE_SIZE = 1024 * 1024; // 1MB
+
+  console.log(formData);
 
   // TODO: Schemas could be exported to util
   const TourSummarySchema = Yup.object().shape({
@@ -40,7 +42,7 @@ const Step4 = () => {
       )
       .test(
         "fileFormat",
-        "Unsupported Format",
+        "Unsupported file format. Please upload an image in one of the following formats: JPEG, PNG, WEBP, SVG, or AVIF.",
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
   });
@@ -148,7 +150,7 @@ const Step4 = () => {
             onChange={handleImageChange}
             className="hidden"
           />
-          <div className="flex items-center  mx-auto w-[83px]   h-10 bg-neutral-50 rounded-[5px] border border-stone-300 tablet:h-[60px] tablet:w-full  ">
+          <div className="relative flex items-center  mx-auto w-[83px]   h-10 bg-neutral-50 rounded-[5px] border border-stone-300 tablet:h-[60px] tablet:w-full  ">
             <span className="hidden p-2 text-zinc-500 text-base font-normal  leading-normal tablet:block">
               {imageName}
             </span>
@@ -166,6 +168,7 @@ const Step4 = () => {
               />
             </label>
           </div>
+
           {formik.errors.thumbnailImage && formik.touched.thumbnailImage && (
             <div className="text-red-500 text-sm">
               {formik.errors.thumbnailImage}

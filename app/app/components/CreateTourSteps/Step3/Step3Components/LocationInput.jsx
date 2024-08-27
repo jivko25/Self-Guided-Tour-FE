@@ -2,7 +2,6 @@
 import React from "react";
 
 function LocationInput({ inputs, handleChange, charactersCount }) {
-  console.log(charactersCount);
   return (
     <>
       <div
