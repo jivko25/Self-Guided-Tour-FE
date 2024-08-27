@@ -15,7 +15,17 @@ const Step4 = () => {
     formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
   );
 
-  const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/webp"];
+  const [summaryCharCount, setSummaryCharCount] = useState(
+    formData.step4Data.description?.length || 0
+  );
+
+  const SUPPORTED_FORMATS = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/svg+xml",
+    "image/avif",
+  ];
   const FILE_SIZE = 1024 * 1024; // 1MB
 
   // TODO: Schemas could be exported to util
@@ -47,6 +57,7 @@ const Step4 = () => {
   const handleSummaryChange = (e) => {
     formik.handleChange(e);
     formik.setFieldTouched("summary", true, false);
+    setSummaryCharCount(e.target.value.length);
     updateFormData({
       step4Data: {
         ...formData.step4Data,
@@ -214,10 +225,14 @@ const Step4 = () => {
             value={formik.values.summary}
             onChange={handleSummaryChange}
             onBlur={formik.handleBlur}
+            maxLength={500}
           />
           {formik.errors.summary && formik.touched.summary && (
             <div className="text-red-500 text-sm">{formik.errors.summary}</div>
           )}
+          <div className="w-full flex justify-end text-sm text-gray-500 mt-2">
+            {summaryCharCount}/500
+          </div>
         </div>
       </section>
       <section className="flex h-40 flex-col gap-4 tablet:h-fit tablet:flex-row">

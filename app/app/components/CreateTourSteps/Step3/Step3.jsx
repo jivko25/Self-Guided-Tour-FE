@@ -13,7 +13,6 @@ import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
 import { usePopup } from "@/app/context/popupContext.jsx";
 
 const Step3 = () => {
-  const pathname = usePathname();
   const popup = usePopup();
 
   const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
