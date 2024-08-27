@@ -27,7 +27,7 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
                 className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-30 rounded-full p-1 z-10 hover:bg-opacity-100"
                 onClick={() => onRemove(index)}
               >
-                <Image src={CloseIcon} height={24} width={24} />
+                <Image alt="remove-image" src={CloseIcon} height={24} width={24} />
               </button>
               {isImage(file) && (
                 <Image

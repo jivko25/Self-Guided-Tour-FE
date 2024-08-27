@@ -30,6 +30,9 @@ const Step3 = () => {
     locationDescription: "",
     addFields: [],
   });
+  const [descriptionCharCount, setDescriptionCharCount] = useState(
+    inputs.locationDescription.length || 0
+  );
 
   useEffect(() => {
     if (placeId) {
@@ -86,8 +89,6 @@ const Step3 = () => {
     );
   };
 
-  console.log(formData);
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
@@ -119,6 +120,9 @@ const Step3 = () => {
         ...prevInputs,
         [name]: value,
       }));
+    }
+    if (name === "locationDescription") {
+      setDescriptionCharCount(value.length);
     }
   };
 
@@ -159,7 +163,11 @@ const Step3 = () => {
           phone:pt-[10px]
           smallPhone:pt-[10px]"
           >
-            <LocationInput inputs={inputs} handleChange={handleChange} />
+            <LocationInput
+              inputs={inputs}
+              handleChange={handleChange}
+              charactersCount={descriptionCharCount}
+            />
             <FileUpload handleChange={handleChange} />
           </section>
 
