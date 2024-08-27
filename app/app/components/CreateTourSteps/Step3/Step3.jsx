@@ -15,7 +15,7 @@ import { usePopup } from "@/app/context/popupContext.jsx";
 const Step3 = () => {
   const popup = usePopup();
 
-  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
+  const { formData, updateFormData, updateStep2Data, goToStep } =
     useCreateTour();
 
   const searchParams = useSearchParams();
