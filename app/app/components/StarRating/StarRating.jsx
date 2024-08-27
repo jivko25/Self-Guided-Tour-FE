@@ -9,17 +9,17 @@ function StarRating({
   maxRating = "",
   textLeft = true,
   goldUnderline = false,
-  textSizeInPx = 16,
+  classes
 }) {
   return (
-    <div className="">
+    <div className={classes}>
       <div className="flex justify-center items-center gap-1.5">
         {textLeft && (
           <Rating
             rating={rating}
             textColor={textColor}
-            textSizeInPx={textSizeInPx}
             goldUnderline={goldUnderline}
+            maxRating={maxRating}
           />
         )}
         {[...Array(starsCount)].map((_, index) => {
@@ -29,8 +29,8 @@ function StarRating({
           <Rating
             rating={rating}
             textColor={textColor}
-            textSizeInPx={textSizeInPx}
             goldUnderline={goldUnderline}
+            maxRating={maxRating}
           />
         )}
       </div>
@@ -41,13 +41,13 @@ function StarRating({
 export default StarRating;
 
 function Star() {
-  return <Image src={StarIcon} alt="star" width={24} height={24} />;
+  return <Image src={StarIcon} alt="star" className="w-[16px] h-[16px] tablet:w-[24px] tablet:h-[24px]" />;
 }
-function Rating({ rating, maxRating, textColor, goldUnderline, textSizeInPx }) {
+function Rating({ rating, maxRating, textColor, goldUnderline }) {
   return (
     <p
       style={{ color: `${textColor}`, borderColor: "E8B600" }}
-      className={`text-[${textSizeInPx}px] ${textColor} ${
+      className={`${textColor} ${
         goldUnderline ? "border-b-2 border-yellow-400" : ""
       }`}
     >

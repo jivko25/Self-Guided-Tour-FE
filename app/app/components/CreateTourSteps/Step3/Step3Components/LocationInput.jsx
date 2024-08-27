@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-function LocationInput({ inputs, handleChange }) {
+function LocationInput({ inputs, handleChange, charactersCount }) {
   return (
     <>
       <div
@@ -87,7 +87,11 @@ function LocationInput({ inputs, handleChange }) {
                 phone:max-w-[361px] phone:h-[178px]
                 smallPhone:max-w-[288px] smallPhone:h-[120px]"
           required
+          maxLength={500}
         />
+        <div className="w-full flex justify-end text-sm text-gray-500 mt-2">
+          {charactersCount}/500
+        </div>
       </div>
     </>
   );
