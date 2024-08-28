@@ -12,7 +12,7 @@ export default function Card({
   description,
   price,
   rating,
-  classes,
+  classes = "",
   creatorName = "",
   creatorImg,
   onclick,
@@ -22,7 +22,7 @@ export default function Card({
 
   useEffect(() => {
     // console.log(windowWidth);
-    
+
     if (windowWidth >= 1280) {
       setIsWeb(true);
     } else {
