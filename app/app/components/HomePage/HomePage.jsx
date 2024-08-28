@@ -5,6 +5,7 @@ import TopSection from "./TopSection/TopSection";
 import InfoCardsSection from "./InfoCardsSection/InfoCardsSection";
 import Summary from "./Summary/Summary";
 import BgBestPlaces from "./BgBestPlaces/BgBestPlaces";
+import BgBiggestTowns from "./BgBiggestTowns/BgBiggestTowns";
 
 function HomePage() {
   
@@ -24,9 +25,10 @@ function HomePage() {
         <InfoCardsSection />
         <Summary />
         <BgBestPlaces />
+        <BgBiggestTowns/>
       </section>
 
-      {/* <Card imageSrc=""  testimonial = {true}/> */}
+      
     </div>
   );
 }
