@@ -15,7 +15,6 @@ function BgBestPlaces() {
         const resBulgarian = await axiosTour.get(
           "?sortBy=mostBought&pageNumber=1&pageSize=4"
         );
-        console.log(resBulgarian.data.result.tours);
         setBulgarianBestPlaces(resBulgarian.data.result.tours);
       } catch (err) {
         console.error(err);
@@ -80,10 +79,10 @@ function BgBestPlaces() {
       </div>
 
       <div
-        className="h-full w-full 
+        className="h-full w-full
         web:flex-nowrap web:flex web:items-center web:justify-evenly web:gap-[20px] web:min-h-[600px] web:overflow-y-hidden web:scrollbar-hide web:overflow-x-hidden
         tablet:flex tablet:items-center tablet:justify-start tablet:gap-[20px] tablet:min-h-[600px] tablet:overflow-x-scroll tablet:overflow-y-hidden tablet:scrollbar-hide
-        phone:grid phone:grid-cols-2 phone:gap-4 phone:justify-items-center phone:items-center phone:w-[100%] 
+        phone:grid phone:grid-cols-2 phone:gap-4 phone:justify-items-center phone:items-center 
         smallPhone:flex-nowrap smallPhone:px-[10px] smallPhone:flex smallPhone:items-center smallPhone:justify-start smallPhone:gap-[20px] smallPhone:overflow-x-auto smallPhone:overflow-y-hidden smallPhone:scrollbar-hide smallPhone:min-h-[250px]
       "
       >
