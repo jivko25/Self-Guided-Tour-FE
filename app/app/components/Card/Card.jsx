@@ -55,7 +55,7 @@ export default function Card({
           </div>
           <div
             className="flex flex-col ml-[8px] justify-center tablet:ml-[24px] mb-[12px] 
-                          tablet:mb-[36px] tablet:mr-[17px] pr-[8px] tablet:mr-[24px] text-[#13294B]"
+                          tablet:mb-[36px] pr-[8px] tablet:mr-[24px] text-[#13294B]"
           >
             <div className="flex justify-between items-center text-[13px] tablet:text-[16px] mb-[36px] tablet:mb-[18px] pr-[6px] tablet:pr-[16px]">
               <div className="flex flex-row items-center w-[151px]">
