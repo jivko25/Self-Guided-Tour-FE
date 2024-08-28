@@ -3,37 +3,54 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
 import { axiosTour } from "@/api/axios";
+import CardSphera from "../CardSphera/CardSphera";
 
 function BgBiggestTowns() {
-
-    const [bulgarianBiggestTowns, setBulgarianBiggestTowns] = useState([]);
+  const [bulgarianBiggestTowns, setBulgarianBiggestTowns] = useState([]);
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
-        const resBiggestTowns = await axiosTour.get(
-          "?searchTerm=sofia"
+        // Create an array of cities to fetch
+        const cities = ["sofia", "plovdiv", "veliko tarnovo", "ruse"];
+
+        // Use Promise.all to fetch data for all cities concurrently
+        const results = await Promise.all(
+          cities.map((city) =>
+            axiosTour.get(
+              `?searchTerm=${city}&sortBy=mostBought&pageNumber=1&pageSize=1`
+            )
+          )
         );
-        setBulgarianBiggestTowns(resBiggestTowns);
+
+        // Extract the first tour object from each result (if available) and update state
+        const townsData = results
+          .map((res) => res.data.result.tours[0] || null)
+          .filter(Boolean);
+
+        console.log(townsData);
+
+        setBulgarianBiggestTowns(townsData);
       } catch (err) {
         console.error(err);
       }
     };
+
     fetchTours();
   }, []);
   return (
     <div
       className="flex flex-col items-center justify-center gap-[30px] w-full h-full
         web:max-w-[1792px] web:min-h-[752px] web:gap-[30px]
-        tablet:px-[10px] tablet:gap-[30px]
-        phone:gap-[20px]
-        smallPhone:gap-[20px]
+        tablet:px-[10px] tablet:gap-[30px] tablet:min-h-[450px]
+        phone:gap-[20px] phone:mb-[50px]
+        smallPhone:gap-[20px] smallPhone:mb-[50px]
         "
     >
       <div
         className="flex items-center w-full max-w-[1792px]
-        web:justify-between
-        tablet:justify-between
+        web:justify-between web:mb-[50px]
+        tablet:justify-between tablet:mb-[30px]
         phone:justify-center
         "
       >
@@ -76,10 +93,34 @@ function BgBiggestTowns() {
           />
         </Link>
       </div>
-
-      <div>
-
-
+      <div
+        className="flex items-center justify-evenly w-full 
+      web:max-w-[1792px] web:gap-[50px]
+      
+      "
+      >
+        {bulgarianBiggestTowns.length > 0 ? (
+          bulgarianBiggestTowns.map((town, index) => (
+            <div className="">
+              <CardSphera
+                key={index}
+                thumbnailImageUrl={town.thumbnailImageUrl}
+                destination={town.destination}
+              />
+            </div>
+          ))
+        ) : (
+          <h3
+            className="mb-6 tablet:mb-16 text-l tablet:text-2xl
+          web:
+          tablet:
+          phone:
+          smallPhone:
+          "
+          >
+            Loading...
+          </h3>
+        )}
       </div>
     </div>
   );
