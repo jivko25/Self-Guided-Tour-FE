@@ -1,16 +1,31 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import imgFirst from "../../../public/images/HomePageImg1.png";
+import imgSecond from "../../../public/images/HomePageImg2.jpeg";
+import Image from "next/image";
 
 function HowItWorks() {
   return (
-    <div className="flex bg-[#13294b]
+    <div
+      className="flex bg-[#13294b]
     web:h-[922px]
     tablet:h-[873px]
-    ">
-      <div className="flex-1">
-        <img src="" alt="" />
-        <img src="" alt="" />
+    "
+    >
+      <div className="relative flex-1">
+        <Image
+          className="absolute w-[408px] h-[440px] rounded-[15px] z-10 left-[150px] top-[50px] object-cover"
+          src={imgFirst}
+          alt="Description of image 1"
+     
+        />
+        <Image
+          className="absolute w-[581px] h-[700px] rounded-[15px] top-[150px] left-[230px] object-cover"
+          src={imgSecond}
+          alt="Description of image 2"
+   
+        />
       </div>
       <div className="flex flex-col flex-1">
         <h1 className="flex-1 w-[278px] text-white text-[39px] font-medium font-['Inter'] leading-[58.50px]">
