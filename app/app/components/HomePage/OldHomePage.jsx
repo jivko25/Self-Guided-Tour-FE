@@ -1,5 +1,31 @@
-import React from 'react'
+"use client";
+import React from "react";
+import Image from "next/image";
+import Search from "@/app/components/Search/Search";
+import Btn from "../Buttons/Btn";
 
+import CARD from "../../public/Home/g10.svg"
+import HUMAN from "../../public/Home/path16.svg"
+import ARROW from "../../public/Home/Frame 14.svg"
+import PICTURES from "../../public/Home/Group 35.svg"
+import SOFIA from "../../public/Home/Ellipse 15.svg"
+import PLOVDIV from "../../public/Home/Ellipse 16.svg"
+import VELIKOTARNOVO from "../../public/Home/Ellipse 17.svg"
+import RUSE from "../../public/Home/Ellipse 18.svg"
+
+import VECTOR1 from "../../public/Home/Vector 1.svg"
+import VECTOR7 from "../../public/Home/Vector 7.svg"
+import VECTOR3 from "../../public/Home/Vector 3.svg"
+import VECTOR8 from "../../public/Home/Vector 8.svg"
+import VECTOR5 from "../../public/Home/Vector 5.svg"
+import CREATE from "../../public/Home/Group 42.svg"
+import PLAN from "../../public/Home/Group 36.svg"
+import DESCRIBE from "../../public/Home/Group 39.svg"
+import REVIEW from "../../public/Home/Group 44.svg"
+
+import CARDTOUR from "../../public/Home/card-tours.svg"
+import Card from "../Card/Card";
+import headerImg from "../../public/images/headerImg.jpeg";
 function OldHomePage() {
   return (
     <div className="flex flex-col items-center w-full min-h-screen">
