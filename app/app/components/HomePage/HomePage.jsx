@@ -6,6 +6,7 @@ import InfoCardsSection from "./InfoCardsSection/InfoCardsSection";
 import Summary from "./Summary/Summary";
 import BgBestPlaces from "./BgBestPlaces/BgBestPlaces";
 import BgBiggestTowns from "./BgBiggestTowns/BgBiggestTowns";
+import HowItWorks from "./HowItWorks/HowItWorks";
 
 function HomePage() {
   
@@ -27,6 +28,8 @@ function HomePage() {
         <BgBestPlaces />
         <BgBiggestTowns/>
       </section>
+
+      <HowItWorks/>
 
       
     </div>
