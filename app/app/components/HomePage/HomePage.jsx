@@ -7,10 +7,10 @@ import Summary from "./Summary/Summary";
 import BgBestPlaces from "./BgBestPlaces/BgBestPlaces";
 import BgBiggestTowns from "./BgBiggestTowns/BgBiggestTowns";
 import HowItWorks from "./HowItWorks/HowItWorks";
+import MakeYourOwnTours from "./MakeYourOwnTours/MakeYourOwnTours";
+import Testimonials from "./Testimonials/Testimonials";
 
 function HomePage() {
-  
-
   return (
     <div className="flex flex-col items-center w-full min-h-screen pb-[100px]">
       <TopSection />
@@ -26,12 +26,12 @@ function HomePage() {
         <InfoCardsSection />
         <Summary />
         <BgBestPlaces />
-        <BgBiggestTowns/>
+        <BgBiggestTowns />
       </section>
 
-      <HowItWorks/>
-
-      
+      <HowItWorks />
+      <MakeYourOwnTours />
+      <Testimonials/>
     </div>
   );
 }
