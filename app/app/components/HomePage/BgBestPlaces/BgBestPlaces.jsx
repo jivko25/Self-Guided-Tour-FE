@@ -88,7 +88,8 @@ function BgBestPlaces() {
       >
         {bulgarianBestPlaces.length > 0 ? (
           bulgarianBestPlaces.map((place) => (
-            <Card
+            <div>
+              <Card
               // testimonial = {true}
               key={place.tourId}
               title={place.title}
@@ -99,6 +100,7 @@ function BgBestPlaces() {
               rating={place.rating || 0}
               onclick={() => {}}
             />
+            </div>
           ))
         ) : (
           <h3
