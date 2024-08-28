@@ -8,12 +8,12 @@ import Image from "next/image";
 function HowItWorks() {
   return (
     <div
-      className="flex bg-[#13294b]
+      className="w-full flex items-center justify-evenly bg-[#13294b]
     web:h-[922px]
     tablet:h-[873px]
     "
     >
-      <div className="relative flex-1">
+      <div className="relative w-[50%] h-full">
         <Image
           className="absolute w-[408px] h-[440px] rounded-[15px] z-10 left-[150px] top-[50px] object-cover"
           src={imgFirst}
@@ -27,11 +27,11 @@ function HowItWorks() {
    
         />
       </div>
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col w-[50%] h-full">
         <h1 className="flex-1 w-[278px] text-white text-[39px] font-medium font-['Inter'] leading-[58.50px]">
           How it Works
         </h1>
-        <p className="flex-1">
+        <p className="flex-1 w-[582px] text-white text-base font-normal font-['Inter']">
           Cursus ante mauris suspendisse laoreet placerat porta amet blandit.
           Venenatis habitasse ligula imperdiet ac sed facilisi. Sodales eget dis
           nibh natoque dictum ante cursus varius. Penatibus lacinia etiam mattis
@@ -40,7 +40,7 @@ function HowItWorks() {
           facilisi. Sodales eget dis nibh natoque dictum ante cursus varius.
           Penatibus lacinia etiam mattis mollis porttitor.
         </p>
-        <p className="flex-1">
+        <p className="flex-1 w-[577px] text-white text-base font-normal font-['Inter']">
           Cursus ante mauris suspendisse laoreet placerat porta amet blandit.
           Venenatis habitasse ligula imperdiet ac sed facilisi. Sodales eget dis
           nibh natoque dictum ante cursus varius. Penatibus lacinia etiam mattis
