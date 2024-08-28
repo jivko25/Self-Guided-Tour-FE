@@ -12,7 +12,7 @@ function BgBiggestTowns() {
     const fetchTours = async () => {
       try {
         const resBiggestTowns = await axiosTour.get(
-          "?searchTerm=sofia&pageSize=1"
+          "?searchTerm=sofia"
         );
         setBulgarianBiggestTowns(resBiggestTowns);
       } catch (err) {
