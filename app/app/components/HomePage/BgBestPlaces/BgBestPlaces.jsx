@@ -33,7 +33,7 @@ function BgBestPlaces() {
     >
       <div
         className="flex items-center w-full max-w-[1792px]
-      web:justify-between
+      web:justify-between web:mb-[50px]
       tablet:justify-between
       phone:justify-center
       "
