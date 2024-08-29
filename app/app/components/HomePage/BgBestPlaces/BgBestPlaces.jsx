@@ -79,6 +79,11 @@ function BgBestPlaces() {
       </div>
 
       <div
+      style={{
+        "::WebkitScrollbar": { display: "none" },
+        MsOverflowStyle: "none",
+        ScrollbarWidth: "none",
+      }}
         className="h-full w-full
         web:flex-nowrap web:flex web:items-center web:justify-evenly web:gap-[20px] web:min-h-[600px] web:overflow-y-hidden web:scrollbar-hide web:overflow-x-hidden
         tablet:flex tablet:items-center tablet:justify-start tablet:gap-[20px] tablet:min-h-[600px] tablet:overflow-x-scroll tablet:overflow-y-hidden tablet:scrollbar-hide
@@ -142,7 +147,7 @@ function BgBestPlaces() {
           web:hidden
           tablet:hidden
           phone:block phone:w-[176px] phone:h-[43px] phone:mb-[50px] 
-          smallPhone:block smallPhone:w-[176px] smallPhone:h-[43px] smallPhone:mb-[50px]
+          smallPhone:block smallPhone:w-[140px] smallPhone:h-[43px] smallPhone:mb-[50px]
           "
       >
         <Btn
