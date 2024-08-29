@@ -1,7 +1,7 @@
 "use client";
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import GoogleMapsComponent from "../../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationInput from "./Step3Components/LocationInput.jsx";
 import FileUpload from "./Step3Components/FileUpload.jsx";

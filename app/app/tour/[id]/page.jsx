@@ -4,17 +4,18 @@ import ArrowUndoOutline from "@/app/components/Svg/ArrowUndoOutline";
 import LocationSharp from "@/app/components/Svg/LocationSharp";
 import Star from "@/app/components/Svg/Star";
 import Walk from "@/app/components/Svg/Walk";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import Btn from "../../components/Buttons/Btn";
 import { axiosTour } from "../../../api/axios";
-import './tour.scss'
+import "./tour.scss";
 
 function TourDetails() {
   const { id } = useParams();
   const [tour, setTour] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
   useEffect(() => {
     const fetchTourDetails = async () => {
       try {
@@ -303,7 +304,13 @@ function TourDetails() {
           </div>
 
           <div className="web:w-[430px] tablet:w-[282px] phone:w-[361px]">
-            <Btn type="submit" variant="filled" text="Buy Tour" fullWidth />
+            <Btn
+              type="submit"
+              variant="filled"
+              text="Buy Tour"
+              fullWidth
+              onClick={() => router.push(`/payment?tourId=${id}`)}
+            />
           </div>
         </div>
       </div>
