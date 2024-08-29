@@ -29,10 +29,16 @@ function Testimonials() {
     "
     >
       <div
+
+
         style={{
           WebkitOverflowScrolling: "touch",
         }}
-        className="h-full w-full px-[10px] flex items-center gap-[20px] overflow-x-auto overflow-y-hidden scrollbar-hide min-h-[250px] whitespace-nowrap"
+        className="h-full w-full px-[10px] flex justify-evenly items-center gap-[20px] scrollbar-hide min-h-[250px] overflow-x-auto hide-scroll-bar
+        web:hide-scroll-bar
+     
+        
+        "
       >
         {recommendedPlaces.length > 0 ? (
           recommendedPlaces.map((place) => (
