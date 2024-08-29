@@ -30,7 +30,7 @@ function HomePage() {
       </section>
 
       <HowItWorks />
-      {/* <MakeYourOwnTours /> */}
+      <MakeYourOwnTours />
       <Testimonials/>
     </div>
   );
