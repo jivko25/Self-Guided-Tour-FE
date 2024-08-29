@@ -22,16 +22,21 @@ function Testimonials() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center h-full w-full min-h-[966px]">
+    <div
+      className="hidden  items-center justify-center h-full w-full 
+    web:flex web:min-h-[966px]
+    tablet:flex tablet:min-h-[650px]
+    "
+    >
       <div
         style={{
-          WebkitOverflowScrolling: "touch", // smooth scrolling on iOS
+          WebkitOverflowScrolling: "touch",
         }}
         className="h-full w-full px-[10px] flex items-center gap-[20px] overflow-x-auto overflow-y-hidden scrollbar-hide min-h-[250px] whitespace-nowrap"
       >
         {recommendedPlaces.length > 0 ? (
           recommendedPlaces.map((place) => (
-            <div className="inline-block">
+            <div className="">
               <Card
                 testimonial={true}
                 key={place.tourId}
@@ -50,28 +55,44 @@ function Testimonials() {
             Loading...
           </h3>
         )}
-        <div className="w-[582px] px-[20px]">
-          <h1 className="text-end text-[#081120] text-[61px] font-medium font-['Inter'] leading-[91.50px]">
-            Testimonials Heading
+        <div className="flex flex-col items-end justify-center w-[582px] pl-[30px]">
+          <h1
+            className="text-end text-[#081120] font-medium font-['Inter'] leading-[91.50px]
+          web:text-[61px]
+          tablet:text-[31px]
+          "
+          >
+            Testimonials
           </h1>
-          <div className="flex gap-[30px] text-end w-full justify-end">
-            
+          <h1
+            className="text-end text-[#081120] font-medium font-['Inter'] leading-[91.50px]
+          web:text-[61px]
+          tablet:text-[31px]
+          "
+          >
+            Heading
+          </h1>
+          <div className="flex gap-[30px] text-end w-full justify-end mt-[20px]">
+            <div className="rounded-full  bg-[#e8b600] p-[5px]">
               <SeeMoreSvgHomePage
-                className="hidden rounded-full w-[5px] rotate-180 bg-[#e8b600]
+                className="hidden w-[5px] rotate-180 
                 web:w-6 web:h-6 web:block
                 tablet:w-6 tablet:h-6 tablet:block
                 phone:
                 smallPhone:
                 "
               />
-            <SeeMoreSvgHomePage
-                className="hidden rounded-full w-[50px] h-[50px]  bg-[#e8b600]
+            </div>
+            <div className="rounded-full  bg-[#e8b600] p-[5px]">
+              <SeeMoreSvgHomePage
+                className="hidden rounded-full 
                 web:w-6 web:h-6 web:block
                 tablet:w-6 tablet:h-6 tablet:block
                 phone:
                 smallPhone:
                 "
               />
+            </div>
           </div>
         </div>
       </div>
