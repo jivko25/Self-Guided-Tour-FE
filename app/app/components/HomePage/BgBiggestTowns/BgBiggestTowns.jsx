@@ -28,7 +28,6 @@ function BgBiggestTowns() {
           .map((res) => res.data.result.tours[0] || null)
           .filter(Boolean);
 
-        console.log(townsData);
 
         setBulgarianBiggestTowns(townsData);
       } catch (err) {
