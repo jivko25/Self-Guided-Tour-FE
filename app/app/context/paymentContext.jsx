@@ -140,7 +140,9 @@ export const PaymentProvider = ({ children }) => {
         // Return URL where the customer should be redirected after the payment is processed.
         return_url:
           process.env.NEXT_PUBLIC_NODE_ENV === "production"
-            ? `${process.env.VERCEL_URL}/payment/success?tourId=${getTourId()}`
+            ? `${
+                process.env.NEXT_PUBLIC_NEXT_VERCEL_URL
+              }/payment/success?tourId=${getTourId()}`
             : "http://localhost:3000/payment/success?tourId=" + getTourId(),
       },
     });
