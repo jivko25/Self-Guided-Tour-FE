@@ -26,7 +26,7 @@ function InfoCardsSection() {
             web:w-[107px] web:h-[124px]
             tablet:w-[117px] tablet:h-[134px] tablet:px-[10px]
             phone:w-[68px] phone:h-[78.80px]
-            smallPhone:w-[60px] smallPhone:h-[70px]
+            smallPhone:w-[40px] smallPhone:h-[68px]
             "
         />
         <div className="flex flex-col">
@@ -66,7 +66,7 @@ function InfoCardsSection() {
             web:w-[107px] web:h-[124px]
             tablet:w-[117px] tablet:h-[134px] tablet:px-[10px]
             phone:w-[68px] phone:h-[78.80px]
-            smallPhone:w-[60px] smallPhone:h-[70px]
+            smallPhone:w-[67px] smallPhone:h-[78px]
             "
         />
         <div className="flex flex-col">
