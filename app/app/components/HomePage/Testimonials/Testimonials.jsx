@@ -23,7 +23,7 @@ function Testimonials() {
 
   return (
     <div
-      className="hidden  items-center justify-center h-full w-full 
+      className="hidden  items-center justify-center h-full w-full max-w-[1792px]
     web:flex web:min-h-[966px]
     tablet:flex tablet:min-h-[650px]
     "
