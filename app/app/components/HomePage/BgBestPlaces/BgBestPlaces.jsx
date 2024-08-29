@@ -25,7 +25,7 @@ function BgBestPlaces() {
   return (
     <div
       className="flex flex-col items-center justify-center gap-[30px] w-full h-full
-    web:max-w-[1792px] web:min-h-[752px] web:gap-[30px]
+    web:max-w-[1792px] web:min-h-[752px] web:gap-[30px] web:px-[0px]
     tablet:px-[10px] tablet:gap-[30px]
     phone:gap-[20px]
     smallPhone:gap-[20px]
@@ -95,7 +95,6 @@ function BgBestPlaces() {
           bulgarianBestPlaces.map((place) => (
             <div>
               <Card
-              // testimonial = {true}
               key={place.tourId}
               title={place.title}
               imageSrc={place.thumbnailImageUrl}
