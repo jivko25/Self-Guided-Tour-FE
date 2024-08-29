@@ -2,9 +2,8 @@
 import Link from "next/link";
 import React from "react";
 import imgGroup from "../../../public/images/Group35.png";
-
 import Image from "next/image";
-import Btn from "../../Buttons/Btn";
+
 function HowItWorks() {
   return (
     <div
