@@ -1,5 +1,5 @@
 "use client";
-import TourCard from "./PaymentPageComponents/TourCard";
+import TourCard from "./PaymentPageComponents/Card/TourCard";
 import { appearance } from "./PaymentPageComponents/Form/Styles/StripeFormStyles";
 import CloseButton from "../Buttons/CloseButton";
 import { usePaymentContext } from "@/app/context/paymentContext";
@@ -8,6 +8,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import PaymentPageSkeleton from "./PaymentPageComponents/Skeletons/PaymentPageSkeleton";
+
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
@@ -29,26 +31,26 @@ function PaymentPage() {
   };
 
   // Check if the tour is free, if so, redirect to success page
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    async function checkIfTourIsFree() {
       if (!tourId) return;
       const { price } = await getTourData(tourId);
       if (price && price === 0) {
         await addFreeTourToUser(tourId);
         router.push("/payment/success");
       }
-    },
-    []
-  );
+    }
+    checkIfTourIsFree();
+  }, [tourId, getTourData, addFreeTourToUser]);
   //Create a payment intent, required for stripe
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    async function fetchPaymentIntent() {
       await getPaymentIntent(tourId);
-    },
-    []
-  );
+    }
+    fetchPaymentIntent();
+  }, [getPaymentIntent, tourId]);
   if (!clientSecret) {
-    return;
+    return <p>Loading...</p>;
   }
   return (
     <Elements options={options} stripe={stripePromise}>

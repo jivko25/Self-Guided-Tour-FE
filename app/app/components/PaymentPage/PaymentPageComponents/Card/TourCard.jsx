@@ -1,12 +1,12 @@
 "use client";
 import Image from "next/image";
-import StarRating from "../../StarRating/StarRating";
-import IconsBar from "./Card/IconsBar";
+import StarRating from "../../../StarRating/StarRating";
+import IconsBar from "../Card/IconsBar";
 import { usePaymentContext } from "@/app/context/paymentContext";
 import { useEffect } from "react";
-import TourCardSkeleton from "./Card/TourCardSkeleton";
+import TourCardSkeleton from "../Skeletons/TourCardSkeleton";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
-import Btn from "../../Buttons/Btn";
+import Btn from "../../../Buttons/Btn";
 //Todo: Add this fields to the tour DTO
 const tourAverageRating = 4.6;
 
