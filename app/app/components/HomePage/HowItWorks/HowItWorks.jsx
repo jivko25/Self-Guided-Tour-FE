@@ -12,7 +12,7 @@ function HowItWorks() {
     web:flex-row web:mt-[0px] web:justify-center web:gap-[50px] web:h-[992px]
     tablet:flex-row tablet:mt-[0px] tablet:justify-center tablet:gap-[50px] tablet:h-[573px]
     phone:flex-col phone:mt-[30px] phone:justify-center phone:gap-[20px] phone:min-h-[395px]
-    smallPhone:flex-col smallPhone:mt-[30px] smallPhone:justify-center smallPhone:gap-[10px] smallPhone:min-h-[638px]
+    smallPhone:flex-col smallPhone:mt-[30px] smallPhone:justify-center smallPhone:gap-[30px] smallPhone:min-h-[638px]
     "
     >
       <div className="flex items-center justify-center w-full h-full">
@@ -32,9 +32,9 @@ function HowItWorks() {
       <div
         className="flex justify-center items-start flex-col h-full w-full 
           web:gap-[30px] web:items-start web:min-h-[922px] 
-          tablet:gap-[7px] tablet:items-start tablet:min-h-[573px] 
-          phone:gap-[10px] phone:items-center phone:min-h-[324px] 
-          smallPhone:gap-[3px] smallPhone:items-center smallPhone:min-h-[324px] 
+          tablet:gap-[20px] tablet:items-start tablet:min-h-[573px] 
+          phone:gap-[30px] phone:items-center phone:min-h-[324px] 
+          smallPhone:gap-[10px] smallPhone:items-center smallPhone:min-h-[324px] 
       
       "
       >
