@@ -5,7 +5,6 @@ import imgFirst from "../../../public/images/HomePageImg1.png";
 import imgSecond from "../../../public/images/HomePageImg2.jpeg";
 import Image from "next/image";
 import Btn from "../../Buttons/Btn";
-
 function HowItWorks() {
   return (
     <div
@@ -24,20 +23,24 @@ function HowItWorks() {
       ">
         <Image
           className="absolute rounded-[15px] z-10 object-cover w-full
-          web:max-w-[408px] web:h-[440px]
-          tablet:max-w-[156px] tablet:h-[169px]
-          phone:max-w-[156px] phone:h-[169px]
-          smallPhone:max-w-[114px] smallPhone:h-[123px]
+          webl:max-w-[408px] webl:h-[440px] webl:top-[60px]   webl:left-[60px]
+          web:max-w-[408px] web:h-[440px] web:top-[60px]   web:left-[60px]
+          tablet:max-w-[156px] tablet:h-[169px] tablet:top-[60px]   tablet:left-[60px]
+          phone:max-w-[156px] phone:h-[169px] phone:top-[30px]  phone:left-[60px]
+          smallPhone:max-w-[114px] smallPhone:h-[123px] smallPhone:top-[30px]  smallPhone:left-[60px]
+          
           "
           src={imgFirst}
           alt="Description of image 1"
         />
         <Image
           className="absolute  rounded-[15px]  object-cover w-full
-          web:max-w-[581px] web:h-[700px]
-          tablet:max-w-[223px] tablet:h-[269px]
-          phone:max-w-[223px] phone:h-[269px]
-          smallPhone:max-w-[162px] smallPhone:h-[195px]
+          webl:max-w-[581px] webl:h-[700px] webl:top-[120px]  webl:right-[60px]
+          web:max-w-[581px] web:h-[700px] web:top-[120px]  web:right-[60px]
+          tablet:max-w-[223px] tablet:h-[269px] tablet:top-[120px]  tablet:right-[60px]
+          phone:max-w-[223px] phone:h-[269px] phone:top-[60px]  phone:right-[60px]
+          smallPhone:max-w-[162px] smallPhone:h-[195px] smallPhone:  smallPhone:right-[60px]
+         
           "
           src={imgSecond}
           alt="Description of image 2"
@@ -64,10 +67,10 @@ function HowItWorks() {
         </h1>
         <p
           className="flex justify-start items-center text-white font-normal font-['Inter'] 
-        web:text-base web:max-w-[582px] web:w-full
-        tablet:text-base tablet:max-w-[484px] tablet:w-full
-        phone:text-[13px] phone:max-w-[363px] phone:w-[90%]
-        smallPhone:text-[13px] smallPhone:w-[90%]
+        web:text-base web:max-w-[582px] web:w-full web:text-start
+        tablet:text-base tablet:max-w-[484px] tablet:w-full tablet:text-start
+        phone:text-[13px] phone:max-w-[363px] phone:w-[90%] phone:text-center
+        smallPhone:text-[13px] smallPhone:w-[95%] smallPhone:text-center
           "
         >
           Cursus ante mauris suspendisse laoreet placerat porta amet blandit.
@@ -77,10 +80,10 @@ function HowItWorks() {
         </p>
         <p
           className="flex justify-start items-center text-white font-normal font-['Inter'] w-full
-        web:text-base web:max-w-[577px] web:w-full
-        tablet:text-base tablet:max-w-[484px] tablet:w-full
-        phone:text-[13px] phone:max-w-[363px] phone:w-[90%]
-        smallPhone:text-[13px] smallPhone:w-[90%]
+        web:text-base web:max-w-[577px] web:w-full web:text-start
+        tablet:text-base tablet:max-w-[484px] tablet:w-full tablet:text-start
+        phone:text-[13px] phone:max-w-[363px] phone:w-[90%] phone:text-center
+        smallPhone:text-[13px] smallPhone:w-[95%] smallPhone:text-center
           "
         >
           Cursus ante mauris suspendisse laoreet placerat porta amet blandit.
