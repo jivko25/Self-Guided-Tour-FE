@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useCallback, useContext, useReducer } from "react";
 import { axios } from "@/api/axios";
 import { useSearchParams, useRouter } from "next/navigation";
 
@@ -53,7 +53,7 @@ export const PaymentProvider = ({ children }) => {
     },
     dispatch,
   ] = useReducer(reducer, initialState);
-  async function getTourData(id) {
+  const getTourData = useCallback(async function getTourData(id) {
     try {
       dispatch({ type: "loading" });
       const response = await axios.get("/tour/" + id);
@@ -66,9 +66,9 @@ export const PaymentProvider = ({ children }) => {
       }
       alert("Error getting tour data", error);
     }
-  }
+  }, []);
   // Creates Payment Intent
-  async function getPaymentIntent(id) {
+  const getPaymentIntent = useCallback(async function getPaymentIntent(id) {
     if (!id) return;
     try {
       dispatch({ type: "loading" });
@@ -90,11 +90,16 @@ export const PaymentProvider = ({ children }) => {
       console.log(error);
       alert("Error getting stripe client secret", error);
     }
-  }
-  function getTourId() {
-    return searchParams.get("tourId");
-  }
-  async function addFreeTourToUser(tourId) {
+  }, []);
+  const getTourId = useCallback(
+    function getTourId() {
+      return searchParams.get("tourId");
+    },
+    [searchParams]
+  );
+  const addFreeTourToUser = useCallback(async function addFreeTourToUser(
+    tourId
+  ) {
     try {
       dispatch({ type: "loading" });
       const response = await axios.post(
@@ -115,7 +120,8 @@ export const PaymentProvider = ({ children }) => {
       console.log(error);
       alert("Error adding free tour to user", error);
     }
-  }
+  },
+  []);
   function handleClose() {
     router.back();
   }
@@ -134,9 +140,7 @@ export const PaymentProvider = ({ children }) => {
         // Return URL where the customer should be redirected after the payment is processed.
         return_url:
           process.env.NEXT_PUBLIC_NODE_ENV === "production"
-            ? `${
-                process.env.NEXT_VERCEL_URL
-              }/payment/success?tourId=${getTourId()}`
+            ? `${process.env.VERCEL_URL}/payment/success?tourId=${getTourId()}`
             : "http://localhost:3000/payment/success?tourId=" + getTourId(),
       },
     });
