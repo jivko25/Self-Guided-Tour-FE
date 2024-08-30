@@ -2,10 +2,7 @@ import Axios from "axios";
 import https from "https";
 import { setupSessionInterceptors } from "./interceptors";
 //TODO: Get the base url from the env
-const BASE_URL =
-  process.env.NEXT_PUBLIC_NODE_ENV === "production"
-    ? `${process.env.NEXT_PUBLIC_BASE_URL}/api`
-    : "https://localhost:7038/api";
+const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`
 
 // to be removed for production
 const agent = new https.Agent({

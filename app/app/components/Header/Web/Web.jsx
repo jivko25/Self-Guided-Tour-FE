@@ -31,7 +31,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
           type="button"
           variant="transparent"
           text="Explore"
-          link="/explore?page=1"
+          link="/explore?page=1&sort=newest"
         />
         {!isAuthenticated && (
           <div className="mr-[30px]">
