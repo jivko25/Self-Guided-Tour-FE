@@ -1,10 +1,9 @@
 import Axios from "axios";
 import https from "https";
 import { setupSessionInterceptors } from "./interceptors";
-//TODO: Get the base url from the env
+
 const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`
 
-// to be removed for production
 const agent = new https.Agent({
   rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false,
 });
@@ -23,7 +22,7 @@ export const axiosAuth = Axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  httpsAgent: agent, // to be removed for production
+  httpsAgent: agent,
 });
 
 export const axiosTour = Axios.create({
@@ -32,7 +31,7 @@ export const axiosTour = Axios.create({
     "Content-Type": "multipart/form-data",
   },
   //withCredentials: true, TODO: Uncomment when we setup CORS
-  httpsAgent: agent, // to be removed for production
+  httpsAgent: agent,
 });
 
 export const axiosAdmin = Axios.create({
@@ -40,7 +39,7 @@ export const axiosAdmin = Axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  httpsAgent: agent, // to be removed for production
+  httpsAgent: agent,
 });
 
 // Attach the interceptor to axios, axiosTour and axiosAdmin
