@@ -11,6 +11,7 @@ import Sort from "../components/Sort/Sort";
 import ArrowDown from "../public/svg/arrow-down.svg";
 import ArrowUp from "../public/svg/arrow-up.svg";
 import { useWindowWidth } from "../utils/hooks";
+import Btn from "../components/Buttons/Btn";
 
 const sortOprions = [
   { label: "Newest", value: "newest", sr: "" },
@@ -30,15 +31,15 @@ export default function Explore() {
   const [isLoading, setIsloading] = useState(true);
   const [isPlaceholder, setisPlaceHolder] = useState(false);
   const [selectedSort, setSelectedSort] = useState(null);
+  const [pageSize, setPageSize] = useState(12);
   const router = useRouter();
   const popup = usePopup();
   const windowWidth = useWindowWidth();
 
-
   useEffect(() => {
     if (search && sort) {
       setQuery(
-        `?pageSize=12&pageNumber=${page}&searchTerm=${search}&sortBy=${sort}`
+        `?pageSize=${pageSize}&pageNumber=${page}&searchTerm=${search}&sortBy=${sort}`
       );
       setSelectedSort(sort);
     } else if (sort) {
@@ -131,12 +132,16 @@ export default function Explore() {
       <h1 className="mb-6 tablet:mb-16 text-xl tablet:text-3xl web:text-[39px] font-medium">
         Discover your next exciting trip
       </h1>
-      <div className="mb-16 tablet:mb-[108px] web:mb-[136px] flex flex-col tablet:flex-row items-center gap-[21px] z-50">
+      <div className="mb-16 tablet:mb-[108px] web:mb-[136px] flex flex-col tablet:flex-row items-center gap-[21px] z-30">
         <div className="tablet:max-w-[484px] web:max-w-full">
           <Search
             onSearch={handleSearch}
             searchValue={search}
-            placeholder={isPlaceholder ? "Search trip by typing a destination or title" : ''}
+            placeholder={
+              isPlaceholder
+                ? "Search trip by typing a destination or title"
+                : ""
+            }
           />
         </div>
         <Sort
@@ -148,30 +153,51 @@ export default function Explore() {
       <h2 className="hidden web:inline-block self-start mb-9 text-[31px] font-medium">
         Explore Top Rated trips
       </h2>
-        <div className="grid phone:grid-cols-2 web:grid-cols-4 webl:grid-cols-4 gap-x-[9px] tablet:gap-x-5 web:gap-x-6 gap-y-6 tablet:gap-y-16 mb-16 web:mb-[108px]">
-          {(tours.length > 0 && !isLoading) &&
-            tours.map((tour) => (
-              <Card
-                key={tour.tourId}
-                title={tour.title}
-                imageSrc={tour.thumbnailImageUrl}
-                description={tour.summary}
-                location={tour.destination}
-                price={`EUR ${tour.price}`}
-                rating={4.5}
-                onclick={() => router.push(`/tour/${tour.tourId}`)}
-              />
-            ))}
+      <div className="grid phone:grid-cols-2 web:grid-cols-4 webl:grid-cols-4 gap-x-[9px] tablet:gap-x-5 web:gap-x-6 gap-y-6 tablet:gap-y-16 mb-16 web:mb-[108px]">
+        {tours.length > 0 &&
+          !isLoading &&
+          tours.map((tour) => (
+            <Card
+              key={tour.tourId}
+              title={tour.title}
+              imageSrc={tour.thumbnailImageUrl}
+              description={tour.summary}
+              location={tour.destination}
+              price={`EUR ${tour.price}`}
+              rating={4.5}
+              onclick={() => router.push(`/tour/${tour.tourId}`)}
+            />
+          ))}
 
-          {tours.length == 0 && !isLoading && (
-            <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl">
-              "{search}" - No results found
+        {(search && tours.length == 0 && !isLoading) && (
+          <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl">
+            "{search}" - No results found
+          </h3>
+        )}
+
+      {(!search && tours.length == 0 && !isLoading )&& (
+          <div className="mb-6 tablet:mb-16 phone:col-end-1 web:col-start-2 web:col-end-4">
+            <h3 className="text-l tablet:text-2xl mb-4">
+              There are no tours at the moment.
             </h3>
-          )}
-        </div>
+          <p className="text-[14px] tablet:text-[16px]">Want to be the first to create one?</p>
+          <Btn text={'Learn More'} />
+          </div>
+        )}
+      </div>
       <div className="mb-[108px] tablet:mb-[236px] flex flex-row gap-x-16">
-        <ButtonRound classes={'w-[60px] h-[60px]'} type="button" direction="left" onclick={handlePrevPage} />
-        <ButtonRound classes={'w-[60px] h-[60px]'} type="button" direction="right" onclick={handleNextPage} />
+        <ButtonRound
+          classes={"w-[60px] h-[60px]"}
+          type="button"
+          direction="left"
+          onclick={handlePrevPage}
+        />
+        <ButtonRound
+          classes={"w-[60px] h-[60px]"}
+          type="button"
+          direction="right"
+          onclick={handleNextPage}
+        />
       </div>
     </div>
   );

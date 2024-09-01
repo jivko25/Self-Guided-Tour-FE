@@ -103,7 +103,7 @@ export default function Card({
               </p>
             </div>
             <span className="self-center inline-block w-full border-b-[1px] border-b-[#D1D0D8]"></span>
-            <p className="mt-[6px] web:ml-[12px]">
+            <p className="mt-[6px] web:ml-[12px] line-clamp-1">
               {title && title.toUpperCase()}
             </p>
           </div>
@@ -140,9 +140,9 @@ export default function Card({
                 </div>
               )}
             </div>
-            <span className="mb-[12px] tablet:mb-[6px] text-[#081120] text-[16px] tablet:text-[25px] tablet:font-semibold">
+            <p className="mb-[12px] tablet:mb-[6px] text-[#081120] text-[16px] tablet:text-[25px] tablet:font-semibold line-clamp-1">
               {title}
-            </span>
+            </p>
             <div className="hidden tablet:block tablet:h-[90px] web:h-[108px]">
               <p className="hidden tablet:line-clamp-4 break-words">
                 {description}

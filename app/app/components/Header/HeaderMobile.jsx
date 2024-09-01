@@ -18,15 +18,21 @@ import MenuDark from "../../public/menu-dark.svg";
 import MenuFocusDark from "../../public/menu-focus-dark.svg";
 
 import MobileMenuOverlay from "../MobileMenuOverlay/MobileMenuOverlay.jsx";
-import { usePathname } from "next/navigation.js";
+import { usePathname, useRouter } from "next/navigation.js";
 
 export default function HeaderMobile({ isAuthenticated }) {
   const [focus, setFocus] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [menuOverlayVisible, setMenuOverlayVisible] = useState(false);
+  const router = useRouter();
 
   const handleFocus = (index) => {
     setFocus(index);
+
+    if (index === 0) {
+      router.push('/explore?page=1&sort=newest');
+    }
+
     // Toggle menu overlay visibility when "Menu" is clicked
     if (index === 2) {
       setMenuOverlayVisible(!menuOverlayVisible);
