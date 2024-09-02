@@ -205,7 +205,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
   /**
    * Helper function for loading google api libraries
    * @param {object} loader 
-   * @returns 
+   * @returns {Promise}
    */
   async function loadLibraries(loader) {
     if (!libraries) {
@@ -231,7 +231,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
   /**
    * Helper function for creating custom markers
    * @param {string} color 
-   * @returns 
+   * @returns {HTMLElement}
    */
   const createCustomMarker = (color) => {
     // Create container element for the marker
