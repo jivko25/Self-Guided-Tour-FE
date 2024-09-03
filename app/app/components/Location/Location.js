@@ -7,7 +7,7 @@ import AlertIcon from "../../public/alert-circle-outline.svg";
 import Image from "next/image.js";
 import { useEffect, useState } from "react";
 
-export default function LocationComponent({
+export default function Location({
   count,
   draggable,
   onDragStart,

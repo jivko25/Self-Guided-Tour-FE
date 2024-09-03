@@ -2,7 +2,7 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import GoogleMapsComponent from "../../GoogleMapsComponent/GoogleMapsComponent.js";
+import GoogleMaps from "../../GoogleMaps/GoogleMaps.js";
 import LocationInput from "./Step3Components/LocationInput.jsx";
 import FileUpload from "./Step3Components/FileUpload.jsx";
 import DescriptionWeb from "./Step3Components/DescriptionWeb.jsx";
@@ -293,7 +293,7 @@ const Step3 = () => {
           </section>
         </div>
 
-        {/* DescriptionTabletPhone, GoogleMapsComponent */}
+        {/* DescriptionTabletPhone, GoogleMaps */}
         <div
           className="flex flex-col rounded-[5px] w-full 
         web:h-full web:max-w-[50%] web:max-h-[691px] 
@@ -303,7 +303,7 @@ const Step3 = () => {
         >
           <DescriptionTabletPhone />
 
-          <GoogleMapsComponent coordinates={coordinates} />
+          <GoogleMaps coordinates={coordinates} />
         </div>
       </div>
 

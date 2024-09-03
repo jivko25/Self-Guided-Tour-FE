@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
+export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
