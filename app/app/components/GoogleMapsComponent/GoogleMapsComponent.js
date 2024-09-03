@@ -179,7 +179,8 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
       // Autocomplete logic
       const autocomplete = new Autocomplete(inputRef.current, {
-        types: ['geocode'],
+        // types: ['geocode'], // switch to this to get full information about the searched place
+        fields: ['geometry'],
       });
 
       autocompleteRef.current = autocomplete;
@@ -188,7 +189,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         const place = autocomplete.getPlace();
         if (place.geometry && map) {
           map.panTo(place.geometry.location);
-          map.setZoom(14);
+          map.setZoom(14);          
         }
         // Reset session token after selection
         inputRef.current.value = '';
