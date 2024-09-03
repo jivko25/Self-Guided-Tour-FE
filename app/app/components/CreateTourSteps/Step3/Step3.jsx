@@ -11,9 +11,11 @@ import MediaPreviewTablet from "./Step3Components/MediaPreviewTablet.jsx";
 import MediaPreviewWebPhone from "./Step3Components/MediaPreviewWebPhone.jsx";
 import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
 import { usePopup } from "@/app/context/popupContext.jsx";
+import { useRouter } from "next/navigation.js";
 
 const Step3 = () => {
   const popup = usePopup();
+  const router = useRouter();
 
   const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
     useCreateTour();
@@ -33,24 +35,54 @@ const Step3 = () => {
     inputs.locationDescription.length || 0
   );
 
+  const removePlaceIdFromUrl = () => {
+    const url = new URL(window.location);
+    url.searchParams.delete("placeId");
+    window.history.pushState({}, "", url);
+  };
+
   useEffect(() => {
     if (placeId) {
       const result = formData.step2Data.find((loc) => loc.placeId === placeId);
       if (result) {
         setCoordinates({ lat: result.latitude, lng: result.longitude });
-        setInputs((prevInputs) => ({
-          ...prevInputs,
+        setInputs({
           placeId: result.placeId || "",
           locationName: result.location || "",
           locationCity: result.locationCity || "",
           locationDescription: result.locationDescription || "",
           addFields: result.addFields || [],
-        }));
+        });
+        setDescriptionCharCount(result.locationDescription?.length || 0);
       }
+    } else if (formData.step2Data.length > 0) {
+      // Pre-fill with the first location data if no specific placeId is provided
+      const firstLocation = formData.step2Data[0];
+      setCoordinates({
+        lat: firstLocation.latitude,
+        lng: firstLocation.longitude,
+      });
+      setInputs({
+        placeId: firstLocation.placeId || "",
+        locationName: firstLocation.location || "",
+        locationCity: firstLocation.locationCity || "",
+        locationDescription: firstLocation.locationDescription || "",
+        addFields: firstLocation.addFields || [],
+      });
+      setDescriptionCharCount(firstLocation.locationDescription?.length || 0);
     }
-  }, [placeId]);
+  }, [placeId, formData.step2Data]);
 
-  const handleFinish = () => {
+  const handlePrevStep = () => {
+    if (placeId) {
+      removePlaceIdFromUrl();
+      goToStep(1);
+    } else {
+      alert("Previous location loaded");
+    }
+  };
+
+  const handleNextStep = () => {
     const { locationName, ...updatedInputs } = inputs;
     if (!locationName || inputs.addFields.length === 0) {
       popup({
@@ -64,6 +96,7 @@ const Step3 = () => {
       });
     }
     updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
+    removePlaceIdFromUrl();
     goToStep(1);
   };
 
@@ -202,7 +235,10 @@ const Step3 = () => {
           web:justify-start web:items-start
           tablet:justify-center tablet:items-center"
       >
-        <NavigationButtons prevStep={prevStep} handleFinish={handleFinish} />
+        <NavigationButtons
+          handlePrevStep={handlePrevStep}
+          handleNextStep={handleNextStep}
+        />
 
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
