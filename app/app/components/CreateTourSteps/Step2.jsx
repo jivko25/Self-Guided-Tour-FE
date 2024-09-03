@@ -11,8 +11,14 @@ import {
 } from "@/app/utils/wizardStepValidations.js";
 
 const Step2 = () => {
-  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
-    useCreateTour();
+  const {
+    formData,
+    updateFormData,
+    updateStep2Data,
+    prevStep,
+    nextStep,
+    goToStep,
+  } = useCreateTour();
   const popup = usePopup();
 
   const [data, setData] = useState({
@@ -81,17 +87,18 @@ const Step2 = () => {
   };
 
   const handleNextStep = () => {
-    const allFieldsFilled = isArrayOfObjFilled(formData.step2Data);
+    // const allFieldsFilled = isArrayOfObjFilled(formData.step2Data);
 
-    if (allFieldsFilled === false) {
-      popup({
-        type: "ERROR",
-        message:
-          "Required fields are missing in one or more locations. Fill them in to continue !",
-      });
-      return;
-    }
-    goToStep(3);
+    // if (allFieldsFilled === false) {
+    //   popup({
+    //     type: "ERROR",
+    //     message:
+    //       "Required fields are missing in one or more locations. Fill them in to continue !",
+    //   });
+    //   return;
+    // }
+    // goToStep(3);
+    nextStep();
   };
 
   return (

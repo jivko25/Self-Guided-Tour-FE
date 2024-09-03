@@ -15,7 +15,7 @@ import { usePopup } from "@/app/context/popupContext.jsx";
 const Step3 = () => {
   const popup = usePopup();
 
-  const { formData, updateFormData, updateStep2Data, goToStep } =
+  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
     useCreateTour();
 
   const searchParams = useSearchParams();
@@ -52,11 +52,7 @@ const Step3 = () => {
 
   const handleFinish = () => {
     const { locationName, ...updatedInputs } = inputs;
-    if (
-      !locationName ||
-      !inputs.locationCity ||
-      inputs.addFields.length === 0
-    ) {
+    if (!locationName || inputs.addFields.length === 0) {
       popup({
         type: "ERROR",
         message: "Please fill out the required fields !",
@@ -206,7 +202,7 @@ const Step3 = () => {
           web:justify-start web:items-start
           tablet:justify-center tablet:items-center"
       >
-        <NavigationButtons handleFinish={handleFinish} />
+        <NavigationButtons prevStep={prevStep} handleFinish={handleFinish} />
 
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
