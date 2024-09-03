@@ -83,21 +83,26 @@ const Step3 = () => {
   };
 
   const handleNextStep = () => {
-    const { locationName, ...updatedInputs } = inputs;
-    if (!locationName || inputs.addFields.length === 0) {
-      popup({
-        type: "ERROR",
-        message: "Please fill out the required fields !",
-      });
+    if (placeId) {
+      const { locationName, ...updatedInputs } = inputs;
+      if (!locationName || inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Location name or files missing !",
+        });
+        return;
+      } else {
+        popup({
+          type: "SUCCESS",
+          message: "Good job required fields are filled !",
+        });
+      }
+      updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
+      removePlaceIdFromUrl();
+      goToStep(1);
     } else {
-      popup({
-        type: "SUCCESS",
-        message: "Good job required fields are filled !",
-      });
+      alert("Next location loaded")
     }
-    updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
-    removePlaceIdFromUrl();
-    goToStep(1);
   };
 
   const handleRemoveMedia = (index) => {
