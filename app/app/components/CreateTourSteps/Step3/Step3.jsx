@@ -11,18 +11,23 @@ import MediaPreviewTablet from "./Step3Components/MediaPreviewTablet.jsx";
 import MediaPreviewWebPhone from "./Step3Components/MediaPreviewWebPhone.jsx";
 import NavigationButtons from "./Step3Components/NavigationButtons.jsx";
 import { usePopup } from "@/app/context/popupContext.jsx";
-import { useRouter } from "next/navigation.js";
 
 const Step3 = () => {
   const popup = usePopup();
-  const router = useRouter();
 
-  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
-    useCreateTour();
+  const {
+    formData,
+    updateFormData,
+    updateStep2Data,
+    prevStep,
+    nextStep,
+    goToStep,
+  } = useCreateTour();
 
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
   const [coordinates, setCoordinates] = useState(null);
+  const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
 
   const [inputs, setInputs] = useState({
     locationName: "",
@@ -84,24 +89,72 @@ const Step3 = () => {
 
   const handleNextStep = () => {
     if (placeId) {
+      // If accessed through the edit button
       const { locationName, ...updatedInputs } = inputs;
       if (!locationName || inputs.addFields.length === 0) {
         popup({
           type: "ERROR",
-          message: "Location name or files missing !",
+          message: "Location name or files missing!",
         });
         return;
       } else {
         popup({
           type: "SUCCESS",
-          message: "Good job required fields are filled !",
+          message: "Good job, required fields are filled!",
         });
       }
       updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
       removePlaceIdFromUrl();
       goToStep(1);
     } else {
-      alert("Next location loaded")
+      // If accessed through the next button in step 2
+      const { locationName, ...updatedInputs } = inputs;
+
+      if (!locationName || inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Location name or files missing!",
+        });
+        return;
+      }
+
+      // Save the current data to the current index in formData.step2Data
+      updateStep2Data(
+        { ...updatedInputs, location: locationName },
+        formData.step2Data[currentLocationIndex].placeId
+      );
+
+      if (currentLocationIndex < formData.step2Data.length - 1) {
+        // Move to the next location after saving the current one
+        const nextIndex = currentLocationIndex + 1;
+
+        // Delay the state update until the next render cycle
+        setTimeout(() => {
+          const nextData = formData.step2Data[nextIndex];
+          setCoordinates({
+            lat: nextData.latitude,
+            lng: nextData.longitude,
+          });
+          setInputs({
+            placeId: nextData.placeId || "",
+            locationName: nextData.location || "",
+            locationCity: nextData.locationCity || "",
+            locationDescription: nextData.locationDescription || "",
+            addFields: nextData.addFields || [],
+          });
+          setDescriptionCharCount(nextData.locationDescription?.length || 0);
+
+          // Update the current index
+          setCurrentLocationIndex(nextIndex);
+        }, 0); // Using a timeout to ensure state updates after the render cycle
+      } else {
+        // If it's the last item, navigate to the next step
+        popup({
+          type: "SUCCESS",
+          message: "Good job, all locations are completed!",
+        });
+        nextStep();
+      }
     }
   };
 
