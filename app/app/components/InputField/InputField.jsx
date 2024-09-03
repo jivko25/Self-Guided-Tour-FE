@@ -91,7 +91,7 @@ const InputField = forwardRef(
             ref={ref}
             {...otherProps}
           />
-          {type === "password" && !error && (
+          {type === "password" && (
             <a className={styles["eye-icon"]} onClick={handleShowPassword}>
               <Image src={EyeIcon} width={32} height={32} alt="Eye icon" />
             </a>
