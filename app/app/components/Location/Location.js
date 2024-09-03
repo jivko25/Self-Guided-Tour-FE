@@ -8,7 +8,7 @@ import Image from "next/image.js";
 import { useEffect, useState } from "react";
 import Tooltip from "../Tooltip/Tooltip.jsx";
 
-export default function LocationComponent({
+export default function Location({
   count,
   draggable,
   onDragStart,
