@@ -2,12 +2,13 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
+import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
   validateStep,
   canProceedToStep,
 } from "../utils/wizardStepValidations.js";
 import { usePopup } from "./popupContext.jsx";
-
+import { useRouter } from "next/navigation.js";
 const LOCAL_STORAGE_KEY = "savedTourFormData";
 
 const CreateTourContext = createContext();
@@ -39,6 +40,7 @@ export const CreateTourProvider = ({ children }) => {
   // };
 
   const popup = usePopup();
+  const router = useRouter();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -104,6 +106,7 @@ export const CreateTourProvider = ({ children }) => {
   const goToStep = (stepIndex) => {
     if (canProceedToStep(stepIndex, formData)) {
       setStep(stepIndex);
+      removePlaceIdFromUrl(stepIndex);
     } else {
       popup({
         type: "ERROR",
@@ -197,7 +200,7 @@ export const CreateTourProvider = ({ children }) => {
       return;
     }
 
-    const { data, error } = await createTour(tourData);
+    const { error } = await createTour(tourData);
 
     if (error) {
       // Iterate over the errors and create a popup for each one
@@ -208,6 +211,7 @@ export const CreateTourProvider = ({ children }) => {
         });
       });
     } else {
+      router.push("/");
       popup({
         type: "SUCCESS",
         message: "Your tour has been successfully created",

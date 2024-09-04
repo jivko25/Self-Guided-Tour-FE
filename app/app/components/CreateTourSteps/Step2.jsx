@@ -5,14 +5,16 @@ import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
 import LocationComponent from "../LocationComponent/LocationComponent.js";
 import InputField from "../InputField/InputField.jsx";
 import { usePopup } from "@/app/context/popupContext.jsx";
-import {
-  isArrayOfObjFilled,
-  isObjectFilled,
-} from "@/app/utils/wizardStepValidations.js";
 
 const Step2 = () => {
-  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
-    useCreateTour();
+  const {
+    formData,
+    updateFormData,
+    updateStep2Data,
+    prevStep,
+    nextStep,
+    goToStep,
+  } = useCreateTour();
   const popup = usePopup();
 
   const [data, setData] = useState({
@@ -81,17 +83,15 @@ const Step2 = () => {
   };
 
   const handleNextStep = () => {
-    const allFieldsFilled = isArrayOfObjFilled(formData.step2Data);
-
-    if (allFieldsFilled === false) {
+    if (formData.step2Data.length === 0) {
       popup({
         type: "ERROR",
         message:
-          "Required fields are missing in one or more locations. Fill them in to continue !",
+          "Please add at least one location to proceed to the next step!",
       });
       return;
     }
-    goToStep(3);
+    nextStep();
   };
 
   return (
