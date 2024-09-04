@@ -20,8 +20,7 @@ export const isArrayOfObjFilled = (input) => {
         obj[key] === "" ||
         (Array.isArray(obj[key]) && obj[key].length === 0)
       ) {
-        // Skip the locationDescription field from being checked
-        if (key === "locationDescription") {
+        if (key === "locationDescription" || key === "locationCity") {
           continue;
         }
         return false;
@@ -42,6 +41,11 @@ export const isArrayOfObjFilled = (input) => {
 export const validateStep = (step, formData, targetStep) => {
   const isObjectFilled = (obj) => {
     for (let key in obj) {
+          // Skip the locationDescription & locationCity field from being checked
+      if (key === "locationDescription" || key === "locationCity") {
+        continue;
+      }
+
       if (obj[key] === null || obj[key] === undefined || obj[key] === "") {
         return false;
       }
