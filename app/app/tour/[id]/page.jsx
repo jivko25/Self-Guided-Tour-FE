@@ -46,7 +46,6 @@ function TourDetails() {
     summary,
   } = tour;
 
-  console.log(landmarks);
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -262,7 +261,7 @@ function TourDetails() {
           </div> */}
         </div>
 
-        <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 phone:my-[0px]"></div>
+        <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 phone:my-[0px] smallPhone:my-[0px]"></div>
 
         <div
           className="flex flex-col h-full flex-wrap items-start justify-center w-full
@@ -409,8 +408,8 @@ function TourDetails() {
                 className="text-[#081120]font-medium font-['Inter'] leading-[30px] font-medium
               web:mb-[20px] web:text-xl web:mt-[5px]
               tablet:text-lg tablet:mb-[20px] tablet:mt-[40px]
-              phone:text-sm phone:mt-[30px] phone:mb-[10px]
-              smallPhone:text-sm smallPhone:mt-[30px] smallPhone:mb-[10px]
+              phone:text-sm phone:mt-[30px] phone:mb-[10px] phone:text-center
+              smallPhone:text-sm smallPhone:mt-[30px] smallPhone:mb-[10px] smallPhone:text-center
               "
               >
                 How to get the most of the tour and its story
@@ -465,8 +464,8 @@ function TourDetails() {
                 className="text-[#081120]font-medium font-['Inter'] leading-[30px] font-medium
               web:mb-[20px] web:text-xl web:mt-[5px]
               tablet:text-lg tablet:mb-[20px] tablet:mt-[40px]
-              phone:text-sm phone:mt-[30px] phone:mb-[10px]
-              smallPhone:text-sm smallPhone:mt-[30px] smallPhone:mb-[10px]
+              phone:text-sm phone:mt-[30px] phone:mb-[10px] phone:text-center
+              smallPhone:text-sm smallPhone:mt-[30px] smallPhone:mb-[10px] smallPhone:text-center
               "
               >
                 How to get the most of the tour and its story
