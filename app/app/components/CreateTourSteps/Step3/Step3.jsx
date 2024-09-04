@@ -34,12 +34,6 @@ const Step3 = () => {
     inputs.locationDescription.length || 0
   );
 
-  const removePlaceIdFromUrl = () => {
-    const url = new URL(window.location);
-    url.searchParams.delete("placeId");
-    window.history.pushState({}, "", url);
-  };
-
   useEffect(() => {
     if (placeId) {
       const result = formData.step2Data.find((loc) => loc.placeId === placeId);
@@ -75,7 +69,6 @@ const Step3 = () => {
   const handlePrevStep = () => {
     if (placeId) {
       // If accessed through the edit button, just remove the placeId and go to step 1
-      removePlaceIdFromUrl();
       goToStep(1);
     } else {
       // If accessed through the previous button in step 3
@@ -124,7 +117,6 @@ const Step3 = () => {
         });
       }
       updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
-      removePlaceIdFromUrl();
       goToStep(1);
     } else {
       // If accessed through the next button in step 2

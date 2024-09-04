@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
+import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
   validateStep,
   canProceedToStep,
@@ -100,9 +101,11 @@ export const CreateTourProvider = ({ children }) => {
   };
 
   const prevStep = () => setStep((prevStep) => prevStep - 1);
+
   const goToStep = (stepIndex) => {
     if (canProceedToStep(stepIndex, formData)) {
       setStep(stepIndex);
+      removePlaceIdFromUrl(stepIndex);
     } else {
       popup({
         type: "ERROR",
@@ -196,7 +199,7 @@ export const CreateTourProvider = ({ children }) => {
       return;
     }
 
-    const { data, error } = await createTour(tourData);
+    const { error } = await createTour(tourData);
 
     if (error) {
       // Iterate over the errors and create a popup for each one

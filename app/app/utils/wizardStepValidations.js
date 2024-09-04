@@ -41,7 +41,7 @@ export const isArrayOfObjFilled = (input) => {
 export const validateStep = (step, formData, targetStep) => {
   const isObjectFilled = (obj) => {
     for (let key in obj) {
-          // Skip the locationDescription & locationCity field from being checked
+      // Skip the locationDescription & locationCity field from being checked
       if (key === "locationDescription" || key === "locationCity") {
         continue;
       }
@@ -105,4 +105,13 @@ export const canProceedToStep = (targetStep, formData) => {
     }
   }
   return true;
+};
+
+export const removePlaceIdFromUrl = (currentStep) => {
+  if (currentStep !== 2) {
+    // Only remove placeId if not on step 3
+    const url = new URL(window.location);
+    url.searchParams.delete("placeId");
+    window.history.pushState({}, "", url);
+  }
 };
