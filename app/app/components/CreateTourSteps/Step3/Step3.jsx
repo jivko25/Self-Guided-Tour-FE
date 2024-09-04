@@ -80,12 +80,39 @@ const Step3 = () => {
 
   const handlePrevStep = () => {
     if (placeId) {
+      // If accessed through the edit button, just remove the placeId and go to step 1
       removePlaceIdFromUrl();
       goToStep(1);
     } else {
-      alert("Previous location loaded");
+      // If accessed through the previous button in step 3
+      if (currentLocationIndex > 0) {
+        // Move to the previous location
+        const prevIndex = currentLocationIndex - 1;
+        const prevData = formData.step2Data[prevIndex];
+  
+        // Set the inputs and coordinates for the previous location
+        setCoordinates({
+          lat: prevData.latitude,
+          lng: prevData.longitude,
+        });
+        setInputs({
+          placeId: prevData.placeId || "",
+          locationName: prevData.location || "",
+          locationCity: prevData.locationCity || "",
+          locationDescription: prevData.locationDescription || "",
+          addFields: prevData.addFields || [],
+        });
+        setDescriptionCharCount(prevData.locationDescription?.length || 0);
+  
+        // Update the current index
+        setCurrentLocationIndex(prevIndex);
+      } else {
+        // If no previous objects are left, go to step 1
+        goToStep(1);
+      }
     }
   };
+  
 
   const handleNextStep = () => {
     if (placeId) {
