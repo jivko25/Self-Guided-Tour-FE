@@ -8,7 +8,7 @@ import {
   canProceedToStep,
 } from "../utils/wizardStepValidations.js";
 import { usePopup } from "./popupContext.jsx";
-
+import { useRouter } from "next/navigation.js";
 const LOCAL_STORAGE_KEY = "savedTourFormData";
 
 const CreateTourContext = createContext();
@@ -40,6 +40,7 @@ export const CreateTourProvider = ({ children }) => {
   // };
 
   const popup = usePopup();
+  const router = useRouter();
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -210,6 +211,7 @@ export const CreateTourProvider = ({ children }) => {
         });
       });
     } else {
+      router.push("/");
       popup({
         type: "SUCCESS",
         message: "Your tour has been successfully created",
