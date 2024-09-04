@@ -15,14 +15,8 @@ import { usePopup } from "@/app/context/popupContext.jsx";
 const Step3 = () => {
   const popup = usePopup();
 
-  const {
-    formData,
-    updateFormData,
-    updateStep2Data,
-    prevStep,
-    nextStep,
-    goToStep,
-  } = useCreateTour();
+  const { formData, updateFormData, updateStep2Data, nextStep, goToStep } =
+    useCreateTour();
 
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
@@ -76,7 +70,7 @@ const Step3 = () => {
       });
       setDescriptionCharCount(firstLocation.locationDescription?.length || 0);
     }
-  }, [placeId, formData.step2Data]);
+  }, [placeId]);
 
   const handlePrevStep = () => {
     if (placeId) {
@@ -89,7 +83,7 @@ const Step3 = () => {
         // Move to the previous location
         const prevIndex = currentLocationIndex - 1;
         const prevData = formData.step2Data[prevIndex];
-  
+
         // Set the inputs and coordinates for the previous location
         setCoordinates({
           lat: prevData.latitude,
@@ -103,7 +97,7 @@ const Step3 = () => {
           addFields: prevData.addFields || [],
         });
         setDescriptionCharCount(prevData.locationDescription?.length || 0);
-  
+
         // Update the current index
         setCurrentLocationIndex(prevIndex);
       } else {
@@ -112,7 +106,6 @@ const Step3 = () => {
       }
     }
   };
-  
 
   const handleNextStep = () => {
     if (placeId) {
@@ -188,18 +181,27 @@ const Step3 = () => {
   const handleRemoveMedia = (index) => {
     const updatedAddFields = inputs.addFields.filter((_, i) => i !== index);
 
+    // Update the inputs state without triggering a reversion to previous location's data
     setInputs((prevInputs) => ({
       ...prevInputs,
       addFields: updatedAddFields,
     }));
 
-    updateStep2Data(
-      {
-        ...inputs,
-        addFields: updatedAddFields,
-      },
-      placeId
+    // Update the specific location in formData.step2Data
+    const updatedLocationData = {
+      ...formData.step2Data[currentLocationIndex],
+      addFields: updatedAddFields,
+    };
+
+    // Update the formData in the context
+    const updatedStep2Data = formData.step2Data.map((location, i) =>
+      i === currentLocationIndex ? updatedLocationData : location
     );
+
+    updateFormData({
+      ...formData,
+      step2Data: updatedStep2Data,
+    });
   };
 
   const handleChange = (e) => {
@@ -215,7 +217,6 @@ const Step3 = () => {
           type: "ERROR",
           message: "Some files exceed the 5MB limit and were not added.",
         });
-        // alert("Some files exceed the 5MB limit and were not added.");
       }
 
       setInputs((prevInputs) => ({

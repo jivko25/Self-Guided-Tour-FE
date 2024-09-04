@@ -100,7 +100,6 @@ export const CreateTourProvider = ({ children }) => {
   };
 
   const prevStep = () => setStep((prevStep) => prevStep - 1);
-
   const goToStep = (stepIndex) => {
     if (canProceedToStep(stepIndex, formData)) {
       setStep(stepIndex);
