@@ -2,7 +2,6 @@
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
-import Btn from "../../components/Buttons/Btn";
 import { axiosTour } from "../../../api/axios";
 import "./tour.scss";
 import TourTitle from "@/app/components/TourDetails/TourTitle";
