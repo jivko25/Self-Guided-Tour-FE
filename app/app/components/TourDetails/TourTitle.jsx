@@ -8,6 +8,7 @@ function TourTitle({ title }) {
         web:gap-[30px]
         tablet:gap-[30px] tablet: mb-[30px]
         phone:gap-[20px]
+        smallPhone:gap-[20px]
         "
     >
       <h1
@@ -15,6 +16,7 @@ function TourTitle({ title }) {
           web:text-[39px] web:leading-[58.50px]
           tablet:text-[32px] tablet:leading-[48px]
           phone:text-[25px]
+          smallPhone:text-[25px]
           "
       >
         {title}
