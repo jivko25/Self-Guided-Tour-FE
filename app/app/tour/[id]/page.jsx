@@ -1,9 +1,5 @@
 "use client";
-import ArrowRedoOutline from "@/app/components/Svg/ArrowRedoOutline";
-import ArrowUndoOutline from "@/app/components/Svg/ArrowUndoOutline";
-import LocationSharp from "@/app/components/Svg/LocationSharp";
-import Star from "@/app/components/Svg/Star";
-import Walk from "@/app/components/Svg/Walk";
+
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import Btn from "../../components/Buttons/Btn";
@@ -96,12 +92,12 @@ function TourDetails() {
     </div>
   );
 }
-
-function TourDetailsWrapper() {
-  return (
-    <Suspense fallback={<p>Loading Tour Details...</p>}>
-      <TourDetails />
-    </Suspense>
-  );
-}
-export default TourDetailsWrapper;
+export default TourDetails;
+// function TourDetailsWrapper() {
+//   return (
+//     <Suspense fallback={<p>Loading Tour Details...</p>}>
+//       <TourDetails />
+//     </Suspense>
+//   );
+// }
+// export default TourDetailsWrapper;
