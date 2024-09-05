@@ -7,6 +7,7 @@ function TourSummary({ summary }) {
         web:gap-[50px] web:max-w-[733px]
         tablet:max-w-[584px]
         phone:max-w-[95%]
+        smallPhone:max-w-[95%]
         "
         >
           <div className="tablet:mb-[40px] phone:mb-[40px] h-full">
@@ -15,6 +16,7 @@ function TourSummary({ summary }) {
             web:mb-[20px] web:text-2xl
             tablet:mb-[20px] tablet:text-2xl
             phone:mb-[20px] phone:text-base
+            smallPhone:mb-[20px] smallPhone:text-base
             "
             >
               About the tour
@@ -24,6 +26,7 @@ function TourSummary({ summary }) {
             web:max-w-[733px] web:text-base 
             tablet:max-w-[584px] tablet:text-base 
             phone:max-w-full phone:text-sm
+            smallPhone:max-w-full smallPhone:text-sm
             "
             >
               {summary}
