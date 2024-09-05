@@ -1,7 +1,7 @@
 "use client";
 import TourCard from "./PaymentPageComponents/Card/TourCard";
 import { appearance } from "./PaymentPageComponents/Form/Styles/StripeFormStyles";
-import CloseButton from "../Buttons/CloseButton";
+import CloseButton from "../Buttons/IconButton";
 import { usePaymentContext } from "@/app/context/paymentContext";
 import CheckoutForm from "./PaymentPageComponents/Form/CheckoutForm";
 import { Elements } from "@stripe/react-stripe-js";
