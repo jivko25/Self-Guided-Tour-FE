@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
+export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId, connectCoordinates }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -41,16 +41,20 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         version: "weekly",
       });
 
-      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }] = await loadLibraries(loader);
+      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }, { LatLng }] = await loadLibraries(loader);
       GoogleSessionTokenRef.current = AutocompleteSessionToken;
 
-
-      if (coordinates && coordinates.lat) {
-        center = coordinates;
-      } else if (createCoordinates && createCoordinates.length > 0) {
-        const lastLocation = createCoordinates[createCoordinates.length - 1]
-        center = { lat: lastLocation.latitude, lng: lastLocation.longitude };
+      if (!connectCoordinates && connectCoordinates.length === 0) {
+        if (coordinates && coordinates.lat) {
+          center = coordinates;
+        } else if (createCoordinates && createCoordinates.length > 0) {
+          const lastLocation = createCoordinates[createCoordinates.length - 1]
+          center = { lat: lastLocation.latitude, lng: lastLocation.longitude };
+        }
+      } else {
+        center = connectCoordinates[0];
       }
+
 
       const mapOPtions = {
         center: center,
@@ -197,6 +201,24 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         autocompleteSessionTokenRef.current = null;
       });
 
+      if (connectCoordinates) {
+        const directionsService = new DirectionsService();
+        const directionsRenderer = new DirectionsRenderer();
+        directionsRenderer.setMap(map);
+
+        directionsService.route({
+          origin: new LatLng(connectCoordinates[0]),
+          destination: new LatLng(connectCoordinates[connectCoordinates.length - 1]),
+          travelMode: 'DRIVING'
+        }, (response, status) => {
+          if (status === 'OK') {
+            directionsRenderer.setDirections(response);
+          } else {
+            console.error('Directions request failed due to ' + status);
+          }
+        });
+
+      }
     }
 
     //initialize map
@@ -215,6 +237,8 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         loader.importLibrary('marker'),
         loader.importLibrary('places'),
         loader.importLibrary('geocoding'),
+        loader.importLibrary('routes'),
+        loader.importLibrary('core'),
       ]);
     }
 
