@@ -7,6 +7,7 @@ function TourImages({ thumbnailImageUrl, landmarks }) {
         web:grid web:grid-cols-4 web:grid-rows-2 web:gap-4 web:w-full web:h-full web:max-h-[520px] web:items-center web:justify-center
         tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:w-full tablet:h-full tablet:items-center tablet:justify-center 
         phone:flex phone:w-full phone:overflow-x-auto 
+        smallPhone:flex smallPhone:w-full smallPhone:overflow-x-auto 
         "
           style={{
             "::WebkitScrollbar": { display: "none" },
