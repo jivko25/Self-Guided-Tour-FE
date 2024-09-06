@@ -1,4 +1,5 @@
 import React from "react";
+import ImageOutline from "../Svgs/ImageOutline";
 
 function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
   return (
@@ -38,7 +39,9 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
               />
               {index === 3 && landmarks.length > 4 && (
                 <div className="absolute">
-                  <button></button>
+                  <button>
+                    <ImageOutline />
+                  </button>
                 </div>
               )}
             </div>
