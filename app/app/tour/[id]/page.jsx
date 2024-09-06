@@ -5,11 +5,12 @@ import React, { Suspense, useEffect, useState } from "react";
 import { axiosTour } from "../../../api/axios";
 import "./tour.scss";
 import TourTitle from "@/app/components/TourDetails/TourTitle";
-import TourImages from "@/app/components/TourDetails/TourImages";
 import TourInfo from "@/app/components/TourDetails/TourInfo";
 import TourPurchase from "@/app/components/TourDetails/TourPurchase";
 import TourSummary from "@/app/components/TourDetails/TourSummary";
 import HowJauntsterWorks from "@/app/components/TourDetails/HowJauntsterWorks";
+import TourImagesPhone from "@/app/components/TourDetails/TourImagesPhone";
+import TourImagesWebTablet from "@/app/components/TourDetails/TourImagesWebTablet";
 
 function TourDetails() {
   const { id } = useParams();
@@ -60,7 +61,8 @@ function TourDetails() {
       >
         <TourTitle title={title} />
 
-        <TourImages thumbnailImageUrl={thumbnailImageUrl} landmarks={landmarks} />
+        <TourImagesPhone thumbnailImageUrl={thumbnailImageUrl} landmarks={landmarks} />
+        <TourImagesWebTablet thumbnailImageUrl={thumbnailImageUrl} landmarks={landmarks} />
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}
