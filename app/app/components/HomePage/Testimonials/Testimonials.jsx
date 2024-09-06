@@ -6,9 +6,11 @@ import Card from "../../Card/Card";
 import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Testimonials() {
   const [recommendedPlaces, setRecommendedPlaces] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchTours = async () => {
@@ -69,7 +71,8 @@ function Testimonials() {
                     location={place.destination}
                     price={`EUR ${place.price}`}
                     rating={place.rating || 0}
-                    onclick={() => {}}
+                    onclick={() => router.push(`/tour/${place.tourId}`)}
+
                   />
                 </div>
               ))}
