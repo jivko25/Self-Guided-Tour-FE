@@ -20,6 +20,8 @@ function Testimonials() {
     };
     fetchTours();
   }, []);
+ 
+  
 
   return (
     <div
@@ -29,9 +31,10 @@ function Testimonials() {
     "
     >
       <div
-
-
         style={{
+          "::WebkitScrollbar": { display: "none" },
+          MsOverflowStyle: "none",
+          ScrollbarWidth: "none",
           WebkitOverflowScrolling: "touch",
         }}
         className="h-full w-full px-[10px] flex justify-evenly items-center gap-[20px] scrollbar-hide min-h-[250px] overflow-x-auto hide-scroll-bar
@@ -41,8 +44,8 @@ function Testimonials() {
         "
       >
         {recommendedPlaces.length > 0 ? (
-          recommendedPlaces.map((place) => (
-            <div className="">
+          recommendedPlaces.map((place, index) => (
+            <div className="" key={index}>
               <Card
                 testimonial={true}
                 key={place.tourId}
