@@ -1,6 +1,6 @@
 import React from "react";
-import ArrowUndoOutline from "../../Svg/ArrowUndoOutline";
-import ArrowRedoOutline from "../../Svg/ArrowRedoOutline";
+import ArrowUndoOutline from "../Svgs/ArrowUndoOutline";
+import ArrowRedoOutline from "../Svgs/ArrowRedoOutline";
 
 function HowJauntsterWorks() {
   return (
