@@ -2,7 +2,7 @@ import React from "react";
 import makeYourOwnToursImg from "../../../public/images/makeYourOwnToursImg.png";
 import Image from "next/image";
 import Link from "next/link";
-import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
+import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 function MakeYourOwnTours() {
   return (
     <div className="hidden  items-center justify-center w-full h-full 
