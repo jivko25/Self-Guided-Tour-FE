@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { axiosTour } from "@/api/axios";
 import Card from "../../Card/Card";
 import Link from "next/link";
-import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
+import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 import Btn from "../../Buttons/Btn";
 
 function BgBestPlaces() {
