@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId, connectCoordinates }) {
+export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId, directions = [] }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -44,17 +44,12 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
       const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }, { LatLng }] = await loadLibraries(loader);
       GoogleSessionTokenRef.current = AutocompleteSessionToken;
 
-      if (!connectCoordinates) {
-        if (coordinates && coordinates.lat) {
-          center = coordinates;
-        } else if (createCoordinates && createCoordinates.length > 0) {
-          const lastLocation = createCoordinates[createCoordinates.length - 1]
-          center = { lat: lastLocation.latitude, lng: lastLocation.longitude };
-        }
-      } else {
-        center = connectCoordinates[0];
+      if (coordinates && coordinates.lat) {
+        center = coordinates;
+      } else if (createCoordinates && createCoordinates.length > 0) {
+        const lastLocation = createCoordinates[createCoordinates.length - 1]
+        center = { lat: lastLocation.latitude, lng: lastLocation.longitude };
       }
-
 
       const mapOPtions = {
         center: center,
@@ -201,32 +196,31 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         autocompleteSessionTokenRef.current = null;
       });
 
-      const coordLength = connectCoordinates.length;
-      if (coordLength > 0) {
+      // logic for drawing routes from array of locations
+      const directionsLength = directions.length;
+      if (directionsLength > 0) {
         const directionsService = new DirectionsService();
         const directionsRenderer = new DirectionsRenderer({
           map, // Set the map
           polylineOptions: {
-          strokeColor: '#E30505',  // Change the line color
-          strokeOpacity: 1,      // Set the line opacity
-          strokeWeight: 3          // Set the line weight
-        },});
+            strokeColor: '#E30505',  // Change the line color
+            strokeOpacity: 1,      // Set the line opacity
+            strokeWeight: 3          // Set the line weight
+          },
+        });
 
         const waypoints = [];
+        const origin = new LatLng(directions[0]);
+        const destination = new LatLng(directions[directionsLength - 1]);
 
-        const origin = new LatLng(connectCoordinates[0]);
-        const destination = new LatLng(connectCoordinates[coordLength - 1]);
-
-        if (connectCoordinates.length > 0) {
-          connectCoordinates.forEach((tour, i) => {
-            if (i > 0 && i < (coordLength - 1)) {
-              waypoints.push({
-                location: new LatLng(tour),
-                stopover: true,
-              });
-            }
-          })
-        }
+        directions.forEach((tour, i) => {
+          if (i > 0 && i < (directionsLength - 1)) {
+            waypoints.push({
+              location: new LatLng(tour),
+              stopover: true,
+            });
+          }
+        })
 
         directionsService.route({
           origin,
@@ -235,7 +229,15 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
           travelMode: 'DRIVING',
         }, (response, status) => {
           if (status === 'OK') {
-            
+            console.log(response);
+
+            directionsRenderer.setOptions({
+              markerOptions: {
+                icon: {
+                  url: locationmarker.src
+                }
+              }
+            });
             directionsRenderer.setDirections(response);
           } else {
             console.error('Directions request failed due to ' + status);

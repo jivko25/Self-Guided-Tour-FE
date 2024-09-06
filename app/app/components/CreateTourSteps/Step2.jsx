@@ -6,14 +6,6 @@ import Location from "../Location/Location.js";
 import InputField from "../InputField/InputField.jsx";
 import { usePopup } from "@/app/context/popupContext.jsx";
 
-// test coordinates
-const flightPlanCoordinates = [
-  { lat: 42.6977, lng: 23.3219 },
-  { lat: 42.4366, lng: 24.5450 },
-  { lat: 41.3353, lng: 24.8452 },
-  { lat: 42.1354, lng: 24.7453 },
-];
-
 const Step2 = () => {
   const {
     formData,
@@ -128,7 +120,6 @@ const Step2 = () => {
             <GoogleMaps
               getLocationInfo={getLocationInfo}
               createCoordinates={createCoordinates}
-              connectCoordinates={flightPlanCoordinates}
             />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
