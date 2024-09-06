@@ -64,7 +64,9 @@ function Testimonials() {
             Loading...
           </h3>
         )}
-        <div className="flex flex-col items-end justify-center w-[582px] pl-[30px]">
+        
+      </div>
+      <div className="flex flex-col items-end justify-center w-[582px] pl-[30px]">
           <h1
             className="text-end text-[#081120] font-medium font-['Inter'] leading-[91.50px]
           web:text-[61px]
@@ -103,8 +105,7 @@ function Testimonials() {
               />
             </div>
           </div>
-        </div>
-      </div>
+        </div> 
     </div>
   );
 }
