@@ -1,6 +1,6 @@
 import React from "react";
-import Walk from "../Svg/Walk";
-import LocationSharp from "../Svg/LocationSharp";
+import Walk from "../Svgs/Walk";
+import LocationSharp from "../Svgs/LocationSharp";
 
 function TourInfo({ estimatedDuration, destination }) {
   return (
