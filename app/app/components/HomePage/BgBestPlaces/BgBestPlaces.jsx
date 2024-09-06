@@ -92,8 +92,8 @@ function BgBestPlaces() {
       "
       >
         {bulgarianBestPlaces.length > 0 ? (
-          bulgarianBestPlaces.map((place) => (
-            <div>
+          bulgarianBestPlaces.map((place, index) => (
+            <div key={index}>
               <Card
               key={place.tourId}
               title={place.title}
