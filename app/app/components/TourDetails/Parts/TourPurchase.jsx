@@ -1,6 +1,6 @@
 import React from 'react'
-import Star from '../Svg/Star'
-import Btn from '../Buttons/Btn'
+import Star from '../Svgs/Star'
+import Btn from '../../Buttons/Btn'
 
 function TourPurchase({ destination, price, id, router }) {
   return (
