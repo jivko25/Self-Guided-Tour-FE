@@ -44,7 +44,7 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
       const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }, { LatLng }] = await loadLibraries(loader);
       GoogleSessionTokenRef.current = AutocompleteSessionToken;
 
-      if (!connectCoordinates && connectCoordinates.length === 0) {
+      if (!connectCoordinates) {
         if (coordinates && coordinates.lat) {
           center = coordinates;
         } else if (createCoordinates && createCoordinates.length > 0) {
@@ -201,17 +201,41 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         autocompleteSessionTokenRef.current = null;
       });
 
-      if (connectCoordinates) {
+      const coordLength = connectCoordinates.length;
+      if (coordLength > 0) {
         const directionsService = new DirectionsService();
-        const directionsRenderer = new DirectionsRenderer();
-        directionsRenderer.setMap(map);
+        const directionsRenderer = new DirectionsRenderer({
+          map, // Set the map
+          polylineOptions: {
+          strokeColor: '#E30505',  // Change the line color
+          strokeOpacity: 1,      // Set the line opacity
+          strokeWeight: 3          // Set the line weight
+        },});
+
+        const waypoints = [];
+
+        const origin = new LatLng(connectCoordinates[0]);
+        const destination = new LatLng(connectCoordinates[coordLength - 1]);
+
+        if (connectCoordinates.length > 0) {
+          connectCoordinates.forEach((tour, i) => {
+            if (i > 0 && i < (coordLength - 1)) {
+              waypoints.push({
+                location: new LatLng(tour),
+                stopover: true,
+              });
+            }
+          })
+        }
 
         directionsService.route({
-          origin: new LatLng(connectCoordinates[0]),
-          destination: new LatLng(connectCoordinates[connectCoordinates.length - 1]),
-          travelMode: 'DRIVING'
+          origin,
+          destination,
+          waypoints,
+          travelMode: 'DRIVING',
         }, (response, status) => {
           if (status === 'OK') {
+            
             directionsRenderer.setDirections(response);
           } else {
             console.error('Directions request failed due to ' + status);

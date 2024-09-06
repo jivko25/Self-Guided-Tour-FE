@@ -9,6 +9,8 @@ import { usePopup } from "@/app/context/popupContext.jsx";
 // test coordinates
 const flightPlanCoordinates = [
   { lat: 42.6977, lng: 23.3219 },
+  { lat: 42.4366, lng: 24.5450 },
+  { lat: 41.3353, lng: 24.8452 },
   { lat: 42.1354, lng: 24.7453 },
 ];
 
