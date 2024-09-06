@@ -5,10 +5,11 @@ import Card from "../../Card/Card";
 import Link from "next/link";
 import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
 import Btn from "../../Buttons/Btn";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function BgBestPlaces() {
   const [bulgarianBestPlaces, setBulgarianBestPlaces] = useState([]);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchTours = async () => {
       try {
@@ -102,7 +103,7 @@ function BgBestPlaces() {
               location={place.destination}
               price={`EUR ${place.price}`}
               rating={place.rating || 0}
-              onclick={() => {}}
+              onclick={() => router.push(`/tour/${place.tourId}`)}
             />
             </div>
           ))
