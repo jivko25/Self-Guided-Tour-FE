@@ -1,5 +1,5 @@
 import React from "react";
-import Star from "../Svg/Star";
+import Star from "../Svgs/Star";
 
 function TourTitle({ title }) {
   return (
