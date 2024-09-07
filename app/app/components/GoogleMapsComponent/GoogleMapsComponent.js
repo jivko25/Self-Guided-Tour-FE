@@ -6,7 +6,23 @@ import Image from 'next/image';
 
 let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId, directions = [] }) {
+/**
+ * @param {Function} getLocationInfo function to handle click on location on the map
+ * @param {object} coordinates object of lat and lng to display one marker
+ * @param {Array} coordinatesArray array of objects {lat, lng} to display multiple markers
+ * @param {Array} createCoordinates array of objects {lat, lng} to display multiple markers on create tour wizard step 2
+ * @param {string} locationId adds marker based on location id
+ * @param {object} directions draws polylines and markers for direction API - structure: { tourType: '', locations: [..] }, locations key has to be array of objects { lat, lng }. For allowed tour types refer to https://developers.google.com/maps/documentation/javascript/directions#TravelModes
+ * @returns {JSX.Element}
+ */
+export default function GoogleMapsComponent({ 
+  getLocationInfo,
+  coordinates, 
+  coordinatesArray,
+  createCoordinates,
+  locationId,
+  directions,
+}) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -37,7 +53,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         version: "weekly",
       });
 
-      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place }, { DirectionsService, DirectionsRenderer, TravelModes }, { LatLng }] = await loadLibraries(loader);
+      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place }, { DirectionsService, DirectionsRenderer }, { LatLng }] = await loadLibraries(loader);
 
       if (coordinates && coordinates.lat) {
         center = coordinates;
@@ -174,53 +190,56 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
       map.addListener('click', handleClick);
 
-      // logic for drawing routes from array of locations
-      const directionsLength = directions.length;
-      if (directionsLength > 0) {
-        const directionsService = new DirectionsService();
-        const directionsRenderer = new DirectionsRenderer({
-          map, // Set the map
-          polylineOptions: {
-            strokeColor: '#E30505',  // Change the line color
-            strokeOpacity: 1,      // Set the line opacity
-            strokeWeight: 3          // Set the line weight
-          },
-        });
+      // logic for drawing directions
+      if (directions) {
+        const tourType = directions.tourType;
+        const locations = directions.locations;
+        const directionsLength = locations.length;
 
-        const waypoints = [];
-        const origin = new LatLng(directions[0]);
-        const destination = new LatLng(directions[directionsLength - 1]);
+        if (directionsLength > 0) {
+          const directionsService = new DirectionsService();
+          const directionsRenderer = new DirectionsRenderer({
+            map, // Set the map
+            polylineOptions: {
+              strokeColor: '#E30505',  // Change the line color
+              strokeOpacity: 1,      // Set the line opacity
+              strokeWeight: 3          // Set the line weight
+            },
+          });
 
-        directions.forEach((tour, i) => {
-          if (i > 0 && i < (directionsLength - 1)) {
-            waypoints.push({
-              location: new LatLng(tour),
-              stopover: true,
-            });
-          }
-        })
+          const waypoints = [];
+          const origin = new LatLng(locations[0]);
+          const destination = new LatLng(locations[directionsLength - 1]);
 
-        directionsService.route({
-          origin,
-          destination,
-          waypoints,
-          travelMode: 'DRIVING',
-        }, (response, status) => {
-          if (status === 'OK') {
-            console.log(response);
+          locations.forEach((tour, i) => {
+            if (i > 0 && i < (directionsLength - 1)) {
+              waypoints.push({
+                location: new LatLng(tour),
+                stopover: true,
+              });
+            }
+          })
 
-            directionsRenderer.setOptions({
-              markerOptions: {
-                icon: {
-                  url: locationmarker.src
+          directionsService.route({
+            origin,
+            destination,
+            waypoints,
+            travelMode: tourType.toUpperCase(),
+          }, (response, status) => {
+            if (status === 'OK') {
+              directionsRenderer.setOptions({
+                markerOptions: {
+                  icon: {
+                    url: locationmarker.src
+                  }
                 }
-              }
-            });
-            directionsRenderer.setDirections(response);
-          } else {
-            console.error('Directions request failed due to ' + status);
-          }
-        });
+              });
+              directionsRenderer.setDirections(response);
+            } else {
+              console.error('Directions request failed due to ' + status);
+            }
+          });
+        }
 
       }
     }
@@ -288,7 +307,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
 
   return (
-    <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
+    <div className="w-[100%] h-[100%]" ref={mapsRef} >
       {/* Hidden container for marker content */}
       <div style={{ display: "none" }}>
         <div ref={markerRef}>
