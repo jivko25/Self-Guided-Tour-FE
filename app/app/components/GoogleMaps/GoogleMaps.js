@@ -11,7 +11,7 @@ let center = { lat: 42.698334, lng: 23.319941 }
  * @param {Function} props.getLocationInfo function to handle click on location on the map
  * @param {object} props.coordinates object of lat and lng to display one marker
  * @param {object[]} props.coordinatesArray array of objects {lat, lng} to display multiple markers
- * @param {object[]} props.createCoordinates array of objects {lat, lng} to display multiple markers on create tour wizard step 2
+ * @param {object[]} props.createCoordinates array of objects {lat, lng} to display multiple markers on create tour wizard step 2. Will handle logic with adding and removing locations
  * @param {string} props.locationId adds marker based on location id
  * @param {object} props.directions draws polylines and markers for direction API - structure: { tourType: '', locations: [..] }, locations key has to be array of objects { lat, lng }. For allowed tour types refer to https://developers.google.com/maps/documentation/javascript/directions#TravelModes
  * @returns {JSX.Element}
