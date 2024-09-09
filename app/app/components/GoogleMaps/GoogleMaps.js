@@ -6,12 +6,16 @@ import Image from 'next/image';
 
 let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMapsComponent({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
+export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
   const currentInfoWindowRef = useRef(null);
   const currentMarkerRef = useRef(null);
+  const autocompleteRef = useRef(null);
+  const inputRef = useRef(null);
+  const autocompleteSessionTokenRef = useRef(null);
+  const GoogleSessionTokenRef = useRef(null);
   const [data, setData] = useState({});
   let libraries = null;
 
@@ -37,13 +41,15 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         version: "weekly",
       });
 
-      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place }] = await loadLibraries(loader);
+      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }] = await loadLibraries(loader);
+      GoogleSessionTokenRef.current = AutocompleteSessionToken;
+
 
       if (coordinates && coordinates.lat) {
         center = coordinates;
       } else if (createCoordinates && createCoordinates.length > 0) {
         const lastLocation = createCoordinates[createCoordinates.length - 1]
-        center = {lat: lastLocation.latitude, lng: lastLocation.longitude};
+        center = { lat: lastLocation.latitude, lng: lastLocation.longitude };
       }
 
       const mapOPtions = {
@@ -78,7 +84,6 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
             await place.fetchFields({ fields: ["displayName"] });
             location = place.displayName;
           } else {
-            const { Geocoder } = await loader.importLibrary('geocoding');
             const geocoding = new Geocoder();
             const { results } = await geocoding.geocode({ location: { lat, lng } });
             placeId = results[0].place_id;
@@ -157,7 +162,7 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         const newMapOptions = {
           center: { lat: latitude, lng: longitude },
           zoom: 17,
-          mapId: 'NEXT_MAP',
+          mapId: "NEXT_MAP",
         }
 
         // Setting new map options
@@ -170,7 +175,27 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
         });
       }
 
-      map.addListener('click', handleClick);
+      map.addListener("click", handleClick);
+
+      // Autocomplete logic
+      const autocomplete = new Autocomplete(inputRef.current, {
+        // types: ['geocode'], // switch to this to get full information about the searched place
+        fields: ['geometry'],
+      });
+
+      autocompleteRef.current = autocomplete;
+
+      autocomplete.addListener('place_changed', (e) => {
+        const place = autocomplete.getPlace();
+        if (place.geometry && map) {
+          map.panTo(place.geometry.location);
+          map.setZoom(14);          
+        }
+        // Reset session token after selection
+        inputRef.current.value = '';
+        
+        autocompleteSessionTokenRef.current = null;
+      });
 
     }
 
@@ -179,26 +204,35 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
   }, [locationId, coordinates, createCoordinates]);
 
   /**
-   * Heper function for loading google api libraries
+   * Helper function for loading google api libraries
    * @param {object} loader 
-   * @returns 
+   * @returns {Promise}
    */
   async function loadLibraries(loader) {
     if (!libraries) {
       libraries = await Promise.all([
         loader.importLibrary('maps'),
         loader.importLibrary('marker'),
-        loader.importLibrary('places')
+        loader.importLibrary('places'),
+        loader.importLibrary('geocoding'),
       ]);
     }
 
     return libraries;
   }
 
+  // Generate a new session token on input focus
+  const handleFocus = async () => {
+    if (GoogleSessionTokenRef.current) {
+      autocompleteSessionTokenRef.current = new GoogleSessionTokenRef.current(); // Generate session token
+      autocompleteRef.current.setOptions({ sessionToken: autocompleteSessionTokenRef.current }); // Set token to Autocomplete
+    }
+  };
+
   /**
    * Helper function for creating custom markers
    * @param {string} color 
-   * @returns 
+   * @returns {HTMLElement}
    */
   const createCustomMarker = (color) => {
     // Create container element for the marker
@@ -235,28 +269,40 @@ export default function GoogleMapsComponent({ getLocationInfo, coordinates, coor
 
 
   return (
-    <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
-      {/* Hidden container for marker content */}
-      <div style={{ display: "none" }}>
-        <div ref={markerRef}>
-          <Image
-            src={locationmarker}
-            alt="Marker Image"
-            width={40}
-            height={40}
-          />
-        </div>
+    <div className='w-[100%] h-[100%] relative'>
+      {/* Container for Autocomplete */}
+      <div className=' w-[120px] h-[40px] tablet:w-[200px] z-10 absolute left-[5px] phone:left-[182px] bottom-[20px] phone:top-[10px] border shadow'>
+        <input
+          ref={inputRef}
+          className='z-50 w-[100%] h-[100%] p-1'
+          type="text"
+          placeholder="Search"
+          onFocus={handleFocus} // Generate a new session token on focus
+        />
       </div>
-      {/* Hidden container for InfoWindow content */}
-      <div style={{ display: "none" }}>
-        <div ref={infoWindowRef} className={"w-[162px] h-[85px]"}>
-          <div>
-            <textarea className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
+      <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
+        {/* Hidden container for marker content */}
+        <div style={{ display: "none" }}>
+          <div ref={markerRef}>
+            <Image
+              src={locationmarker}
+              alt="Marker Image"
+              width={40}
+              height={40}
+            />
+          </div>
+        </div>
+        {/* Hidden container for InfoWindow content */}
+        <div style={{ display: "none" }}>
+          <div ref={infoWindowRef} className={"w-[162px] h-[85px]"}>
+            <div>
+              <textarea className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
                                 resize-none focus:outline-none rounded-sm text-[#13294B]" placeholder='Location name'>
-            </textarea>
-            <div className='flex justify-around mt-[10px] text-[#4285F4]'>
-              <button onClick={handleSave}>Save</button>
-              <button onClick={handleCancel}>Cancel</button>
+              </textarea>
+              <div className='flex justify-around mt-[10px] text-[#4285F4]'>
+                <button onClick={handleSave}>Save</button>
+                <button onClick={handleCancel}>Cancel</button>
+              </div>
             </div>
           </div>
         </div>
