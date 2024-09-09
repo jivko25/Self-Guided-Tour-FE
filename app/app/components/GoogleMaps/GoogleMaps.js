@@ -16,9 +16,9 @@ let center = { lat: 42.698334, lng: 23.319941 }
  * @param {object} props.directions draws polylines and markers for direction API - structure: { tourType: '', locations: [..] }, locations key has to be array of objects { lat, lng }. For allowed tour types refer to https://developers.google.com/maps/documentation/javascript/directions#TravelModes
  * @returns {JSX.Element}
  */
-export default function GoogleMaps({ 
+export default function GoogleMaps({
   getLocationInfo,
-  coordinates, 
+  coordinates,
   coordinatesArray,
   createCoordinates,
   locationId,
@@ -58,7 +58,14 @@ export default function GoogleMaps({
         version: "weekly",
       });
 
-      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }, { LatLng }] = await loadLibraries(loader);
+      const [
+        { Map, InfoWindow }, { AdvancedMarkerElement },
+        { Place, Autocomplete, AutocompleteSessionToken },
+        { Geocoder },
+        { DirectionsService, DirectionsRenderer },
+        { LatLng }
+      ] = await loadLibraries(loader);
+
       GoogleSessionTokenRef.current = AutocompleteSessionToken;
 
       if (coordinates && coordinates.lat) {
@@ -205,11 +212,10 @@ export default function GoogleMaps({
         const place = autocomplete.getPlace();
         if (place.geometry && map) {
           map.panTo(place.geometry.location);
-          map.setZoom(14);          
+          map.setZoom(14);
         }
         // Reset session token after selection
         inputRef.current.value = '';
-        
         autocompleteSessionTokenRef.current = null;
       });
 
@@ -350,7 +356,7 @@ export default function GoogleMaps({
           onFocus={handleFocus} // Generate a new session token on focus
         />
       </div>
-      <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
+      <div className="w-[100%] h-[100%]" ref={mapsRef}>
         {/* Hidden container for marker content */}
         <div style={{ display: "none" }}>
           <div ref={markerRef}>
