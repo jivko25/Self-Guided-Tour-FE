@@ -8,7 +8,9 @@ import { useFormState } from "react-dom";
 import { registerUser } from "@/app/actions/authActions";
 import { useAuth } from "@/app/context/authContext";
 import { redirect } from "next/navigation";
-
+import { registerValidationScheme } from "@/app/utils/validationSchemes.js";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 const RegisterForm = ({ userId }) => {
   const [formState, registerAction] = useFormState(registerUser, "");
   const { setSession } = useAuth();
@@ -26,7 +28,14 @@ const RegisterForm = ({ userId }) => {
     password: "",
     repeatPassword: "",
   });
-
+  const {
+    register,
+    formState: { errors: validationErrors, isValid },
+    trigger,
+  } = useForm({
+    resolver: yupResolver(registerValidationScheme),
+    mode: "onChange",
+  });
   React.useEffect(() => {
     if (formState.data === true) {
       setSession(formState.data);
@@ -50,9 +59,10 @@ const RegisterForm = ({ userId }) => {
       ...formData,
       [name]: value,
     });
+    trigger(name);
   };
 
-  // const password = watch("password", "");
+  //const password = watch("password", "");
 
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
@@ -67,6 +77,7 @@ const RegisterForm = ({ userId }) => {
       >
         Create Account
       </h2>
+
       <form
         className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-[5px] 
         web:w-[582px] web:h-[826px] 
@@ -78,21 +89,21 @@ const RegisterForm = ({ userId }) => {
       >
         <div
           className=" text-center 
-        web:flex tablet:flex phone:flex smallPhone:hidden hidden"
+          web:flex tablet:flex phone:flex smallPhone:hidden hidden"
         >
           <span
             className="text-neutral-700 font-normal font-['Inter Tight'] 
-          web:text-base tablet:text-base phone:text-sm text-sm"
+            web:text-base tablet:text-base phone:text-sm text-sm"
           >
             Already have an account?
           </span>
           <span
             className="text-white font-normal font-['Inter Tight']
-          web:text-base tablet:text-base phone:text-sm text-sm"
+            web:text-base tablet:text-base phone:text-sm text-sm"
           ></span>
           <span
             className="text-blue-500 font-normal font-['Inter Tight']
-          web:text-base tablet:text-base phone:text-sm text-sm"
+            web:text-base tablet:text-base phone:text-sm text-sm"
           >
             <Link href="/sign-in">Sign In</Link>
           </span>
@@ -100,14 +111,14 @@ const RegisterForm = ({ userId }) => {
 
         <div
           className="
-            web:w-[400px] web:h-[60px] 
-            tablet:w-[400px] tablet:h-[60px]
-            phone:w-[320px] phone:h-[43px] 
-            smallPhone:w-[288px] smallPhone:h-[48px]
-            sm:w-72 sm:h-[43px]
-            md:w-80 md:h-[43px]
-            lg:w-[400px] lg:h-[60px]
-            w-[400px] h-[60px]
+          web:w-[400px] web:h-[60px] 
+          tablet:w-[400px] tablet:h-[60px]
+          phone:w-[320px] phone:h-[43px] 
+          smallPhone:w-[288px] smallPhone:h-[48px]
+          sm:w-72 sm:h-[43px]
+          md:w-80 md:h-[43px]
+          lg:w-[400px] lg:h-[60px]
+          w-[400px] h-[60px]
           "
         >
           <ButtonGoogle />
@@ -126,13 +137,13 @@ const RegisterForm = ({ userId }) => {
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
             w-[126px] h-[1px]
-          "
+            "
           ></div>
 
           <div
             className="text-center text-zinc-400 font-medium font-['Inter Tight']
-          web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px] text-[10px]
-          "
+            web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px] text-[10px]
+            "
           >
             OR
           </div>
@@ -144,7 +155,7 @@ const RegisterForm = ({ userId }) => {
             phone:w-[145px] phone:h-[1px]
             smallPhone:w-[126px] smallPhone:h-[1px]
             w-[126px] h-[1px]
-          "
+            "
           ></div>
         </div>
 
@@ -156,7 +167,8 @@ const RegisterForm = ({ userId }) => {
           type="email"
           value={formData.email}
           onChange={handleInputChange}
-          error={errors.Email}
+          error={validationErrors.email?.message || errors.Email}
+          {...register("email")}
           // hint="Please enter a valid email address"
           required
         />
@@ -169,8 +181,9 @@ const RegisterForm = ({ userId }) => {
           type="text"
           value={formData.name}
           onChange={handleInputChange}
-          error={errors.Name}
+          error={validationErrors.name?.message || errors.Name}
           // hint="Please enter a valid name"
+          {...register("name", {})}
           required
         />
 
@@ -182,7 +195,8 @@ const RegisterForm = ({ userId }) => {
           type="password"
           value={formData.password}
           onChange={handleInputChange}
-          error={errors.Password}
+          error={validationErrors.password?.message || errors.Password}
+          {...register("password")}
           // hint="Your password must be at least 6 characters long"
           required
         />
@@ -195,19 +209,22 @@ const RegisterForm = ({ userId }) => {
           type="password"
           value={formData.repeatPassword}
           onChange={handleInputChange}
-          error={errors.RepeatPassword}
+          error={
+            validationErrors.repeatPassword?.message || errors.RepeatPassword
+          }
+          {...register("repeatPassword")}
           // hint="Your repeat password must be at least 6 characters long"
           required
         />
 
         <div
           className="
-        web:w-[400px] web:h-[43px] 
-        tablet:w-[400px] tablet:h-[43px]
-        phone:w-80 phone:h-[43px] 
-        smallPhone:w-72 smallPhone:h-[43px]
-        w-72 h-[43px]
-        "
+          web:w-[400px] web:h-[43px] 
+          tablet:w-[400px] tablet:h-[43px]
+          phone:w-80 phone:h-[43px] 
+          smallPhone:w-72 smallPhone:h-[43px]
+          w-72 h-[43px]
+          "
         >
           <Btn type="submit" variant="filled" text="Create account" fullWidth />
         </div>
