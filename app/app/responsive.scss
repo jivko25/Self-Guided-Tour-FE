@@ -1,11 +1,11 @@
 @mixin smallPhone {
-  @media (min-width: 320px) and (max-width: 393px) {
+  @media (min-width: 320px) and (max-width: 392px) {
     @content;
   }
 }
 
 @mixin mobile {
-  @media (min-width: 394px) and (max-width: 767px) {
+  @media (min-width: 393px) and (max-width: 767px) {
     @content;
   }
 }

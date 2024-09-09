@@ -2,7 +2,7 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import GoogleMapsComponent from "../../GoogleMapsComponent/GoogleMapsComponent.js";
+import GoogleMaps from "../../GoogleMaps/GoogleMaps.js";
 import LocationInput from "./Step3Components/LocationInput.jsx";
 import FileUpload from "./Step3Components/FileUpload.jsx";
 import DescriptionWeb from "./Step3Components/DescriptionWeb.jsx";
@@ -15,12 +15,13 @@ import { usePopup } from "@/app/context/popupContext.jsx";
 const Step3 = () => {
   const popup = usePopup();
 
-  const { formData, updateFormData, updateStep2Data, goToStep } =
+  const { formData, updateFormData, updateStep2Data, nextStep, goToStep } =
     useCreateTour();
 
   const searchParams = useSearchParams();
   const placeId = searchParams.get("placeId");
   const [coordinates, setCoordinates] = useState(null);
+  const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
 
   const [inputs, setInputs] = useState({
     locationName: "",
@@ -38,54 +39,161 @@ const Step3 = () => {
       const result = formData.step2Data.find((loc) => loc.placeId === placeId);
       if (result) {
         setCoordinates({ lat: result.latitude, lng: result.longitude });
-        setInputs((prevInputs) => ({
-          ...prevInputs,
+        setInputs({
           placeId: result.placeId || "",
           locationName: result.location || "",
           locationCity: result.locationCity || "",
           locationDescription: result.locationDescription || "",
           addFields: result.addFields || [],
-        }));
+        });
+        setDescriptionCharCount(result.locationDescription?.length || 0);
       }
+    } else if (formData.step2Data.length > 0) {
+      // Pre-fill with the first location data if no specific placeId is provided
+      const firstLocation = formData.step2Data[0];
+      setCoordinates({
+        lat: firstLocation.latitude,
+        lng: firstLocation.longitude,
+      });
+      setInputs({
+        placeId: firstLocation.placeId || "",
+        locationName: firstLocation.location || "",
+        locationCity: firstLocation.locationCity || "",
+        locationDescription: firstLocation.locationDescription || "",
+        addFields: firstLocation.addFields || [],
+      });
+      setDescriptionCharCount(firstLocation.locationDescription?.length || 0);
     }
   }, [placeId]);
 
-  const handleFinish = () => {
-    const { locationName, ...updatedInputs } = inputs;
-    if (
-      !locationName ||
-      !inputs.locationCity ||
-      inputs.addFields.length === 0
-    ) {
-      popup({
-        type: "ERROR",
-        message: "Please fill out the required fields !",
-      });
+  const handlePrevStep = () => {
+    if (placeId) {
+      // If accessed through the edit button, just remove the placeId and go to step 1
+      goToStep(1);
     } else {
-      popup({
-        type: "SUCCESS",
-        message: "Good job required fields are filled !",
-      });
+      // If accessed through the previous button in step 3
+      if (currentLocationIndex > 0) {
+        // Move to the previous location
+        const prevIndex = currentLocationIndex - 1;
+        const prevData = formData.step2Data[prevIndex];
+
+        // Set the inputs and coordinates for the previous location
+        setCoordinates({
+          lat: prevData.latitude,
+          lng: prevData.longitude,
+        });
+        setInputs({
+          placeId: prevData.placeId || "",
+          locationName: prevData.location || "",
+          locationCity: prevData.locationCity || "",
+          locationDescription: prevData.locationDescription || "",
+          addFields: prevData.addFields || [],
+        });
+        setDescriptionCharCount(prevData.locationDescription?.length || 0);
+
+        // Update the current index
+        setCurrentLocationIndex(prevIndex);
+      } else {
+        // If no previous objects are left, go to step 1
+        goToStep(1);
+      }
     }
-    updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
-    goToStep(1);
+  };
+
+  const handleNextStep = () => {
+    if (placeId) {
+      // If accessed through the edit button
+      const { locationName, ...updatedInputs } = inputs;
+      if (!locationName || inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Location name or files missing!",
+        });
+        return;
+      } else {
+        popup({
+          type: "SUCCESS",
+          message: "Good job, required fields are filled!",
+        });
+      }
+      updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
+      goToStep(1);
+    } else {
+      // If accessed through the next button in step 2
+      const { locationName, ...updatedInputs } = inputs;
+
+      if (!locationName || inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Location name or files missing!",
+        });
+        return;
+      }
+
+      // Save the current data to the current index in formData.step2Data
+      updateStep2Data(
+        { ...updatedInputs, location: locationName },
+        formData.step2Data[currentLocationIndex].placeId
+      );
+
+      if (currentLocationIndex < formData.step2Data.length - 1) {
+        // Move to the next location after saving the current one
+        const nextIndex = currentLocationIndex + 1;
+
+        // Delay the state update until the next render cycle
+        setTimeout(() => {
+          const nextData = formData.step2Data[nextIndex];
+          setCoordinates({
+            lat: nextData.latitude,
+            lng: nextData.longitude,
+          });
+          setInputs({
+            placeId: nextData.placeId || "",
+            locationName: nextData.location || "",
+            locationCity: nextData.locationCity || "",
+            locationDescription: nextData.locationDescription || "",
+            addFields: nextData.addFields || [],
+          });
+          setDescriptionCharCount(nextData.locationDescription?.length || 0);
+
+          // Update the current index
+          setCurrentLocationIndex(nextIndex);
+        }, 0); // Using a timeout to ensure state updates after the render cycle
+      } else {
+        // If it's the last item, navigate to the next step
+        popup({
+          type: "SUCCESS",
+          message: "Good job, all locations are completed!",
+        });
+        nextStep();
+      }
+    }
   };
 
   const handleRemoveMedia = (index) => {
     const updatedAddFields = inputs.addFields.filter((_, i) => i !== index);
 
+    // Update the inputs state without triggering a reversion to previous location's data
     setInputs((prevInputs) => ({
       ...prevInputs,
       addFields: updatedAddFields,
     }));
 
-    updateStep2Data(
-      {
-        ...inputs,
-        addFields: updatedAddFields,
-      },
-      placeId
+    // Update the specific location in formData.step2Data
+    const updatedLocationData = {
+      ...formData.step2Data[currentLocationIndex],
+      addFields: updatedAddFields,
+    };
+
+    // Update the formData in the context
+    const updatedStep2Data = formData.step2Data.map((location, i) =>
+      i === currentLocationIndex ? updatedLocationData : location
     );
+
+    updateFormData({
+      ...formData,
+      step2Data: updatedStep2Data,
+    });
   };
 
   const handleChange = (e) => {
@@ -101,7 +209,6 @@ const Step3 = () => {
           type: "ERROR",
           message: "Some files exceed the 5MB limit and were not added.",
         });
-        // alert("Some files exceed the 5MB limit and were not added.");
       }
 
       setInputs((prevInputs) => ({
@@ -186,7 +293,7 @@ const Step3 = () => {
           </section>
         </div>
 
-        {/* DescriptionTabletPhone, GoogleMapsComponent */}
+        {/* DescriptionTabletPhone, GoogleMaps */}
         <div
           className="flex flex-col rounded-[5px] w-full 
         web:h-full web:max-w-[50%] web:max-h-[691px] 
@@ -196,7 +303,7 @@ const Step3 = () => {
         >
           <DescriptionTabletPhone />
 
-          <GoogleMapsComponent coordinates={coordinates} />
+          <GoogleMaps coordinates={coordinates} />
         </div>
       </div>
 
@@ -206,7 +313,10 @@ const Step3 = () => {
           web:justify-start web:items-start
           tablet:justify-center tablet:items-center"
       >
-        <NavigationButtons handleFinish={handleFinish} />
+        <NavigationButtons
+          handlePrevStep={handlePrevStep}
+          handleNextStep={handleNextStep}
+        />
 
         <div
           className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full

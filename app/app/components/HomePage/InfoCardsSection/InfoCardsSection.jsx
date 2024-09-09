@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import LocationSvgHomePage from "../../Svg/LocationSvgHomePage";
-import BeIndependentSvgHomePage from "../../Svg/BeIndependentSvgHomePage";
+import LocationSvgHomePage from "../Svgs/LocationSvgHomePage";
+import BeIndependentSvgHomePage from "../Svgs/BeIndependentSvgHomePage";
 function InfoCardsSection() {
   return (
     <section

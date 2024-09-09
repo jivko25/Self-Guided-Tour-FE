@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import { axiosTour } from "@/api/axios";
 import Card from "../../Card/Card";
 import Link from "next/link";
-import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
+import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 import Btn from "../../Buttons/Btn";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function BgBestPlaces() {
   const [bulgarianBestPlaces, setBulgarianBestPlaces] = useState([]);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchTours = async () => {
       try {
@@ -92,8 +93,8 @@ function BgBestPlaces() {
       "
       >
         {bulgarianBestPlaces.length > 0 ? (
-          bulgarianBestPlaces.map((place) => (
-            <div>
+          bulgarianBestPlaces.map((place, index) => (
+            <div key={index}>
               <Card
               key={place.tourId}
               title={place.title}
@@ -102,7 +103,7 @@ function BgBestPlaces() {
               location={place.destination}
               price={`EUR ${place.price}`}
               rating={place.rating || 0}
-              onclick={() => {}}
+              onclick={() => router.push(`/tour/${place.tourId}`)}
             />
             </div>
           ))

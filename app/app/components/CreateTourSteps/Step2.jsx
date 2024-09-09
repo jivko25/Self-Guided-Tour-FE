@@ -1,18 +1,20 @@
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useCallback, useRef, useEffect } from "react";
 import Btn from "../Buttons/Btn.jsx";
-import GoogleMapsComponent from "../GoogleMapsComponent/GoogleMapsComponent.js";
-import LocationComponent from "../LocationComponent/LocationComponent.js";
+import GoogleMaps from "../GoogleMaps/GoogleMaps.js";
+import Location from "../Location/Location.js";
 import InputField from "../InputField/InputField.jsx";
 import { usePopup } from "@/app/context/popupContext.jsx";
-import {
-  isArrayOfObjFilled,
-  isObjectFilled,
-} from "@/app/utils/wizardStepValidations.js";
 
 const Step2 = () => {
-  const { formData, updateFormData, updateStep2Data, prevStep, goToStep } =
-    useCreateTour();
+  const {
+    formData,
+    updateFormData,
+    updateStep2Data,
+    prevStep,
+    nextStep,
+    goToStep,
+  } = useCreateTour();
   const popup = usePopup();
 
   const [data, setData] = useState({
@@ -81,17 +83,15 @@ const Step2 = () => {
   };
 
   const handleNextStep = () => {
-    const allFieldsFilled = isArrayOfObjFilled(formData.step2Data);
-
-    if (allFieldsFilled === false) {
+    if (formData.step2Data.length === 0) {
       popup({
         type: "ERROR",
         message:
-          "Required fields are missing in one or more locations. Fill them in to continue !",
+          "Please add at least one location to proceed to the next step!",
       });
       return;
     }
-    goToStep(3);
+    nextStep();
   };
 
   return (
@@ -117,7 +117,7 @@ const Step2 = () => {
             className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] mt-[24px] web:w-1/2 web:h-[582px] 
                           web:absolute web:right-[60px] web:top-0"
           >
-            <GoogleMapsComponent
+            <GoogleMaps
               getLocationInfo={getLocationInfo}
               createCoordinates={createCoordinates}
             />
@@ -158,7 +158,7 @@ const Step2 = () => {
                 list below.
               </p>
               {/* {formData.step2Data.map(({ placeId, location }, index) => (
-                <LocationComponent
+                <Location
                   key={index}
                   count={index + 1}
                   text={location}
@@ -173,7 +173,7 @@ const Step2 = () => {
                 />
               ))} */}
               {formData.step2Data.map((location, index) => (
-                <LocationComponent
+                <Location
                   key={location.placeId}
                   count={index + 1}
                   location={location} // Pass the entire location object

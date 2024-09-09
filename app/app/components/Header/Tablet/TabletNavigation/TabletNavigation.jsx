@@ -27,7 +27,7 @@ const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
             type="button"
             variant="transparent"
             text="Explore"
-            link="/explore?page=1"
+            link="/explore?page=1&sort=newest"
             onClick={handleClick}
           />
 
