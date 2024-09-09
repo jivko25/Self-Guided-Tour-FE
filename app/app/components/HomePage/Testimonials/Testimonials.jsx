@@ -2,7 +2,7 @@
 import { axiosTour } from "@/api/axios";
 import React, { useEffect, useState } from "react";
 import Card from "../../Card/Card";
-import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
+import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 
 function Testimonials() {
   const [recommendedPlaces, setRecommendedPlaces] = useState([]);

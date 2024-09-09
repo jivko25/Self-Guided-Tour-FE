@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
+import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 import { axiosTour } from "@/api/axios";
 import CardSphera from "../CardSphera/CardSphera";
 
