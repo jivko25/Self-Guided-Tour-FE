@@ -10,6 +10,7 @@ import HowItWorks from "./HowItWorks/HowItWorks";
 import MakeYourOwnTours from "./MakeYourOwnTours/MakeYourOwnTours";
 import Testimonials from "./Testimonials/Testimonials";
 
+
 function HomePage() {
   return (
     <div className="flex flex-col items-center w-full min-h-screen pb-[50px]">
