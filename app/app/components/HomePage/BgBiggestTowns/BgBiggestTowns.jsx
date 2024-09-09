@@ -100,9 +100,9 @@ function BgBiggestTowns() {
       >
         {bulgarianBiggestTowns.length > 0 ? (
           bulgarianBiggestTowns.map((town, index) => (
-            <div className="">
+            <div className="" key={index}>
               <CardSphera
-                key={index}
+                key={town.tourId}
                 thumbnailImageUrl={town.thumbnailImageUrl}
                 destination={town.destination}
               />
