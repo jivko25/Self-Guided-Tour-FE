@@ -3,7 +3,7 @@ import { axiosTour } from "@/api/axios";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Card from "../../Card/Card";
-import SeeMoreSvgHomePage from "../../Svg/SeeMoreSvgHomePage";
+import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter, useSearchParams } from "next/navigation";
