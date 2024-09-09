@@ -1,4 +1,5 @@
-import Link from "next/link.js";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Btn({
   id,
@@ -9,6 +10,8 @@ export default function Btn({
   link,
   onClick,
   className,
+  icon, // Accept an icon path for Next.js Image
+  iconPosition = "left", // 'left' or 'right'
   ...props
 }) {
   const variantClasses = {
@@ -16,11 +19,26 @@ export default function Btn({
     outlined: "bg-neutral text-gray-900 border-2 rounded-md border-blue-950",
     transparent: "bg-transparent text-gray-900 border-transparent",
     "transparent-outlined":
-      "bg-transparent text-gray-900 rounded-md border-2  border-blue-950",
+      "bg-transparent text-gray-900 rounded-md border-2 border-blue-950",
   };
 
   const commonClasses = `h-11 px-4 py-3 justify-center items-center inline-flex text-center font-medium 
-  ${fullWidth ? "w-full" : "w-fit"} ${variantClasses[variant]} ${className || ""}`;
+  ${fullWidth ? "w-full" : "w-fit"} ${variantClasses[variant]} ${
+    className || ""
+  }`;
+
+  // Render content based on whether icon is provided and its position
+  const content = (
+    <>
+      {icon && iconPosition === "left" && (
+        <Image src={icon} alt="icon" width={20} height={20} className="mr-2" />
+      )}
+      {text}
+      {icon && iconPosition === "right" && (
+        <Image src={icon} alt="icon" width={20} height={20} className="ml-2" />
+      )}
+    </>
+  );
 
   if (link) {
     return (
@@ -31,7 +49,7 @@ export default function Btn({
           {...props}
           onClick={onClick}
         >
-          {text}
+          {content}
         </button>
       </Link>
     );
@@ -45,7 +63,7 @@ export default function Btn({
       {...props}
       onClick={onClick}
     >
-      {text}
+      {content}
     </button>
   );
 }
