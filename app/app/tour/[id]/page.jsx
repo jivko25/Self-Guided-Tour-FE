@@ -33,6 +33,11 @@ function TourDetails() {
     fetchTourDetails();
   }, [id]);
 
+  const handleEditClick = () => {
+    sessionStorage.setItem("tourToEdit", JSON.stringify(tour));
+    router.push(`/create?edit=${tour.tourId}`);
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!tour) return <p>No tour data found</p>;
@@ -48,7 +53,6 @@ function TourDetails() {
     summary,
   } = tour;
 
-
   return (
     <div className="flex flex-col items-center w-full">
       <div
@@ -59,15 +63,24 @@ function TourDetails() {
       smallPhone:mt-[50px] smallPhone:p-[20px]
       "
       >
-        <TourTitle title={title} />
+        <TourTitle title={title} handleEditClick={handleEditClick} />
 
-        <TourImagesPhone thumbnailImageUrl={thumbnailImageUrl} landmarks={landmarks} />
-        <TourImagesWebTablet thumbnailImageUrl={thumbnailImageUrl} landmarks={landmarks} />
+        <TourImagesPhone
+          thumbnailImageUrl={thumbnailImageUrl}
+          landmarks={landmarks}
+        />
+        <TourImagesWebTablet
+          thumbnailImageUrl={thumbnailImageUrl}
+          landmarks={landmarks}
+        />
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}
 
-      <TourInfo estimatedDuration={estimatedDuration} destination={destination} />
+      <TourInfo
+        estimatedDuration={estimatedDuration}
+        destination={destination}
+      />
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}
 
@@ -79,12 +92,16 @@ function TourDetails() {
       smallPhone:flex-col-reverse smallPhone:w-[95%] smallPhone:pt-[20px] smallPhone:pb-[20px] smallPhone:gap-[50px] smallPhone:items-center
       "
       >
-        <TourSummary summary={summary}/>
+        <TourSummary summary={summary} />
 
         <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 phone:my-[0px] smallPhone:my-[0px]"></div>
 
-        <TourPurchase destination={destination} price={price} id={id} router={router} />
-
+        <TourPurchase
+          destination={destination}
+          price={price}
+          id={id}
+          router={router}
+        />
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}
