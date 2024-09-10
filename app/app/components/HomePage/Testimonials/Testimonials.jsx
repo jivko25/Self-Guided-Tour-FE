@@ -36,7 +36,7 @@ function Testimonials() {
     arrows: false,
     responsive: [
       {
-        breakpoint: 1336,
+        breakpoint: 1660,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -45,7 +45,16 @@ function Testimonials() {
         },
       },
       {
-        breakpoint: 870,
+        breakpoint: 1270,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 1000,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
@@ -53,6 +62,7 @@ function Testimonials() {
           dots: false,
         },
       },
+      
     ],
   };
 
