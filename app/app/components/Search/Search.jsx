@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
+import { useRouter } from "next/navigation";
 const SearchIcon = ({ className }) => (
   <svg
     className={className}
@@ -28,7 +28,7 @@ const SearchIcon = ({ className }) => (
 
 const Search = ({ variant = "default", searchValue, placeholder, onSearch, handleNavClose }) => {
   const [query, setQuery] = useState("");
-
+  const router = useRouter(); 
   useEffect(() => {
     if (searchValue) {
       setQuery(searchValue);
@@ -40,6 +40,10 @@ const Search = ({ variant = "default", searchValue, placeholder, onSearch, handl
   };
 
   const handleSearch = () => {
+    if (query.trim()) {
+      router.push(`/explore?search=${encodeURIComponent(query.trim())}`);
+    }
+
     if (onSearch) {
       onSearch(query);
     }
@@ -117,6 +121,7 @@ const Search = ({ variant = "default", searchValue, placeholder, onSearch, handl
           placeholder={placeholder}
           value={query}
           onChange={handleInputChange}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()} 
         />
         <button
           onClick={handleSearch}
