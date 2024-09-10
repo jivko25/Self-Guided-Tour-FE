@@ -39,7 +39,7 @@ function BgBiggestTowns() {
   }, []);
   return (
     <div
-      className="flex flex-col items-center justify-center gap-[30px] w-full h-full
+      className="flex flex-col items-center justify-center gap-[30px] w-[95%] h-full
         web:max-w-[1792px] web:min-h-[752px] web:gap-[30px]
         tablet:px-[10px] tablet:gap-[30px] tablet:min-h-[450px]
         phone:gap-[20px] phone:mb-[50px]
