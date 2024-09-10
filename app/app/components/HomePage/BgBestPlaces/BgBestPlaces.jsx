@@ -129,17 +129,7 @@ function BgBestPlaces() {
         smallPhone:
       "
       >
-        <Btn
-          className="hidden font-semibold text-[16px] border-b-2 border-b-[#E8B600] w-[128px] h-[43px] 
-          web:block
-          tablet:block
-          phone:
-          smallPhone:
-          "
-          variant="transparent"
-          text="Explore Sofia"
-          link="/explore"
-        />
+       
       </div>
 
       <div
