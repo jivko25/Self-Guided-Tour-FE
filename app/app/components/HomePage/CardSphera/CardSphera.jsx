@@ -4,11 +4,7 @@ function CardSphera({ thumbnailImageUrl, destination, onClick }) {
   return (
     <div
       className="flex flex-col items-center justify-center
-    web:
-    tablet:
-    phone:
-    smallPhone:
-    "
+      "
       onClick={onClick}
     >
       <img
@@ -25,11 +21,11 @@ function CardSphera({ thumbnailImageUrl, destination, onClick }) {
 
       <h2
         className="text-[#081120]  font-medium font-['Inter']
-      web:text-[31px]
-      tablet:text-[25px]
-      phone:text-[13px]
-      smallPhone:text-[13px]
-      "
+        web:text-[31px]
+        tablet:text-[25px]
+        phone:text-[13px]
+        smallPhone:text-[13px]
+        "
       onClick={onClick}
       >
         {destination}
