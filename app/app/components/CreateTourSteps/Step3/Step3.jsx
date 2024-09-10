@@ -233,10 +233,12 @@ const Step3 = () => {
   };
 
   // Function to check if a file is an image
-  const isImage = (file) => file.type.startsWith("image");
+  const isImage = (file) => file.type.toLowerCase().startsWith("image");
 
   // Function to check if a file is a video
-  const isVideo = (file) => file.type.startsWith("video");
+  const isVideo = (file) => file.type.toLowerCase().startsWith("video");
+
+  const isFile = (file) => file instanceof File;
 
   return (
     <div className="flex flex-col w-full web:h-[100vh] ">
@@ -286,6 +288,7 @@ const Step3 = () => {
           >
             <MediaPreviewWebPhone
               inputs={inputs}
+              isFile={isFile}
               isImage={isImage}
               isVideo={isVideo}
               onRemove={handleRemoveMedia}
@@ -325,6 +328,7 @@ const Step3 = () => {
         >
           <MediaPreviewTablet
             inputs={inputs}
+            isFile={isFile}
             isImage={isImage}
             isVideo={isVideo}
             onRemove={handleRemoveMedia}
