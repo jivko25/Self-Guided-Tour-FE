@@ -28,13 +28,13 @@ function MakeYourOwnTours() {
         >
           <span
             className="text-[#081120] text-base font-semibold font-['Inter']
-            web:w-[74px] web:h-[19px] web:text-base
-            tablet:w-[74px] tablet:h-[19px] tablet:text-base
+            web:text-base
+            tablet:text-base
             phone:
             smallPhone:
             "
           >
-            See More
+            Learn More
           </span>
           <SeeMoreSvgHomePage
             className="hidden
