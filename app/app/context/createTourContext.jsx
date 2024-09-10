@@ -8,8 +8,9 @@ import {
   canProceedToStep,
 } from "../utils/wizardStepValidations.js";
 import { usePopup } from "./popupContext.jsx";
-import { useRouter } from "next/navigation.js";
+import { useRouter, useSearchParams } from "next/navigation.js";
 const LOCAL_STORAGE_KEY = "savedTourFormData";
+const EDIT_TOUR_KEY = "tourToEdit";
 
 const CreateTourContext = createContext();
 
@@ -30,19 +31,15 @@ export const CreateTourProvider = ({ children }) => {
     },
   };
 
-  // const loadInitialState = () => {
-  //   if (typeof window !== "undefined") {
-  //     // Check if the code is running in the browser
-  //     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-  //     return savedData ? JSON.parse(savedData) : emptyFormData;
-  //   }
-  //   return emptyFormData; // Return empty form data during SSR
-  // };
-
   const popup = usePopup();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check if it's edit mode
+  const editModeQuery = searchParams.get("edit");
 
   const [openModal, setOpenModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const [step, setStep] = useState(0);
   // const [formData, setFormData] = useState(loadInitialState());
@@ -67,8 +64,51 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, [localStorageData]);
 
+  // Check for the tourToEdit object in localStorage
   useEffect(() => {
-    if (!hasPrompted.current) {
+    const storedTour = sessionStorage.getItem(EDIT_TOUR_KEY);
+    if (storedTour) {
+      const tourToEdit = JSON.parse(storedTour);
+      // Set form data to the tourToEdit object if found
+      setFormData({
+        step1Data: {
+          tour: tourToEdit.title || "", //
+          destination: tourToEdit.destination || "", //
+          duration: tourToEdit.estimatedDuration || "",
+          tourType: tourToEdit.tourType || "",
+          price: tourToEdit.price || "",
+        },
+        step2Data:
+          tourToEdit.landmarks.map((landmark) => ({
+            latitude: landmark.latitude || null,
+            longitude: landmark.longitude || null,
+            location: landmark.locationName || "",
+            locationCity: landmark.city || "",
+            locationDescription: landmark.description || "",
+            stopOrder: landmark.stopOrder || 0,
+            addFields:
+              landmark.resources.map((resource) => ({
+                type: resource.resourceType || "",
+                url: resource.resourceUrl || "",
+                id: resource.resourceId || "",
+              })) || [],
+          })) || [],
+        step3Data: "",
+        step4Data: {
+          summary: tourToEdit.summary || "",
+          thumbnailImage: tourToEdit.thumbnailImageUrl || null,
+        },
+      });
+      setIsEditMode(true);
+      sessionStorage.removeItem(EDIT_TOUR_KEY);
+    }
+  }, []);
+
+  console.log(formData);
+
+  // Show load draft modal only if it's not edit mode
+  useEffect(() => {
+    if (!hasPrompted.current && !editModeQuery) {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const data = JSON.parse(savedData);
 
@@ -82,7 +122,7 @@ export const CreateTourProvider = ({ children }) => {
         setOpenModal(true);
       }
     }
-  }, []);
+  }, [isEditMode]);
 
   const onCloseModal = () => {
     setFormData(() => emptyFormData);
@@ -225,6 +265,7 @@ export const CreateTourProvider = ({ children }) => {
         step,
         formData,
         openModal,
+        isEditMode,
         onCloseModal,
         nextStep,
         prevStep,
