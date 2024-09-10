@@ -4,7 +4,7 @@ import ReactPlayer from "react-player";
 import React from "react";
 import CloseIcon from "../../../../public/svg/close-red.svg";
 
-function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
+function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove, isFile }) {
   return (
     <>
       {/* IMAGES */}
@@ -27,11 +27,20 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
                 className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-30 rounded-full p-1 z-10 hover:bg-opacity-100"
                 onClick={() => onRemove(index)}
               >
-                <Image alt="remove-image" src={CloseIcon} height={24} width={24} />
+                <Image
+                  alt="remove-image"
+                  src={CloseIcon}
+                  height={24}
+                  width={24}
+                />
               </button>
               {isImage(file) && (
                 <Image
-                  src={URL.createObjectURL(file)}
+                  src={
+                    isFile(file)
+                      ? URL.createObjectURL(file) // Newly uploaded file
+                      : file.url // URL from the server
+                  }
                   width={269}
                   height={240}
                   className={`${
@@ -44,7 +53,11 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
               )}
               {isVideo(file) && (
                 <ReactPlayer
-                  url={URL.createObjectURL(file)}
+                  url={
+                    isFile(file)
+                      ? URL.createObjectURL(file) // Newly uploaded file
+                      : file.url // URL from the server
+                  }
                   width={269}
                   height={240}
                   borderRadius={5}

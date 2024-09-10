@@ -4,7 +4,7 @@ import ReactPlayer from "react-player";
 import React from "react";
 import CloseIcon from "../../../../public/svg/close-red.svg";
 
-function MediaPreviewTablet({ inputs, isImage, isVideo ,onRemove }) {
+function MediaPreviewTablet({ inputs, isImage, isVideo, onRemove, isFile }) {
   return (
     <>
       {/* IMAGES */}
@@ -19,13 +19,17 @@ function MediaPreviewTablet({ inputs, isImage, isVideo ,onRemove }) {
             >
               <button
                 className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-30 rounded-full p-1 z-10 hover:bg-opacity-100"
-                onClick={() => onRemove(index)} 
+                onClick={() => onRemove(index)}
               >
                 <Image src={CloseIcon} height={24} width={24} />
               </button>
               {isImage(file) && (
                 <Image
-                  src={URL.createObjectURL(file)}
+                  src={
+                    isFile(file)
+                      ? URL.createObjectURL(file) // Newly uploaded file
+                      : file.url // URL from the server
+                  }
                   width={index === 0 ? 858 : 279}
                   height={240}
                   className={`rounded-[5px] ${
@@ -38,7 +42,11 @@ function MediaPreviewTablet({ inputs, isImage, isVideo ,onRemove }) {
               )}
               {isVideo(file) && (
                 <ReactPlayer
-                  url={URL.createObjectURL(file)}
+                  src={
+                    isFile(file)
+                      ? URL.createObjectURL(file) // Newly uploaded file
+                      : file.url // URL from the server
+                  }
                   width={279}
                   borderRadius={5}
                   height={240}
