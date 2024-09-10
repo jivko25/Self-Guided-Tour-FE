@@ -45,9 +45,9 @@ function Testimonials() {
         },
       },
       {
-        breakpoint: 930,
+        breakpoint: 870,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
           dots: false,
@@ -66,7 +66,7 @@ function Testimonials() {
         className="flex justify-center h-full w-full px-[10px] gap-[20px] 
         web:flex-row"
       >
-        <div className="web:w-[75%] tablet:w-[70%] ">
+        <div className="web:w-[80%] tablet:w-[90%] web:ml-[-10%] tablet:ml-[-20%]">
           {recommendedPlaces.length > 0 ? (
             <Slider ref={sliderRef} {...settings}>
               {recommendedPlaces.map((place, index) => (
@@ -91,26 +91,26 @@ function Testimonials() {
             </h3>
           )}
         </div>
-        <div className="flex items-center justify-center web:w-[25%] tablet:w-[30%] ">
-          <div className="flex flex-col text-end">
+        <div className="flex items-center web:justify-center web:w-[30%] tablet:justify-end tablet:w-[20%]">
+          <div className="flex flex-col h-[75%] text-end">
             <h1
-              className=" text-[#081120] font-medium font-['Inter'] web:w-[310px] tablet:w-[150px]
-            web:text-[51px]
-            tablet:text-[25px]"
+              className=" text-[#081120] font-medium font-['Inter'] web:w-[370px] tablet:w-[200px]
+            web:text-[61px]
+            tablet:text-[31px]"
             >
               Testimonials Heading
             </h1>
 
-            <div className="w-full mt-[20px] ">
+            <div className="w-full mt-[30px] ">
               <button
                 onClick={() => sliderRef.current.slickPrev()}
-                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[10px] mr-[20px]"
+                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[7px] mr-[20px]"
               >
                 <SeeMoreSvgHomePage className="w-[30px] h-[30px] rounded-full rotate-180 web:w-6 web:h-6 web:block tablet:w-6 tablet:h-6" />
               </button>
               <button
                 onClick={() => sliderRef.current.slickNext()}
-                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[10px] "
+                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[7px] "
               >
                 <SeeMoreSvgHomePage className="w-[30px] h-[30px] rounded-full web:w-6 web:h-6 web:block tablet:w-6 tablet:h-6" />
               </button>
