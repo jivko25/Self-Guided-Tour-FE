@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 import { axiosTour } from "@/api/axios";
 import CardSphera from "../CardSphera/CardSphera";
-
+import { useRouter, useSearchParams } from "next/navigation";
 function BgBiggestTowns() {
   const [bulgarianBiggestTowns, setBulgarianBiggestTowns] = useState([]);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchTours = async () => {
       try {
@@ -105,6 +105,7 @@ function BgBiggestTowns() {
                 key={town.tourId}
                 thumbnailImageUrl={town.thumbnailImageUrl}
                 destination={town.destination}
+                onClick={() => router.push(`/explore?search=${town.destination}`)}
               />
             </div>
           ))
