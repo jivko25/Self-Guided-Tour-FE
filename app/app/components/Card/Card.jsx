@@ -34,8 +34,8 @@ export default function Card({
     <>
       {testimonial ? (
         <div
-          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px] web:w-[325px] 
-                      webl:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] 
+          className={`w-[176px] h-[224px] tablet:w-[282px] tablet:h-[503px]  
+                      web:w-[430px] web:h-[738px] bg-[#FAFAFA] border border-[#D1D0D8] rounded-[5px] 
                       tablet:rounded-[15px] ${classes}`}
           onClick={onclick}
         >
