@@ -1,10 +1,12 @@
-import Table from "../components/Table/Table";
+import { ProfileProvider } from "../context/profileContext";
 
 function Profile() {
   return (
-    <div>
-      <h1>Profile Page</h1>
-    </div>
+    <ProfileProvider>
+      <div>
+        <h1>Profile Page</h1>
+      </div>
+    </ProfileProvider>
   );
 }
 
