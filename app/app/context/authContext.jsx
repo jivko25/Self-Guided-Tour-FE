@@ -11,17 +11,15 @@ export const AuthProvider = ({ children }) => {
 
   const values = {
     session,
-    setSession
+    setSession,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
-    
-}
-
+};
 
 AuthProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-  
-  export const useAuth = () => useContext(AuthContext);
-  export default AuthContext;
+  children: PropTypes.node.isRequired,
+};
+
+export const useAuth = () => useContext(AuthContext);
+export default AuthContext;

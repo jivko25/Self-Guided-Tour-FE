@@ -2,6 +2,7 @@
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
+import { useAuth } from "@/app/context/authContext.jsx";
 import { axiosTour } from "../../../api/axios";
 import "./tour.scss";
 import TourTitle from "@/app/components/TourDetails/Parts/TourTitle";
@@ -14,6 +15,7 @@ import TourImagesWebTablet from "@/app/components/TourDetails/Parts/TourImagesWe
 
 function TourDetails() {
   const { id } = useParams();
+  const { session } = useAuth();
   const [tour, setTour] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,6 +39,8 @@ function TourDetails() {
     sessionStorage.setItem("tourToEdit", JSON.stringify(tour));
     router.push(`/create?edit=${tour.tourId}`);
   };
+
+  console.log(tour);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -63,7 +67,12 @@ function TourDetails() {
       smallPhone:mt-[50px] smallPhone:p-[20px]
       "
       >
-        <TourTitle title={title} handleEditClick={handleEditClick} />
+        <TourTitle
+          title={title}
+          userId={session?.userId}
+          tourId={tour.creatorId}
+          handleEditClick={handleEditClick}
+        />
 
         <TourImagesPhone
           thumbnailImageUrl={thumbnailImageUrl}
