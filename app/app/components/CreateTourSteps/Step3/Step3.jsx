@@ -68,7 +68,7 @@ const Step3 = () => {
 
   const handlePrevStep = () => {
     if (placeId) {
-      // If accessed through the edit button, just remove the placeId and go to step 1
+      // If accessed through the edit button go to step 1
       goToStep(1);
     } else {
       // If accessed through the previous button in step 3
