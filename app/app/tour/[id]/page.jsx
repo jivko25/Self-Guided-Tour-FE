@@ -14,7 +14,7 @@ import Review from "@/app/components/Review/Review";
 import { getOne } from "@/app/actions/tourActions";
 import { createReview, getReviewsByTourId } from "@/app/actions/reviewActions";
 import { usePopup } from "@/app/context/popupContext";
-import { getBoughtTours } from "@/app/actions/profileActions";
+import { getBoughtTours } from "@/app/actions/profilePageActions";
 import { getUserSession } from "@/app/actions/authActions";
 
 function TourDetails() {
