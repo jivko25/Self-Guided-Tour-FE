@@ -6,7 +6,24 @@ import Image from 'next/image';
 
 let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
+/**
+ * @param {object} props
+ * @param {Function} props.getLocationInfo function to handle click on location on the map
+ * @param {object} props.coordinates object of lat and lng to display one marker
+ * @param {object[]} props.coordinatesArray array of objects {lat, lng} to display multiple markers
+ * @param {object[]} props.createCoordinates array of objects {lat, lng} to display multiple markers on create tour wizard step 2. Will handle logic with adding and removing locations
+ * @param {string} props.locationId adds marker based on location id
+ * @param {object} props.directions draws polylines and markers for direction API - structure: { tourType: '', locations: [..] }, locations key has to be array of objects { lat, lng }. For allowed tour types refer to https://developers.google.com/maps/documentation/javascript/directions#TravelModes
+ * @returns {JSX.Element}
+ */
+export default function GoogleMaps({
+  getLocationInfo,
+  coordinates,
+  coordinatesArray,
+  createCoordinates,
+  locationId,
+  directions,
+}) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
@@ -41,9 +58,15 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         version: "weekly",
       });
 
-      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }] = await loadLibraries(loader);
-      GoogleSessionTokenRef.current = AutocompleteSessionToken;
+      const [
+        { Map, InfoWindow }, { AdvancedMarkerElement },
+        { Place, Autocomplete, AutocompleteSessionToken },
+        { Geocoder },
+        { DirectionsService, DirectionsRenderer },
+        { LatLng }
+      ] = await loadLibraries(loader);
 
+      GoogleSessionTokenRef.current = AutocompleteSessionToken;
 
       if (coordinates && coordinates.lat) {
         center = coordinates;
@@ -189,14 +212,65 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         const place = autocomplete.getPlace();
         if (place.geometry && map) {
           map.panTo(place.geometry.location);
-          map.setZoom(14);          
+          map.setZoom(14);
         }
         // Reset session token after selection
         inputRef.current.value = '';
-        
         autocompleteSessionTokenRef.current = null;
       });
 
+      // logic for drawing directions
+      if (directions) {
+        const tourType = directions.tourType;
+        const locations = directions.locations;
+        const directionsLength = locations.length;
+
+        if (directionsLength > 0) {
+          const directionsService = new DirectionsService();
+          const directionsRenderer = new DirectionsRenderer({
+            map, // Set the map
+            polylineOptions: {
+              strokeColor: '#E30505',  // Change the line color
+              strokeOpacity: 1,      // Set the line opacity
+              strokeWeight: 3          // Set the line weight
+            },
+          });
+
+          const waypoints = [];
+          const origin = new LatLng(locations[0]);
+          const destination = new LatLng(locations[directionsLength - 1]);
+
+          locations.forEach((tour, i) => {
+            if (i > 0 && i < (directionsLength - 1)) {
+              waypoints.push({
+                location: new LatLng(tour),
+                stopover: true,
+              });
+            }
+          })
+
+          directionsService.route({
+            origin,
+            destination,
+            waypoints,
+            travelMode: tourType.toUpperCase(),
+          }, (response, status) => {
+            if (status === 'OK') {
+              directionsRenderer.setOptions({
+                markerOptions: {
+                  icon: {
+                    url: locationmarker.src
+                  }
+                }
+              });
+              directionsRenderer.setDirections(response);
+            } else {
+              console.error('Directions request failed due to ' + status);
+            }
+          });
+        }
+
+      }
     }
 
     //initialize map
@@ -215,6 +289,8 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         loader.importLibrary('marker'),
         loader.importLibrary('places'),
         loader.importLibrary('geocoding'),
+        loader.importLibrary('routes'),
+        loader.importLibrary('core'),
       ]);
     }
 
@@ -280,7 +356,7 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
           onFocus={handleFocus} // Generate a new session token on focus
         />
       </div>
-      <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
+      <div className="w-[100%] h-[100%]" ref={mapsRef}>
         {/* Hidden container for marker content */}
         <div style={{ display: "none" }}>
           <div ref={markerRef}>
