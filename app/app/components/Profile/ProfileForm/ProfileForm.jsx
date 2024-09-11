@@ -145,7 +145,9 @@ function ProfileForm() {
         <Btn
           type="submit"
           text="Save Changes"
-          className="w-48 mt-16 hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500"
+          className={`${
+            isLoading ? "animate-pulse" : ""
+          } w-48 mt-16 hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500`}
           variant="filled"
         />
       </section>
