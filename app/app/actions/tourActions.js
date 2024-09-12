@@ -24,6 +24,7 @@ export async function createTour(tourData) {
     formData.append(`Landmarks[${index}].LocationName`, landmark.locationName);
     formData.append(`Landmarks[${index}].StopOrder`, landmark.stopOrder);
     formData.append(`Landmarks[${index}].Description`, landmark.description);
+    formData.append(`Landmarks[${index}].placeId`, landmark.placeId);
 
     // Append resources array within each landmark
     landmark.resources.forEach((file) => {
@@ -39,7 +40,7 @@ export async function createTour(tourData) {
 
     data = response.data;
   } catch (err) {
-    error = err.response?.data
+    error = err.response?.data;
   }
 
   return { data, error };

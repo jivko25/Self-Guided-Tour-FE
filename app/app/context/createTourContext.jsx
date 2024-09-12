@@ -226,6 +226,7 @@ export const CreateTourProvider = ({ children }) => {
           locationName: landmark.location,
           stopOrder: landmark.stopOrder,
           description: landmark.locationDescription,
+          placeId: landmark.placeId,
           resources: resources,
         };
       }),
