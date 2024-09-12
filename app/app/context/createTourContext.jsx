@@ -86,6 +86,7 @@ export const CreateTourProvider = ({ children }) => {
             locationCity: landmark.city || "",
             locationDescription: landmark.description || "",
             stopOrder: landmark.stopOrder || 0,
+            placeId: landmark.placeId || "",
             addFields:
               landmark.resources.map((resource) => ({
                 type: resource.resourceType || "",
@@ -104,7 +105,7 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
-  console.log(formData);
+
 
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
@@ -129,6 +130,8 @@ export const CreateTourProvider = ({ children }) => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(emptyFormData));
     setOpenModal(false);
   };
+
+  console.log(formData);
 
   const nextStep = () => {
     if (validateStep(step, formData)) {
