@@ -78,13 +78,13 @@ const Step1 = () => {
   return (
     <>
       <div
-        className={`flex justify-center flex-col gap-5  tablet:w-[582px] ${
+        className={`flex justify-center flex-col gap-5  ${
           onType ? "h-[1050px] mt-40 mb-6" : "h-[756px]"
         } h-[753px]`}
       >
         <StepHeader
           title={"Let's get started!"}
-          description={"Subheding, short description, ect."}
+          description={"Subheading, short description, ect."}
           step={1}
         />
 
@@ -165,7 +165,7 @@ const Step1 = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="flex flex-col   justify-center items-center border-[0.5px] border-[#CECECE] mt-[-1rem] gap-5 relative"
+            className="flex flex-col w-full   justify-center items-center border-[0.5px] border-[#CECECE] mt-[-1rem] gap-5 relative"
           >
             <p
               className="absolute top-[14px] right-1 cursor-pointer"
@@ -222,7 +222,7 @@ const Step1 = () => {
         />
 
         <Btn
-          className=" w-[177] h-[43px] text-[16px] border-b-2 border-b-[#E8B600]   self-center  tablet:self-end web:w-[100px]   "
+          className=" w-[177] h-[43px] text-[16px]  border-b-2 border-b-[#E8B600]   self-center  tablet:self-end web:w-[100px]   "
           variant="transparent"
           text="Next"
           onClick={onNextStep}
