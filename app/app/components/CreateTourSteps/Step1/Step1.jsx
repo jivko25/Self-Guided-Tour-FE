@@ -182,7 +182,7 @@ const Step1 = () => {
                 <p className="mr-[0.5rem]">
                   <Image src={Walk} alt="Walk icon" />
                 </p>
-                Walking Tour
+                Walking
               </li>
               <li
                 className={liClassName}
@@ -191,7 +191,7 @@ const Step1 = () => {
                 <p className="mr-[0.5rem]">
                   <Image src={Bicycle} alt="Bicycle icon" />
                 </p>
-                Bicycling Tour
+                Bicycling
               </li>
               <li
                 className={liClassName}
@@ -200,7 +200,7 @@ const Step1 = () => {
                 <p className="mr-[0.5rem]">
                   <Image src={Car} alt="Car icon" />
                 </p>
-                Driving Tour
+                Driving
               </li>
             </ul>
           </motion.div>
