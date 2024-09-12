@@ -18,7 +18,7 @@ function MediaPreviewTablet({ inputs, isImage, isVideo, onRemove, isFile }) {
               }`}
             >
               <button
-                className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-30 rounded-full p-1 z-10 hover:bg-opacity-100"
+                className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-90 rounded-full p-1 z-10 "
                 onClick={() => onRemove(index)}
               >
                 <Image src={CloseIcon} height={24} width={24} />
