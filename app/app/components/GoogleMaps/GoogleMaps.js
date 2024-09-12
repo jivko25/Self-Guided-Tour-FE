@@ -34,6 +34,7 @@ export default function GoogleMaps({
   const autocompleteSessionTokenRef = useRef(null);
   const GoogleSessionTokenRef = useRef(null);
   const [data, setData] = useState({});
+  const [tourType, setTourType] = useState('');
   let libraries = null;
 
   const handleSave = () => {
@@ -51,6 +52,12 @@ export default function GoogleMaps({
     currentMarkerRef.current.setMap(null);
   }
 
+  useEffect(() => {
+    if (directions) {
+      setTourType(directions.tourType.toUpperCase());
+    }
+  }, [directions, setTourType]);
+  
   useEffect(() => {
     const initMaps = async () => {
       const loader = new Loader({
@@ -220,8 +227,7 @@ export default function GoogleMaps({
       });
 
       // logic for drawing directions
-      if (directions) {
-        const tourType = directions.tourType;
+      if (directions && tourType !== '') {
         const locations = directions.locations;
         const directionsLength = locations.length;
         
@@ -251,13 +257,13 @@ export default function GoogleMaps({
               });
             }
           })
-
+          
           directionsService.route({
             origin,
             destination,
             waypoints,
             optimizeWaypoints: true,
-            travelMode: tourType.toUpperCase(),
+            travelMode: tourType,
           }, (response, status) => {
             if (status === 'OK') {
               directionsRenderer.setOptions({
@@ -271,7 +277,10 @@ export default function GoogleMaps({
               directionsRenderer.setDirections(response);
               map.setCenter({lat: lastLoc.latitude, lng: lastLoc.longitude});
             } else {
-              console.error('Directions request failed due to ' + status);
+              if (status == 'ZERO_RESULTS' && tourType == 'BICYCLING') {
+                setTourType('WALKING');
+              }
+              console.error(`Directions request failed for tour type BICYCLING due to ${status} switching to tour Type WALKING!`);
             }
           });
         }
@@ -281,7 +290,7 @@ export default function GoogleMaps({
 
     //initialize map
     initMaps();
-  }, [locationId, coordinates, createCoordinates, directions]);
+  }, [locationId, coordinates, createCoordinates, directions, tourType]);
 
   /**
    * Helper function for loading google api libraries
