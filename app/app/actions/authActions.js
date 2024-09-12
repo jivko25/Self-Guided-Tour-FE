@@ -148,6 +148,7 @@ export async function validateToken() {
       accessToken: response.data.accessToken,
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
+      userId: response.data.userId,
     });
   } catch (err) {
     deleteCookie("session");
