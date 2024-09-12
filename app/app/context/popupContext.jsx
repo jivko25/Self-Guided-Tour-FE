@@ -35,7 +35,7 @@ export const PopupProvider = ({ children }) => {
 
   return (
     <PopupContext.Provider value={addPopup}>
-      <div className="z-30 fixed bottom-[100px] ">
+      <div className="z-30 fixed bottom-[100px] w-11/12 ">
         <AnimatePresence>
           {state.map((x) => (
             <Popup dispatch={dispatch} key={x.id} {...x} />
