@@ -131,7 +131,7 @@ const Step1 = () => {
           required={true}
           createTour={true}
         />
-        <div className={`relative`}>
+        <div className={`relative w-fit`}>
           <InputField
             id="tourType"
             label="Tour Type"
@@ -165,7 +165,7 @@ const Step1 = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="flex flex-col justify-center items-center border-[0.5px] border-[#CECECE] mt-[-1rem] gap-5 relative"
+            className="flex flex-col   justify-center items-center border-[0.5px] border-[#CECECE] mt-[-1rem] gap-5 relative"
           >
             <p
               className="absolute top-[14px] right-1 cursor-pointer"
@@ -216,13 +216,13 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Price}
           // hint="Please enter a valid Price"
-          content={"Help for Price"}
+          content={"Help for price"}
           required={true}
           createTour={true}
         />
 
         <Btn
-          className=" smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600]  h-[43px] self-center  tablet:hidden "
+          className=" w-[177] h-[43px] text-[16px] border-b-2 border-b-[#E8B600]   self-center  tablet:self-end web:w-[100px]   "
           variant="transparent"
           text="Next"
           onClick={onNextStep}
@@ -231,9 +231,9 @@ const Step1 = () => {
         <AnimatePresence>
           {openModal && (
             <Modal
-              title={"Saved Data."}
+              title={"You have saved draft"}
               description={
-                "Do you want to load the saved draft? Note that you will need to add the files again."
+                "Do you want to load the previously saved draft? Note that you will need to add the files again."
               }
               open={openModal}
               onConfirm={updateSavedFormData}
@@ -241,14 +241,6 @@ const Step1 = () => {
             ></Modal>
           )}
         </AnimatePresence>
-      </div>
-      <div className="relative web:w-[1920px] web:h-[138px] tablet:w-[834px] tablet:h-[100px] phone:hidden tablet:block border-t border-[#E7EAED] ">
-        <Btn
-          className="absolute web:left-[1151px] web:top-[36px] tablet:left-[608px] tablet:top-[19px] phone:hidden tablet:block font-semibold text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[100px] web:w[100px] h-[43px] "
-          variant="transparent"
-          text="Next"
-          onClick={onNextStep}
-        />
       </div>
     </>
   );
