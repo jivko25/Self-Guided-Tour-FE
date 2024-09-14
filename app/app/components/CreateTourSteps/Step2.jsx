@@ -28,6 +28,7 @@ const Step2 = () => {
   const dragOver = useRef(0);
   const [tourType, setTourType] = useState('');
   const [createCoordinates, setCreateCoordinates] = useState([]);
+  const [warnings, setWarnings] = useState([]);
 
   useEffect(() => {
     setTourType(formData.step1Data.tourType);
@@ -96,6 +97,12 @@ const Step2 = () => {
     nextStep();
   };
 
+  const handleWarnings = (warn) => {
+    if (warn) {
+     setWarnings(warn);
+    }
+  }
+
   return (
     <>
       <section
@@ -122,6 +129,7 @@ const Step2 = () => {
             <GoogleMaps
               getLocationInfo={getLocationInfo}
               directions={{tourType, locations: createCoordinates}}
+              handleWarnings={handleWarnings}
             />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
@@ -159,6 +167,17 @@ const Step2 = () => {
                 Once you’ve added locations on the map, they’ll appear in the
                 list below.
               </p>
+              {/* Display warnings to the user */}
+              {warnings.length > 0 && (
+                <div className="mb-1 text-[#FFA500]">
+                  <h2>Warnings:</h2>
+                  <ul>
+                    {warnings.map((warning, index) => (
+                      <li key={index}>{index + 1}. {warning}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {/* {formData.step2Data.map(({ placeId, location }, index) => (
                 <Location
                   key={index}
