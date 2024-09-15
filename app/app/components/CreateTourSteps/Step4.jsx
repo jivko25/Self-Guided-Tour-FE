@@ -247,7 +247,7 @@ const Step4 = () => {
           />
         </div>
         <div className="tablet:w-[183px]">
-          <Btn fullWidth variant="outlined" text="Preview" />
+          <Btn fullWidth variant="outlined" text="Preview" link={"/preview/0"} />
         </div>
       </section>
     </div>
