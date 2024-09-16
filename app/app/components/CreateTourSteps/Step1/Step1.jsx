@@ -177,30 +177,30 @@ const Step1 = () => {
             <ul className="flex flex-col justify-center gap-4  pb-[20px]">
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Walking Tour")}
+                onClick={() => updateTourType("Walking")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Walk} alt="Walk icon" />
                 </p>
-                Walking Tour
+                Walking
               </li>
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Cycling Tour")}
+                onClick={() => updateTourType("Bicycling")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Bicycle} alt="Bicycle icon" />
                 </p>
-                Cycling Tour
+                Bicycling
               </li>
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Driving Tour")}
+                onClick={() => updateTourType("Driving")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Car} alt="Car icon" />
                 </p>
-                Driving Tour
+                Driving
               </li>
             </ul>
           </motion.div>
