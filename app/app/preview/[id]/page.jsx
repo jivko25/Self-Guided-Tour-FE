@@ -1,10 +1,37 @@
+"use client";
+
 import Btn from "@/app/components/Buttons/Btn";
 import GoogleMaps from "@/app/components/GoogleMaps/GoogleMaps";
 import Link from "next/link";
 import Image from "next/image";
 import Pencil from "../../public/svg/pencil.svg";
+import { useCreateTour } from "@/app/context/createTourContext";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { getOne } from "@/app/actions/tourActions";
 
 export default function Preview() {
+  const { id } = useParams();
+  const { formData } = useCreateTour();
+  const [data, setData] = useState({});
+  const [error, setError] = useState({});
+
+  useEffect(() => {
+    if (id == 0) {
+      setData(formData);
+      console.log(formData);
+    } else {
+      getOne(id).then((result) => {
+        const { data, error } = result;
+
+        if (data) {
+          setData(data);
+        } else {
+          setError(error);
+        }
+      });
+    }
+  }, [id, formData]);
   return (
     <div
       className="w-[100%] h-full web:relative mt-24 tablet:mt-[151px] web:mt-[64px] 
