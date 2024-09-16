@@ -67,6 +67,7 @@ export default function GoogleMaps({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         version: "weekly",
       });
+      let zoom = 17;
 
       const [
         { Map, InfoWindow }, { AdvancedMarkerElement },
@@ -87,8 +88,9 @@ export default function GoogleMaps({
 
       const mapOPtions = {
         center: center,
-        zoom: 17,
+        zoom,
         mapId: 'NEXT_MAP',
+        disableDoubleClickZoom: true
       }
 
       const map = new Map(mapsRef.current, mapOPtions);
@@ -194,7 +196,7 @@ export default function GoogleMaps({
 
         const newMapOptions = {
           center: { lat: latitude, lng: longitude },
-          zoom: 17,
+          zoom,
           mapId: "NEXT_MAP",
         }
 
@@ -208,7 +210,29 @@ export default function GoogleMaps({
         });
       }
 
-      map.addListener("click", handleClick);
+      // Handling of click events
+      let clickTimer = null;
+      
+      map.addListener("click", (e) => {
+        if (clickTimer) {
+          clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(() => {
+          handleClick(e)
+        }, 200)
+      });
+
+      map.addListener("dblclick", (e) => {
+        if (clickTimer) {
+          clearTimeout(clickTimer);
+          clickTimer = null;
+        }
+
+        const currentZoom = map.getZoom();
+        map.setZoom(currentZoom + 1);
+        map.setCenter(e.latLng);
+      });
 
       // Autocomplete logic
       const autocomplete = new Autocomplete(searchRef.current, {
