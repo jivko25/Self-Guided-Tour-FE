@@ -1,7 +1,6 @@
 "use client";
 import {
   useCreateTour,
-  CreateTourProvider,
 } from "../context/createTourContext.jsx";
 import { Suspense } from "react";
 import Step1 from "../components/CreateTourSteps/Step1/Step1.jsx";

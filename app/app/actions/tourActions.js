@@ -73,26 +73,53 @@ export async function updateTour(tourId, tourData) {
     formData.append(`Landmarks[${index}].Description`, landmark.description);
     formData.append(`Landmarks[${index}].PlaceId`, landmark.placeId);
 
-    // Добавете ресурсите
-    landmark.resources.forEach((resource, resIndex) => {
+  // Append resources array within each landmark
+  landmark.resources.forEach((resource, resIndex) => {
+    // if it's file append it as single File
+    if (resource instanceof File) {
+      formData.append(
+        `Landmarks[${index}].Resources[${resIndex}].ResourceFile`,
+        resource
+      );
+    } else {
+      // else it's resource from server with id,type,url , so append them to the formData
       formData.append(
         `Landmarks[${index}].Resources[${resIndex}].ResourceId`,
-        resource.resourceId || ""
+        resource.id || ""
       );
 
-      if (resource.resourceFile) {
-        formData.append(
-          `Landmarks[${index}].Resources[${resIndex}].ResourceFile`,
-          resource.resourceFile
-        );
-      }
+      formData.append(
+        `Landmarks[${index}].Resources[${resIndex}].ResourceType`,
+        ""
+      ); // Server returns error if i append resourceType
 
       formData.append(
         `Landmarks[${index}].Resources[${resIndex}].ResourceUrl`,
-        resource.resourceUrl || ""
+        resource.url || ""
       );
-    });
+    }
   });
+});
+
+// //For testing purposes - logging formdata entries
+// for (let [key, value] of formData.entries()) {
+//   console.log(`${key}: ${value}`);
+// }
+
+// return { data: null, error: null };
+
+let data = null;
+let error = null;
+
+try {
+  const response = await axiosTour.put(`/update-tour/${tourId}`, formData);
+  data = response.data;
+} catch (err) {
+  error = err.response?.data;
+}
+
+return { data, error };
+}
 
   let data = null;
   let error = null;
@@ -106,4 +133,22 @@ export async function updateTour(tourId, tourData) {
   }
 
   return { data, error };
+}
+
+/**
+ * @param {string|number} id 
+ * @returns {object}
+ */
+export async function getOne(id) {
+  let data = null;
+  let error = null;
+
+  try {
+    const response = await axiosTour.get(id);
+    data = response?.data?.result;
+  } catch (err) {
+    error = err?.response?.data;
+  }
+
+  return {data, error}
 }
