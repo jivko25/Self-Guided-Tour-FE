@@ -169,7 +169,7 @@ const Step2 = () => {
               </p>
               {/* Display warnings to the user */}
               {warnings.length > 0 && (
-                <div className="mb-1 text-[#FFA500]">
+                <div className="mb-1 text-[14px] text-[#FFA500]">
                   <h2>Warnings:</h2>
                   <ul>
                     {warnings.map((warning, index) => (
