@@ -98,7 +98,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Tour}
           // hint="Please enter a valid Tour Title"
-          content={"Help for Tour Title"}
+          content={"The name of the tour package"}
           required={true}
           createTour={true}
         />
@@ -113,7 +113,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Destination}
           // hint="Please enter a valid Destination"
-          content={"Help for Destination"}
+          content={"The location or city where the tour takes place"}
           required={true}
           createTour={true}
         />
@@ -122,12 +122,12 @@ const Step1 = () => {
           label="Duration"
           name="duration"
           type="number"
-          placeholder="Estimate duration of your tour"
+          placeholder="Estimate duration of your tour in minutes"
           value={input.duration}
           onChange={handleChange}
           error={errors.Duration}
           // hint="Please enter a valid Duration"
-          content={"Help for Duration"}
+          content={"The length of the tour, enter the time in minutes"}
           required={true}
           createTour={true}
         />
@@ -142,7 +142,7 @@ const Step1 = () => {
             // onChange={handleChange}
             error={errors.TourType}
             // hint="Please enter a valid Duration"
-            content={"Help for Tour Type"}
+            content={"Select the type of tour: Walking, Cycling, or Driving"}
             required={true}
             createTour={true}
             readOnly={true}
@@ -211,12 +211,12 @@ const Step1 = () => {
           label="Price"
           name="price"
           type="number"
-          placeholder="USD"
+          placeholder="EUR"
           value={input.price}
           onChange={handleChange}
           error={errors.Price}
           // hint="Please enter a valid Price"
-          content={"Help for price"}
+          content={"The cost of the tour in EUR"}
           required={true}
           createTour={true}
         />
