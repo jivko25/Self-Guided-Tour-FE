@@ -21,13 +21,13 @@ export default async function RootLayout({ children }) {
       <body className={`${inter.className} bg-neutral-50 flex flex-col items-center justify-between min-h-screen`}>
       <div id="createModal"/>
         <AuthProvider>
-          <CreateTourProvider>
-            <PopupProvider>
-            <Header />
-            {children}
-            <Footer/>
-            </PopupProvider>
-          </CreateTourProvider>
+          <PopupProvider>
+            <CreateTourProvider>
+              <Header />
+              {children}
+              <Footer/>
+            </CreateTourProvider>
+          </PopupProvider>
         </AuthProvider>
       </body>
     </html>

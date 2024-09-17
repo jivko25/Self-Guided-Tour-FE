@@ -214,6 +214,7 @@ export default function GoogleMaps({
       let clickTimer = null;
       
       map.addListener("click", (e) => {
+        e.stop();
         if (clickTimer) {
           clearTimeout(clickTimer);
         }
