@@ -163,7 +163,6 @@ const Step3 = () => {
         return;
       }
 
-
       // Save the current data to the current index in formData.step2Data
       updateStep2Data(
         { ...updatedInputs, location: locationName },
@@ -234,14 +233,36 @@ const Step3 = () => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
       const fileArray = Array.from(files);
-      const validFiles = fileArray.filter(
-        (file) => file.size <= 5 * 1024 * 1024
-      ); // 5MB in bytes
+      const validFiles = [];
+      const invalidFiles = [];
+      const oversizedFiles = [];
 
-      if (validFiles.length !== fileArray.length) {
+      fileArray.forEach((file) => {
+        if (file.size > 5 * 1024 * 1024) {
+          // 5MB in bytes
+          oversizedFiles.push(file);
+        } else if (
+          ["image", "video", "audio"].some((type) =>
+            file.type.toLowerCase().startsWith(type)
+          )
+        ) {
+          validFiles.push(file);
+        } else {
+          invalidFiles.push(file);
+        }
+      });
+
+      if (oversizedFiles.length > 0) {
         popup({
           type: "ERROR",
-          message: "Some files exceed the 5MB limit and were not added.",
+          message: `The File exceed the 5MB limit and is not added `,
+        });
+      }
+
+      if (invalidFiles.length > 0) {
+        popup({
+          type: "ERROR",
+          message: `The File  not in a valid format and is not added `,
         });
       }
 
