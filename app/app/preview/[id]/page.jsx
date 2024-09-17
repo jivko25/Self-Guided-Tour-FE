@@ -13,19 +13,18 @@ import { getOne } from "@/app/actions/tourActions";
 export default function Preview() {
   const { id } = useParams();
   const { formData } = useCreateTour();
-  const [data, setData] = useState({});
+  const [previewData, setPreviewData] = useState([]);
   const [error, setError] = useState({});
 
   useEffect(() => {
     if (id == 0) {
-      setData(formData);
-      console.log(formData);
+      setPreviewData(formData.step2Data);
     } else {
       getOne(id).then((result) => {
         const { data, error } = result;
 
         if (data) {
-          setData(data);
+          setPreviewData(data.landmarks);
         } else {
           setError(error);
         }
@@ -62,10 +61,33 @@ export default function Preview() {
             <GoogleMaps />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
-            {/* TODO */}
+            {previewData.length > 0 && (
+              <ul className="text-[16px] text-[#13294B]">
+                {previewData.map((loc, i) => (
+                  <li
+                    key={i}
+                    className="relative ml-5 before:absolute before:block before:content-[''] 
+                                before:bg-[#617086] before:w-[0.5px] before:top-0 before:bottom-0
+                                first:before:top-[15px]"
+                  >
+                    <div className="absolute -left-[7px] w-[15px] h-[15px] border-[0.5px] rounded-full border-[#617086]"></div>
+                    <div className="ml-6">
+                      <span className="font-light">Location {i + 1}</span>
+                      <h3 className="font-medium text-[18px] text-[#081120]">
+                        {loc.locationName}
+                      </h3>
+                      <div className="font-semibold text-[#4285F4] flex gap-x-11">
+                        <span>Play Audio</span>
+                        <span>Show directions</span>
+                      </div>
+                      <p className="text-[14px]">{loc.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </section>
         </div>
-        {/* TODO */}
       </section>
       <div className="web:border-t border-[#E7EAED] mb-[130px] tablet:mb-0">
         <div className="web:w-1/2">
