@@ -104,31 +104,65 @@ const Step3 = () => {
     if (placeId) {
       // If accessed through the edit button
       const { locationName, ...updatedInputs } = inputs;
-      if (!locationName || inputs.addFields.length === 0) {
+      if (!locationName) {
         popup({
           type: "ERROR",
-          message: "Location name or files missing!",
+          message: "Location name is missing!",
         });
         return;
-      } else {
-        popup({
-          type: "SUCCESS",
-          message: "Good job, required fields are filled!",
-        });
       }
+
+      if (locationName.length < 3 || locationName.length > 50) {
+        popup({
+          type: "ERROR",
+          message: "Location name must be between 3 and 50 characters long!",
+        });
+        return;
+      }
+
+      if (inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Please upload at least one file!",
+        });
+        return;
+      }
+
+      // If all validations pass
+      popup({
+        type: "SUCCESS",
+        message: "Good job, required fields are filled!",
+      });
       updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
       goToStep(1);
     } else {
       // If accessed through the next button in step 2
       const { locationName, ...updatedInputs } = inputs;
 
-      if (!locationName || inputs.addFields.length === 0) {
+      if (!locationName) {
         popup({
           type: "ERROR",
-          message: "Location name or files missing!",
+          message: "Location name is missing!",
         });
         return;
       }
+
+      if (locationName.length < 3 || locationName.length > 50) {
+        popup({
+          type: "ERROR",
+          message: "Location name must be between 3 and 50 characters long!",
+        });
+        return;
+      }
+
+      if (inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Please upload at least one file!",
+        });
+        return;
+      }
+
 
       // Save the current data to the current index in formData.step2Data
       updateStep2Data(

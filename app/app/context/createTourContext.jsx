@@ -105,8 +105,6 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
-
-
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
     if (!hasPrompted.current && !editModeQuery) {
@@ -235,14 +233,28 @@ export const CreateTourProvider = ({ children }) => {
       }),
     };
 
-    if (!tourData.summary || !tourData.thumbnailImage) {
+    // Validations
+    if (!tourData.thumbnailImage) {
       popup({
         type: "ERROR",
-        message: "Missing thumbnail image or summary",
+        message: "Thumbnail image is missing.",
       });
-
       return;
     }
+
+    if (
+      !tourData.summary ||
+      tourData.summary.length < 3 ||
+      tourData.summary.length > 50
+    ) {
+      popup({
+        type: "ERROR",
+        message: "Summary must be between 3 and 50 characters long.",
+      });
+      return;
+    }
+
+    // Check if a thumbnail image is provided
 
     const { error } = await createTour(tourData);
 
