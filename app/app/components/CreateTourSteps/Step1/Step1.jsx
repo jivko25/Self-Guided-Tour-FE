@@ -57,22 +57,48 @@ const Step1 = () => {
     setInput(() => state);
   };
 
+  const fieldValidations = [
+    { field: "tour", message: "Please enter the tour title." },
+    { field: "destination", message: "Please enter a destination." },
+    { field: "duration", message: "Please specify the duration (in minutes)." },
+    { field: "price", message: "Please enter the price (in EUR)." },
+    {
+      field: "tourType",
+      message:
+        "Please choose a tour type (e.g., Walking, Bicycling, or Driving).",
+    },
+  ];
+
   const onNextStep = () => {
-    if (
-      input.tour === "" ||
-      input.destination === "" ||
-      input.duration === "" ||
-      input.price === "" ||
-      input.tourType === ""
-    ) {
+    for (let validation of fieldValidations) {
+      if (input[validation.field] === "") {
+        popup({
+          type: "ERROR",
+          message: validation.message,
+        });
+        return;
+      }
+    }
+    // Max duration 3 days
+    if (input.duration <= 0 || input.duration > 4320) {
       popup({
         type: "ERROR",
-        message: "Please fill in all required fields before proceeding.",
+        message:
+          "Duration must be a positive number and cannot exceed 3 days (4320 minutes)",
       });
-    } else {
-      updateStep1Data(input);
-      nextStep();
+      return;
     }
+
+    if (input.price <= 0) {
+      popup({
+        type: "ERROR",
+        message: "Price must be a positive amount in EUR.",
+      });
+      return;
+    }
+
+    updateStep1Data(input);
+    nextStep();
   };
 
   return (
