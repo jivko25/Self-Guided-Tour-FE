@@ -198,9 +198,9 @@ export const CreateTourProvider = ({ children }) => {
   };
   const handlePublishTour = async () => {
     const tourTypeOptions = [
-      { id: 0, label: "Walking Tour" },
-      { id: 1, label: "Cycling Tour" },
-      { id: 2, label: "Driving Tour" },
+      { id: 0, label: "Walking" },
+      { id: 1, label: "Bicycling" },
+      { id: 2, label: "Driving" },
     ];
 
     // Find the corresponding ID for the selected tour type
