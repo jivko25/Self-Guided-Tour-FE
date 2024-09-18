@@ -111,7 +111,7 @@ const Step2 = () => {
                         px-[8px] phone:px-[16px] tablet:px-[125px] web:px-[56px] 
                         web:h-[582px] web:w-1/2"
       >
-        <div className="overflow-y-scroll web:pr-[40px] we:w-[100%] web:mr-[24px]">
+        <div className="overflow-y-scroll web:pr-[40px] web:w-[100%] web:mr-[24px]">
           <header className="flex flex-row justify-between">
             <h2 className="text-[20px] web:text-[24px]">Plan your route</h2>
             <span className="mt-[7px] tablet:mt-0 text-[#E8B600]">
