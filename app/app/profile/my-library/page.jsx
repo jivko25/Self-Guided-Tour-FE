@@ -1,7 +1,45 @@
+"use client";
+import Table from "@/app/components/Table/Table";
+import { useProfile } from "@/app/context/profileContext";
+import { useEffect, useState } from "react";
+const tableHeaders = [
+  { label: "Tour Title", additionalClasses: "" },
+  { label: "Date", additionalClasses: "smallPhone:hidden tablet:table-cell" },
+  {
+    label: "Creator",
+    additionalClasses: "smallPhone:hidden web:table-cell",
+  },
+  {
+    label: "Status",
+    additionalClasses: "smallPhone:hidden tablet:table-cell",
+  },
+  { label: "Action", additionalClasses: "rounded-tr-[5px]" },
+];
+const tabs = ["My Tours", "Bought Tours"];
 function Library() {
+  const [tours, setTours] = useState([]);
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const { getToursAsync } = useProfile();
+  function handleTabChange(tab) {
+    setActiveTab(tab);
+  }
+  useEffect(() => {
+    async function fetchTours() {
+      const response = await getToursAsync();
+      setTours(response);
+    }
+    fetchTours();
+  }, [getToursAsync]);
   return (
     <div>
-      <h1>Librray</h1>
+      <Table
+        tableHeaders={tableHeaders}
+        tours={tours}
+        tabs={tabs}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onTabChange={handleTabChange}
+      />
     </div>
   );
 }

@@ -6,15 +6,28 @@ import { use, useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import { updateProfileAsync } from "@/app/actions/profileActions";
 import { useProfile } from "@/app/context/profileContext";
+import { useForm as useFormValidation } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerValidationScheme } from "@/app/utils/validationSchemes";
 
 function ProfileForm() {
-  const { getProfile, user, isLoading, dispatch, profilePictureSrc } =
+  const { getProfile, user, isLoading, dispatch, profilePictureSrc, error } =
     useProfile();
   const profilePictureRef = useRef(null);
+  // Set up server action
   const [formState, updateProfile] = useFormState(
     updateProfileAsync,
     undefined
   );
+  //Set up the form validation
+  const {
+    register,
+    formState: { errors: validationErrors, isValid },
+    watch,
+  } = useFormValidation({
+    resolver: yupResolver(registerValidationScheme),
+    mode: "onChange",
+  });
   const [profilePicture, setProfilePicture] = useState("");
   function handleFileUpload(e) {
     const file = e.target.files[0];
@@ -31,13 +44,25 @@ function ProfileForm() {
   function triggerFileUpload() {
     profilePictureRef.current.click();
   }
+  //Handle validation errors
   useEffect(() => {
+    if (formState?.error) {
+      dispatch({ type: "error", payload: formState.error });
+    }
+    // Clear the error upon successful submission, form state is string only on succesfull submission
+    if (typeof formState === "string") {
+      dispatch({ type: "clearError" });
+    }
+    dispatch({ type: "loaded" });
+  }, [error, formState]);
+  // Fetch the user profile when the component mounts
+  useEffect(() => {
+    if (error) return;
     async function fetchProfile() {
-      const response = await getProfile();
-      console.log("profile", response);
+      await getProfile();
     }
     fetchProfile();
-  }, []);
+  }, [getProfile, error]);
   // Clean up the object URL when the component unmounts
   useEffect(() => {
     return () => {
@@ -46,11 +71,12 @@ function ProfileForm() {
       }
     };
   }, [profilePictureSrc]);
-
+  console.log(user);
   return (
     <form
       action={updateProfile}
       className=" w-[884px] text-l font-medium mb-11"
+      noValidate
     >
       <div className="flex gap-5 mb-16">
         <InputField
@@ -74,10 +100,11 @@ function ProfileForm() {
         <InputField
           label="Email Addres"
           type="email"
-          name="email"
           id="email"
-          classes=" w-[430px]"
           value={user?.email}
+          name="email"
+          classes=" w-[430px]"
+          error={error?.email}
         />
         <InputField
           label="Phone Number (optional)"
@@ -94,7 +121,7 @@ function ProfileForm() {
           name="about"
           className="w-full  h-36 border border-[#CECECE] bg-transparent"
           style={{ resize: "none", textIndent: "10px" }}
-          value={user?.about}
+          defaultValue={user?.about}
         ></textarea>
       </div>
       <section className="mt-16 flex flex-col gap-9">
@@ -119,14 +146,23 @@ function ProfileForm() {
         />
       </section>
       <section className=" border-t-2 border-[#D1D0D8] mt-16">
-        <h1 className="mt-16">Sign In and Security</h1>`
-        <InputField
-          label="Current Password"
-          name="currentPassword"
-          id="password"
-          type="password"
-          classes=" w-[430px]"
-        />
+        <h1 className="mt-16 text-xl">Sign In and Security</h1>
+        {user?.hasPassword ? (
+          <InputField
+            label="Current Password"
+            name="currentPassword"
+            id="currentPassword"
+            type="password"
+            classes=" w-[430px] mt-16"
+          />
+        ) : (
+          <h1 className="text-l mt-8">
+            It looks like you’re currently using an external login method
+            (Google, Facebook, etc.) and don’t have a password set for your
+            account. If you’d like, you can add a password for added security or
+            for alternative login options.
+          </h1>
+        )}
         <div className="flex gap-8 mt-16">
           <InputField
             label="New Password"
@@ -134,17 +170,28 @@ function ProfileForm() {
             id="password"
             type="password"
             classes=" w-[430px]"
+            {...register("password")}
+            error={
+              validationErrors.password?.message ||
+              validationErrors.repeatPassword?.message
+            }
           />
           <InputField
             label="Repeat Password"
             name="repeatPassword"
             type="password"
             classes=" w-[430px]"
+            {...register("repeatPassword")}
+            error={
+              validationErrors.repeatPassword?.message ||
+              validationErrors.password?.message
+            }
           />
         </div>
         <Btn
           type="submit"
           text="Save Changes"
+          onClick={() => dispatch({ type: "loading" })}
           className={`${
             isLoading ? "animate-pulse" : ""
           } w-48 mt-16 hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500`}

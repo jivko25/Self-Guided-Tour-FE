@@ -15,3 +15,9 @@ export async function getBoughtTours() {
     }
   }
 }
+
+function structureError(error) {
+  const type = error.path;
+  const message = error.errors[0];
+  return { error: { [type]: message }, type: "Validation Error" };
+}
