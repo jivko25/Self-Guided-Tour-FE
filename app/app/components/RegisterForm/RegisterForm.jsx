@@ -62,8 +62,6 @@ const RegisterForm = ({ userId }) => {
     trigger(name);
   };
 
-  //const password = watch("password", "");
-
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
       <h2

@@ -59,4 +59,19 @@ export const registerValidationScheme = yup.object({
   repeatPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], paswordsDontMatchErrorMessage),
+  phoneNumber: yup
+    .string()
+    .matches(/^[0-9]{10}$/, "Phone number must be 10 digits"),
+});
+export const emailValidationScheme = yup.object({
+  email: yup
+    .string()
+    .matches(emailRegex, emailErrorMessage)
+    .required(requiredMessage("Email")),
+});
+export const passwordValidationScheme = yup.object({
+  Password: passwordValidation,
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], paswordsDontMatchErrorMessage),
 });
