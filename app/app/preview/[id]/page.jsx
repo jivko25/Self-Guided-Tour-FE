@@ -40,7 +40,7 @@ export default function Preview() {
   }, [id, formData]);
   return (
     <>
-      <header className="hidden w-[90%] web:flex flex-row justify-between items-center">
+      <header className="hidden w-[90%] web:flex flex-row justify-between items-center mt-16 mb-32">
         <h1 className="text-[39px] font-medium flex">
           Tour Locations <span className="block w-0.5 h-[59px] bg-[#617086] mx-9"></span> {title}
         </h1>
