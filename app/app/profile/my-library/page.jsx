@@ -19,17 +19,20 @@ const tabs = ["My Tours", "Bought Tours"];
 function Library() {
   const [tours, setTours] = useState([]);
   const [activeTab, setActiveTab] = useState(tabs[0]);
-  const { getToursAsync } = useProfile();
-  function handleTabChange(tab) {
-    setActiveTab(tab);
-  }
+  const { getToursAsync, getBoughtToursAsync } = useProfile();
+
   useEffect(() => {
     async function fetchTours() {
-      const response = await getToursAsync();
-      setTours(response);
+      if (activeTab === "My Tours") {
+        const response = await getToursAsync();
+        setTours(response);
+      } else if (activeTab === "Bought Tours") {
+        const response = await getBoughtToursAsync();
+        setTours(response);
+      }
     }
     fetchTours();
-  }, [getToursAsync]);
+  }, [getToursAsync, activeTab]);
   return (
     <div>
       <Table
@@ -38,7 +41,6 @@ function Library() {
         tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onTabChange={handleTabChange}
       />
     </div>
   );

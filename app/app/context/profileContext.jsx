@@ -49,9 +49,15 @@ export const ProfileProvider = ({ children }) => {
   }, []);
   // Fetch tours
   const getToursAsync = useCallback(async function getTours() {
+    const response = await axios.get("/profile/my-tours");
+    const tours = response?.data;
+    console.log(response);
+    return tours;
+  }, []);
+  const getBoughtToursAsync = useCallback(async function getBoughtTours() {
     const response = await axios.get("/tour");
-    const tours = response.data?.result?.tours;
-    console.log(tours);
+    const tours = response?.data?.result?.tours;
+    console.log(response);
     return tours;
   }, []);
   return (
@@ -65,6 +71,7 @@ export const ProfileProvider = ({ children }) => {
         profilePictureSrc,
         error,
         getToursAsync,
+        getBoughtToursAsync,
       }}
     >
       {children}
