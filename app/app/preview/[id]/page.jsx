@@ -21,13 +21,23 @@ export default function Preview() {
 
   useEffect(() => {
     if (id == 0) {
-      console.log(formData);
+      setTitle(formData.step1Data.tour);
 
-      setPreviewData(formData.step2Data);
+      const newArr = formData.step2Data.map((loc) => {
+          return{
+            locationName: loc.location,
+            description: loc.locationDescription,
+            latitude: loc.latitude,
+            longitude: loc.longitude,
+            resources: loc.addFields,
+          }
+      });
+
+      setLocations(newArr);
+
     } else {
       getOne(id).then((result) => {
         const { data, error } = result;
-        console.log(data);
 
         if (data) {
           setTitle(data.title);
@@ -37,12 +47,14 @@ export default function Preview() {
         }
       });
     }
-  }, [id, formData]);
+  }, [id, formData, setLocations]);
   return (
     <>
       <header className="hidden w-[90%] web:flex flex-row justify-between items-center mt-16 mb-32">
         <h1 className="text-[39px] font-medium flex">
-          Tour Locations <span className="block w-0.5 h-[59px] bg-[#617086] mx-9"></span> {title}
+          Tour Locations{" "}
+          <span className="block w-0.5 h-[59px] bg-[#617086] mx-9"></span>{" "}
+          {title}
         </h1>
         <Link className="flex flex-row items-start gap-3" href={`/edit/${id}`}>
           <Image src={Pencil} width={24} height={24} alt="Edit tour" />
