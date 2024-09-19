@@ -12,7 +12,6 @@ function Table({
   tabs = [],
   activeTab,
   setActiveTab,
-  handleTabChange,
 }) {
   return (
     <div>
@@ -20,7 +19,6 @@ function Table({
         tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onTabChange={handleTabChange}
       />
       <table className="min-w-full bg-white border">
         <thead>
