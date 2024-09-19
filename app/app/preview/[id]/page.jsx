@@ -17,14 +17,14 @@ const IOSTypes = {
   Driving: "d",
   Walking: "w",
   Bycicling: "w",
-}
+};
 
 export default function Preview() {
   const { id } = useParams();
   const { formData } = useCreateTour();
   const [title, setTitle] = useState("");
   const [locations, setLocations] = useState([]);
-  const [tourType, setTourType] = useState('');
+  const [tourType, setTourType] = useState("");
   const [error, setError] = useState({});
   const popup = usePopup();
 
@@ -34,22 +34,21 @@ export default function Preview() {
       setTourType(formData.step1Data.tourType);
 
       const newArr = formData.step2Data.map((loc) => {
-          return{
-            locationName: loc.location,
-            description: loc.locationDescription,
-            latitude: loc.latitude,
-            longitude: loc.longitude,
-            resources: loc.addFields,
-          }
+        return {
+          locationName: loc.location,
+          description: loc.locationDescription,
+          latitude: loc.latitude,
+          longitude: loc.longitude,
+          resources: loc.addFields,
+        };
       });
 
       setLocations(newArr);
-
     } else {
       getOne(id).then((result) => {
         const { data, error } = result;
         console.log(data);
-        
+
         if (data) {
           setTitle(data.title);
           setLocations(data.landmarks);
@@ -61,7 +60,7 @@ export default function Preview() {
     }
   }, [id, formData, setLocations]);
 
-  const handleNavigation = (location) => {
+  const handleNavigation = (location, multiple = false) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -69,17 +68,13 @@ export default function Preview() {
           const userLng = position.coords.longitude;
           const lat = location.latitude;
           const lng = location.longitude;
+          const device = getUserDeviceType();
+          let url = "";
 
-          // Detect if user is on Android or iOS
-          const isAndroid = /Android/i.test(navigator.userAgent);
-          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-          
-          let url = '';
-
-          if (isAndroid) {
+          if (device === "android") {
             // Open Google Maps app if available on Android
             url = `geo:${userLat},${userLng}?q=${lat},${lng}&travelmode=${tourType}`;
-          } else if (isIOS) {
+          } else if (device === "ios") {
             // Open in Apple Maps on iOS devices
             url = `http://maps.apple.com/?saddr=${userLat},${userLng}&daddr=${lat},${lng}&dirflg=${IOSTypes[tourType]}`;
           } else {
@@ -87,23 +82,38 @@ export default function Preview() {
             url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=${tourType}`;
           }
 
-          window.open(url, '_blank');
+          window.open(url, "_blank");
         },
         (error) => {
           popup({
             type: "ERROR",
-            message: "Unable to retrieve your location. Please enable location services.",
+            message: "Unable to retrieve your location.",
           });
         }
       );
     } else {
       popup({
         type: "ERROR",
-        message: "Geolocation is not supported by this browser."
+        message: "Geolocation is not supported by this browser.",
       });
       setError();
     }
-  }
+  };
+
+  const getUserDeviceType = () => {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+      return "android";
+    }
+
+    if (isIOS) {
+      return "ios";
+    }
+
+    return "browser";
+  };
 
   return (
     <>
@@ -183,7 +193,10 @@ export default function Preview() {
                             />
                             <span>Play Audio</span>
                           </div>
-                          <div className="flex items-center gap-3 cursor-pointer" onClick={handleNavigation.bind(null, loc)}>
+                          <div
+                            className="flex items-center gap-3 cursor-pointer"
+                            onClick={handleNavigation.bind(null, loc)}
+                          >
                             <Image
                               src={ArrowRedo}
                               width={24}
