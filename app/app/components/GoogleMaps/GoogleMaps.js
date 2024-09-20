@@ -6,17 +6,38 @@ import Image from 'next/image';
 
 let center = { lat: 42.698334, lng: 23.319941 }
 
-export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesArray, createCoordinates, index, locationId }) {
+/**
+ * @param {object} props
+ * @param {Function} props.getLocationInfo function to handle click on location on the map
+ * @param {object} props.coordinates object of lat and lng to display one marker
+ * @param {object[]} props.coordinatesArray array of objects {lat, lng} to display multiple markers
+ * @param {object[]} props.createCoordinates array of objects {lat, lng} to display multiple markers on create tour wizard step 2. Will handle logic with adding and removing locations
+ * @param {string} props.locationId adds marker based on location id
+ * @param {object} props.directions draws polylines and markers for directions API - structure: { tourType: '', locations: [..] }, locations key has to be array of objects { latitude, longitude }. For allowed tour types refer to https://developers.google.com/maps/documentation/javascript/directions#TravelModes. IMPORTANT - handleWarnings prop must be used to show warning to users
+ * @param {Function} props.handleWarnings handle warnings given from Google's directions API.
+ * @returns {JSX.Element}
+ */
+export default function GoogleMaps({
+  getLocationInfo,
+  coordinates,
+  coordinatesArray,
+  createCoordinates,
+  locationId,
+  directions,
+  handleWarnings,
+}) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
   const infoWindowRef = useRef(null);
   const currentInfoWindowRef = useRef(null);
   const currentMarkerRef = useRef(null);
   const autocompleteRef = useRef(null);
-  const inputRef = useRef(null);
+  const searchRef = useRef(null);
   const autocompleteSessionTokenRef = useRef(null);
   const GoogleSessionTokenRef = useRef(null);
   const [data, setData] = useState({});
+  const [tourType, setTourType] = useState('');
+  const warningsRef = useRef(null);
   let libraries = null;
 
   const handleSave = () => {
@@ -35,15 +56,27 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
   }
 
   useEffect(() => {
+    if (directions) {
+      setTourType(directions.tourType.toUpperCase());
+    }
+  }, [directions, setTourType]);
+
+  useEffect(() => {
     const initMaps = async () => {
       const loader = new Loader({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         version: "weekly",
       });
 
-      const [{ Map, InfoWindow }, { AdvancedMarkerElement }, { Place, Autocomplete, AutocompleteSessionToken }, { Geocoder }] = await loadLibraries(loader);
-      GoogleSessionTokenRef.current = AutocompleteSessionToken;
+      const [
+        { Map, InfoWindow }, { AdvancedMarkerElement },
+        { Place, Autocomplete, AutocompleteSessionToken },
+        { Geocoder },
+        { DirectionsService, DirectionsRenderer },
+        { LatLng }
+      ] = await loadLibraries(loader);
 
+      GoogleSessionTokenRef.current = AutocompleteSessionToken;
 
       if (coordinates && coordinates.lat) {
         center = coordinates;
@@ -178,7 +211,7 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
       map.addListener("click", handleClick);
 
       // Autocomplete logic
-      const autocomplete = new Autocomplete(inputRef.current, {
+      const autocomplete = new Autocomplete(searchRef.current, {
         // types: ['geocode'], // switch to this to get full information about the searched place
         fields: ['geometry'],
       });
@@ -189,19 +222,88 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         const place = autocomplete.getPlace();
         if (place.geometry && map) {
           map.panTo(place.geometry.location);
-          map.setZoom(14);          
+          map.setZoom(14);
         }
         // Reset session token after selection
-        inputRef.current.value = '';
-        
+        searchRef.current.value = '';
         autocompleteSessionTokenRef.current = null;
       });
 
+      // logic for drawing directions
+      if (directions && tourType !== '') {
+        const locations = directions.locations;
+        const directionsLength = locations.length;
+
+        if (directionsLength > 0) {
+          const directionsService = new DirectionsService();
+          const directionsRenderer = new DirectionsRenderer({
+            map, // Set the map
+            polylineOptions: {
+              strokeColor: '#E30505',  // Change the line color
+              strokeOpacity: 1,      // Set the line opacity
+              strokeWeight: 3          // Set the line weight
+            },
+            preserveViewport: true,
+          });
+
+          const firstLoc = locations[0];
+          const lastLoc = locations[directionsLength - 1];
+          const waypoints = [];
+          const origin = new LatLng({ lat: firstLoc.latitude, lng: firstLoc.longitude });
+          const destination = new LatLng({ lat: lastLoc.latitude, lng: lastLoc.longitude });
+
+          locations.forEach((loc, i) => {
+            if (i > 0 && i < (directionsLength - 1)) {
+              waypoints.push({
+                location: new LatLng({ lat: loc.latitude, lng: loc.longitude }),
+                stopover: true,
+              });
+            }
+          })
+
+          directionsService.route({
+            origin,
+            destination,
+            waypoints,
+            optimizeWaypoints: true,
+            travelMode: tourType,
+          }, (response, status) => {
+            if (status === 'OK') {
+              directionsRenderer.setOptions({
+                markerOptions: {
+                  icon: {
+                    url: locationmarker.src
+                  }
+                }
+              });
+
+              const warnings = response.routes[0].warnings;
+
+              if (handleWarnings) {
+                if (JSON.stringify(warnings) !== JSON.stringify(warningsRef.current)) {
+                  handleWarnings(warnings);
+                  warningsRef.current = warnings;
+                }
+              }
+              
+              directionsRenderer.setDirections(response);
+              map.setCenter({ lat: lastLoc.latitude, lng: lastLoc.longitude });
+            } else if (status == 'ZERO_RESULTS' && tourType == 'BICYCLING') {
+              setTourType('WALKING');
+              console.error(`Directions request failed for tour type BICYCLING due to ${status} switching to tour Type WALKING!`);
+            } else {
+              console.error('Error fetching directions', status);
+            }
+
+          });
+        }
+
+      }
     }
 
     //initialize map
     initMaps();
-  }, [locationId, coordinates, createCoordinates]);
+  }, [locationId, coordinates, createCoordinates, directions, tourType]);
 
   /**
    * Helper function for loading google api libraries
@@ -215,6 +317,8 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
         loader.importLibrary('marker'),
         loader.importLibrary('places'),
         loader.importLibrary('geocoding'),
+        loader.importLibrary('routes'),
+        loader.importLibrary('core'),
       ]);
     }
 
@@ -273,14 +377,14 @@ export default function GoogleMaps({ getLocationInfo, coordinates, coordinatesAr
       {/* Container for Autocomplete */}
       <div className=' w-[120px] h-[40px] tablet:w-[200px] z-10 absolute left-[5px] phone:left-[182px] bottom-[20px] phone:top-[10px] border shadow'>
         <input
-          ref={inputRef}
+          ref={searchRef}
           className='z-50 w-[100%] h-[100%] p-1'
           type="text"
           placeholder="Search"
           onFocus={handleFocus} // Generate a new session token on focus
         />
       </div>
-      <div className="w-[100%] h-[100%]" ref={mapsRef} id={`map-${index}`}>
+      <div className="w-[100%] h-[100%]" ref={mapsRef}>
         {/* Hidden container for marker content */}
         <div style={{ display: "none" }}>
           <div ref={markerRef}>

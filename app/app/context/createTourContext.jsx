@@ -222,12 +222,24 @@ export const CreateTourProvider = ({ children }) => {
       }),
     };
 
-    if (!tourData.summary || !tourData.thumbnailImage) {
+    // Validations
+    if (!tourData.thumbnailImage) {
       popup({
         type: "ERROR",
-        message: "Missing thumbnail image or summary",
+        message: "Thumbnail image is missing.",
       });
+      return;
+    }
 
+    if (
+      !tourData.summary ||
+      tourData.summary.length < 10 ||
+      tourData.summary.length > 500
+    ) {
+      popup({
+        type: "ERROR",
+        message: "Summary must be between 10 and 500 characters long",
+      });
       return;
     }
 

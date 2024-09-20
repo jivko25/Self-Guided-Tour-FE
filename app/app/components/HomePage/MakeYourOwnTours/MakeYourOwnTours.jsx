@@ -5,7 +5,7 @@ import Link from "next/link";
 import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 function MakeYourOwnTours() {
   return (
-    <div className="hidden  items-center justify-center w-full h-full 
+    <div className="hidden  items-center justify-center w-[95%] h-full 
     web:flex web:min-h-[608px] web:max-w-[1792px]
     tablet:flex tablet:min-h-[500px]
     ">
@@ -28,13 +28,13 @@ function MakeYourOwnTours() {
         >
           <span
             className="text-[#081120] text-base font-semibold font-['Inter']
-            web:w-[74px] web:h-[19px] web:text-base
-            tablet:w-[74px] tablet:h-[19px] tablet:text-base
+            web:text-base
+            tablet:text-base
             phone:
             smallPhone:
             "
           >
-            See More
+            Learn More
           </span>
           <SeeMoreSvgHomePage
             className="hidden

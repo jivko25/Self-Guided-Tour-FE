@@ -25,7 +25,7 @@ function BgBestPlaces() {
   }, []);
   return (
     <div
-      className="flex flex-col items-center justify-center gap-[30px] w-full h-full
+      className="flex flex-col items-center justify-center gap-[30px] w-[95%] h-full
     web:max-w-[1792px] web:min-h-[752px] web:gap-[30px] web:px-[0px]
     tablet:px-[10px] tablet:gap-[30px]
     phone:gap-[20px]
@@ -129,17 +129,7 @@ function BgBestPlaces() {
         smallPhone:
       "
       >
-        <Btn
-          className="hidden font-semibold text-[16px] border-b-2 border-b-[#E8B600] w-[128px] h-[43px] 
-          web:block
-          tablet:block
-          phone:
-          smallPhone:
-          "
-          variant="transparent"
-          text="Explore Sofia"
-          link="/explore"
-        />
+       
       </div>
 
       <div

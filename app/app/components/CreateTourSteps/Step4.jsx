@@ -28,7 +28,6 @@ const Step4 = () => {
   ];
   const FILE_SIZE = 1024 * 1024; // 1MB
 
-  console.log(formData);
 
   // TODO: Schemas could be exported to util
   const TourSummarySchema = Yup.object().shape({

@@ -26,8 +26,13 @@ const Step2 = () => {
 
   const drag = useRef(0);
   const dragOver = useRef(0);
-  const coordinatesRef = useRef([]);
+  const [tourType, setTourType] = useState('');
   const [createCoordinates, setCreateCoordinates] = useState([]);
+  const [warnings, setWarnings] = useState([]);
+
+  useEffect(() => {
+    setTourType(formData.step1Data.tourType);
+  }, [formData.step1Data.tourType]);
 
   useEffect(() => {
     if (formData.step2Data.length > 0) {
@@ -41,9 +46,9 @@ const Step2 = () => {
         return;
       }
       updateStep2Data(newData, formData.step2Data.length); // pass index as length of step2Data
-      coordinatesRef.current.push(newData);
       setCreateCoordinates([...createCoordinates, newData]);
       setData(newData);
+      
     },
     [updateStep2Data, formData.step2Data.length]
   );
@@ -66,17 +71,15 @@ const Step2 = () => {
   };
 
   const handleDeleteLocation = (placeId) => {
-    const placeIndex = coordinatesRef.current.findIndex(
+    const placeIndex = createCoordinates.findIndex(
       (loc) => loc.placeId === placeId
     );
 
     if (placeIndex !== -1) {
-      coordinatesRef.current.splice(placeIndex, 1);
       setCreateCoordinates([
         ...createCoordinates.filter((c) => c.placeId !== placeId),
       ]);
     }
-
     updateFormData({
       step2Data: formData.step2Data.filter((loc) => loc.placeId !== placeId),
     });
@@ -93,6 +96,12 @@ const Step2 = () => {
     }
     nextStep();
   };
+
+  const handleWarnings = (warn) => {
+    if (warn) {
+     setWarnings(warn);
+    }
+  }
 
   return (
     <>
@@ -119,7 +128,8 @@ const Step2 = () => {
           >
             <GoogleMaps
               getLocationInfo={getLocationInfo}
-              createCoordinates={createCoordinates}
+              directions={{tourType, locations: createCoordinates}}
+              handleWarnings={handleWarnings}
             />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
@@ -157,6 +167,17 @@ const Step2 = () => {
                 Once you’ve added locations on the map, they’ll appear in the
                 list below.
               </p>
+              {/* Display warnings to the user */}
+              {warnings.length > 0 && (
+                <div className="mb-1 text-[14px] text-[#FFA500]">
+                  <h2>Warnings:</h2>
+                  <ul>
+                    {warnings.map((warning, index) => (
+                      <li key={index}>{index + 1}. {warning}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {/* {formData.step2Data.map(({ placeId, location }, index) => (
                 <Location
                   key={index}

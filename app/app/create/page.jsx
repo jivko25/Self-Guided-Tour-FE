@@ -3,6 +3,7 @@ import {
   useCreateTour,
   CreateTourProvider,
 } from "../context/createTourContext.jsx";
+import { Suspense } from "react";
 import Step1 from "../components/CreateTourSteps/Step1/Step1.jsx";
 import Step2 from "../components/CreateTourSteps/Step2.jsx";
 import Step3 from "../components/CreateTourSteps/Step3/Step3.jsx";
@@ -27,19 +28,29 @@ const MultiStepForm = () => {
     }
   };
 
-  return(
+  return (
     <>
-    <div className={`${step===0? "flex flex-col justify-center items-center" : "w-[100%] h-full web:relative"}`}>{renderStep()}</div>
+      <div
+        className={`${
+          step === 0
+            ? "flex flex-col justify-center items-center"
+            : "w-[100%] h-full web:relative"
+        }`}
+      >
+        {renderStep()}
+      </div>
     </>
-    )
-
+  );
 };
 
 export default function App() {
   return (
-    <CreateTourProvider>
-      <Stepper />
-      <MultiStepForm />
-    </CreateTourProvider>
+    //TODO: Add Skeleton to fallback
+    <Suspense fallback={<div>Loading...</div>}>
+      <CreateTourProvider>
+        <Stepper />
+        <MultiStepForm />
+      </CreateTourProvider>
+    </Suspense>
   );
 }

@@ -14,7 +14,7 @@ import { useWindowWidth } from "../utils/hooks";
 import Btn from "../components/Buttons/Btn";
 
 const sortOprions = [
-  { label: "Newest", value: "newest", sr: "" },
+  { label: "Newest", value: "newest", icon: "" },
   { label: "Price Low", value: "minPrice", icon: ArrowDown },
   { label: "Price High", value: "maxPrice", icon: ArrowUp },
   { label: "Rating", value: "averageRating", icon: "" },
@@ -59,7 +59,9 @@ export default function Explore() {
   }, [query]);
 
   useEffect(() => {
-    handleURLParams(1, search, selectedSort);
+    if (selectedSort !== null) {
+      handleURLParams(1, search, selectedSort);
+    }
 
     return () => setSelectedSort(null);
   }, [selectedSort]);

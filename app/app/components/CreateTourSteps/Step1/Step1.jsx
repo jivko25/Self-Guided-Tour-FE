@@ -57,22 +57,48 @@ const Step1 = () => {
     setInput(() => state);
   };
 
+  const fieldValidations = [
+    { field: "tour", message: "Please enter the tour title" },
+    { field: "destination", message: "Please enter a destination" },
+    { field: "duration", message: "Please specify the duration (in minutes)" },
+    { field: "price", message: "Please enter the price (in EUR)" },
+    {
+      field: "tourType",
+      message:
+        "Please choose a tour type (e.g., Walking, Bicycling, or Driving)",
+    },
+  ];
+
   const onNextStep = () => {
-    if (
-      input.tour === "" ||
-      input.destination === "" ||
-      input.duration === "" ||
-      input.price === "" ||
-      input.tourType === ""
-    ) {
+    for (let validation of fieldValidations) {
+      if (input[validation.field] === "") {
+        popup({
+          type: "ERROR",
+          message: validation.message,
+        });
+        return;
+      }
+    }
+    // Max duration 24 hours
+    if (input.duration < 15 || input.duration > 1440) {
       popup({
         type: "ERROR",
-        message: "Please fill in all required fields before proceeding.",
+        message:
+          "Duration must be a positive number and cannot exceed 3 days (4320 minutes)",
       });
-    } else {
-      updateStep1Data(input);
-      nextStep();
+      return;
     }
+
+    if (input.price <= 0) {
+      popup({
+        type: "ERROR",
+        message: "Price must be a positive amount in EUR",
+      });
+      return;
+    }
+
+    updateStep1Data(input);
+    nextStep();
   };
 
   return (
@@ -98,7 +124,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Tour}
           // hint="Please enter a valid Tour Title"
-          content={"Help for Tour Title"}
+          content={"The name of the tour package"}
           required={true}
           createTour={true}
         />
@@ -113,7 +139,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Destination}
           // hint="Please enter a valid Destination"
-          content={"Help for Destination"}
+          content={"The location or city where the tour takes place"}
           required={true}
           createTour={true}
         />
@@ -122,12 +148,12 @@ const Step1 = () => {
           label="Duration"
           name="duration"
           type="number"
-          placeholder="Estimate duration of your tour"
+          placeholder="Estimate duration of your tour in minutes"
           value={input.duration}
           onChange={handleChange}
           error={errors.Duration}
           // hint="Please enter a valid Duration"
-          content={"Help for Duration"}
+          content={"The length of the tour, enter the time in minutes"}
           required={true}
           createTour={true}
         />
@@ -142,7 +168,7 @@ const Step1 = () => {
             // onChange={handleChange}
             error={errors.TourType}
             // hint="Please enter a valid Duration"
-            content={"Help for Tour Type"}
+            content={"Select the type of tour: Walking, Cycling, or Driving"}
             required={true}
             createTour={true}
             readOnly={true}
@@ -177,30 +203,30 @@ const Step1 = () => {
             <ul className="flex flex-col justify-center gap-4  pb-[20px]">
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Walking Tour")}
+                onClick={() => updateTourType("Walking")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Walk} alt="Walk icon" />
                 </p>
-                Walking Tour
+                Walking
               </li>
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Cycling Tour")}
+                onClick={() => updateTourType("Bicycling")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Bicycle} alt="Bicycle icon" />
                 </p>
-                Cycling Tour
+                Bicycling
               </li>
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Driving Tour")}
+                onClick={() => updateTourType("Driving")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Car} alt="Car icon" />
                 </p>
-                Driving Tour
+                Driving
               </li>
             </ul>
           </motion.div>
@@ -211,12 +237,12 @@ const Step1 = () => {
           label="Price"
           name="price"
           type="number"
-          placeholder="USD"
+          placeholder="EUR"
           value={input.price}
           onChange={handleChange}
           error={errors.Price}
           // hint="Please enter a valid Price"
-          content={"Help for price"}
+          content={"Help for Price"}
           required={true}
           createTour={true}
         />
