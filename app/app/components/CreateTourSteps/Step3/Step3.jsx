@@ -142,7 +142,7 @@ const Step3 = () => {
       if (!locationName) {
         popup({
           type: "ERROR",
-          message: "Location name is missing!",
+          message: "Location name is missing",
         });
         return;
       }
@@ -150,7 +150,7 @@ const Step3 = () => {
       if (locationName.length < 3 || locationName.length > 50) {
         popup({
           type: "ERROR",
-          message: "Location name must be between 3 and 50 characters long!",
+          message: "Location name must be between 3 and 50 characters long",
         });
         return;
       }
@@ -158,7 +158,7 @@ const Step3 = () => {
       if (inputs.addFields.length === 0) {
         popup({
           type: "ERROR",
-          message: "Please upload at least one file!",
+          message: "Please upload at least one file",
         });
         return;
       }
@@ -196,7 +196,7 @@ const Step3 = () => {
         // If it's the last item, navigate to the next step
         popup({
           type: "SUCCESS",
-          message: "Good job, all locations are completed!",
+          message: "Good job, all locations are completed",
         });
         nextStep();
       }

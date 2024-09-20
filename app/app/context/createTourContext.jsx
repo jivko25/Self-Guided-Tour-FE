@@ -193,22 +193,11 @@ export const CreateTourProvider = ({ children }) => {
     hasPrompted.current = true;
   };
   const handlePublishTour = async () => {
-    const tourTypeOptions = [
-      { id: 0, label: "Walking" },
-      { id: 1, label: "Bicycling" },
-      { id: 2, label: "Driving" },
-    ];
-
-    // Find the corresponding ID for the selected tour type
-    const selectedTourType = tourTypeOptions.find(
-      (option) => option.label === formData.step1Data.tourType
-    );
-
     const tourData = {
       title: formData.step1Data.tour,
       summary: formData.step4Data.summary,
       price: formData.step1Data.price,
-      tourType: selectedTourType ? selectedTourType.id : null, // Use the id if found
+      tourType: formData.step1Data.tourType,
       destination: formData.step1Data.destination,
       thumbnailImage: formData.step4Data.thumbnailImage,
       estimatedDuration: formData.step1Data.duration,
@@ -242,17 +231,15 @@ export const CreateTourProvider = ({ children }) => {
 
     if (
       !tourData.summary ||
-      tourData.summary.length < 3 ||
-      tourData.summary.length > 50
+      tourData.summary.length < 10 ||
+      tourData.summary.length > 500
     ) {
       popup({
         type: "ERROR",
-        message: "Summary must be between 3 and 50 characters long.",
+        message: "Summary must be between 10 and 500 characters long",
       });
       return;
     }
-
-    // Check if a thumbnail image is provided
 
     const { error } = await createTour(tourData);
 
