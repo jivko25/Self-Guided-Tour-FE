@@ -46,11 +46,11 @@ const MultiStepForm = () => {
 export default function App() {
   return (
     //TODO: Add Skeleton to fallback
-    <CreateTourProvider>
-      <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <CreateTourProvider>
         <Stepper />
         <MultiStepForm />
-      </Suspense>
-    </CreateTourProvider>
+      </CreateTourProvider>
+    </Suspense>
   );
 }
