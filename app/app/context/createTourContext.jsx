@@ -260,13 +260,15 @@ export const CreateTourProvider = ({ children }) => {
 
     let response;
     if (isEditMode) {
-      const tourId = editModeTourId;
+      const tourId = editModeQuery;
       response = await updateTour(tourId, tourData);
     } else {
       response = await createTour(tourData);
     }
 
     const { error } = response;
+    console.log(response.data);
+
     if (error) {
       Object.entries(error.errors).forEach(([field, messages]) => {
         popup({

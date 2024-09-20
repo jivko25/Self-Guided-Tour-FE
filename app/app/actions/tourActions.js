@@ -136,7 +136,7 @@ return { data, error };
 }
 
 /**
- * @param {string|number} id 
+ * @param {string|number} id
  * @returns {object}
  */
 export async function getOne(id) {
@@ -150,5 +150,5 @@ export async function getOne(id) {
     error = err?.response?.data;
   }
 
-  return {data, error}
+  return { data, error };
 }
