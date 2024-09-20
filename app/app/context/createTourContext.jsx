@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
-import { createTour } from "../actions/tourActions.js";
+import { createTour, updateTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
@@ -105,8 +105,6 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
-
-
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
     if (!hasPrompted.current && !editModeQuery) {
@@ -197,22 +195,11 @@ export const CreateTourProvider = ({ children }) => {
     hasPrompted.current = true;
   };
   const handlePublishTour = async () => {
-    const tourTypeOptions = [
-      { id: 0, label: "Walking Tour" },
-      { id: 1, label: "Cycling Tour" },
-      { id: 2, label: "Driving Tour" },
-    ];
-
-    // Find the corresponding ID for the selected tour type
-    const selectedTourType = tourTypeOptions.find(
-      (option) => option.label === formData.step1Data.tourType
-    );
-
     const tourData = {
       title: formData.step1Data.tour,
       summary: formData.step4Data.summary,
       price: formData.step1Data.price,
-      tourType: selectedTourType ? selectedTourType.id : null, // Use the id if found
+      tourType: formData.step1Data.tourType,
       destination: formData.step1Data.destination,
       thumbnailImage: formData.step4Data.thumbnailImage,
       estimatedDuration: formData.step1Data.duration,
@@ -244,7 +231,16 @@ export const CreateTourProvider = ({ children }) => {
       return;
     }
 
-    const { error } = await createTour(tourData);
+    let response;
+    if (isEditMode) {
+      const tourId = editModeQuery;
+      response = await updateTour(tourId, tourData);
+    } else {
+      response = await createTour(tourData);
+    }
+
+    const { error } = response;
+    console.log(response.data);
 
     if (error) {
       // Iterate over the errors and create a popup for each one
