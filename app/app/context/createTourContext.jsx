@@ -129,8 +129,6 @@ export const CreateTourProvider = ({ children }) => {
     setOpenModal(false);
   };
 
-  console.log(formData);
-
   const nextStep = () => {
     if (validateStep(step, formData)) {
       setStep((prevStep) => prevStep + 1);
