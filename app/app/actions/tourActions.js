@@ -7,6 +7,7 @@ import { axiosTour } from "@/api/axios.js";
  */
 export async function createTour(tourData) {
   //TODO: Could create a util function for converting the object to formData
+  console.log(tourData);
 
   const formData = new FormData();
   formData.append("Title", tourData.title);
