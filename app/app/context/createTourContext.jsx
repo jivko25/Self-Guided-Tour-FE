@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
-import { createTour } from "../actions/tourActions.js";
+import { createTour, updateTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
@@ -243,7 +243,16 @@ export const CreateTourProvider = ({ children }) => {
       return;
     }
 
-    const { error } = await createTour(tourData);
+    let response;
+    if (isEditMode) {
+      const tourId = editModeQuery;
+      response = await updateTour(tourId, tourData);
+    } else {
+      response = await createTour(tourData);
+    }
+
+    const { error } = response;
+    console.log(response.data);
 
     if (error) {
       // Iterate over the errors and create a popup for each one
