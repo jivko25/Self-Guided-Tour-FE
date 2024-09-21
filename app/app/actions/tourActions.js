@@ -113,6 +113,7 @@ export async function updateTour(tourId, tourData) {
 
   let data = null;
   let error = null;
+  console.log(formData);
 
   try {
     const response = await axiosTour.put(`/update-tour/${tourId}`, formData);

@@ -36,7 +36,7 @@ export const CreateTourProvider = ({ children }) => {
   const searchParams = useSearchParams();
 
   // Check if it's edit mode
-  const editModeQuery = searchParams.get("edit");
+  const editModeTourId = searchParams.get("edit");
 
   const [openModal, setOpenModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -70,6 +70,7 @@ export const CreateTourProvider = ({ children }) => {
     if (storedTour) {
       const tourToEdit = JSON.parse(storedTour);
       // Set form data to the tourToEdit object if found
+      console.log(tourToEdit);
       setFormData({
         step1Data: {
           tour: tourToEdit.title || "", //
@@ -80,6 +81,7 @@ export const CreateTourProvider = ({ children }) => {
         },
         step2Data:
           tourToEdit.landmarks.map((landmark) => ({
+            landmarkId: landmark.landmarkId || null,
             latitude: landmark.latitude || null,
             longitude: landmark.longitude || null,
             location: landmark.locationName || "",
@@ -105,9 +107,10 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
+  console.log(formData);
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
-    if (!hasPrompted.current && !editModeQuery) {
+    if (!hasPrompted.current && !editModeTourId) {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const data = JSON.parse(savedData);
 
@@ -210,6 +213,7 @@ export const CreateTourProvider = ({ children }) => {
         });
 
         return {
+          landmarkId: landmark.landmarkId,
           latitude: landmark.latitude,
           longitude: landmark.longitude,
           city: landmark.locationCity,
@@ -222,30 +226,18 @@ export const CreateTourProvider = ({ children }) => {
       }),
     };
 
-    // Validations
-    if (!tourData.thumbnailImage) {
+    if (!tourData.summary || !tourData.thumbnailImage) {
       popup({
         type: "ERROR",
-        message: "Thumbnail image is missing.",
+        message: "Missing thumbnail image or summary",
       });
-      return;
-    }
 
-    if (
-      !tourData.summary ||
-      tourData.summary.length < 10 ||
-      tourData.summary.length > 500
-    ) {
-      popup({
-        type: "ERROR",
-        message: "Summary must be between 10 and 500 characters long",
-      });
       return;
     }
 
     let response;
     if (isEditMode) {
-      const tourId = editModeQuery;
+      const tourId = editModeTourId;
       response = await updateTour(tourId, tourData);
     } else {
       response = await createTour(tourData);
