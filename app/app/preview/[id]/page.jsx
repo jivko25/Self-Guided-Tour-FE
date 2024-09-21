@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Pencil from "../../public/svg/pencil.svg";
 import { useCreateTour } from "@/app/context/createTourContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { getOne } from "@/app/actions/tourActions";
 import Play from "../../public/svg/play.svg";
@@ -29,9 +29,14 @@ export default function Preview() {
   const popup = usePopup();
 
   useEffect(() => {
+    console.log(locations);
+  }, [locations]);
+
+  useEffect(() => {
     if (id == 0) {
       setTitle(formData.step1Data.tour);
       setTourType(formData.step1Data.tourType);
+      console.log(formData);
 
       const newArr = formData.step2Data.map((loc) => {
         return {
@@ -39,7 +44,23 @@ export default function Preview() {
           description: loc.locationDescription,
           latitude: loc.latitude,
           longitude: loc.longitude,
-          resources: loc.addFields,
+          audio: loc.addFields.filter(
+            (file) =>
+              file.name.endsWith(".mp3") ||
+              file.name.endsWith(".wav") ||
+              file.name.endsWith(".aac") ||
+              file.name.endsWith(".flac") ||
+              file.name.endsWith(".ogg")
+          ),
+          video: loc.addFields.filter(
+            (file) =>
+              file.name.endsWith(".mp4") ||
+              file.name.endsWith(".avi") ||
+              file.name.endsWith(".mkv") ||
+              file.name.endsWith(".mov") ||
+              file.name.endsWith(".wmv") ||
+              file.name.endsWith(".flv")
+          ),
         };
       });
 
@@ -200,7 +221,7 @@ export default function Preview() {
             </section>
             <section className="flex flex-wrap w-[100%] gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
               {locations.length > 0 && (
-                <ul className="text-[16px] text-[#13294B] ">
+                <ul className="text-[16px] text-[#13294B]">
                   {locations.map((loc, i) => (
                     <li
                       key={i}
@@ -216,15 +237,30 @@ export default function Preview() {
                         <h3 className="font-medium text-[18px] text-[#081120] mb-4">
                           {loc.locationName}
                         </h3>
-                        <div className="font-semibold text-[#4285F4] flex gap-x-8 tablet:gap-x-11 mb-6 ml-2 tablet:ml-6">
-                          <div className="flex items-center gap-3">
-                            <Image
-                              src={Play}
-                              width={16}
-                              height={18}
-                              alt="Play audio"
-                            />
-                            <span>Play Audio</span>
+                        <div className="font-semibold text-[#4285F4] flex flex-col-reverse tablet:flex-row gap-y-3 gap-x-8 items-start tablet:gap-x-11 mb-6 ml-2 tablet:ml-6">
+                          <div>
+                            {loc.audio.length > 0 && (
+                              <>
+                                {loc.audio.map((audioFile, i) => (
+                                  <AudioPlayer
+                                    key={i}
+                                    audioFile={audioFile}
+                                    count={i + 1}
+                                  />
+                                ))}
+                              </>
+                            )}
+                            {loc.video.length > 0 && (
+                              <>
+                                {loc.video.map((videoFile, i) => (
+                                  <VideoPlayer
+                                    key={i}
+                                    videoFile={videoFile}
+                                    count={i + 1}
+                                  />
+                                ))}
+                              </>
+                            )}
                           </div>
                           <div
                             className="flex items-center gap-3 cursor-pointer"
@@ -275,3 +311,84 @@ export default function Preview() {
     </>
   );
 }
+
+// Audio player
+const AudioPlayer = ({ audioFile, count }) => {
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    audioRef.current.play();
+    setIsPlaying(true);
+  };
+
+  const handlePouse = () => {
+    audioRef.current.pause();
+    setIsPlaying(false);
+  };
+  return (
+    <>
+      {!isPlaying && (
+        <div
+          className="flex items-center gap-x-3 cursor-pointer"
+          onClick={handlePlay}
+        >
+          <Image src={Play} width={16} height={18} alt="Play audio" />
+          <span>Play Audio {count}</span>
+        </div>
+      )}
+      <audio
+        className="w-full"
+        ref={audioRef}
+        controls
+        hidden={!isPlaying}
+        onPause={handlePouse}
+      >
+        <source src={URL.createObjectURL(audioFile)} />
+        Cannot play audio!
+      </audio>
+    </>
+  );
+};
+
+// Video player
+const VideoPlayer = ({ videoFile, count }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef(null);
+  
+  const handlePlay = () => {
+    videoRef.current.play();
+    setIsPlaying(true);
+  };
+
+  const handlePause = () => {
+    videoRef.current.pause();
+    setIsPlaying(false);
+  };
+
+  return (
+    <div>
+      {!isPlaying && (
+        <div
+          className="flex items-center gap-x-3 cursor-pointer"
+          onClick={handlePlay}
+        >
+          <Image src={Play} width={16} height={18} alt="Play audio" />
+          <span>Play Video {count}</span>
+        </div>
+      )}
+
+      <video
+        ref={videoRef}
+        onPlay={handlePlay}
+        onPause={handlePause}
+        controls
+        hidden={!isPlaying}
+        width={300}
+      >
+        <source src={URL.createObjectURL(videoFile)} />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  );
+};
