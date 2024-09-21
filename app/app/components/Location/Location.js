@@ -2,8 +2,6 @@
 import Link from "next/link";
 import pencil from "../../public/svg/pencil.svg";
 import trashcan from "../../public/svg/trash.svg";
-import CheckmarkIcon from "../../public/svg/checkmark-circle.svg";
-import AlertIcon from "../../public/alert-circle-outline.svg";
 import Image from "next/image.js";
 import { useEffect, useState } from "react";
 

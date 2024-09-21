@@ -63,6 +63,7 @@ export async function updateTour(tourId, tourData) {
   formData.append("EstimatedDuration", tourData.estimatedDuration);
 
   tourData.landmarks.forEach((landmark, index) => {
+    formData.append(`Landmarks[${index}].LandmarkId`, landmark.landmarkId);
     formData.append(`Landmarks[${index}].Latitude`, landmark.latitude);
     formData.append(`Landmarks[${index}].Longitude`, landmark.longitude);
     formData.append(`Landmarks[${index}].City`, landmark.city);
@@ -79,6 +80,7 @@ export async function updateTour(tourId, tourData) {
 
   let data = null;
   let error = null;
+  console.log(formData);
 
   try {
     const response = await axiosTour.put(`/update-tour/${tourId}`, formData);

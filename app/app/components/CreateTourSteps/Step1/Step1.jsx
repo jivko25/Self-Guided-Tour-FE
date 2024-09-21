@@ -84,7 +84,7 @@ const Step1 = () => {
       popup({
         type: "ERROR",
         message:
-          "Duration must be a positive number and cannot exceed 3 days (4320 minutes)",
+          "Duration must be a at least 15 minutes and cannot exceed 1 day (1440 minutes)",
       });
       return;
     }
