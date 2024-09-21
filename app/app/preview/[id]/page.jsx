@@ -238,30 +238,32 @@ export default function Preview() {
                           {loc.locationName}
                         </h3>
                         <div className="font-semibold text-[#4285F4] flex flex-col-reverse tablet:flex-row gap-y-3 gap-x-8 items-start tablet:gap-x-11 mb-6 ml-2 tablet:ml-6">
-                          <div>
-                            {loc.audio.length > 0 && (
-                              <>
-                                {loc.audio.map((audioFile, i) => (
-                                  <AudioPlayer
-                                    key={i}
-                                    audioFile={audioFile}
-                                    count={i + 1}
-                                  />
-                                ))}
-                              </>
-                            )}
-                            {loc.video.length > 0 && (
-                              <>
-                                {loc.video.map((videoFile, i) => (
-                                  <VideoPlayer
-                                    key={i}
-                                    videoFile={videoFile}
-                                    count={i + 1}
-                                  />
-                                ))}
-                              </>
-                            )}
-                          </div>
+                          {(loc.audio.length > 0 || loc.video.length > 0) && (
+                            <div>
+                              {loc.audio.length > 0 && (
+                                <>
+                                  {loc.audio.map((audioFile, i) => (
+                                    <AudioPlayer
+                                      key={i}
+                                      audioFile={audioFile}
+                                      count={i + 1}
+                                    />
+                                  ))}
+                                </>
+                              )}
+                              {loc.video.length > 0 && (
+                                <>
+                                  {loc.video.map((videoFile, i) => (
+                                    <VideoPlayer
+                                      key={i}
+                                      videoFile={videoFile}
+                                      count={i + 1}
+                                    />
+                                  ))}
+                                </>
+                              )}
+                            </div>
+                          )}
                           <div
                             className="flex items-center gap-3 cursor-pointer"
                             onClick={handleNavigation.bind(null, loc, false)}
@@ -355,7 +357,7 @@ const AudioPlayer = ({ audioFile, count }) => {
 const VideoPlayer = ({ videoFile, count }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
-  
+
   const handlePlay = () => {
     videoRef.current.play();
     setIsPlaying(true);
