@@ -25,7 +25,6 @@ export default function Preview() {
   const [title, setTitle] = useState("");
   const [locations, setLocations] = useState([]);
   const [tourType, setTourType] = useState("");
-  const [error, setError] = useState({});
   const popup = usePopup();
 
   useEffect(() => {
@@ -82,7 +81,10 @@ export default function Preview() {
           setLocations(newData);
 
         } else {
-          setError(error);
+          popup({
+            type: "ERROR",
+            message: error.message,
+          });
         }
       });
     }
