@@ -29,14 +29,9 @@ export default function Preview() {
   const popup = usePopup();
 
   useEffect(() => {
-    console.log(locations);
-  }, [locations]);
-
-  useEffect(() => {
     if (id == 0) {
       setTitle(formData.step1Data.tour);
       setTourType(formData.step1Data.tourType);
-      console.log(formData);
 
       const newArr = formData.step2Data.map((loc) => {
         return {
@@ -68,12 +63,24 @@ export default function Preview() {
     } else {
       getOne(id).then((result) => {
         const { data, error } = result;
-        console.log(data);
 
         if (data) {
           setTitle(data.title);
-          setLocations(data.landmarks);
           setTourType(data.tourType);
+
+          const newData = data.landmarks.map((loc) => {
+            return {
+              locationName: loc.locationName,
+              description: loc.description,
+              latitude: loc.latitude,
+              longitude: loc.longitude,
+              audio: loc.resources.filter(file => file.resourceType === 'Audio'),
+              video: loc.resources.filter(file => file.resourceType === 'Video'),
+            };
+          });
+
+          setLocations(newData);
+
         } else {
           setError(error);
         }
@@ -304,7 +311,7 @@ export default function Preview() {
                 className="w-full tablet:w-[182px] web:w-[220px] webl:w-[278px] h-[44px] font-semibold"
                 variant="outlined"
                 text="Back"
-                link={id == 0 ? "/create" : `tour/${id}`}
+                link={id == 0 ? "/create" : `/tour/${id}`}
               />
             </div>
           </div>
@@ -318,6 +325,15 @@ export default function Preview() {
 const AudioPlayer = ({ audioFile, count }) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    if (audioFile.hasOwnProperty('resourceUrl')) {
+      setUrl(audioFile.resourceUrl);
+    } else {
+      setUrl(URL.createObjectURL(audioFile));
+    }
+  }, [audioFile, setUrl]);
 
   const handlePlay = () => {
     audioRef.current.play();
@@ -340,13 +356,15 @@ const AudioPlayer = ({ audioFile, count }) => {
         </div>
       )}
       <audio
-        className="w-full"
+        className="w-[200px] phone:w-[280px]"
         ref={audioRef}
         controls
         hidden={!isPlaying}
         onPause={handlePouse}
+        preload="metadata"
+        playsInline
+        src={url}
       >
-        <source src={URL.createObjectURL(audioFile)} />
         Cannot play audio!
       </audio>
     </>
@@ -357,6 +375,15 @@ const AudioPlayer = ({ audioFile, count }) => {
 const VideoPlayer = ({ videoFile, count }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    if (videoFile.hasOwnProperty('resourceUrl')) {
+      setUrl(videoFile.resourceUrl);
+    } else {
+      setUrl(URL.createObjectURL(videoFile));
+    }
+  }, [videoFile, setUrl]);
 
   const handlePlay = () => {
     videoRef.current.play();
@@ -387,8 +414,10 @@ const VideoPlayer = ({ videoFile, count }) => {
         controls
         hidden={!isPlaying}
         width={300}
+        preload="metadata"
+        playsInline
+        src={url}
       >
-        <source src={URL.createObjectURL(videoFile)} />
         Your browser does not support the video tag.
       </video>
     </div>
