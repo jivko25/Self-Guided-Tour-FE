@@ -73,57 +73,43 @@ export async function updateTour(tourId, tourData) {
     formData.append(`Landmarks[${index}].Description`, landmark.description);
     formData.append(`Landmarks[${index}].PlaceId`, landmark.placeId);
 
-  // Append resources array within each landmark
-  landmark.resources.forEach((resource, resIndex) => {
-    // if it's file append it as single File
-    if (resource instanceof File) {
-      formData.append(
-        `Landmarks[${index}].Resources[${resIndex}].ResourceFile`,
-        resource
-      );
-    } else {
-      // else it's resource from server with id,type,url , so append them to the formData
-      formData.append(
-        `Landmarks[${index}].Resources[${resIndex}].ResourceId`,
-        resource.id || ""
-      );
+    // Append resources array within each landmark
+    landmark.resources.forEach((resource, resIndex) => {
+      // if it's file append it as single File
+      if (resource instanceof File) {
+        formData.append(
+          `Landmarks[${index}].Resources[${resIndex}].ResourceFile`,
+          resource
+        );
+      } else {
+        // else it's resource from server with id,type,url , so append them to the formData
+        formData.append(
+          `Landmarks[${index}].Resources[${resIndex}].ResourceId`,
+          resource.id || ""
+        );
 
-      formData.append(
-        `Landmarks[${index}].Resources[${resIndex}].ResourceType`,
-        ""
-      ); // Server returns error if i append resourceType
+        formData.append(
+          `Landmarks[${index}].Resources[${resIndex}].ResourceType`,
+          ""
+        ); // Server returns error if i append resourceType
 
-      formData.append(
-        `Landmarks[${index}].Resources[${resIndex}].ResourceUrl`,
-        resource.url || ""
-      );
-    }
+        formData.append(
+          `Landmarks[${index}].Resources[${resIndex}].ResourceUrl`,
+          resource.url || ""
+        );
+      }
+    });
   });
-});
 
-// //For testing purposes - logging formdata entries
-// for (let [key, value] of formData.entries()) {
-//   console.log(`${key}: ${value}`);
-// }
+  // //For testing purposes - logging formdata entries
+  // for (let [key, value] of formData.entries()) {
+  //   console.log(`${key}: ${value}`);
+  // }
 
-// return { data: null, error: null };
-
-let data = null;
-let error = null;
-
-try {
-  const response = await axiosTour.put(`/update-tour/${tourId}`, formData);
-  data = response.data;
-} catch (err) {
-  error = err.response?.data;
-}
-
-return { data, error };
-}
+  // return { data: null, error: null };
 
   let data = null;
   let error = null;
-  console.log(formData);
 
   try {
     const response = await axiosTour.put(`/update-tour/${tourId}`, formData);

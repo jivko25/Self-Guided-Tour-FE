@@ -219,6 +219,7 @@ export const CreateTourProvider = ({ children }) => {
 
         return {
           landmarkId: landmark.landmarkId,
+          landmarkId: landmark.landmarkId,
           latitude: landmark.latitude,
           longitude: landmark.longitude,
           city: landmark.locationCity,
@@ -231,36 +232,30 @@ export const CreateTourProvider = ({ children }) => {
       }),
     };
 
-    // Проверка за липсващи задължителни полета
-    if (
-      !tourData.title ||
-      !tourData.price ||
-      !tourData.summary ||
-      !tourData.thumbnailImage
-    ) {
+    // Validations
+    if (!tourData.thumbnailImage) {
       popup({
         type: "ERROR",
-        message:
-          "Title, Price, Summary and Thumbnail image are required fields.",
+        message: "Thumbnail image is missing.",
       });
       return;
     }
 
-    // Проверка дали има ресурси за всяка забележителност
-    const hasValidResources = tourData.landmarks.every(
-      (landmark) => landmark.resources.length > 0
-    );
-    if (!hasValidResources) {
+    if (
+      !tourData.summary ||
+      tourData.summary.length < 10 ||
+      tourData.summary.length > 500
+    ) {
       popup({
         type: "ERROR",
-        message: "Each landmark must have at least one resource (file or URL).",
+        message: "Summary must be between 10 and 500 characters long",
       });
       return;
     }
 
     let response;
     if (isEditMode) {
-      const tourId = editModeQuery;
+      const tourId = editModeTourId;
       response = await updateTour(tourId, tourData);
     } else {
       response = await createTour(tourData);
