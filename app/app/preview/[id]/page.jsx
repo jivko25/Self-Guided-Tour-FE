@@ -176,6 +176,10 @@ export default function Preview() {
     return "browser";
   };
 
+  const handleTourTypeChange = (tourType) => {
+    setTourType(tourType);
+  }
+
   return (
     <>
       <header className="hidden w-[90%] web:flex flex-row justify-between items-center mt-16 mb-32">
@@ -224,7 +228,7 @@ export default function Preview() {
               className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] web:w-1/2 web:h-[582px] 
                             web:absolute web:right-[60px] web:top-0"
             >
-              <GoogleMaps directions={{ tourType, locations }} />
+              <GoogleMaps directions={{ tourType, locations }} handleTourTypeChange={handleTourTypeChange}/>
             </section>
             <section className="flex flex-wrap w-[100%] gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
               {locations.length > 0 && (
