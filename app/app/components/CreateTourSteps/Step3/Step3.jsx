@@ -23,6 +23,8 @@ const Step3 = () => {
   const [coordinates, setCoordinates] = useState(null);
   const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
 
+  const [resourcesToDelete, setResourcesToDelete] = useState([]); // Добавено състояние за ресурсите за изтриване
+
   const [inputs, setInputs] = useState({
     locationName: "",
     placeId: "",
@@ -49,7 +51,6 @@ const Step3 = () => {
         setDescriptionCharCount(result.locationDescription?.length || 0);
       }
     } else if (formData.step2Data.length > 0) {
-      // Pre-fill with the first location data if no specific placeId is provided
       const firstLocation = formData.step2Data[0];
       setCoordinates({
         lat: firstLocation.latitude,
@@ -68,16 +69,12 @@ const Step3 = () => {
 
   const handlePrevStep = () => {
     if (placeId) {
-      // If accessed through the edit button go to step 1
       goToStep(1);
     } else {
-      // If accessed through the previous button in step 3
       if (currentLocationIndex > 0) {
-        // Move to the previous location
         const prevIndex = currentLocationIndex - 1;
         const prevData = formData.step2Data[prevIndex];
 
-        // Set the inputs and coordinates for the previous location
         setCoordinates({
           lat: prevData.latitude,
           lng: prevData.longitude,
@@ -90,45 +87,33 @@ const Step3 = () => {
           addFields: prevData.addFields || [],
         });
         setDescriptionCharCount(prevData.locationDescription?.length || 0);
-
-        // Update the current index
         setCurrentLocationIndex(prevIndex);
       } else {
-        // If no previous objects are left, go to step 1
         goToStep(1);
       }
     }
   };
 
   const handleNextStep = () => {
+    const { locationName, ...updatedInputs } = inputs;
+
+    if (!locationName || locationName.length < 3 || locationName.length > 50) {
+      popup({
+        type: "ERROR",
+        message: "Location name must be between 3 and 50 characters long",
+      });
+      return;
+    }
+
+    if (inputs.addFields.length === 0) {
+      popup({
+        type: "ERROR",
+        message: "Please upload at least one file",
+      });
+      return;
+    }
+
     if (placeId) {
-      // If accessed through the edit button
-      const { locationName, ...updatedInputs } = inputs;
-      if (!locationName) {
-        popup({
-          type: "ERROR",
-          message: "Location name is missing!",
-        });
-        return;
-      }
-
-      if (locationName.length < 3 || locationName.length > 50) {
-        popup({
-          type: "ERROR",
-          message: "Location name must be between 3 and 50 characters long!",
-        });
-        return;
-      }
-
-      if (inputs.addFields.length === 0) {
-        popup({
-          type: "ERROR",
-          message: "Please upload at least one file!",
-        });
-        return;
-      }
-
-      // If all validations pass
       popup({
         type: "SUCCESS",
         message: "Good job, required fields are filled!",
@@ -136,44 +121,14 @@ const Step3 = () => {
       updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
       goToStep(1);
     } else {
-      // If accessed through the next button in step 2
-      const { locationName, ...updatedInputs } = inputs;
-
-      if (!locationName) {
-        popup({
-          type: "ERROR",
-          message: "Location name is missing",
-        });
-        return;
-      }
-
-      if (locationName.length < 3 || locationName.length > 50) {
-        popup({
-          type: "ERROR",
-          message: "Location name must be between 3 and 50 characters long",
-        });
-        return;
-      }
-
-      if (inputs.addFields.length === 0) {
-        popup({
-          type: "ERROR",
-          message: "Please upload at least one file",
-        });
-        return;
-      }
-
-      // Save the current data to the current index in formData.step2Data
       updateStep2Data(
         { ...updatedInputs, location: locationName },
         formData.step2Data[currentLocationIndex].placeId
       );
 
       if (currentLocationIndex < formData.step2Data.length - 1) {
-        // Move to the next location after saving the current one
         const nextIndex = currentLocationIndex + 1;
 
-        // Delay the state update until the next render cycle
         setTimeout(() => {
           const nextData = formData.step2Data[nextIndex];
           setCoordinates({
@@ -188,12 +143,9 @@ const Step3 = () => {
             addFields: nextData.addFields || [],
           });
           setDescriptionCharCount(nextData.locationDescription?.length || 0);
-
-          // Update the current index
           setCurrentLocationIndex(nextIndex);
-        }, 0); // Using a timeout to ensure state updates after the render cycle
+        }, 0);
       } else {
-        // If it's the last item, navigate to the next step
         popup({
           type: "SUCCESS",
           message: "Good job, all locations are completed",
@@ -205,23 +157,25 @@ const Step3 = () => {
 
   const handleRemoveMedia = (index) => {
     const updatedAddFields = inputs.addFields.filter((_, i) => i !== index);
-
-    // Update the inputs state without triggering a reversion to previous location's data
     setInputs((prevInputs) => ({
       ...prevInputs,
       addFields: updatedAddFields,
     }));
 
-    // Update the specific location in formData.step2Data
-    const updatedLocationData = {
-      ...formData.step2Data[currentLocationIndex],
-      addFields: updatedAddFields,
-    };
+    const resourceToRemove = inputs.addFields[index];
+    if (!(resourceToRemove instanceof File)) {
+      setResourcesToDelete((prev) => [...prev, resourceToRemove.id]);
+    }
 
-    // Update the formData in the context
-    const updatedStep2Data = formData.step2Data.map((location, i) =>
-      i === currentLocationIndex ? updatedLocationData : location
-    );
+    const updatedStep2Data = formData.step2Data.map((location) => {
+      if (location.placeId === inputs.placeId) {
+        return {
+          ...location,
+          addFields: updatedAddFields,
+        };
+      }
+      return location;
+    });
 
     updateFormData({
       ...formData,
@@ -239,7 +193,6 @@ const Step3 = () => {
 
       fileArray.forEach((file) => {
         if (file.size > 5 * 1024 * 1024) {
-          // 5MB in bytes
           oversizedFiles.push(file);
         } else if (
           ["image", "video", "audio"].some((type) =>
@@ -255,14 +208,14 @@ const Step3 = () => {
       if (oversizedFiles.length > 0) {
         popup({
           type: "ERROR",
-          message: `The File exceed the 5MB limit and is not added `,
+          message: `The file exceeds the 5MB limit and is not added`,
         });
       }
 
       if (invalidFiles.length > 0) {
         popup({
           type: "ERROR",
-          message: `The File  not in a valid format and is not added `,
+          message: `The file is not in a valid format and is not added`,
         });
       }
 
@@ -287,45 +240,16 @@ const Step3 = () => {
     }
   };
 
-  // Function to check if a file is an image
   const isImage = (file) => file.type.toLowerCase().startsWith("image");
-
-  // Function to check if a file is a video
   const isVideo = (file) => file.type.toLowerCase().startsWith("video");
-
   const isFile = (file) => file instanceof File;
 
   return (
     <div className="flex flex-col w-full web:h-[100vh] ">
-      {/* Main container for inputs and maps, files for web */}
-      <div
-        className="flex w-full justify-center items-center h-full
-       web:flex-row web:max-h-[691px] 
-       tablet:flex-col-reverse 
-       phone:flex-col-reverse
-       smallPhone:flex-col-reverse"
-      >
-        {/* DescriptionWeb, LocationInput, FileUpload, MediaPreviewWebPhone */}
-        <div
-          className="flex flex-col items-center w-full web:h-full
-        web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%]
-        tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px]
-        phone:w-full
-        "
-          style={{
-            "::WebkitScrollbar": { display: "none" },
-            MsOverflowStyle: "none",
-            ScrollbarWidth: "none",
-          }}
-        >
+      <div className="flex w-full justify-center items-center h-full web:flex-row web:max-h-[691px] tablet:flex-col-reverse phone:flex-col-reverse smallPhone:flex-col-reverse">
+        <div className="flex flex-col items-center w-full web:h-full web:justify-start web:max-h-[691px] web:overflow-y-auto web:max-w-[50%] tablet:w-full tablet:overflow-y-auto tablet:max-h-[350px] phone:w-full">
           <DescriptionWeb />
-
-          <section
-            className="flex items-center flex-col w-full justify-center 
-          tablet:pt-[10px]
-          phone:pt-[10px]
-          smallPhone:pt-[10px]"
-          >
+          <section className="flex items-center flex-col w-full justify-center tablet:pt-[10px] phone:pt-[10px] smallPhone:pt-[10px]">
             <LocationInput
               inputs={inputs}
               handleChange={handleChange}
@@ -334,13 +258,7 @@ const Step3 = () => {
             <FileUpload handleChange={handleChange} />
           </section>
 
-          <section
-            className="hidden flex-col items-center justify-center w-full web:max-w-[581px] h-full
-          web:flex web:ml-[0px]
-          phone:flex phone:ml-[30px]
-          smallPhone:flex smallPhone:ml-[30px]
-          tablet:hidden"
-          >
+          <section className="hidden flex-col items-center justify-center w-full web:max-w-[581px] h-full web:flex web:ml-[0px] phone:flex phone:ml-[30px] smallPhone:flex smallPhone:ml-[30px] tablet:hidden">
             <MediaPreviewWebPhone
               inputs={inputs}
               isFile={isFile}
@@ -351,36 +269,19 @@ const Step3 = () => {
           </section>
         </div>
 
-        {/* DescriptionTabletPhone, GoogleMaps */}
-        <div
-          className="flex flex-col rounded-[5px] w-full 
-        web:h-full web:max-w-[50%] web:max-h-[691px] 
-        tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[696px] tablet:mb-[20px]
-        phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px]
-        smallPhone:items-center smallPhone:justify-center smallPhone:h-screen smallPhone:max-w-[290px] smallPhone:max-h-[400px]"
-        >
+        <div className="flex flex-col rounded-[5px] w-full web:h-full web:max-w-[50%] web:max-h-[691px] tablet:items-center tablet:justify-center tablet:h-screen tablet:max-w-[584px] tablet:max-h-[696px] tablet:mb-[20px] phone:items-center phone:justify-center phone:h-screen phone:max-w-[361px] phone:max-h-[420px] smallPhone:items-center smallPhone:justify-center smallPhone:h-screen smallPhone:max-w-[290px] smallPhone:max-h-[400px]">
           <DescriptionTabletPhone />
-
           <GoogleMaps coordinates={coordinates} />
         </div>
       </div>
 
-      {/* NavigationButtons, MediaPreviewTablet */}
-      <div
-        className="flex flex-col w-full h-full 
-          web:justify-start web:items-start
-          tablet:justify-center tablet:items-center"
-      >
+      <div className="flex flex-col w-full h-full web:justify-start web:items-start tablet:justify-center tablet:items-center">
         <NavigationButtons
           handlePrevStep={handlePrevStep}
           handleNextStep={handleNextStep}
         />
 
-        <div
-          className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full
-            web:hidden 
-            tablet:flex"
-        >
+        <div className="hidden flex-col items-center justify-center w-full max-w-[581px] h-full web:hidden tablet:flex">
           <MediaPreviewTablet
             inputs={inputs}
             isFile={isFile}

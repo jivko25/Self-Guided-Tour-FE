@@ -9,6 +9,7 @@ import {
 } from "../utils/wizardStepValidations.js";
 import { usePopup } from "./popupContext.jsx";
 import { useRouter, useSearchParams } from "next/navigation.js";
+
 const LOCAL_STORAGE_KEY = "savedTourFormData";
 const EDIT_TOUR_KEY = "tourToEdit";
 
@@ -69,41 +70,43 @@ export const CreateTourProvider = ({ children }) => {
     const storedTour = sessionStorage.getItem(EDIT_TOUR_KEY);
     if (storedTour) {
       const tourToEdit = JSON.parse(storedTour);
-      // Set form data to the tourToEdit object if found
-      console.log(tourToEdit);
-      setFormData({
-        step1Data: {
-          tour: tourToEdit.title || "", //
-          destination: tourToEdit.destination || "", //
-          duration: tourToEdit.estimatedDuration || "",
-          tourType: tourToEdit.tourType || "",
-          price: tourToEdit.price || "",
-        },
-        step2Data:
-          tourToEdit.landmarks.map((landmark) => ({
-            landmarkId: landmark.landmarkId || null,
-            latitude: landmark.latitude || null,
-            longitude: landmark.longitude || null,
-            location: landmark.locationName || "",
-            locationCity: landmark.city || "",
-            locationDescription: landmark.description || "",
-            stopOrder: landmark.stopOrder || 0,
-            placeId: landmark.placeId || "",
-            addFields:
-              landmark.resources.map((resource) => ({
-                type: resource.resourceType || "",
-                url: resource.resourceUrl || "",
-                id: resource.resourceId || "",
-              })) || [],
-          })) || [],
-        step3Data: "",
-        step4Data: {
-          summary: tourToEdit.summary || "",
-          thumbnailImage: tourToEdit.thumbnailImageUrl || null,
-        },
-      });
-      setIsEditMode(true);
-      sessionStorage.removeItem(EDIT_TOUR_KEY);
+      if (tourToEdit) {
+        // Задаване на formData с данните от tourToEdit, ако е намерен
+        console.log(tourToEdit);
+        setFormData({
+          step1Data: {
+            tour: tourToEdit.title || "",
+            destination: tourToEdit.destination || "",
+            duration: tourToEdit.estimatedDuration || "",
+            tourType: tourToEdit.tourType || "",
+            price: tourToEdit.price || "",
+          },
+          step2Data:
+            tourToEdit.landmarks?.map((landmark) => ({
+              landmarkId: landmark.landmarkId || null,
+              latitude: landmark.latitude || null,
+              longitude: landmark.longitude || null,
+              location: landmark.locationName || "",
+              locationCity: landmark.city || "",
+              locationDescription: landmark.description || "",
+              stopOrder: landmark.stopOrder || 0,
+              placeId: landmark.placeId || "",
+              addFields:
+                landmark.resources?.map((resource) => ({
+                  type: resource.resourceType || "",
+                  url: resource.resourceUrl || "",
+                  id: resource.resourceId || "",
+                })) || [],
+            })) || [],
+          step3Data: "",
+          step4Data: {
+            summary: tourToEdit.summary || "",
+            thumbnailImage: tourToEdit.thumbnailImageUrl || null,
+          },
+        });
+        setIsEditMode(true);
+        sessionStorage.removeItem(EDIT_TOUR_KEY);
+      }
     }
   }, []);
 

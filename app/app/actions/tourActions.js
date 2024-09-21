@@ -70,17 +70,40 @@ export async function updateTour(tourId, tourData) {
     formData.append(`Landmarks[${index}].LocationName`, landmark.locationName);
     formData.append(`Landmarks[${index}].StopOrder`, landmark.stopOrder);
     formData.append(`Landmarks[${index}].Description`, landmark.description);
-    formData.append(`Landmarks[${index}].placeId`, landmark.placeId);
+    formData.append(`Landmarks[${index}].PlaceId`, landmark.placeId);
 
-    // Append resources array within each landmark
-    landmark.resources.forEach((file) => {
-      formData.append(`Landmarks[${index}].Resources`, file);
+    // Добавяме ресурсите
+    landmark.resources.forEach((resource, resourceIndex) => {
+      if (resource instanceof File) {
+        // Нов файл за качване
+        formData.append(`Landmarks[${index}].Resources`, resource);
+      } else {
+        // Съществуващ ресурс
+        formData.append(
+          `Landmarks[${index}].Resources[${resourceIndex}].ResourceId`,
+          resource.id
+        );
+        formData.append(
+          `Landmarks[${index}].Resources[${resourceIndex}].ResourceUrl`,
+          resource.url
+        );
+        formData.append(
+          `Landmarks[${index}].Resources[${resourceIndex}].ResourceType`,
+          resource.type
+        );
+      }
     });
   });
 
+  // Добавяме ресурсите за изтриване
+  if (tourData.resourcesToDelete && tourData.resourcesToDelete.length > 0) {
+    tourData.resourcesToDelete.forEach((resourceId) => {
+      formData.append("ResourcesToDelete", resourceId);
+    });
+  }
+
   let data = null;
   let error = null;
-  console.log(formData);
 
   try {
     const response = await axiosTour.put(`/update-tour/${tourId}`, formData);
