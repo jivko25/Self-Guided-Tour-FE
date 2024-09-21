@@ -64,7 +64,7 @@ export default function GoogleMaps({
   }, [directions, setTourType]);
 
   useEffect(() => {
-    if (handleTourType) {
+    if (handleTourTypeChange) {
       handleTourTypeChange(tourType);
     }
   }, [tourType]);
