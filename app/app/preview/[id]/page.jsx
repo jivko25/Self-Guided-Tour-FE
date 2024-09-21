@@ -14,9 +14,9 @@ import ArrowRedo from "../../public/svg/arrow-redo.svg";
 import { usePopup } from "@/app/context/popupContext";
 
 const IOSTypes = {
-  Driving: "d",
-  Walking: "w",
-  Bycicling: "w",
+  driving: "d",
+  walking: "w",
+  bicycling: "w",
 };
 
 export default function Preview() {
@@ -60,26 +60,59 @@ export default function Preview() {
     }
   }, [id, formData, setLocations]);
 
-  const handleNavigation = (location, multiple = false) => {
+  const handleNavigation = (locationData, multiple = false) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
-          const lat = location.latitude;
-          const lng = location.longitude;
           const device = getUserDeviceType();
+          const type = tourType.toLowerCase();
           let url = "";
 
-          if (device === "android") {
-            // Open Google Maps app if available on Android
-            url = `geo:${userLat},${userLng}?q=${lat},${lng}&travelmode=${tourType}`;
-          } else if (device === "ios") {
-            // Open in Apple Maps on iOS devices
-            url = `http://maps.apple.com/?saddr=${userLat},${userLng}&daddr=${lat},${lng}&dirflg=${IOSTypes[tourType]}`;
+          if (!multiple) {
+            const lat = locationData.latitude;
+            const lng = locationData.longitude;
+
+            if (device === "android") {
+              // Open Google Maps app if available on Android
+              url = `geo:${userLat},${userLng}?q=${lat},${lng}&travelmode=${type}`;
+            } else if (device === "ios") {
+              // Open in Apple Maps on iOS devices
+              url = `http://maps.apple.com/?saddr=${userLat},${userLng}&daddr=${lat},${lng}&dirflg=${IOSTypes[type]}`;
+            } else {
+              // Open Google Maps in the browser on desktop or other devices
+              url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=${type}`;
+            }
           } else {
-            // Open Google Maps in the browser on desktop or other devices
-            url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=${tourType}`;
+            const destination = locationData[locationData.length - 1];
+            const rest = locationData.slice(0, locationData.length - 1);
+
+            if (device === "android") {
+              // Open Google Maps app if available on Android
+              const waypoints = rest.map((loc) => {
+                return `&daddr=${loc.latitude},${loc.longitude}`;
+              });
+
+              url = `geo:${userLat},${userLng}?q=${lat},${lng}(%22Start%22)${waypoints}&travelmode=${type}`;
+            } else if (device === "ios") {
+              // Open in Apple Maps on iOS devices
+              const waypoints = rest.map((loc) => {
+                return `&daddr${loc.latitude},${loc.longitude}`;
+              });
+              url = `http://maps.apple.com/?saddr=${userLat},${userLng}${waypoints}&daddr=${destination.latitude},${destination.longitude}&dirflg=${IOSTypes[type]}`;
+            } else {
+              const waypoints = rest.map((loc) => {
+                return `${loc.latitude},${loc.longitude}`;
+              });
+
+              // Open Google Maps in the browser on desktop or other devices
+              url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${
+                destination.latitude
+              },${destination.longitude}&waypoints=${waypoints.join(
+                "|"
+              )}&travelmode=${type}`;
+            }
           }
 
           window.open(url, "_blank");
@@ -163,7 +196,7 @@ export default function Preview() {
               className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] web:w-1/2 web:h-[582px] 
                             web:absolute web:right-[60px] web:top-0"
             >
-              <GoogleMaps />
+              <GoogleMaps directions={{ tourType, locations }} />
             </section>
             <section className="flex flex-wrap w-[100%] gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
               {locations.length > 0 && (
@@ -195,7 +228,7 @@ export default function Preview() {
                           </div>
                           <div
                             className="flex items-center gap-3 cursor-pointer"
-                            onClick={handleNavigation.bind(null, loc)}
+                            onClick={handleNavigation.bind(null, loc, false)}
                           >
                             <Image
                               src={ArrowRedo}
@@ -227,11 +260,13 @@ export default function Preview() {
                 className="w-full tablet:w-[182px] web:w-[220px] webl:w-[278px] h-[44px] font-semibold"
                 variant="filled"
                 text="Play Tour"
+                onClick={handleNavigation.bind(null, locations, true)}
               />
               <Btn
                 className="w-full tablet:w-[182px] web:w-[220px] webl:w-[278px] h-[44px] font-semibold"
                 variant="outlined"
                 text="Back"
+                link={id == 0 ? "/create" : `tour/${id}`}
               />
             </div>
           </div>
