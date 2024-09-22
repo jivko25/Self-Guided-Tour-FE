@@ -39,7 +39,7 @@ function TourDetails() {
     router.push(`/create?edit=${tour.tourId}`);
   };
 
-  console.log(tour);
+  // console.log(tour);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
