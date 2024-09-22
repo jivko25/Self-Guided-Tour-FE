@@ -263,9 +263,9 @@ export default function Preview() {
                               {loc.audio.length > 0 && (
                                 <>
                                   {loc.audio.map((audioFile, i) => (
-                                    <AudioPlayer
+                                    <MediaPlayer
                                       key={i}
-                                      audioFile={audioFile}
+                                      file={audioFile}
                                       count={i + 1}
                                     />
                                   ))}
@@ -274,9 +274,10 @@ export default function Preview() {
                               {loc.video.length > 0 && (
                                 <>
                                   {loc.video.map((videoFile, i) => (
-                                    <VideoPlayer
+                                    <MediaPlayer
                                       key={i}
-                                      videoFile={videoFile}
+                                      isVideo={true}
+                                      file={videoFile}
                                       count={i + 1}
                                     />
                                   ))}
@@ -334,119 +335,100 @@ export default function Preview() {
   );
 }
 
-// Audio player
-const AudioPlayer = ({ audioFile, count }) => {
-  const audioRef = useRef(null);
+// Audio and video player
+const MediaPlayer = ({ isVideo = false, file, count }) => {
+  const mediaRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [url, setUrl] = useState("");
 
   useEffect(() => {
-    if (audioFile.hasOwnProperty("resourceUrl")) {
-      setUrl(audioFile.resourceUrl);
+    if (file.hasOwnProperty("resourceUrl")) {
+      setUrl(file.resourceUrl);
     } else {
-      setUrl(URL.createObjectURL(audioFile));
+      setUrl(URL.createObjectURL(file));
     }
-  }, [audioFile, setUrl]);
+  }, [file, setUrl]);
 
   const handlePlay = () => {
-    audioRef.current.play();
-    setIsPlaying(true);
-  };
-
-  const handlePouse = () => {
-    audioRef.current.pause();
-    setIsPlaying(false);
-  };
-  return (
-    <>
-      {!isPlaying && (
-        <div
-          className="flex items-center gap-x-3 cursor-pointer"
-          onClick={handlePlay}
-        >
-          <Image src={Play} width={16} height={18} alt="Play audio" />
-          <span>Play Audio {count}</span>
-        </div>
-      )}
-      {url && (<audio
-        className="w-[200px] phone:w-[280px]"
-        ref={audioRef}
-        controls
-        hidden={!isPlaying}
-        onPause={handlePouse}
-        preload="metadata"
-        playsInline
-        src={url}
-      >
-        Cannot play audio!
-      </audio>)}
-    </>
-  );
-};
-
-// Video player
-const VideoPlayer = ({ videoFile, count }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef(null);
-  const [url, setUrl] = useState("");
-
-  useEffect(() => {
-    if (videoFile.hasOwnProperty("resourceUrl")) {
-      setUrl(videoFile.resourceUrl);
-    } else {
-      setUrl(URL.createObjectURL(videoFile));
-    }
-  }, [videoFile, setUrl]);
-
-  const handlePlay = () => {
-    videoRef.current.play();
+    mediaRef.current.play();
     setIsPlaying(true);
   };
 
   const handlePause = () => {
-    videoRef.current.pause();
+    mediaRef.current.pause();
     setIsPlaying(false);
   };
-
   return (
-    <div>
-      <div
-        className="flex items-center gap-x-3 cursor-pointer"
-        onClick={handlePlay}
-      >
-        <Image src={Play} width={16} height={18} alt="Play audio" />
-        <span>Play Video {count}</span>
-      </div>
-
-      <div
-        className={`fixed ${
-          isPlaying ? "flex flex-col" : "hidden"
-        } items-center justify-center top-0 bottom-0 left-0 right-0 bg-[#000000]/80 z-50`}
-      >
-        <div className="flex flex-col justify-center items-center rounded-3xl px-10 mx-2 text-[#081120] bg-[#FAFAFA]">
-          <div className="flex justify-end w-full mb-2 mt-5 border-b-2">
-            <Image
-              className="w-6 h-6 tablet:w-10 tablet:h-10 border rounded-full text-center mb-3"
-              onClick={handlePause}
-              width={14}
-              height={14}
-              src={X}
-              alt="Close video"
-            />
-          </div>
-          {url && (<video
-            className="w-full opacity-100 mx-10 mb-10"
-            ref={videoRef}
-            onPlay={handlePlay}
-            controls
-            preload="metadata"
-            playsInline
-            src={url}
+    <>
+      {!isVideo ? (
+        <>
+          {!isPlaying && (
+            <div
+              className="flex items-center gap-x-3 cursor-pointer"
+              onClick={handlePlay}
+            >
+              <Image src={Play} width={16} height={18} alt="Play audio" />
+              <span>Play Audio {count}</span>
+            </div>
+          )}
+          {url && (
+            <audio
+              className="w-[200px] phone:w-[280px]"
+              ref={mediaRef}
+              controls
+              hidden={!isPlaying}
+              onPause={handlePause}
+              preload="metadata"
+              playsInline
+              src={url}
+            >
+              Cannot play audio!
+            </audio>
+          )}
+        </>
+      ) : (
+        <div>
+          <div
+            className="flex items-center gap-x-3 cursor-pointer"
+            onClick={handlePlay}
           >
-            Your browser does not support the video tag.
-          </video>)}
+            <Image src={Play} width={16} height={18} alt="Play audio" />
+            <span>Play Video {count}</span>
+          </div>
+
+          <div
+            className={`fixed ${
+              isPlaying ? "flex flex-col" : "hidden"
+            } items-center justify-center top-0 bottom-0 left-0 right-0 bg-[#000000]/80 z-50`}
+          >
+            <div className="flex flex-col justify-center items-center rounded-3xl px-10 mx-2 text-[#081120] bg-[#FAFAFA]">
+              <div className="flex justify-end w-full mb-2 mt-5 border-b-2">
+                <Image
+                  className="w-6 h-6 tablet:w-10 tablet:h-10 border rounded-full text-center mb-3"
+                  onClick={handlePause}
+                  width={14}
+                  height={14}
+                  src={X}
+                  alt="Close video"
+                />
+              </div>
+              {url && (
+                <video
+                  className="w-full opacity-100 mx-10 mb-10"
+                  ref={mediaRef}
+                  onPlay={handlePlay}
+                  controls
+                  preload="metadata"
+                  playsInline
+                  src={url}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
