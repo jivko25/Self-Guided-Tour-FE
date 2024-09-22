@@ -168,15 +168,17 @@ export default function Preview() {
   };
 
   const getUserDeviceType = () => {
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (navigator.userAgent) {
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    if (isAndroid) {
-      return "android";
-    }
+      if (isAndroid) {
+        return "android";
+      }
 
-    if (isIOS) {
-      return "ios";
+      if (isIOS) {
+        return "ios";
+      }
     }
 
     return "browser";
