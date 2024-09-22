@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { getOne } from "@/app/actions/tourActions";
 import Play from "../../public/svg/play.svg";
+import X from "../../public/svg/X.svg";
 import ArrowRedo from "../../public/svg/arrow-redo.svg";
 import { usePopup } from "@/app/context/popupContext";
 
@@ -73,13 +74,16 @@ export default function Preview() {
               description: loc.description,
               latitude: loc.latitude,
               longitude: loc.longitude,
-              audio: loc.resources.filter(file => file.resourceType === 'Audio'),
-              video: loc.resources.filter(file => file.resourceType === 'Video'),
+              audio: loc.resources.filter(
+                (file) => file.resourceType === "Audio"
+              ),
+              video: loc.resources.filter(
+                (file) => file.resourceType === "Video"
+              ),
             };
           });
 
           setLocations(newData);
-
         } else {
           popup({
             type: "ERROR",
@@ -180,7 +184,7 @@ export default function Preview() {
 
   const handleTourTypeChange = (tourType) => {
     setTourType(tourType);
-  }
+  };
 
   return (
     <>
@@ -230,7 +234,10 @@ export default function Preview() {
               className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] web:w-1/2 web:h-[582px] 
                             web:absolute web:right-[60px] web:top-0"
             >
-              <GoogleMaps directions={{ tourType, locations }} handleTourTypeChange={handleTourTypeChange}/>
+              <GoogleMaps
+                directions={{ tourType, locations }}
+                handleTourTypeChange={handleTourTypeChange}
+              />
             </section>
             <section className="flex flex-wrap w-[100%] gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
               {locations.length > 0 && (
@@ -331,10 +338,10 @@ export default function Preview() {
 const AudioPlayer = ({ audioFile, count }) => {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
-    if (audioFile.hasOwnProperty('resourceUrl')) {
+    if (audioFile.hasOwnProperty("resourceUrl")) {
       setUrl(audioFile.resourceUrl);
     } else {
       setUrl(URL.createObjectURL(audioFile));
@@ -381,10 +388,10 @@ const AudioPlayer = ({ audioFile, count }) => {
 const VideoPlayer = ({ videoFile, count }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
-    if (videoFile.hasOwnProperty('resourceUrl')) {
+    if (videoFile.hasOwnProperty("resourceUrl")) {
       setUrl(videoFile.resourceUrl);
     } else {
       setUrl(URL.createObjectURL(videoFile));
@@ -403,29 +410,43 @@ const VideoPlayer = ({ videoFile, count }) => {
 
   return (
     <div>
-      {!isPlaying && (
-        <div
-          className="flex items-center gap-x-3 cursor-pointer"
-          onClick={handlePlay}
-        >
-          <Image src={Play} width={16} height={18} alt="Play audio" />
-          <span>Play Video {count}</span>
-        </div>
-      )}
-
-      <video
-        ref={videoRef}
-        onPlay={handlePlay}
-        onPause={handlePause}
-        controls
-        hidden={!isPlaying}
-        width={300}
-        preload="metadata"
-        playsInline
-        src={url}
+      <div
+        className="flex items-center gap-x-3 cursor-pointer"
+        onClick={handlePlay}
       >
-        Your browser does not support the video tag.
-      </video>
+        <Image src={Play} width={16} height={18} alt="Play audio" />
+        <span>Play Video {count}</span>
+      </div>
+
+      <div
+        className={`fixed ${
+          isPlaying ? "flex flex-col" : "hidden"
+        } items-center justify-center top-0 bottom-0 left-0 right-0 bg-[#000000]/80 z-50`}
+      >
+        <div className="flex flex-col justify-center items-center rounded-3xl px-10 mx-2 text-[#081120] bg-[#FAFAFA]">
+          <div className="flex justify-end w-full mb-2 mt-5 border-b-2">
+            <Image
+              className="w-6 h-6 tablet:w-10 tablet:h-10 border rounded-full text-center mb-3"
+              onClick={handlePause}
+              width={14}
+              height={14}
+              src={X}
+              alt="Close video"
+            />
+          </div>
+          <video
+            className="w-full opacity-100 mx-10 mb-10"
+            ref={videoRef}
+            onPlay={handlePlay}
+            controls
+            preload="metadata"
+            playsInline
+            src={url}
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
     </div>
   );
 };
