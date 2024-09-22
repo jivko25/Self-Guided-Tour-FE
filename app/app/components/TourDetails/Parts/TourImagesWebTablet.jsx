@@ -22,7 +22,9 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
         landmarks
           .flatMap((landmark) =>
             landmark.resources
-              ? landmark.resources.map((resource) => resource)
+              ? landmark.resources.filter(
+                  (resource) => resource.resourceType === "Image"
+                )
               : []
           )
           .slice(0, 4)
@@ -40,7 +42,10 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
               {index === 1 && landmarks.length > 2 && (
                 <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
                   <button className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2">
-                    <ImageOutline /> <span className="text-[#081120] text-base font-semibold font-['Inter']">View All Images</span>
+                    <ImageOutline />
+                    <span className="text-[#081120] text-base font-semibold font-['Inter']">
+                      View All Images
+                    </span>
                   </button>
                 </div>
               )}
