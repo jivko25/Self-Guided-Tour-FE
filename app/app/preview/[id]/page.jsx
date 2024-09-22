@@ -4,15 +4,15 @@ import Btn from "@/app/components/Buttons/Btn";
 import GoogleMaps from "@/app/components/GoogleMaps/GoogleMaps";
 import Link from "next/link";
 import Image from "next/image";
-import Pencil from "../../public/svg/pencil.svg";
 import { useCreateTour } from "@/app/context/createTourContext";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { getOne } from "@/app/actions/tourActions";
+import { usePopup } from "@/app/context/popupContext";
+import ArrowRedo from "../../public/svg/arrow-redo.svg";
+import Pencil from "../../public/svg/pencil.svg";
 import Play from "../../public/svg/play.svg";
 import X from "../../public/svg/X.svg";
-import ArrowRedo from "../../public/svg/arrow-redo.svg";
-import { usePopup } from "@/app/context/popupContext";
 
 const IOSTypes = {
   driving: "d",
