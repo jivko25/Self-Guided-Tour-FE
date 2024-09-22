@@ -26,7 +26,7 @@ export default async function RootLayout({ children }) {
           <PopupProvider>
             <CreateTourProvider>
               <Header />
-              <Suspense>{children}</Suspense>
+              {children}
               <Footer />
             </CreateTourProvider>
           </PopupProvider>
