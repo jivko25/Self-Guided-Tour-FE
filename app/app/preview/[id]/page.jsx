@@ -100,18 +100,19 @@ export default function Preview() {
         (position) => {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
-          const device = getUserDeviceType();
           const type = tourType.toLowerCase();
+          const isAndroid = /Android/i.test(navigator.userAgent);
+          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
           let url = "";
 
           if (!multiple) {
             const lat = locationData.latitude;
             const lng = locationData.longitude;
 
-            if (device === "android") {
+            if (isAndroid) {
               // Open Google Maps app if available on Android
               url = `geo:${userLat},${userLng}?q=${lat},${lng}&travelmode=${type}`;
-            } else if (device === "ios") {
+            } else if (isIOS) {
               // Open in Apple Maps on iOS devices
               url = `http://maps.apple.com/?saddr=${userLat},${userLng}&daddr=${lat},${lng}&dirflg=${IOSTypes[type]}`;
             } else {
@@ -122,14 +123,14 @@ export default function Preview() {
             const destination = locationData[locationData.length - 1];
             const rest = locationData.slice(0, locationData.length - 1);
 
-            if (device === "android") {
+            if (isAndroid) {
               // Open Google Maps app if available on Android
               const waypoints = rest.map((loc) => {
                 return `&daddr=${loc.latitude},${loc.longitude}`;
               });
 
               url = `geo:${userLat},${userLng}?q=${lat},${lng}(%22Start%22)${waypoints}&travelmode=${type}`;
-            } else if (device === "ios") {
+            } else if (isIOS) {
               // Open in Apple Maps on iOS devices
               const waypoints = rest.map((loc) => {
                 return `&daddr${loc.latitude},${loc.longitude}`;
@@ -165,23 +166,6 @@ export default function Preview() {
       });
       setError();
     }
-  };
-
-  const getUserDeviceType = () => {
-    if (navigator.userAgent) {
-      const isAndroid = /Android/i.test(navigator.userAgent);
-      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-      if (isAndroid) {
-        return "android";
-      }
-
-      if (isIOS) {
-        return "ios";
-      }
-    }
-
-    return "browser";
   };
 
   const handleTourTypeChange = (tourType) => {
