@@ -368,7 +368,7 @@ const AudioPlayer = ({ audioFile, count }) => {
           <span>Play Audio {count}</span>
         </div>
       )}
-      <audio
+      {url && (<audio
         className="w-[200px] phone:w-[280px]"
         ref={audioRef}
         controls
@@ -379,7 +379,7 @@ const AudioPlayer = ({ audioFile, count }) => {
         src={url}
       >
         Cannot play audio!
-      </audio>
+      </audio>)}
     </>
   );
 };
@@ -434,7 +434,7 @@ const VideoPlayer = ({ videoFile, count }) => {
               alt="Close video"
             />
           </div>
-          <video
+          {url && (<video
             className="w-full opacity-100 mx-10 mb-10"
             ref={videoRef}
             onPlay={handlePlay}
@@ -444,7 +444,7 @@ const VideoPlayer = ({ videoFile, count }) => {
             src={url}
           >
             Your browser does not support the video tag.
-          </video>
+          </video>)}
         </div>
       </div>
     </div>
