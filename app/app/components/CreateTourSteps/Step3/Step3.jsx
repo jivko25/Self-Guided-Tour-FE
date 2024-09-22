@@ -1,3 +1,4 @@
+//createTourContext.jsx
 "use client";
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
@@ -239,7 +240,6 @@ const Step3 = () => {
 
       fileArray.forEach((file) => {
         if (file.size > 5 * 1024 * 1024) {
-          // 5MB in bytes
           oversizedFiles.push(file);
         } else if (
           ["image", "video", "audio"].some((type) =>
@@ -266,16 +266,17 @@ const Step3 = () => {
         });
       }
 
+      const resourceObjects = validFiles.map((file) => ({
+        id: "",
+        resourceFile: file,
+        resourceUrl: "",
+        resourceType: file.type,
+      }));
+
       setInputs((prevInputs) => ({
         ...prevInputs,
-        addFields: [...prevInputs.addFields, ...validFiles],
+        addFields: [...prevInputs.addFields, ...resourceObjects],
       }));
-      updateFormData({
-        step3Data: {
-          ...inputs,
-          addFields: [...inputs.addFields, ...validFiles],
-        },
-      });
     } else {
       setInputs((prevInputs) => ({
         ...prevInputs,
@@ -288,10 +289,10 @@ const Step3 = () => {
   };
 
   // Function to check if a file is an image
-  const isImage = (file) => file.type.toLowerCase().startsWith("image");
+  const isImage = (file) => file && file.type && file.type.toLowerCase().startsWith("image");
 
   // Function to check if a file is a video
-  const isVideo = (file) => file.type.toLowerCase().startsWith("video");
+  const isVideo = (file) => file && file.type && file.type.toLowerCase().startsWith("video");
 
   const isFile = (file) => file instanceof File;
 

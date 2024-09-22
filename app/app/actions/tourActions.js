@@ -1,3 +1,4 @@
+//tourActions.js
 import { axiosTour } from "@/api/axios.js";
 
 /**
@@ -70,11 +71,26 @@ export async function updateTour(tourId, tourData) {
     formData.append(`Landmarks[${index}].LocationName`, landmark.locationName);
     formData.append(`Landmarks[${index}].StopOrder`, landmark.stopOrder);
     formData.append(`Landmarks[${index}].Description`, landmark.description);
-    formData.append(`Landmarks[${index}].placeId`, landmark.placeId);
+    formData.append(`Landmarks[${index}].PlaceId`, landmark.placeId);
 
-    // Append resources array within each landmark
-    landmark.resources.forEach((file) => {
-      formData.append(`Landmarks[${index}].Resources`, file);
+    // Добавете ресурсите
+    landmark.resources.forEach((resource, resIndex) => {
+      formData.append(
+        `Landmarks[${index}].Resources[${resIndex}].ResourceId`,
+        resource.resourceId || ""
+      );
+
+      if (resource.resourceFile) {
+        formData.append(
+          `Landmarks[${index}].Resources[${resIndex}].ResourceFile`,
+          resource.resourceFile
+        );
+      }
+
+      formData.append(
+        `Landmarks[${index}].Resources[${resIndex}].ResourceUrl`,
+        resource.resourceUrl || ""
+      );
     });
   });
 

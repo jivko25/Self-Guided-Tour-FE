@@ -1,3 +1,4 @@
+// createTourContext.jsx
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour, updateTour } from "../actions/tourActions.js";
@@ -64,7 +65,7 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, [localStorageData]);
 
-  // Check for the tourToEdit object in localStorage
+  // Check for the tourToEdit object in sessionStorage
   useEffect(() => {
     const storedTour = sessionStorage.getItem(EDIT_TOUR_KEY);
     if (storedTour) {
@@ -73,8 +74,8 @@ export const CreateTourProvider = ({ children }) => {
       console.log(tourToEdit);
       setFormData({
         step1Data: {
-          tour: tourToEdit.title || "", //
-          destination: tourToEdit.destination || "", //
+          tour: tourToEdit.title || "",
+          destination: tourToEdit.destination || "",
           duration: tourToEdit.estimatedDuration || "",
           tourType: tourToEdit.tourType || "",
           price: tourToEdit.price || "",
@@ -91,9 +92,10 @@ export const CreateTourProvider = ({ children }) => {
             placeId: landmark.placeId || "",
             addFields:
               landmark.resources.map((resource) => ({
-                type: resource.resourceType || "",
-                url: resource.resourceUrl || "",
                 id: resource.resourceId || "",
+                resourceFile: null,
+                resourceUrl: resource.resourceUrl || "",
+                resourceType: resource.resourceType || "",
               })) || [],
           })) || [],
         step3Data: "",
@@ -207,10 +209,13 @@ export const CreateTourProvider = ({ children }) => {
       thumbnailImage: formData.step4Data.thumbnailImage,
       estimatedDuration: formData.step1Data.duration,
       landmarks: formData.step2Data.map((landmark) => {
-        const resources = [];
-        landmark.addFields.forEach((data) => {
-          resources.push(data);
-        });
+        const resources = landmark.addFields.map((data) => ({
+          resourceId: data.id || "",
+          resourceFile:
+            data.resourceFile instanceof File ? data.resourceFile : null,
+          resourceUrl: data.resourceUrl || "",
+          resourceType: data.resourceType || "",
+        }));
 
         return {
           landmarkId: landmark.landmarkId,
@@ -226,12 +231,30 @@ export const CreateTourProvider = ({ children }) => {
       }),
     };
 
-    if (!tourData.summary || !tourData.thumbnailImage) {
+    // Проверка за липсващи задължителни полета
+    if (
+      !tourData.title ||
+      !tourData.price ||
+      !tourData.summary ||
+      !tourData.thumbnailImage
+    ) {
       popup({
         type: "ERROR",
-        message: "Missing thumbnail image or summary",
+        message:
+          "Title, Price, Summary and Thumbnail image are required fields.",
       });
+      return;
+    }
 
+    // Проверка дали има ресурси за всяка забележителност
+    const hasValidResources = tourData.landmarks.every(
+      (landmark) => landmark.resources.length > 0
+    );
+    if (!hasValidResources) {
+      popup({
+        type: "ERROR",
+        message: "Each landmark must have at least one resource (file or URL).",
+      });
       return;
     }
 
@@ -244,10 +267,7 @@ export const CreateTourProvider = ({ children }) => {
     }
 
     const { error } = response;
-    console.log(response.data);
-
     if (error) {
-      // Iterate over the errors and create a popup for each one
       Object.entries(error.errors).forEach(([field, messages]) => {
         popup({
           type: "ERROR",
