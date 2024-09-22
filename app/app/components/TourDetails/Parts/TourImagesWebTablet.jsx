@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageOutline from "../Svgs/ImageOutline";
+import Slider from "react-slick";
 
 function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
+  const [openSlider, setOpenSlider] = useState(false);
   return (
     <div
       className="hidden phone:hidden smallPhone:hidden overflow-hidden
@@ -41,7 +43,10 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
               />
               {index === 1 && landmarks.length > 2 && (
                 <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
-                  <button className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2">
+                  <button
+                    className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2"
+                    onClick={() => setOpenSlider((prev) => !prev)}
+                  >
                     <ImageOutline />
                     <span className="text-[#081120] text-base font-semibold font-['Inter']">
                       View All Images
@@ -51,6 +56,8 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
               )}
             </div>
           ))}
+
+
     </div>
   );
 }
