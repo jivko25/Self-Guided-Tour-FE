@@ -13,19 +13,21 @@ import { AuthProvider } from "./context/authContext";
 import Footer from "./components/Footer/Footer";
 import { PopupProvider } from "./context/popupContext";
 import { CreateTourProvider } from "./context/createTourContext";
+import { Suspense } from "react";
 
 export default async function RootLayout({ children }) {
-
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-neutral-50 flex flex-col items-center justify-between min-h-screen`}>
-      <div id="createModal"/>
+      <body
+        className={`${inter.className} bg-neutral-50 flex flex-col items-center justify-between min-h-screen`}
+      >
+        <div id="createModal" />
         <AuthProvider>
           <PopupProvider>
             <CreateTourProvider>
               <Header />
-              {children}
-              <Footer/>
+              <Suspense>{children}</Suspense>
+              <Footer />
             </CreateTourProvider>
           </PopupProvider>
         </AuthProvider>
