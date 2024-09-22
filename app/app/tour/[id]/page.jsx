@@ -4,7 +4,6 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext.jsx";
 import { axiosTour } from "../../../api/axios";
-import "./tour.scss";
 import TourTitle from "@/app/components/TourDetails/Parts/TourTitle";
 import TourInfo from "@/app/components/TourDetails/Parts/TourInfo";
 import TourPurchase from "@/app/components/TourDetails/Parts/TourPurchase";
@@ -120,11 +119,4 @@ function TourDetails() {
   );
 }
 export default TourDetails;
-// function TourDetailsWrapper() {
-//   return (
-//     <Suspense fallback={<p>Loading Tour Details...</p>}>
-//       <TourDetails />
-//     </Suspense>
-//   );
-// }
-// export default TourDetailsWrapper;
+
