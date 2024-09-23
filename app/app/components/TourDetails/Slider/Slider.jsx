@@ -59,8 +59,8 @@ function Slider({title, setOpenSlider, selectedImage, setSelectedImage, landmark
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center overflow-y-auto ">
-      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative py-[100px]">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center overflow-y-auto hideScroll">
+      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative py-[100px] hideScroll">
         <CloseIcon onClick={() => setOpenSlider(false)} />
         <div
           className="flex w-full web:h-full tablet:h-full  justify-center
