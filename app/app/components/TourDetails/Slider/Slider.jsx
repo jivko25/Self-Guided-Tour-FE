@@ -112,7 +112,6 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
                   alt={`Landmark Image ${index + 1}`}
                   onClick={() => handleImageClick(resource.resourceUrl, index)}
                 />
-                
               ))}
             </div>
           </div>
@@ -125,7 +124,7 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
         }
 
         .hide-scrollbar {
-          -ms-overflow-style: none; 
+          -ms-overflow-style: none;
           scrollbar-width: none;
         }
       `}</style>
