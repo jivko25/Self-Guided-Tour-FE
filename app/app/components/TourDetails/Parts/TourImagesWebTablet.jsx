@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ImageOutline from "../Svgs/ImageOutline";
 import Slider from "../Slider/Slider";
 
-function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
+function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
   const [openSlider, setOpenSlider] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -69,9 +69,10 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
 
       {openSlider && (
         <Slider
+          title={title}
           setOpenSlider={setOpenSlider}
           selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage} 
+          setSelectedImage={setSelectedImage}
           landmarks={landmarks}
           thumbnailImageUrl={thumbnailImageUrl}
         />
