@@ -48,11 +48,11 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative overflow-y-auto pb-[50px]">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center overflow-y-auto ">
+      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative py-[100px]">
         <CloseIcon onClick={() => setOpenSlider(false)} />
         <div
-          className="flex w-full web:h-[750px] tablet:h-full  justify-center
+          className="flex w-full web:h-full tablet:h-full  justify-center
         web:flex-row web:items-start web:gap-10
         tablet:flex-col tablet:items-center tablet:gap-10
         "
