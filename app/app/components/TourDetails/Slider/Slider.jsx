@@ -49,7 +49,7 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center bg-black w-full h-full p-4 relative">
+      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative overflow-y-auto pb-[50px]">
         <CloseIcon onClick={() => setOpenSlider(false)} />
         <div
           className="flex w-full web:h-[750px] tablet:h-full  justify-center
@@ -64,7 +64,7 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
           >
             {"<"} Prev
           </button> */}
-          <h1 className="hidden web:hidden tablet:block mb-[50px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
+          <h1 className="hidden web:hidden tablet:block mb-[10px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
             Sofia Theaters
           </h1>
           <div className="flex items-center">
@@ -84,7 +84,7 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
             {/* Button for the next image */}
             <div className="flex items-center justify-center h-full ml-[-30px]">
               <button
-                className="flex items-center justify-center mt-[80px] tablet:mt-[80px] w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8]"
+                className="flex items-center justify-center web:mt-[80px] tablet:mt-[30px] w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8]"
                 onClick={handleNext}
               >
                 <Next className="w-[30px] h-[30px]" />
@@ -94,11 +94,16 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
 
           {/* Gallery of thumbnails */}
           <div className="flex h-full items-start">
-            <div className="grid  hide-scrollbar  web:grid-cols-2 tablet:grid-cols-4 gap-[24px] web:max-h-[650px] tablet:max-h-full web:mt-[109px] tablet:mt-[0px] overflow-y-auto">
+            <div
+              className="grid  hide-scrollbar gap-[24px]  
+            web:grid-cols-2 web:max-h-[650px] web:mt-[109px] overflow-y-auto 
+            tablet:grid-cols-4 tablet:max-h-full tablet:mt-[0px]
+            "
+            >
               {images.map((resource, index) => (
                 <img
                   key={resource.resourceId}
-                  className={`web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px]  rounded-[15px] object-cover cursor-pointer ${
+                  className={`w-[182px] h-[100px] web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px] rounded-[15px] object-cover cursor-pointer ${
                     selectedImage === resource.resourceUrl
                       ? "border-2 border-white"
                       : ""
@@ -107,6 +112,7 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
                   alt={`Landmark Image ${index + 1}`}
                   onClick={() => handleImageClick(resource.resourceUrl, index)}
                 />
+                
               ))}
             </div>
           </div>
@@ -115,12 +121,12 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
 
       <style jsx>{`
         .hide-scrollbar::-webkit-scrollbar {
-          display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+          display: none;
         }
 
         .hide-scrollbar {
-          -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
-          scrollbar-width: none; /* Hide scrollbar for Firefox */
+          -ms-overflow-style: none; 
+          scrollbar-width: none;
         }
       `}</style>
     </div>
