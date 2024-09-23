@@ -4,10 +4,22 @@
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-input[type=number]{
-    -moz-appearance: textfield;
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.hideScroll {
+  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+
+  scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+
+.hideScroll::-webkit-scrollbar {
+  display: none;
 }
