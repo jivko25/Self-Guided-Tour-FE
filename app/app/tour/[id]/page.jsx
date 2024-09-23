@@ -78,6 +78,7 @@ function TourDetails() {
           landmarks={landmarks}
         />
         <TourImagesWebTablet
+          title={title}
           thumbnailImageUrl={thumbnailImageUrl}
           landmarks={landmarks}
         />
@@ -119,4 +120,3 @@ function TourDetails() {
   );
 }
 export default TourDetails;
-
