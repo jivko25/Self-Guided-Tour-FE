@@ -66,8 +66,14 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
               </div>
             ))}
       </div>
+
       {openSlider && (
-        <Slider setOpenSlider={setOpenSlider} selectedImage={selectedImage} />
+        <Slider
+          setOpenSlider={setOpenSlider}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage} // Пропс за обновяване на избраната картинка
+          landmarks={landmarks}
+        />
       )}
     </>
   );
