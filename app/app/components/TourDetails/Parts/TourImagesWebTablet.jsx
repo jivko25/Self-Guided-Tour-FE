@@ -21,7 +21,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
         <img
           className="object-cover w-full h-full overflow-hidden
             web:col-span-2 web:row-span-2 web:h-[500px]  
-            tablet:w-full tablet:h-[360px] tablet:col-span-2
+            tablet:w-full tablet:h-[360px] tablet:col-span-2 cursor-pointer
      
             "
           src={thumbnailImageUrl}
@@ -43,7 +43,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
                 <img
                   className="object-cover overflow-hidden
                       web:w-[431px] web:h-[244px]
-                      tablet:w-full tablet:h-[280px]
+                      tablet:w-full tablet:h-[280px] cursor-pointer
              
                       "
                   src={resource.resourceUrl}
