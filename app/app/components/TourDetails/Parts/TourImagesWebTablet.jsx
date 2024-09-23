@@ -10,6 +10,19 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
     setSelectedImage(imageUrl);
     setOpenSlider(true);
   };
+
+  // Get all image resources
+  const imageResources = landmarks
+    ? landmarks.flatMap((landmark) =>
+        landmark.resources
+          ? landmark.resources.filter(
+              (resource) => resource.resourceType === "Image"
+            )
+          : []
+      )
+    : [];
+
+  const totalImages = imageResources.length;
   return (
     <>
       <div
@@ -50,7 +63,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
                   alt={`Landmark Image ${index + 1}`}
                   onClick={() => handleImageClick(resource.resourceUrl)}
                 />
-                {index === 1 && (
+                {index === 1 && totalImages > 4 && (
                   <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
                     <button
                       className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2"
