@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Next from "../Svgs/Next";
 
 // Slider component that handles image slider functionality
-function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks, thumbnailImageUrl }) {
+function Slider({title, setOpenSlider, selectedImage, setSelectedImage, landmarks, thumbnailImageUrl }) {
    // State to track current image index in the slider
   const [currentIndex, setCurrentIndex] = useState(
     landmarks
@@ -75,14 +75,15 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks, thu
           >
             {"<"} Prev
           </button> */}
+
           <h1 className="hidden web:hidden tablet:block mb-[10px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
-            Sofia Theaters
+            {title}
           </h1>
           <div className="flex items-center">
             {/* The large image in the carousel */}
             <div className="flex flex-col">
               <h1 className="hidden web:block mb-[50px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px]">
-                Sofia Theaters
+                {title}
               </h1>
 
               <img
