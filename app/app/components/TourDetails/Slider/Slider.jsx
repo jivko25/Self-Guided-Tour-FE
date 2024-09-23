@@ -115,7 +115,7 @@ function Slider({title, setOpenSlider, selectedImage, setSelectedImage, landmark
               {images.map((resource, index) => (
                 <img
                   key={resource.resourceId}
-                  className={`w-[182px] h-[100px] web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px] rounded-[15px] object-cover cursor-pointer ${
+                  className={` w-[182px] h-[100px] web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px] rounded-[15px] object-cover cursor-pointer ${
                     selectedImage === resource.resourceUrl
                       ? "border-2 border-white"
                       : ""
