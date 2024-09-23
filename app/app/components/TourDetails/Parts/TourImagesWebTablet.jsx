@@ -4,11 +4,11 @@ import Slider from "../Slider/Slider";
 
 function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
   const [openSlider, setOpenSlider] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null); // Добавено състояние за избраната картинка
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl); // Запазване на избраната картинка
-    setOpenSlider(true); // Отваряне на слайдера
+    setSelectedImage(imageUrl);
+    setOpenSlider(true);
   };
   return (
     <>
@@ -50,7 +50,7 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
                   alt={`Landmark Image ${index + 1}`}
                   onClick={() => handleImageClick(resource.resourceUrl)}
                 />
-                {index === 1 && landmarks.length > 2 && (
+                {index === 1 && (
                   <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
                     <button
                       className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2"
@@ -71,7 +71,7 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
         <Slider
           setOpenSlider={setOpenSlider}
           selectedImage={selectedImage}
-          setSelectedImage={setSelectedImage} // Пропс за обновяване на избраната картинка
+          setSelectedImage={setSelectedImage} 
           landmarks={landmarks}
         />
       )}
