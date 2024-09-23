@@ -51,8 +51,12 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
     <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center">
       <div className="flex flex-col items-center justify-center bg-black w-full h-full p-4 relative">
         <CloseIcon onClick={() => setOpenSlider(false)} />
-
-        <div className="flex flex-row w-full h-full max-h-[650px] items-start justify-center gap-10">
+        <div
+          className="flex w-full web:h-[750px] tablet:h-full  justify-center
+        web:flex-row web:items-start web:gap-10
+        tablet:flex-col tablet:items-center tablet:gap-10
+        "
+        >
           {/* Button for the previous image */}
           {/* <button
             className="text-white bg-gray-800 px-4 py-2 rounded-full"
@@ -60,34 +64,41 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
           >
             {"<"} Prev
           </button> */}
+          <h1 className="hidden web:hidden tablet:block mb-[50px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
+            Sofia Theaters
+          </h1>
+          <div className="flex items-center">
+            {/* The large image in the carousel */}
+            <div className="flex flex-col">
+              <h1 className="hidden web:block mb-[50px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px]">
+                Sofia Theaters
+              </h1>
 
-          {/* The large image in the carousel */}
-          <div>
-            <img
-              src={selectedImage}
-              alt="Selected"
-              className="max-w-full max-h-full mx-auto w-[1002px] h-[600px] rounded-[15px] object-cover"
-            />
-          </div>
+              <img
+                src={selectedImage}
+                alt="Selected"
+                className="max-w-full max-h-full mx-auto tablet:w-[685px] tablet:h-[400px] web:w-[1002px] web:h-[600px] rounded-[15px] object-cover"
+              />
+            </div>
 
-          {/* Button for the next image */}
-          <div className="flex items-center justify-center h-full ml-[-70px]">
-          <button
-            className="flex items-center justify-center w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8]"
-            onClick={handleNext}
-          >
-            <Next className="w-[30px] h-[30px]"/>
-          </button>
+            {/* Button for the next image */}
+            <div className="flex items-center justify-center h-full ml-[-30px]">
+              <button
+                className="flex items-center justify-center mt-[80px] tablet:mt-[80px] w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8]"
+                onClick={handleNext}
+              >
+                <Next className="w-[30px] h-[30px]" />
+              </button>
+            </div>
           </div>
-          
 
           {/* Gallery of thumbnails */}
           <div className="flex h-full items-start">
-            <div className="grid grid-cols-2 gap-[24px] max-h-[650px] overflow-y-auto">
+            <div className="grid  hide-scrollbar  web:grid-cols-2 tablet:grid-cols-4 gap-[24px] web:max-h-[650px] tablet:max-h-full web:mt-[109px] tablet:mt-[0px] overflow-y-auto">
               {images.map((resource, index) => (
                 <img
                   key={resource.resourceId}
-                  className={`w-[200px] h-[140px] rounded-[15px] object-cover cursor-pointer ${
+                  className={`web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px]  rounded-[15px] object-cover cursor-pointer ${
                     selectedImage === resource.resourceUrl
                       ? "border-2 border-white"
                       : ""
@@ -101,6 +112,7 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
           </div>
         </div>
       </div>
+
       <style jsx>{`
         .hide-scrollbar::-webkit-scrollbar {
           display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
