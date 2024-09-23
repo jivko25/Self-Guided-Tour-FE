@@ -73,6 +73,7 @@ function TourImagesWebTablet({ thumbnailImageUrl, landmarks }) {
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage} 
           landmarks={landmarks}
+          thumbnailImageUrl={thumbnailImageUrl}
         />
       )}
     </>
