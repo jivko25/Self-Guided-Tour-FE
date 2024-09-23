@@ -4,8 +4,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Next from "../Svgs/Next";
 
+// Slider component that handles image slider functionality
 function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks, thumbnailImageUrl }) {
-  // Keep track of the current image index in the carousel
+   // State to track current image index in the slider
   const [currentIndex, setCurrentIndex] = useState(
     landmarks
       .flatMap((landmark) =>
@@ -30,8 +31,10 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks, thu
  // UseEffect to set default image if no image is selected
  useEffect(() => {
   if (!selectedImage) {
-    setSelectedImage(thumbnailImageUrl); // Set the default image to the thumbnail image
-    setCurrentIndex(0); // Set the current index to 0 (first image)
+    // Set the default image to the thumbnail image
+    setSelectedImage(thumbnailImageUrl); 
+    // Set the current index to 0 (first image)
+    setCurrentIndex(0); 
   }
 }, [selectedImage, thumbnailImageUrl, setSelectedImage]);
 
