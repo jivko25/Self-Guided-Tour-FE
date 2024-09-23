@@ -1,7 +1,6 @@
 "use client";
 import {
   useCreateTour,
-  CreateTourProvider,
 } from "../context/createTourContext.jsx";
 import { Suspense } from "react";
 import Step1 from "../components/CreateTourSteps/Step1/Step1.jsx";
@@ -47,10 +46,8 @@ export default function App() {
   return (
     //TODO: Add Skeleton to fallback
     <Suspense fallback={<div>Loading...</div>}>
-      <CreateTourProvider>
         <Stepper />
         <MultiStepForm />
-      </CreateTourProvider>
     </Suspense>
   );
 }

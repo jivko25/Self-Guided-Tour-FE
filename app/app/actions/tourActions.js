@@ -46,3 +46,21 @@ export async function createTour(tourData) {
 
   return { data, error };
 }
+
+/**
+ * @param {string|number} id 
+ * @returns {object}
+ */
+export async function getOne(id) {
+  let data = null;
+  let error = null;
+
+  try {
+    const response = await axiosTour.get(id);
+    data = response?.data?.result;
+  } catch (err) {
+    error = err?.response?.data;
+  }
+
+  return {data, error}
+}

@@ -15,6 +15,7 @@ let center = { lat: 42.698334, lng: 23.319941 }
  * @param {string} props.locationId adds marker based on location id
  * @param {object} props.directions draws polylines and markers for directions API - structure: { tourType: '', locations: [..] }, locations key has to be array of objects { latitude, longitude }. For allowed tour types refer to https://developers.google.com/maps/documentation/javascript/directions#TravelModes. IMPORTANT - handleWarnings prop must be used to show warning to users
  * @param {Function} props.handleWarnings handle warnings given from Google's directions API.
+ * @param {Function} props.handleTourTypeChange if tour type is changes by directions API logic the new tour type can be passed to parent component
  * @returns {JSX.Element}
  */
 export default function GoogleMaps({
@@ -25,6 +26,7 @@ export default function GoogleMaps({
   locationId,
   directions,
   handleWarnings,
+  handleTourTypeChange,
 }) {
   const mapsRef = useRef(null);
   const markerRef = useRef(null);
@@ -62,11 +64,18 @@ export default function GoogleMaps({
   }, [directions, setTourType]);
 
   useEffect(() => {
+    if (handleTourTypeChange) {
+      handleTourTypeChange(tourType);
+    }
+  }, [tourType]);
+
+  useEffect(() => {
     const initMaps = async () => {
       const loader = new Loader({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         version: "weekly",
       });
+      let zoom = 17;
 
       const [
         { Map, InfoWindow }, { AdvancedMarkerElement },
@@ -87,8 +96,9 @@ export default function GoogleMaps({
 
       const mapOPtions = {
         center: center,
-        zoom: 17,
+        zoom,
         mapId: 'NEXT_MAP',
+        disableDoubleClickZoom: true
       }
 
       const map = new Map(mapsRef.current, mapOPtions);
@@ -194,7 +204,7 @@ export default function GoogleMaps({
 
         const newMapOptions = {
           center: { lat: latitude, lng: longitude },
-          zoom: 17,
+          zoom,
           mapId: "NEXT_MAP",
         }
 
@@ -208,7 +218,30 @@ export default function GoogleMaps({
         });
       }
 
-      map.addListener("click", handleClick);
+      // Handling of click events
+      let clickTimer = null;
+      
+      map.addListener("click", (e) => {
+        e.stop();
+        if (clickTimer) {
+          clearTimeout(clickTimer);
+        }
+
+        clickTimer = setTimeout(() => {
+          handleClick(e)
+        }, 200)
+      });
+
+      map.addListener("dblclick", (e) => {
+        if (clickTimer) {
+          clearTimeout(clickTimer);
+          clickTimer = null;
+        }
+
+        const currentZoom = map.getZoom();
+        map.setZoom(currentZoom + 1);
+        map.setCenter(e.latLng);
+      });
 
       // Autocomplete logic
       const autocomplete = new Autocomplete(searchRef.current, {

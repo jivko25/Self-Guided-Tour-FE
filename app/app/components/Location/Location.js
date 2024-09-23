@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import pencil from "../../public/svg/pencil.svg";
-import trashcan from "../../public/svg/trash.svg";
+import Pencil from "../../public/svg/pencil.svg";
+import Trashcan from "../../public/svg/trash.svg";
 import CheckmarkIcon from "../../public/svg/checkmark-circle.svg";
 import AlertIcon from "../../public/alert-circle-outline.svg";
 import Image from "next/image.js";
@@ -55,7 +55,7 @@ export default function Location({
         )}
         <Link href={path} className="right-[42px] cursor-pointer absolute">
           <Image
-            src={pencil}
+            src={Pencil}
             width={24}
             height={24}
             alt="pencil"
@@ -64,7 +64,7 @@ export default function Location({
         </Link>
         <div className="cursor-pointer absolute right-[8px]">
           <Image
-            src={trashcan}
+            src={Trashcan}
             width={24}
             height={24}
             alt="trashcan"
