@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "../Svgs/CloseIcon";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Next from "../Svgs/Next";
 
-function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
+function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks, thumbnailImageUrl }) {
   // Keep track of the current image index in the carousel
   const [currentIndex, setCurrentIndex] = useState(
     landmarks
@@ -27,16 +27,24 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
       : []
   );
 
+ // UseEffect to set default image if no image is selected
+ useEffect(() => {
+  if (!selectedImage) {
+    setSelectedImage(thumbnailImageUrl); // Set the default image to the thumbnail image
+    setCurrentIndex(0); // Set the current index to 0 (first image)
+  }
+}, [selectedImage, thumbnailImageUrl, setSelectedImage]);
+
   // Function to navigate to the next image
   const handleNext = () => {
-    const newIndex = (currentIndex + 1) % images.length; // Обръща цикъла
+    const newIndex = (currentIndex + 1) % images.length;
     setCurrentIndex(newIndex);
-    setSelectedImage(images[newIndex].resourceUrl); // Актуализираме избраната снимка
+    setSelectedImage(images[newIndex].resourceUrl); 
   };
 
   // Function to navigate to the previous image
   const handlePrev = () => {
-    const newIndex = (currentIndex - 1 + images.length) % images.length; // Обръща цикъла назад
+    const newIndex = (currentIndex - 1 + images.length) % images.length;
     setCurrentIndex(newIndex);
     setSelectedImage(images[newIndex].resourceUrl);
   };
@@ -44,7 +52,7 @@ function Slider({ setOpenSlider, selectedImage, setSelectedImage, landmarks }) {
   // When the user clicks on a thumbnail, update the selected image and index
   const handleImageClick = (imageUrl, index) => {
     setSelectedImage(imageUrl);
-    setCurrentIndex(index); // Актуализиране на индекса
+    setCurrentIndex(index); 
   };
 
   return (
