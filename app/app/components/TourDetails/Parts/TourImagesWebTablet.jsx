@@ -83,6 +83,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
       {openSlider && (
         <Slider
           title={title}
+          totalImages={totalImages}
           setOpenSlider={setOpenSlider}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
