@@ -11,6 +11,7 @@ import TourSummary from "@/app/components/TourDetails/Parts/TourSummary";
 import HowJauntsterWorks from "@/app/components/TourDetails/Parts/HowJauntsterWorks";
 import TourImagesPhone from "@/app/components/TourDetails/Parts/TourImagesPhone";
 import TourImagesWebTablet from "@/app/components/TourDetails/Parts/TourImagesWebTablet";
+import Review from "@/app/components/Review/Review";
 
 function TourDetails() {
   const { id } = useParams();
@@ -55,6 +56,11 @@ function TourDetails() {
     status,
     summary,
   } = tour;
+
+  const handleReview = (rating, comment) => {
+    console.log(rating, comment);
+    
+  }
 
   return (
     <div className="flex flex-col items-center w-full relative">
@@ -111,6 +117,8 @@ function TourDetails() {
           id={id}
           router={router}
         />
+
+        <Review title={title} handleReview={handleReview}/>
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}
