@@ -1,12 +1,9 @@
 import React from "react";
 
-function CloseIcon({ onClick }) {
+function CloseIcon({ onClick, className }) {
   return (
     <svg
-      className="fixed  top-4 right-8 z-10 cursor-pointer text-[#FFFFFF] w-10 h-10
-      "
-      width="40"
-      height="40"
+      className={className}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
