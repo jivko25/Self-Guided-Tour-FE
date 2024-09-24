@@ -12,14 +12,12 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.hideScroll {
-  -webkit-overflow-scrolling: touch;
-  overflow: hidden;
 
-  scrollbar-width: none; 
-  -ms-overflow-style: none;
-}
 
 .hideScroll::-webkit-scrollbar {
   display: none;
+  overflow-y: hidden;
+}
+.hideScroll {
+  scrollbar-width: none;
 }
