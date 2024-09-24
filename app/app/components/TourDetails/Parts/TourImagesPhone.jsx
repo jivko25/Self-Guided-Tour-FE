@@ -17,6 +17,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
         fill={true}
         style={{ objectFit: "cover" }}
         alt="Cover Image"
+        priority={true}
       />
 
       {landmarks &&
@@ -31,6 +32,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
                   src={resource.resourceUrl}
                   style={{ objectFit: "cover" }}
                   alt={`Landmark Image ${index + 1}`}
+                  priority={true}
                 />
               ))
             : []
