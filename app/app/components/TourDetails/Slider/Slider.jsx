@@ -7,6 +7,7 @@ import Next from "../Svgs/Next";
 // Slider component that handles image slider functionality
 function Slider({
   title,
+  totalImages,
   setOpenSlider,
   selectedImage,
   setSelectedImage,
@@ -52,13 +53,6 @@ function Slider({
     setSelectedImage(images[newIndex].resourceUrl);
   };
 
-  // Function to navigate to the previous image
-  const handlePrev = () => {
-    const newIndex = (currentIndex - 1 + images.length) % images.length;
-    setCurrentIndex(newIndex);
-    setSelectedImage(images[newIndex].resourceUrl);
-  };
-
   // When the user clicks on a thumbnail, update the selected image and index
   const handleImageClick = (imageUrl, index) => {
     setSelectedImage(imageUrl);
@@ -66,18 +60,24 @@ function Slider({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center h-auto max-h-screen overflow-y-auto web:overflow-y-hidden">
-      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative py-[100px]">
-        <CloseIcon onClick={() => setOpenSlider(false)} />
+    <div className="fixed top-0 left-0 right-0 z-50 bg-black w-full h-full p-[10px] overflow-y-auto hideScroll">
+      <div className="flex flex-col items-center justify-center w-full h-auto">
+        <div className="flex w-full items-center web:justify-end tablet:justify-center py-[15px]">
+          <h1 className="hidden web:hidden tablet:flex w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
+            {title}
+          </h1>
+          <CloseIcon
+            onClick={() => setOpenSlider(false)}
+            className="cursor-pointer text-[#FFFFFF] w-10"
+          />
+        </div>
+
         <div
           className="flex w-full web:h-full tablet:h-full  justify-center
       web:flex-row web:items-start web:gap-10
       tablet:flex-col tablet:items-center tablet:gap-10
       "
         >
-          <h1 className="hidden web:hidden tablet:flex mt-10 w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
-            {title}
-          </h1>
           <div className="flex items-center">
             {/* The large image in the carousel */}
             <div className="flex flex-col">
@@ -93,21 +93,23 @@ function Slider({
             </div>
 
             {/* Button for the next image */}
-            <div className="flex items-center justify-center h-full ml-[-30px]">
-              <button
-                className="flex items-center justify-center web:mt-[80px] tablet:mt-[30px] w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8]"
-                onClick={handleNext}
-              >
-                <Next className="w-[30px] h-[30px]" />
-              </button>
-            </div>
+            {totalImages > 1 && (
+              <div className="flex items-center justify-center h-full ml-[-30px]">
+                <button
+                  className="flex items-center justify-center web:mt-[80px] tablet:mt-[30px] w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8]"
+                  onClick={handleNext}
+                >
+                  <Next className="w-[30px] h-[30px]" />
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Gallery of thumbnails */}
           <div className="flex h-full items-start">
             <div
               className="grid  hide-scrollbar gap-[24px]  
-                        web:grid-cols-2 web:max-h-[650px] web:mt-[109px] overflow-y-auto 
+                        web:grid-cols-2 web:max-h-[650px] web:mt-[109px] overflow-y-auto hideScroll
                         tablet:grid-cols-4 tablet:max-h-full tablet:mt-[0px]
                         "
             >
