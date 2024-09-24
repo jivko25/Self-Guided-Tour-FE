@@ -60,7 +60,7 @@ function Slider({
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-black w-full h-full p-[10px] overflow-y-auto hideScroll">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-black w-full h-full p-[15px] overflow-y-auto hideScroll">
       <div className="flex flex-col items-center justify-center w-full h-auto">
         <div className="flex w-full items-center web:justify-end tablet:justify-center py-[15px]">
           <h1 className="hidden web:hidden tablet:flex w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
@@ -78,7 +78,7 @@ function Slider({
       tablet:flex-col tablet:items-center tablet:gap-10
       "
         >
-          <div className="flex items-center">
+          <div className="flex items-center tablet:ml-[2%]">
             {/* The large image in the carousel */}
             <div className="flex flex-col">
               <h1 className="hidden web:block mb-[50px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px]">
