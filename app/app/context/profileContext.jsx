@@ -55,8 +55,8 @@ export const ProfileProvider = ({ children }) => {
     return tours;
   }, []);
   const getBoughtToursAsync = useCallback(async function getBoughtTours() {
-    const response = await axios.get("/tour");
-    const tours = response?.data?.result?.tours;
+    const response = await axios.get("/profile/bought-tours");
+    const tours = response?.data;
     console.log(response);
     return tours;
   }, []);
