@@ -57,9 +57,9 @@ function TourDetails() {
   } = tour;
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full relative">
       <div
-        className="flex flex-col justify-center items-center
+        className="flex flex-col justify-center items-center 
       web:w-[80%] web:mt-[30px]
       tablet:mt-[100px]
       phone:mt-[50px] phone:p-[20px]
