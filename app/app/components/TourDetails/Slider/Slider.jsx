@@ -66,7 +66,7 @@ function Slider({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center h-auto max-h-screen overflow-y-auto   web:overflow-y-hidden  ">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center h-auto max-h-screen overflow-y-auto web:overflow-y-hidden">
       <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative py-[100px]">
         <CloseIcon onClick={() => setOpenSlider(false)} />
         <div
@@ -75,15 +75,7 @@ function Slider({
       tablet:flex-col tablet:items-center tablet:gap-10
       "
         >
-          {/* Button for the previous image */}
-          {/* <button
-            className="text-white bg-gray-800 px-4 py-2 rounded-full"
-            onClick={handlePrev}
-          >
-            {"<"} Prev
-          </button> */}
-
-          <h1 className="hidden web:hidden tablet:block mb-[10px] w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
+          <h1 className="hidden web:hidden tablet:flex mt-10 w-full text-white text-[39px] font-medium font-['Inter'] leading-[58.50px] ">
             {title}
           </h1>
           <div className="flex items-center">
@@ -115,9 +107,9 @@ function Slider({
           <div className="flex h-full items-start">
             <div
               className="grid  hide-scrollbar gap-[24px]  
-            web:grid-cols-2 web:max-h-[650px] web:mt-[109px] overflow-y-auto 
-            tablet:grid-cols-4 tablet:max-h-full tablet:mt-[0px]
-            "
+                        web:grid-cols-2 web:max-h-[650px] web:mt-[109px] overflow-y-auto 
+                        tablet:grid-cols-4 tablet:max-h-full tablet:mt-[0px]
+                        "
             >
               {images.map((resource, index) => (
                 <img
@@ -136,17 +128,6 @@ function Slider({
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </div>
   );
 }
