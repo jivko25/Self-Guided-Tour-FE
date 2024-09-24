@@ -8,24 +8,19 @@ function TourInfo({ estimatedDuration, destination }) {
         className="flex border-b-2  border-[#d1d0d8] 
         web:h-[250px] web:w-[80%] web:justify-around web:items-center
         tablet:flex-row-reverse tablet:h-[250px] tablet:w-[95%] tablet:justify-center tablet:gap-[20px] tablet:items-center
-        phone:flex-col-reverse phone:items-start phone:justify-center phone:gap-[30px] phone:w-[95%] phone:py-[40px]
-        smallPhone:flex-col-reverse smallPhone:items-start smallPhone:justify-center smallPhone:gap-[30px] smallPhone:w-[95%] smallPhone:py-[40px]
-        "
+        flex-col-reverse items-start justify-center gap-[30px] w-[95%] py-[40px]"
       >
         <div className="flex items-center">
           <Walk className="
           web:h-[60px] web:w-[60px]  
           tablet:w-[40px] tablet:h-[40px]
-          phone:h-[32px] phone:w-[32px]
-          smallPhone:h-[32px] smallPhone:w-[32px]
-          " />
+          h-[32px] w-[32px]" />
           <div>
             <h2
               className="text-[#081120] font-medium font-['Inter'] 
             web:text-xl 
             tablet:text-lg
-            phone:text-base
-            smallPhone:text-base
+            text-base
             "
             >
               This is a 2.5km walking tour
@@ -33,10 +28,7 @@ function TourInfo({ estimatedDuration, destination }) {
             <p
               className="text-[#13294b] font-normal font-['Inter']
             web:text-base
-            tablet:text-sm
-            phone:text-sm
-            smallPhone:text-sm
-            "
+            text-sm"
             >
               To complete it you will need average of {estimatedDuration}min.
             </p>
@@ -47,28 +39,20 @@ function TourInfo({ estimatedDuration, destination }) {
           <LocationSharp className="
           web:h-[60px] web:w-[60px] 
           tablet:h-[40px] tablet:w-[40px]  
-          phone:h-[32px] phone:w-[32px]
-          smallPhone:h-[32px] smallPhone:w-[32px]
-          " />
+          h-[32px] w-[32px]" />
           <div>
             <h2
               className="text-[#081120] font-medium font-['Inter'] 
             web:text-xl 
             tablet:text-lg
-            phone:text-base
-            smallPhone:text-base
-
-            "
+            text-base"
             >
               This tour is located in {destination}
             </h2>
             <p
               className="text-[#13294b]font-normal font-['Inter']
             web:text-base
-            tablet:text-sm
-            phone:text-sm
-            smallPhone:text-sm
-            "
+            text-sm"
             >
               {destination} is the capital of Bulgaria
             </p>

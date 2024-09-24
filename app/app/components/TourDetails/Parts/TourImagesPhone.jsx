@@ -1,42 +1,38 @@
+import Image from "next/image";
 import React from "react";
 
 function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
   return (
     <div
-      className="hidden web:hidden tablet:hidden 
-        phone:flex phone:w-full phone:overflow-x-auto phone:gap-[10px]
-        smallPhone:flex smallPhone:w-full smallPhone:overflow-x-auto smallPhone:gap-[10px]
-        "
+      className="relative flex web:hidden tablet:hidden 
+        w-full overflow-x-auto gap-[10px] h-[260px]"
       style={{
         "::WebkitScrollbar": { display: "none" },
         MsOverflowStyle: "none",
         ScrollbarWidth: "none",
       }}
     >
-      <img
-        className="object-cover w-full h-full 
-                  phone:w-[361px] phone:h-[260px]
-                  smallPhone:w-[361px] smallPhone:h-[260px]
-            "
+      <Image
         src={thumbnailImageUrl}
+        fill={true}
+        style={{ objectFit: "cover" }}
         alt="Cover Image"
       />
+
       {landmarks &&
         landmarks.flatMap((landmark, index) =>
           landmark.resources
             ? landmark.resources
                 .filter((resource) => resource.resourceType === "Image")
                 .map((resource, resourceIndex) => (
-                  <img
-                    key={resource.resourceId}
-                    className="object-cover rounded-[5px]
-                      phone:w-[361px] phone:h-[260px]
-                      smallPhone:w-[361px] smallPhone:h-[260px]
-                      "
-                    src={resource.resourceUrl}
-                    alt={`Landmark Image ${index + 1}`}
-                  />
-                ))
+                <Image
+                  key={resource.resourceId}
+                  fill={true}
+                  src={resource.resourceUrl}
+                  style={{ objectFit: "cover" }}
+                  alt={`Landmark Image ${index + 1}`}
+                />
+              ))
             : []
         )}
     </div>

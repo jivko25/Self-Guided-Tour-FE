@@ -3,7 +3,7 @@
 import Image from "next/image";
 import HollowStar from "../../public/svg/hollow-star.svg";
 import Star from "../../public/svg/star-outline.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Btn from "../Buttons/Btn";
 
 export default function Review({title, handleReview }) {
@@ -39,28 +39,26 @@ export default function Review({title, handleReview }) {
   };
 
   return (
-    <div className="w-[502px] h-[518px] p-9">
-      {title && <h2 className="font-medium text-[31px] mb-6">{title}</h2>}
+    <div className="w-full tablet:w-[502px] p-2 tablet:p-9">
+      {title && <h2 className="font-medium tablet:text-[31px] mb-4 tablet:mb-6">{title}</h2>}
 
-      {/* Render 5 stars */}
-      <div className="flex mb-9 gap-2">
+      <div className="flex mb-6 tablet:mb-9 gap-2">
         {[1, 2, 3, 4, 5].map((starValue) => renderStar(starValue))}
       </div>
 
-      {/* Comment input */}
       <div>
         <form onSubmit={handleSubmit}>
           <label htmlFor="comment" className="font-medium mb-1">Tell us what you think</label>
           <textarea
             id="comment"
-            className="w-full block h-[204px] mb-[37px] bg-[#FAFAFA] border border-[#CECECE]"
+            className="block w-full h-[140px] tablet:h-[204px] mb-7 tablet:mb-[37px] bg-[#FAFAFA] border border-[#CECECE]"
             value={comment}
             style={{resize: "none"}}
             onChange={(e) => setComment(e.target.value)}
           />
-          <div className="flex gap-x-6">
-            <Btn fullWidth text={"Cancel"} variant="outlined" type="button"/>
+          <div className="flex flex-col tablet:flex-row-reverse gap-y-3 tablet:gap-x-6">
             <Btn fullWidth text={"Submit"} />
+            <Btn fullWidth text={"Cancel"} variant="outlined" type="button"/>
           </div>
         </form>
       </div>

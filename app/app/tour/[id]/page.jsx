@@ -63,13 +63,13 @@ function TourDetails() {
   }
 
   return (
-    <div className="flex flex-col items-center w-full relative">
+    <div className="flex flex-col w-full px-[10px] tablet:items-center tablet:px-0">
       <div
         className="flex flex-col justify-center items-center 
       web:w-[80%] web:mt-[30px]
       tablet:mt-[100px]
       phone:mt-[50px] phone:p-[20px]
-      smallPhone:mt-[50px] smallPhone:p-[20px]
+      mt-[50px] p-[20px]
       "
       >
         <TourTitle
@@ -104,12 +104,12 @@ function TourDetails() {
       web:w-[80%] web:mt-[100px] web:pb-[100px] web:flex-row web:items-start web:pt-[0px]
       tablet:flex-col-reverse tablet:w-[95%] tablet:pt-[70px] tablet:pb-[70px] tablet:gap-[100px] tablet:items-center
       phone:flex-col-reverse phone:w-[95%] phone:pt-[20px] phone:pb-[20px] phone:gap-[50px] phone:items-center
-      smallPhone:flex-col-reverse smallPhone:w-[95%] smallPhone:pt-[20px] smallPhone:pb-[20px] smallPhone:gap-[50px] smallPhone:items-center
+      flex-col-reverse w-[95%] pt-[20px] pb-[20px] gap-[50px] items-center
       "
       >
         <TourSummary summary={summary} />
 
-        <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 phone:my-[0px] smallPhone:my-[0px]"></div>
+        <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 my-[0px]"></div>
 
         <TourPurchase
           destination={destination}
@@ -118,7 +118,7 @@ function TourDetails() {
           router={router}
         />
 
-        <Review title={title} handleReview={handleReview}/>
+        {/* <Review title={title} handleReview={handleReview}/> */}
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}

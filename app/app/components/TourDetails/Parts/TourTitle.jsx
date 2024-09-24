@@ -9,18 +9,14 @@ function TourTitle({ title, handleEditClick, userId, tourId }) {
       className="flex justify-between items-center w-full 
         web:gap-[30px]
         tablet:gap-[30px] tablet:mb-[30px]
-        phone:gap-[20px]
-        smallPhone:gap-[20px]
-        "
+        gap-[20px]"
     >
       <div className="flex items-center gap-[10px]">
         <h1
           className="text-[#081120] font-['Inter'] font-medium 
             web:text-[39px] web:leading-[58.50px]
             tablet:text-[32px] tablet:leading-[48px]
-            phone:text-[25px]
-            smallPhone:text-[25px]
-            "
+            text-[25px]"
         >
           {title}
         </h1>
