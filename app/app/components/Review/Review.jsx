@@ -43,7 +43,7 @@ export default function Review({title, handleReview }) {
       {title && <h2 className="font-medium text-[31px] mb-6">{title}</h2>}
 
       {/* Render 5 stars */}
-      <div className="flex mb-9">
+      <div className="flex mb-9 gap-2">
         {[1, 2, 3, 4, 5].map((starValue) => renderStar(starValue))}
       </div>
 
