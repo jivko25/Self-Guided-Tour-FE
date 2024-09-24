@@ -5,8 +5,15 @@ import "slick-carousel/slick/slick-theme.css";
 import Next from "../Svgs/Next";
 
 // Slider component that handles image slider functionality
-function Slider({title, setOpenSlider, selectedImage, setSelectedImage, landmarks, thumbnailImageUrl }) {
-   // State to track current image index in the slider
+function Slider({
+  title,
+  setOpenSlider,
+  selectedImage,
+  setSelectedImage,
+  landmarks,
+  thumbnailImageUrl,
+}) {
+  // State to track current image index in the slider
   const [currentIndex, setCurrentIndex] = useState(
     landmarks
       .flatMap((landmark) =>
@@ -28,21 +35,21 @@ function Slider({title, setOpenSlider, selectedImage, setSelectedImage, landmark
       : []
   );
 
- // UseEffect to set default image if no image is selected
- useEffect(() => {
-  if (!selectedImage) {
-    // Set the default image to the thumbnail image
-    setSelectedImage(thumbnailImageUrl); 
-    // Set the current index to 0 (first image)
-    setCurrentIndex(0); 
-  }
-}, [selectedImage, thumbnailImageUrl, setSelectedImage]);
+  // UseEffect to set default image if no image is selected
+  useEffect(() => {
+    if (!selectedImage) {
+      // Set the default image to the thumbnail image
+      setSelectedImage(thumbnailImageUrl);
+      // Set the current index to 0 (first image)
+      setCurrentIndex(0);
+    }
+  }, [selectedImage, thumbnailImageUrl, setSelectedImage]);
 
   // Function to navigate to the next image
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % images.length;
     setCurrentIndex(newIndex);
-    setSelectedImage(images[newIndex].resourceUrl); 
+    setSelectedImage(images[newIndex].resourceUrl);
   };
 
   // Function to navigate to the previous image
@@ -55,18 +62,18 @@ function Slider({title, setOpenSlider, selectedImage, setSelectedImage, landmark
   // When the user clicks on a thumbnail, update the selected image and index
   const handleImageClick = (imageUrl, index) => {
     setSelectedImage(imageUrl);
-    setCurrentIndex(index); 
+    setCurrentIndex(index);
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center overflow-y-auto hideScroll">
-      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative py-[100px] hideScroll">
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center h-auto max-h-screen overflow-y-auto   web:overflow-y-hidden  ">
+      <div className="flex flex-col items-center justify-center bg-black w-full min-h-screen p-4 relative py-[100px]">
         <CloseIcon onClick={() => setOpenSlider(false)} />
         <div
           className="flex w-full web:h-full tablet:h-full  justify-center
-        web:flex-row web:items-start web:gap-10
-        tablet:flex-col tablet:items-center tablet:gap-10
-        "
+      web:flex-row web:items-start web:gap-10
+      tablet:flex-col tablet:items-center tablet:gap-10
+      "
         >
           {/* Button for the previous image */}
           {/* <button
@@ -115,7 +122,7 @@ function Slider({title, setOpenSlider, selectedImage, setSelectedImage, landmark
               {images.map((resource, index) => (
                 <img
                   key={resource.resourceId}
-                  className={` w-[182px] h-[100px] web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px] rounded-[15px] object-cover cursor-pointer ${
+                  className={`w-[182px] h-[100px] web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px] rounded-[15px] object-cover cursor-pointer ${
                     selectedImage === resource.resourceUrl
                       ? "border-2 border-white"
                       : ""
