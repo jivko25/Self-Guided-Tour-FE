@@ -3,7 +3,8 @@ import React from "react";
 function CloseIcon({ onClick }) {
   return (
     <svg
-      className="absolute top-6 right-4 z-10 cursor-pointer text-[#FFFFFF] w-10 h-10"
+      className="fixed  top-4 right-8 z-10 cursor-pointer text-[#FFFFFF] w-10 h-10
+      "
       width="40"
       height="40"
       viewBox="0 0 24 24"
