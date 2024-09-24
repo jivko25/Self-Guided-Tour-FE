@@ -50,7 +50,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
               type="button"
               variant="transparent"
               text="My tours"
-              link="/my-tours"
+              link="/profile/my-library"
             />
             <div>
               <Btn

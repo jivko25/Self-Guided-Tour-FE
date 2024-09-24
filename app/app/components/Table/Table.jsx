@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
 import TourStatus from "../TourStatus/TourStatus";
-import CheckmarkIcon from "../../public/svg/checkmark.svg";
-import CloseIcon from "../../public/svg/close-red.svg";
-import Image from "next/image";
+import ThrashIcon from "@/app/public/svg/trash.svg";
+import Pencil from "../../public/svg/pencil.svg";
+import EyeIcon from "@/app/public/svg/eye.svg";
 import TableTabs from "./TableTabs";
+import ActionButtons from "./ActionButtons";
+import IconButton from "../Buttons/IconButton";
 
 function Table({
   tableHeaders,
@@ -26,7 +28,7 @@ function Table({
             {tableHeaders.map((header, index) => (
               <th
                 key={index}
-                className={`py-2 px-4 ${header.additionalClasses}`}
+                className={`py-2 px-4 ${header.additionalClasses} `}
               >
                 {header.label}
               </th>
@@ -45,42 +47,38 @@ function Table({
             </tr>
           ) : (
             tours.map((tour) => (
-              <tr key={tour.id} className="border-b-2 ">
+              <tr key={tour.id} className="border-b-2 text-center ">
                 <td className=" text-center  ">{tour.title}</td>
-                <td className="text-center smallPhone:hidden tablet:table-cell ">
+                <td className="text-center  tablet:table-cell ">
                   {tour.createdAt}
                 </td>
-                <td className="text-center smallPhone:hidden web:table-cell ">
+                <td className="text-center  web:table-cell ">
+                  <TourStatus status={tour.status} />
                   {tour.creatorName}
                 </td>
-                <td className="text-center smallPhone:hidden tablet:table-cell ">
-                  <TourStatus status={tour.status} />
+                <td className="smallPhone:hidden tablet:block text-center  ">
+                  {activeTab === "My Tours" ? (
+                    <IconButton
+                      text=""
+                      icon={Pencil}
+                      className="border-[3px] p-2 border-[#13294B] rounded-[5px]  m-auto"
+                    />
+                  ) : (
+                    <div className="m-auto border-red-500">
+                      <TourStatus status={tour.status} />
+                    </div>
+                  )}
                 </td>
-                <td className="py-2   text-center  ">
-                  <button
-                    className="w-[38px] h-[30px] rounded-[5px] border-2 border-[#027e00] mr-6 tablet:h-10 tablet:w-[48px]"
-                    onClick={() => handleAccept(tour.id)}
-                  >
-                    <Image
-                      src={CheckmarkIcon}
-                      className="mx-auto"
-                      width={24}
-                      height={24}
-                      alt="Accept"
+                <td className="py-2  ">
+                  {activeTab === "Bought Tours" ? (
+                    <IconButton
+                      text=""
+                      icon={EyeIcon}
+                      className="border-[3px] p-2 border-[#13294B] rounded-[5px] "
                     />
-                  </button>
-                  <button
-                    className="w-[38px] h-[30px] rounded-[5px] border-2 border-[#e80000] tablet:h-10 tablet:w-[48px]"
-                    onClick={() => handleDecline(tour.id)}
-                  >
-                    <Image
-                      src={CloseIcon}
-                      className="mx-auto"
-                      width={24}
-                      height={24}
-                      alt="Decline"
-                    />
-                  </button>
+                  ) : (
+                    ""
+                  )}
                 </td>
               </tr>
             ))

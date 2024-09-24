@@ -65,7 +65,7 @@ function PaymentPage() {
           <h1 className="web:text-[39px] tablet:text-[31px] phone:text-[25px]">
             Payment Information
           </h1>
-          <CloseButton onClick={handleClose} />
+          <CloseButton onClick={handleClose} text="Cancel" />
         </div>
         <div className="flex  gap-16  justify-center">
           <CheckoutForm />
