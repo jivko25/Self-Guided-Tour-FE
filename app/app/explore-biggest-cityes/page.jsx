@@ -2,12 +2,14 @@
 import React from "react";
 import CardSphera from "../components/HomePage/CardSphera/CardSphera";
 import { useRouter } from "next/navigation";
+import burgas from "../public/images/burgas.png";
+
 function page() {
   const router = useRouter();
 
   const exploreBiggestCities = [
     {
-      thumbnailImageUrl: "/images/burgas.png",
+      thumbnailImageUrl: {burgas},
        destination: "Sofia",
     },
     {
