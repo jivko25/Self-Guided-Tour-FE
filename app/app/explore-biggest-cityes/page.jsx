@@ -160,25 +160,27 @@ function page() {
     },
   ];
   return (
-    <div className="flex flex-col items-center justify-center p-4 w-full h-full">
+    <div className="flex flex-col items-center justify-center p-4 w-full h-full phone:p-[10px] tablet:p-[20px] smallPhone:p-[0px]">
       <h1 className="text-center text-[#081120] web:text-[39px] tablet:text-[35px] phone:text-[25px] smallPhone:text-[20px] font-medium font-['Inter'] leading-[58.50px] web:my-[100px] tablet:my-[70px] phone:my-[30px] smallPhone:my-[30px]">
         Discover your next exiting trip
       </h1>
-      <div className="flex flex-col w-full h-full p-6">
-        <h4 className="flex w-full justify-start items-start text-[#081120] web:text-[31px] tablet:text-[31px] phone:text-[20px] smallPhone:text-[16px] font-medium font-['Inter'] mb-[50px]">
+      <div className="flex flex-col w-full h-full p-6 phone:p-[0px] tablet:p-[10px] smallPhone:p-[0px]">
+        <h4 className="flex w-full justify-start items-start text-[#081120] web:text-[31px] tablet:text-[31px] phone:text-[20px] smallPhone:text-[16px] font-medium font-['Inter'] mb-[50px] pl-[10px]">
           Explore Biggest Towns in Bulgaria
         </h4>
-        <div className="flex w-full items-center justify-center web:gap-[100px] tablet:gap-[50px] phone:gap-[30px] smallPhone:gap-[30px] pb-[100px] flex-wrap overflow-x-auto overflow-hidden">
+        <div className="flex w-full items-center justify-center web:gap-[100px] tablet:gap-[50px] phone:gap-[30px] smallPhone:gap-[0px] pb-[100px] flex-wrap">
           {exploreBiggestCities.map((place, index) => (
             <div
+              key={index}
               className="
                 web:w-[300px]
                 tablet:w-[180px]
                 phone:w-[100px]
-                smallPhone:w-[100px]"
+                smallPhone:w-[100px]
+                mb-[30px]
+                "
             >
               <CardSphera
-                key={index}
                 thumbnailImageUrl={place.thumbnailImageUrl}
                 destination={place.destination}
                 onClick={() =>
