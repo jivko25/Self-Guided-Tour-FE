@@ -92,6 +92,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks, interval = 3000 }) {
             >
               <Image
                 src={image}
+                sizes="(max-width: 1280px) 50vw, 33vw"
                 fill={true}
                 style={{ objectFit: "cover" }}
                 alt={`Landmark Image ${i + 1}`}
@@ -101,7 +102,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks, interval = 3000 }) {
             </div>
           ))}
       </div>
-      <div className="flex justify-center mt-4 space-x-2">
+      <div className="flex justify-center mt-4 space-x-1">
         {images.map((_, index) => (
           <span
             key={index}
