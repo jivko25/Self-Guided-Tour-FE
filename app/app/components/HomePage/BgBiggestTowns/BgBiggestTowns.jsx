@@ -74,11 +74,11 @@ function BgBiggestTowns() {
       </div>
 
       <div
-        className="flex items-center justify-center w-full px-[20px]
-        overflow-x-auto whitespace-nowrap
-        web:max-w-[1792px] web:gap-[50px]
-        tablet:gap-[40px] tablet:justify-center
-        phone:gap-[20px] smallPhone:gap-[20px]"
+        className="flex items-center justify-center w-full px-[20px] hideScroll
+        overflow-x-auto
+        web:max-w-[1792px] web:gap-[5%]
+        tablet:gap-[15px] tablet:justify-center
+        phone:gap-[0px] smallPhone:gap-[0px]"
       >
         {exploreBiggestCities.map((place, index) => (
           <div key={index} className="inline-block">
