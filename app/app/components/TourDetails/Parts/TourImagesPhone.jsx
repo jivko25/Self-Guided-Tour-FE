@@ -24,17 +24,19 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
       {landmarks &&
         landmarks.flatMap((landmark, index) =>
           landmark.resources
-            ? landmark.resources.map((resource, resourceIndex) => (
-                <img
-                  key={resource.resourceId}
-                  className="object-cover rounded-[5px]
+            ? landmark.resources
+                .filter((resource) => resource.resourceType === "Image")
+                .map((resource, resourceIndex) => (
+                  <img
+                    key={resource.resourceId}
+                    className="object-cover rounded-[5px]
                       phone:w-[361px] phone:h-[260px]
                       smallPhone:w-[361px] smallPhone:h-[260px]
                       "
-                  src={resource.resourceUrl}
-                  alt={`Landmark Image ${index + 1}`}
-                />
-              ))
+                    src={resource.resourceUrl}
+                    alt={`Landmark Image ${index + 1}`}
+                  />
+                ))
             : []
         )}
     </div>

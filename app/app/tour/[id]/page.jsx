@@ -4,7 +4,6 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext.jsx";
 import { axiosTour } from "../../../api/axios";
-import "./tour.scss";
 import TourTitle from "@/app/components/TourDetails/Parts/TourTitle";
 import TourInfo from "@/app/components/TourDetails/Parts/TourInfo";
 import TourPurchase from "@/app/components/TourDetails/Parts/TourPurchase";
@@ -40,7 +39,7 @@ function TourDetails() {
     router.push(`/create?edit=${tour.tourId}`);
   };
 
-  console.log(tour);
+  // console.log(tour);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -58,9 +57,9 @@ function TourDetails() {
   } = tour;
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full relative">
       <div
-        className="flex flex-col justify-center items-center
+        className="flex flex-col justify-center items-center 
       web:w-[80%] web:mt-[30px]
       tablet:mt-[100px]
       phone:mt-[50px] phone:p-[20px]
@@ -79,6 +78,7 @@ function TourDetails() {
           landmarks={landmarks}
         />
         <TourImagesWebTablet
+          title={title}
           thumbnailImageUrl={thumbnailImageUrl}
           landmarks={landmarks}
         />
@@ -120,11 +120,3 @@ function TourDetails() {
   );
 }
 export default TourDetails;
-// function TourDetailsWrapper() {
-//   return (
-//     <Suspense fallback={<p>Loading Tour Details...</p>}>
-//       <TourDetails />
-//     </Suspense>
-//   );
-// }
-// export default TourDetailsWrapper;
