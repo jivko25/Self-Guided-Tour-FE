@@ -1,28 +1,31 @@
-"use client"
+"use client";
 import React from "react";
 import CardSphera from "../components/HomePage/CardSphera/CardSphera";
 import { useRouter } from "next/navigation";
+import sofia from "../public/images/SofiaImgExploreBiggestTownsBulgaria.jpeg";
 import burgas from "../public/images/burgas.png";
+import varna from "../public/images/varna.png";
+import plovdiv from "../public/images/plovdiv.png";
 
 function page() {
   const router = useRouter();
 
   const exploreBiggestCities = [
     {
-      thumbnailImageUrl: {burgas},
-       destination: "Sofia",
+      thumbnailImageUrl: sofia,
+      destination: "Sofia",
     },
     {
-      thumbnailImageUrl: "/images/plovdiv.png",
-       destination: "Plovdiv",
+      thumbnailImageUrl: plovdiv,
+      destination: "Plovdiv",
     },
     {
-      thumbnailImageUrl: "/images/varna.png",
-       destination: "Varna",
+      thumbnailImageUrl: varna,
+      destination: "Varna",
     },
     {
-      thumbnailImageUrl: "/images/burgas.png",
-       destination: "Burgas",
+      thumbnailImageUrl: burgas,
+      destination: "Burgas",
     },
   ];
   return (
@@ -31,16 +34,18 @@ function page() {
         Discover your next exiting trip
       </h1>
       <div className="flex flex-col w-full h-full p-4 ">
-        <h3 className="flex w-full justify-start items-start text-[#081120] text-[31px] font-medium font-['Inter']">
+        <h3 className="flex w-full justify-start items-start text-[#081120] text-[31px] font-medium font-['Inter'] mb-[50px]">
           Explore Biggest Towns in Bulgaria
         </h3>
-        <div className="flex flex-wrap">
+        <div className="flex w-full items-center justify-center gap-12  flex-wrap">
           {exploreBiggestCities.map((place, index) => (
             <CardSphera
               key={index}
               thumbnailImageUrl={place.thumbnailImageUrl}
-              destination={place. destination}
-              onClick={() => router.push(`/explore?search=${place.destination}`)}
+              destination={place.destination}
+              onClick={() =>
+                router.push(`/explore?search=${place.destination}`)
+              }
             />
           ))}
         </div>
