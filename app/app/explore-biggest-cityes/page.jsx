@@ -168,7 +168,7 @@ function page() {
         <h4 className="flex w-full justify-start items-start text-[#081120] web:text-[31px] tablet:text-[31px] phone:text-[20px] smallPhone:text-[16px] font-medium font-['Inter'] mb-[50px]">
           Explore Biggest Towns in Bulgaria
         </h4>
-        <div className="flex w-full items-center justify-center web:gap-[100px] tablet:gap-[50px] phone:gap-[30px] smallPhone:gap-[30px] pb-[100px] flex-wrap">
+        <div className="flex w-full items-center justify-center web:gap-[100px] tablet:gap-[50px] phone:gap-[30px] smallPhone:gap-[30px] pb-[100px] flex-wrap overflow-x-auto overflow-hidden">
           {exploreBiggestCities.map((place, index) => (
             <CardSphera
               key={index}
