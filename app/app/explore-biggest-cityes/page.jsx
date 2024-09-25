@@ -170,14 +170,22 @@ function page() {
         </h4>
         <div className="flex w-full items-center justify-center web:gap-[100px] tablet:gap-[50px] phone:gap-[30px] smallPhone:gap-[30px] pb-[100px] flex-wrap overflow-x-auto overflow-hidden">
           {exploreBiggestCities.map((place, index) => (
-            <CardSphera
-              key={index}
-              thumbnailImageUrl={place.thumbnailImageUrl}
-              destination={place.destination}
-              onClick={() =>
-                router.push(`/explore?search=${place.destination}`)
-              }
-            />
+            <div
+              className="
+                web:w-[300px]
+                tablet:w-[180px]
+                phone:w-[100px]
+                smallPhone:w-[100px]"
+            >
+              <CardSphera
+                key={index}
+                thumbnailImageUrl={place.thumbnailImageUrl}
+                destination={place.destination}
+                onClick={() =>
+                  router.push(`/explore?search=${place.destination}`)
+                }
+              />
+            </div>
           ))}
         </div>
       </div>
