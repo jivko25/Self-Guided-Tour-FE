@@ -63,7 +63,7 @@ function BgBiggestTowns() {
         phone:
         smallPhone:
       "
-          href="/explore"
+          href="/explore-biggest-cityes"
         >
           <span
             className="text-[#081120] text-base font-semibold font-['Inter']
