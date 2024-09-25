@@ -25,11 +25,11 @@ function CardSphera({ thumbnailImageUrl, destination, onClick }) {
       />
 
       <h2
-        className="text-[#081120]  font-medium font-['Inter']
-        web:text-[31px]
-        tablet:text-[25px]
-        phone:text-[13px]
-        smallPhone:text-[13px]
+        className="text-[#081120]  font-medium font-['Inter'] text-center
+        web:text-[31px] web:w-[300px]
+        tablet:text-[25px] tablet:w-[180px]
+        phone:text-[13px] phone:w-[100px]
+        smallPhone:text-[13px] smallPhone:w-[100px]
         "
       onClick={onClick}
       >
