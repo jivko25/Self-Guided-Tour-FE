@@ -2,7 +2,7 @@
 import React from "react";
 import CardSphera from "../components/HomePage/CardSphera/CardSphera";
 import { useRouter } from "next/navigation";
-import sofia from "../public/images/SofiaImgExploreBiggestTownsBulgaria.jpeg";
+import sofia from "../public/images/sofia.png";
 import burgas from "../public/images/burgas.png";
 import varna from "../public/images/varna.png";
 import plovdiv from "../public/images/plovdiv.png";
