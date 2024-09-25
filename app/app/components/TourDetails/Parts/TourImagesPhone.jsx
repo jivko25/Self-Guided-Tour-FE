@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-function TourImagesPhone({ thumbnailImageUrl, landmarks, interval = 3000 }) {
+function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [images, setImages] = useState([]);
   const sliderRef = useRef(null);
