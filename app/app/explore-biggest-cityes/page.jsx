@@ -184,7 +184,7 @@ function page() {
                 thumbnailImageUrl={place.thumbnailImageUrl}
                 destination={place.destination}
                 onClick={() =>
-                  router.push(`/explore?search=${place.destination}`)
+                  router.push(`/explore?page=1&search=${place.destination}`)
                 }
               />
             </div>
