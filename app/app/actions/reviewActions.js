@@ -9,8 +9,25 @@ import { axiosReview } from "@/api/axios.js";
  */
 export async function createReview(tourId, rating, comment) {
     try {
-        const response = await axiosReview.post(`create-review/${tourId}`, {rating, comment});
+        const response = await axiosReview.post(`create-review/${tourId}`, { rating, comment });
         return response.data.result;
+    } catch (error) {
+        if (error.response.data) {
+            throw error.response.data;
+        } else {
+            throw error.response;
+        }
+    }
+}
+
+/**
+ * @param {number} tourId 
+ * @return {object}
+ */
+export async function getReviewByTourId(tourId) {
+    try {
+        const response = await axiosReview.get("", { tourId });
+        return response;
     } catch (error) {
         if (error.response.data) {
             throw error.response.data;

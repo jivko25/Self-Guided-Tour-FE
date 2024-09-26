@@ -3,7 +3,6 @@
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext.jsx";
-import { axiosTour } from "../../../api/axios";
 import TourTitle from "@/app/components/TourDetails/Parts/TourTitle";
 import TourInfo from "@/app/components/TourDetails/Parts/TourInfo";
 import TourPurchase from "@/app/components/TourDetails/Parts/TourPurchase";
@@ -13,7 +12,7 @@ import TourImagesPhone from "@/app/components/TourDetails/Parts/TourImagesPhone"
 import TourImagesWebTablet from "@/app/components/TourDetails/Parts/TourImagesWebTablet";
 import Review from "@/app/components/Review/Review";
 import { getOne } from "@/app/actions/tourActions";
-import { createReview } from "@/app/actions/reviewActions";
+import { createReview, getReviewByTourId } from "@/app/actions/reviewActions";
 import { usePopup } from "@/app/context/popupContext";
 
 function TourDetails() {
@@ -39,28 +38,28 @@ function TourDetails() {
         setLoading(false);
       });
 
-    // createReview(id, 1, "success")
-    //   .then((data) => {
-    //     // console.log(data);
-    //   })
-    //   .catch((err) => {
-    //     if (err.errors) {
-    //       popup({
-    //         type: "ERROR",
-    //         message: err.errors.Rating,
-    //       });
-    //     } else if (err.errorMessages) {
-    //       popup({
-    //         type: "ERROR",
-    //         message: err.errorMessages.join("\r\n"),
-    //       });
-    //     } else {
-    //       popup({
-    //         type: "ERROR",
-    //         message: err.statusText,
-    //       });
-    //     }
-    //   });
+    getReviewByTourId(id)
+      .then((data) => {
+        // console.log(data);
+      })
+      .catch((err) => {
+        if (err.errors) {
+          popup({
+            type: "ERROR",
+            message: err.errors.Rating,
+          });
+        } else if (err.errorMessages) {
+          popup({
+            type: "ERROR",
+            message: err.errorMessages.join("\r\n"),
+          });
+        } else {
+          popup({
+            type: "ERROR",
+            message: err.statusText,
+          });
+        }
+      });
   }, [id]);
 
   const handleEditClick = () => {
@@ -85,8 +84,25 @@ function TourDetails() {
     summary,
   } = tour;
 
-  const handleReview = (rating, comment) => {
-    console.log(rating, comment);
+  const handleReview = async ({ rating, comment }) => {
+    try {
+      const result = await createReview(id, rating, comment);
+    } catch (err) {
+      let message = "Something went wrong!";
+
+      if (err.errors) {
+        message = err.errors.Rating;
+      } else if (err.errorMessages) {
+        message = err.errorMessages.join("\r\n");
+      } else if (err.statusText) {
+        message = err.statusText;
+      }
+
+      popup({
+        type: "ERROR",
+        message: message,
+      });
+    }
   };
 
   return (
@@ -145,7 +161,7 @@ function TourDetails() {
           router={router}
         />
 
-        {/* <Review title={title} handleReview={handleReview}/> */}
+        {/* <Review title={title} handleReview={handleReview} /> */}
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}
