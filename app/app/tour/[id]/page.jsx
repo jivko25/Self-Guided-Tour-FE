@@ -13,6 +13,8 @@ import TourImagesPhone from "@/app/components/TourDetails/Parts/TourImagesPhone"
 import TourImagesWebTablet from "@/app/components/TourDetails/Parts/TourImagesWebTablet";
 import Review from "@/app/components/Review/Review";
 import { getOne } from "@/app/actions/tourActions";
+import { createReview } from "@/app/actions/reviewActions";
+import { usePopup } from "@/app/context/popupContext";
 
 function TourDetails() {
   const { id } = useParams();
@@ -21,6 +23,8 @@ function TourDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const popup = usePopup();
+
   useEffect(() => {
     getOne(id)
       .then((res) => {
@@ -34,6 +38,29 @@ function TourDetails() {
       .finally(() => {
         setLoading(false);
       });
+
+    // createReview(id, 1, "success")
+    //   .then((data) => {
+    //     // console.log(data);
+    //   })
+    //   .catch((err) => {
+    //     if (err.errors) {
+    //       popup({
+    //         type: "ERROR",
+    //         message: err.errors.Rating,
+    //       });
+    //     } else if (err.errorMessages) {
+    //       popup({
+    //         type: "ERROR",
+    //         message: err.errorMessages.join("\r\n"),
+    //       });
+    //     } else {
+    //       popup({
+    //         type: "ERROR",
+    //         message: err.statusText,
+    //       });
+    //     }
+    //   });
   }, [id]);
 
   const handleEditClick = () => {
