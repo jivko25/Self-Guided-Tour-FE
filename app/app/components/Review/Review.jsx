@@ -33,7 +33,7 @@ export default function Review({title, handleReview }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (handleReview) {
-      handleReview(rating, comment);
+      handleReview({rating, comment});
       setSubmitted(true);
     }
   };

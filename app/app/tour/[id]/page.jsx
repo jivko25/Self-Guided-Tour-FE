@@ -1,7 +1,7 @@
 "use client";
 
-import { useParams, useRouter, useSearchParams } from "next/navigation";
-import React, { Suspense, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext.jsx";
 import { axiosTour } from "../../../api/axios";
 import TourTitle from "@/app/components/TourDetails/Parts/TourTitle";
@@ -12,6 +12,7 @@ import HowJauntsterWorks from "@/app/components/TourDetails/Parts/HowJauntsterWo
 import TourImagesPhone from "@/app/components/TourDetails/Parts/TourImagesPhone";
 import TourImagesWebTablet from "@/app/components/TourDetails/Parts/TourImagesWebTablet";
 import Review from "@/app/components/Review/Review";
+import { getOne } from "@/app/actions/tourActions";
 
 function TourDetails() {
   const { id } = useParams();
@@ -21,18 +22,18 @@ function TourDetails() {
   const [error, setError] = useState(null);
   const router = useRouter();
   useEffect(() => {
-    const fetchTourDetails = async () => {
-      try {
-        const res = await axiosTour.get(`/${id}`);
-        setTour(res.data.result);
-      } catch (err) {
-        console.log(err);
-        setError(err.message);
-      } finally {
+    getOne(id)
+      .then((res) => {
+        const { data, error } = res;
+        if (data) {
+          setTour(data);
+        } else if (error) {
+          setError(error.message);
+        }
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-    fetchTourDetails();
+      });
   }, [id]);
 
   const handleEditClick = () => {
@@ -59,8 +60,7 @@ function TourDetails() {
 
   const handleReview = (rating, comment) => {
     console.log(rating, comment);
-    
-  }
+  };
 
   return (
     <div className="flex flex-col w-full px-[10px] tablet:items-center tablet:px-0">

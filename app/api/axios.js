@@ -42,7 +42,16 @@ export const axiosAdmin = Axios.create({
   httpsAgent: agent,
 });
 
+export const axiosReview = Axios.create({
+  baseURL: `${BASE_URL}/Review/`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  httpsAgent: agent,
+});
+
 // Attach the interceptor to axios, axiosTour and axiosAdmin
 setupSessionInterceptors(axios);
 setupSessionInterceptors(axiosTour);
 setupSessionInterceptors(axiosAdmin);
+setupSessionInterceptors(axiosReview);
