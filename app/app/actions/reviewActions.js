@@ -26,7 +26,7 @@ export async function createReview(tourId, rating, comment) {
  */
 export async function getReviewByTourId(tourId) {
     try {
-        const response = await axiosReview.get("", { tourId });
+        const response = await axiosReview.get(`?tourId=${tourId}`);
         return response;
     } catch (error) {
         if (error.response.data) {
