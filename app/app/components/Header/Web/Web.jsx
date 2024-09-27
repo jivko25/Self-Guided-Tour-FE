@@ -3,6 +3,10 @@ import Link from "next/link";
 import Button from "../../Buttons/Button";
 import Btn from "../../Buttons/Btn.jsx";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import LogoColored from "@/app/public/svg/logo-colored.svg"
+
+
 export default function Web({ isAuthenticated, handleLogout }) {
   const pathname = usePathname();
 
@@ -23,7 +27,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
         className="text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
         href="/"
       >
-        LOGO
+        <Image src={LogoColored} width={133} height={94} alt="Logo" priority={true}/>
       </Link>
 
       <div className="flex items-center">

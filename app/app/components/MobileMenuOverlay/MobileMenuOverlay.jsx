@@ -3,6 +3,7 @@ import CloseIcon from "../../public/svg/close.svg";
 import Link from "next/link.js";
 import MobileMenuOverlayGuest from "./MobileMenuOverlayGuest.jsx";
 import MobileMenuOverlayUser from "./MobileMenuOverlayUser.jsx";
+import LogoColored from "@/app/public/svg/logo-colored.svg"
 
 export default function MobileMenuOverlay({
   menuOverlayVisible,
@@ -23,7 +24,7 @@ export default function MobileMenuOverlay({
           className="flex justify-center items-center text-center text-gray-900 font-medium text-2xl p-6"
           onClick={menuOverlayVisible}
         >
-          LOGO
+          <Image src={LogoColored} width={133} height={94} alt="Logo" priority={true}/>
         </Link>
         <div className="flex flex-col phone:mb-32 ">
           {isAuthenticated ? (
