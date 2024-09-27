@@ -61,13 +61,6 @@ const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
             </>
           ) : (
             <>
-              <Btn
-                type="button"
-                variant="transparent"
-                text="Menu"
-                link="/menu"
-                onClick={handleClick}
-              />
               <div className="flex mt-[30px]">
                 <div className="mx-2.5 w-[182px]">
                   <Btn

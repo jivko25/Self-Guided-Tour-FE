@@ -58,8 +58,9 @@ export default function Web({ isAuthenticated, handleLogout }) {
             />
             <div>
               <Btn
+                className={signInButtonClass}
                 type="button"
-                variant="transparent"
+                variant="outlined"
                 text="Menu"
                 link="/menu"
               />

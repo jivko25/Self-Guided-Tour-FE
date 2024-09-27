@@ -41,7 +41,7 @@ function TourDetails() {
 
     getReviewsByTourId(id)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
       })
       .catch((err) => {
         if (err.errors) {
