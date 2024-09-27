@@ -12,8 +12,9 @@ import TourImagesPhone from "@/app/components/TourDetails/Parts/TourImagesPhone"
 import TourImagesWebTablet from "@/app/components/TourDetails/Parts/TourImagesWebTablet";
 import Review from "@/app/components/Review/Review";
 import { getOne } from "@/app/actions/tourActions";
-import { createReview, getReviewByTourId } from "@/app/actions/reviewActions";
+import { createReview, getReviewsByTourId } from "@/app/actions/reviewActions";
 import { usePopup } from "@/app/context/popupContext";
+import { getBoughtTours } from "@/app/actions/profileActions";
 
 function TourDetails() {
   const { id } = useParams();
@@ -38,7 +39,7 @@ function TourDetails() {
         setLoading(false);
       });
 
-    getReviewByTourId(id)
+    getReviewsByTourId(id)
       .then((data) => {
         console.log(data);
       })
@@ -60,6 +61,10 @@ function TourDetails() {
           });
         }
       });
+
+    getBoughtTours()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }, [id]);
 
   const handleEditClick = () => {

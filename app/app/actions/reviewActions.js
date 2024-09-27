@@ -24,7 +24,7 @@ export async function createReview(tourId, rating, comment) {
  * @param {number} tourId 
  * @return {object}
  */
-export async function getReviewByTourId(tourId) {
+export async function getReviewsByTourId(tourId) {
     try {
         const response = await axiosReview.get(`?tourId=${tourId}`);
         return response;
