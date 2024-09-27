@@ -53,7 +53,7 @@ export default function Location({
         )}
         <Link href={path} className="right-[42px] cursor-pointer absolute">
           <Image
-            src={Pencil}
+            src={pencil}
             width={24}
             height={24}
             alt="pencil"
@@ -62,7 +62,7 @@ export default function Location({
         </Link>
         <div className="cursor-pointer absolute right-[8px]">
           <Image
-            src={Trashcan}
+            src={trashcan}
             width={24}
             height={24}
             alt="trashcan"
