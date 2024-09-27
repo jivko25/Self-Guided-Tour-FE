@@ -24,7 +24,7 @@ export default function MobileMenuOverlay({
           className="flex justify-center items-center text-center text-gray-900 font-medium text-2xl p-6"
           onClick={menuOverlayVisible}
         >
-          <Image src={LogoColored} width={133} height={94} alt="Logo" priority={true}/>
+          <Image src={LogoColored} width={103} height={64} alt="Logo" priority={true}/>
         </Link>
         <div className="flex flex-col phone:mb-32 ">
           {isAuthenticated ? (
