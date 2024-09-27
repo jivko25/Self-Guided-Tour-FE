@@ -71,7 +71,7 @@ export const CreateTourProvider = ({ children }) => {
     if (storedTour) {
       const tourToEdit = JSON.parse(storedTour);
       // Set form data to the tourToEdit object if found
-      console.log(tourToEdit);
+
       setFormData({
         step1Data: {
           tour: tourToEdit.title || "",
@@ -107,9 +107,10 @@ export const CreateTourProvider = ({ children }) => {
       setIsEditMode(true);
       sessionStorage.removeItem(EDIT_TOUR_KEY);
     }
-  }, []);
+  }, [editModeTourId]);
 
-  console.log(formData);
+  console.log(isEditMode);
+
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
     if (!hasPrompted.current && !editModeTourId) {
@@ -133,8 +134,6 @@ export const CreateTourProvider = ({ children }) => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(emptyFormData));
     setOpenModal(false);
   };
-
-  console.log(formData);
 
   const nextStep = () => {
     if (validateStep(step, formData)) {
