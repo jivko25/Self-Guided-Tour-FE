@@ -2,6 +2,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour, updateTour } from "../actions/tourActions.js";
+import { createTour, updateTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
@@ -73,6 +74,7 @@ export const CreateTourProvider = ({ children }) => {
 
     if (storedTour) {
       // Set form data to the tourToEdit object if found
+
       setFormData({
         step1Data: {
           tour: storedTour.title || "",
@@ -82,8 +84,7 @@ export const CreateTourProvider = ({ children }) => {
           price: storedTour.price || "",
         },
         step2Data:
-          storedTour.landmarks.map((landmark) => ({
-            landmarkId: landmark.landmarkId || null,
+          tourToEdit.landmarks.map((landmark) => ({
             latitude: landmark.latitude || null,
             longitude: landmark.longitude || null,
             location: landmark.locationName || "",
@@ -111,11 +112,9 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
-  console.log(isEditMode);
-
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
-    if (!hasPrompted.current && !editModeTourId) {
+    if (!hasPrompted.current && !editModeQuery) {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const data = JSON.parse(savedData);
 
@@ -219,8 +218,6 @@ export const CreateTourProvider = ({ children }) => {
         }));
 
         return {
-          landmarkId: landmark.landmarkId,
-          landmarkId: landmark.landmarkId,
           latitude: landmark.latitude,
           longitude: landmark.longitude,
           city: landmark.locationCity,
@@ -233,24 +230,12 @@ export const CreateTourProvider = ({ children }) => {
       }),
     };
 
-    // Validations
-    if (!tourData.thumbnailImage) {
+    if (!tourData.summary || !tourData.thumbnailImage) {
       popup({
         type: "ERROR",
-        message: "Thumbnail image is missing.",
+        message: "Missing thumbnail image or summary",
       });
-      return;
-    }
 
-    if (
-      !tourData.summary ||
-      tourData.summary.length < 10 ||
-      tourData.summary.length > 500
-    ) {
-      popup({
-        type: "ERROR",
-        message: "Summary must be between 10 and 500 characters long",
-      });
       return;
     }
 
@@ -262,8 +247,7 @@ export const CreateTourProvider = ({ children }) => {
       response = await createTour(tourData);
     }
 
-    const { error } = response;
-    console.log(response.data);
+    const { error } = await createTour(tourData);
 
     if (error) {
       Object.entries(error.errors).forEach(([field, messages]) => {

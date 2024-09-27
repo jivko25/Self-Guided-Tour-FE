@@ -1,5 +1,6 @@
 "use client";
 import {
+  useCreateTour,
   CreateTourProvider,
   useCreateTour,
 } from "../context/createTourContext.jsx";
@@ -48,10 +49,8 @@ export default function App() {
   return (
     //TODO: Add Skeleton to fallback
     <Suspense fallback={<div>Loading...</div>}>
-      <CreateTourProvider>
         <Stepper />
         <MultiStepForm />
-      </CreateTourProvider>
     </Suspense>
   );
 }
