@@ -2,7 +2,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour, updateTour } from "../actions/tourActions.js";
-import { createTour, updateTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
@@ -84,7 +83,7 @@ export const CreateTourProvider = ({ children }) => {
           price: storedTour.price || "",
         },
         step2Data:
-          tourToEdit.landmarks.map((landmark) => ({
+          storedTour.landmarks.map((landmark) => ({
             latitude: landmark.latitude || null,
             longitude: landmark.longitude || null,
             location: landmark.locationName || "",
@@ -94,10 +93,9 @@ export const CreateTourProvider = ({ children }) => {
             placeId: landmark.placeId || "",
             addFields:
               landmark.resources.map((resource) => ({
+                type: resource.resourceType || "",
+                url: resource.resourceUrl || "",
                 id: resource.resourceId || "",
-                resourceFile: null,
-                resourceUrl: resource.resourceUrl || "",
-                resourceType: resource.resourceType || "",
               })) || [],
           })) || [],
         step3Data: "",
@@ -108,13 +106,15 @@ export const CreateTourProvider = ({ children }) => {
       });
 
       setIsEditMode(true);
-      sessionStorage.removeItem(EDIT_TOUR_KEY); // Move this to ensure it's only removed after the data is set
+      sessionStorage.removeItem(EDIT_TOUR_KEY); 
     }
   }, []);
 
+  console.log(formData);
+
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
-    if (!hasPrompted.current && !editModeQuery) {
+    if (!hasPrompted.current && !editModeTourId) {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const data = JSON.parse(savedData);
 
