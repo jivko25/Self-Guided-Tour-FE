@@ -22,6 +22,8 @@ function TourDetails() {
   const [tour, setTour] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isBought, setIsBought] = useState(false);
+  const [isReviewd, setIsReviwed] = useState(false);
   const router = useRouter();
   const popup = usePopup();
 
@@ -32,6 +34,10 @@ function TourDetails() {
         if (data) {
           setTour(data);
         } else if (error) {
+          popup({
+            type: "ERROR",
+            message: error.message,
+          });
           setError(error.message);
         }
       })
@@ -45,22 +51,24 @@ function TourDetails() {
       })
       .catch((err) => {
         if (err.errors) {
-          popup({
-            type: "ERROR",
-            message: err.errors.Rating,
-          });
+          setError(err.errors.Rating);
         } else if (err.errorMessages) {
-          popup({
-            type: "ERROR",
-            message: err.errorMessages.join("\r\n"),
-          });
+          setError(err.errorMessages.join("\r\n"));
         } else {
-          popup({
-            type: "ERROR",
-            message: err.statusText,
-          });
+          setError(err.statusText);
         }
       });
+
+      useEffect(() => {
+        if (error) {
+          popup({
+            type: "ERROR",
+            message: error.
+          });
+        }
+      }, [error]);
+
+
 
     getBoughtTours()
       .then((res) => console.log(res))
@@ -75,8 +83,7 @@ function TourDetails() {
   // console.log(tour);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!tour) return <p>No tour data found</p>;
+  if (!tour) return setError("No tour data found");
 
   const {
     title,
@@ -93,20 +100,15 @@ function TourDetails() {
     try {
       const result = await createReview(id, rating, comment);
     } catch (err) {
-      let message = "Something went wrong!";
-
       if (err.errors) {
-        message = err.errors.Rating;
+        setError(err.errors.Rating);
       } else if (err.errorMessages) {
-        message = err.errorMessages.join("\r\n");
+        setError(err.errorMessages.join("\r\n"));
       } else if (err.statusText) {
-        message = err.statusText;
+       setError(err.statusText);
+      } else {
+        setError("Something went wrong!");
       }
-
-      popup({
-        type: "ERROR",
-        message: message,
-      });
     }
   };
 
