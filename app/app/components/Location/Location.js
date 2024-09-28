@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import pencil from "../../public/svg/pencil.svg";
-import trashcan from "../../public/svg/trash.svg";
+import Pencil from "../../public/svg/pencil.svg";
+import Trashcan from "../../public/svg/trash.svg";
 import Image from "next/image.js";
 import { useEffect, useState } from "react";
 
