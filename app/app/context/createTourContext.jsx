@@ -67,23 +67,21 @@ export const CreateTourProvider = ({ children }) => {
 
   // Check for the tourToEdit object in sessionStorage
   useEffect(() => {
-    const storedTour = sessionStorage.getItem(EDIT_TOUR_KEY)
-      ? JSON.parse(sessionStorage.getItem(EDIT_TOUR_KEY))
-      : null;
-
+    const storedTour = sessionStorage.getItem(EDIT_TOUR_KEY);
     if (storedTour) {
+      const tourToEdit = JSON.parse(storedTour);
       // Set form data to the tourToEdit object if found
-
       setFormData({
         step1Data: {
-          tour: storedTour.title || "",
-          destination: storedTour.destination || "",
-          duration: storedTour.estimatedDuration || "",
-          tourType: storedTour.tourType || "",
-          price: storedTour.price || "",
+          tour: tourToEdit.title || "", //
+          destination: tourToEdit.destination || "", //
+          duration: tourToEdit.estimatedDuration || "",
+          tourType: tourToEdit.tourType || "",
+          price: tourToEdit.price || "",
         },
         step2Data:
-          storedTour.landmarks.map((landmark) => ({
+          tourToEdit.landmarks.map((landmark) => ({
+            landmarkId: landmark.landmarkId || null,
             latitude: landmark.latitude || null,
             longitude: landmark.longitude || null,
             location: landmark.locationName || "",
@@ -100,13 +98,12 @@ export const CreateTourProvider = ({ children }) => {
           })) || [],
         step3Data: "",
         step4Data: {
-          summary: storedTour.summary || "",
-          thumbnailImage: storedTour.thumbnailImageUrl || null,
+          summary: tourToEdit.summary || "",
+          thumbnailImage: tourToEdit.thumbnailImageUrl || null,
         },
       });
-
       setIsEditMode(true);
-      sessionStorage.removeItem(EDIT_TOUR_KEY); 
+      sessionStorage.removeItem(EDIT_TOUR_KEY);
     }
   }, []);
 
@@ -209,15 +206,13 @@ export const CreateTourProvider = ({ children }) => {
       thumbnailImage: formData.step4Data.thumbnailImage,
       estimatedDuration: formData.step1Data.duration,
       landmarks: formData.step2Data.map((landmark) => {
-        const resources = landmark.addFields.map((data) => ({
-          resourceId: data.id || "",
-          resourceFile:
-            data.resourceFile instanceof File ? data.resourceFile : null,
-          resourceUrl: data.resourceUrl || "",
-          resourceType: data.resourceType || "",
-        }));
+        const resources = [];
+        landmark.addFields.forEach((data) => {
+          resources.push(data);
+        });
 
         return {
+          landmarkId: landmark.landmarkId,
           latitude: landmark.latitude,
           longitude: landmark.longitude,
           city: landmark.locationCity,
@@ -239,6 +234,7 @@ export const CreateTourProvider = ({ children }) => {
       return;
     }
 
+    // If it's edit mode update the tour else create a new tour
     let response;
     if (isEditMode) {
       const tourId = editModeTourId;
@@ -247,7 +243,7 @@ export const CreateTourProvider = ({ children }) => {
       response = await createTour(tourData);
     }
 
-    const { error } = await createTour(tourData);
+    const { error } = response;
 
     if (error) {
       Object.entries(error.errors).forEach(([field, messages]) => {
@@ -257,7 +253,7 @@ export const CreateTourProvider = ({ children }) => {
         });
       });
     } else {
-      router.push("/");
+      router.push(`/tour/${editModeTourId}`);
       popup({
         type: "SUCCESS",
         message: "Your tour has been successfully created",
