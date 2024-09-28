@@ -3,12 +3,15 @@
 import Link from "next/link";
 import Btn from "../../../Buttons/Btn";
 import Search from "@/app/components/Search/Search";
+import Image from "next/image";
+import LogoColored from "@/app/public/svg/logo-colored.svg";
+
 const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
   const handleClick = () => {
     if (handleNavClose) {
       handleNavClose();
     }
-  }
+  };
 
   return (
     <nav className="absolute flex flex-col w-full bg-neutral-50 h-[404px]">
@@ -16,10 +19,19 @@ const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
         href="/"
         className="flex justify-center items-center text-center text-gray-900 font-medium text-2xl p-6"
       >
-        LOGO
+        <Image
+          src={LogoColored}
+          width={83}
+          style={{ height: "auto" }}
+          alt="Logo"
+          priority={true}
+        />
       </Link>
 
-      <Search variant="tabletNavigationSearch" handleNavClose={handleNavClose}/>
+      <Search
+        variant="tabletNavigationSearch"
+        handleNavClose={handleNavClose}
+      />
 
       <div className="flex items-center justify-center w-full mt-[30px]">
         <div className="flex flex-col items-start w-full tablet:max-w-[610px] ">

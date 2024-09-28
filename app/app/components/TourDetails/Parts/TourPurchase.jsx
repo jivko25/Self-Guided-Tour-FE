@@ -2,7 +2,7 @@ import React from 'react'
 import Star from '../Svgs/Star'
 import Btn from '../../Buttons/Btn'
 
-function TourPurchase({ destination, price, id, router }) {
+function TourPurchase({ destination, price, id, router, isBought, isReviewed, handleReviewing }) {
   return (
     <div
           className="flex flex-col h-full flex-wrap items-start justify-center w-full
@@ -62,13 +62,23 @@ function TourPurchase({ destination, price, id, router }) {
           </div>
 
           <div className="web:w-[430px] tablet:w-[282px] w-full">
-            <Btn
+            {isBought ? (
+              <Btn
+              variant="filled"
+              text="Rate This Tour"
+              fullWidth
+              disabled={isReviewed}
+              onClick={handleReviewing}
+            />
+          ) : (
+              <Btn
               type="submit"
               variant="filled"
               text="Buy Tour"
               fullWidth
               onClick={() => router.push(`/payment?tourId=${id}`)}
             />
+            )}
           </div>
         </div>
   )

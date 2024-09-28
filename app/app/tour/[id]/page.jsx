@@ -15,6 +15,7 @@ import { getOne } from "@/app/actions/tourActions";
 import { createReview, getReviewsByTourId } from "@/app/actions/reviewActions";
 import { usePopup } from "@/app/context/popupContext";
 import { getBoughtTours } from "@/app/actions/profileActions";
+import { getUserSession } from "@/app/actions/authActions";
 
 function TourDetails() {
   const { id } = useParams();
@@ -22,10 +23,38 @@ function TourDetails() {
   const [tour, setTour] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState("");
   const [isBought, setIsBought] = useState(false);
-  const [isReviewd, setIsReviwed] = useState(false);
+  const [isReviewed, setIsReviewed] = useState(false);
+  const [isReviewing, setIsReviewing] = useState(false);
   const router = useRouter();
   const popup = usePopup();
+
+  useEffect(() => {
+    getUserSession()
+      .then((sess) => setUserId(sess.userId))
+      .catch((err) => console.log(err));
+  });
+
+  useEffect(() => {
+    getReviewsByTourId(id)
+      .then((data) => {
+        const result = data.data.result.filter((tour) => tour.userId == userId);
+
+        if (result.length > 0) {
+          setIsReviewed(true);
+        }
+      })
+      .catch((err) => {
+        if (err.errors) {
+          setError(err.errors.Rating);
+        } else if (err.errorMessages) {
+          setError(err.errorMessages.join("\r\n"));
+        } else {
+          setError(err.statusText);
+        }
+      });
+  }, [id, userId]);
 
   useEffect(() => {
     getOne(id)
@@ -45,35 +74,25 @@ function TourDetails() {
         setLoading(false);
       });
 
-    getReviewsByTourId(id)
-      .then((data) => {
-        // console.log(data);
-      })
-      .catch((err) => {
-        if (err.errors) {
-          setError(err.errors.Rating);
-        } else if (err.errorMessages) {
-          setError(err.errorMessages.join("\r\n"));
-        } else {
-          setError(err.statusText);
-        }
-      });
-
-      useEffect(() => {
-        if (error) {
-          popup({
-            type: "ERROR",
-            message: error.
-          });
-        }
-      }, [error]);
-
-
-
     getBoughtTours()
-      .then((res) => console.log(res))
+      .then((data) => {
+        const result = data.data.filter((tour) => tour.tourId == id);
+
+        if (result.length > 0) {
+          setIsBought(true);
+        }
+      })
       .catch((err) => console.log(err));
   }, [id]);
+
+  useEffect(() => {
+    if (error) {
+      popup({
+        type: "ERROR",
+        message: error,
+      });
+    }
+  }, [error]);
 
   const handleEditClick = () => {
     sessionStorage.setItem("tourToEdit", JSON.stringify(tour));
@@ -96,16 +115,22 @@ function TourDetails() {
     summary,
   } = tour;
 
+  const handleReviewing = () => {
+    setIsReviewing(true);
+  };
+
   const handleReview = async ({ rating, comment }) => {
     try {
-      const result = await createReview(id, rating, comment);
+      await createReview(id, rating, comment);
+      setIsReviewed(true);
+      setIsReviewing(false);
     } catch (err) {
       if (err.errors) {
         setError(err.errors.Rating);
       } else if (err.errorMessages) {
         setError(err.errorMessages.join("\r\n"));
       } else if (err.statusText) {
-       setError(err.statusText);
+        setError(err.statusText);
       } else {
         setError("Something went wrong!");
       }
@@ -161,14 +186,19 @@ function TourDetails() {
 
         <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 my-[0px]"></div>
 
-        <TourPurchase
-          destination={destination}
-          price={price}
-          id={id}
-          router={router}
-        />
-
-        {/* <Review title={title} handleReview={handleReview} /> */}
+        {isReviewing ? (
+          <Review title={title} handleReview={handleReview} />
+        ) : (
+          <TourPurchase
+            destination={destination}
+            price={price}
+            id={id}
+            router={router}
+            isBought={isBought}
+            isReviewed={isReviewed}
+            handleReviewing={handleReviewing}
+          />
+        )}
       </div>
 
       {/* ------------------------------------------------------------------------------------------------------------------------ */}

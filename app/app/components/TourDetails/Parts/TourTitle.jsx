@@ -3,7 +3,7 @@ import Star from "../Svgs/Star";
 import PencilIcon from "../../../public/svg/pencil.svg";
 import Btn from "../../Buttons/Btn.jsx";
 
-function TourTitle({ title, handleEditClick, userId, tourId }) {
+function TourTitle({ title, handleEditClick, userId, tourId, rating }) {
   return (
     <div
       className="flex justify-between items-center w-full 
@@ -22,7 +22,7 @@ function TourTitle({ title, handleEditClick, userId, tourId }) {
         </h1>
         <Star />
         <span className="text-[#13294b] text-base font-normal font-['Inter'] leading-none border-2 border-[#FAFAFA] border-b-[#e8b600]">
-          4.8
+          {rating}
         </span>
       </div>
       {userId === tourId && (

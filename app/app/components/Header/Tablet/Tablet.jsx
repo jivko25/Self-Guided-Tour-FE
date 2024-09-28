@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import TabletNavigation from "./TabletNavigation/TabletNavigation";
 import Image from "next/image";
-import LogoColored from "@/app/public/svg/logo-colored.svg"
+import LogoColored from "@/app/public/svg/logo-colored.svg";
 
 const CloseIcon = ({ onClick }) => (
   <svg
@@ -72,7 +72,7 @@ const Tablet = ({ isAuthenticated }) => {
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
       setShow(false);
-    } 
+    }
   };
 
   useEffect(() => {
@@ -92,7 +92,13 @@ const Tablet = ({ isAuthenticated }) => {
         className="absolute top-3 left-3 text-center text-gray-900 text-2xl font-medium font-['Inter Tight'] z-30"
         href="/"
       >
-        <Image src={LogoColored} width={83} height={44} alt="Logo" priority={true} />
+        <Image
+          src={LogoColored}
+          width={83}
+          style={{ height: "auto" }}
+          alt="Logo"
+          priority={true}
+        />
       </Link>
       <div className="w-full z-40">
         {show ? (
@@ -101,7 +107,10 @@ const Tablet = ({ isAuthenticated }) => {
           <MenuIcon onClick={toggleShow} />
         )}
         <div ref={menuRef} className={`relative ${show ? "flex" : "hidden"}`}>
-          <TabletNavigation isAuthenticated={isAuthenticated} handleNavClose={toggleShow} />
+          <TabletNavigation
+            isAuthenticated={isAuthenticated}
+            handleNavClose={toggleShow}
+          />
         </div>
       </div>
     </>
