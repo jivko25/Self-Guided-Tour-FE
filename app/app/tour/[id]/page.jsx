@@ -1,6 +1,6 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/app/context/authContext.jsx";
 import TourTitle from "@/app/components/TourDetails/Parts/TourTitle";
@@ -99,10 +99,8 @@ function TourDetails() {
     router.push(`/create?edit=${tour.tourId}`);
   };
 
-  // console.log(tour);
-
   if (loading) return <p>Loading...</p>;
-  if (!tour) return setError("No tour data found");
+  if (!tour) return notFound();
 
   const {
     title,
