@@ -1,8 +1,9 @@
 import React from 'react'
 import Star from '../Svgs/Star'
 import Btn from '../../Buttons/Btn'
+import StarRating from '../../StarRating/StarRating'
 
-function TourPurchase({ destination, price, id, router, isBought, isReviewed, handleReviewing }) {
+function TourPurchase({ destination, price, id, router, isBought, isReviewed, handleReviewing, averageRating }) {
   return (
     <div
           className="flex flex-col h-full flex-wrap items-start justify-center w-full
@@ -25,11 +26,7 @@ function TourPurchase({ destination, price, id, router, isBought, isReviewed, ha
               {destination} Theaters Tour
             </h2>
             <div className="flex gap-[10px] tablet:mt-[5px] ">
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              <Star />
+                <StarRating starsCount={Math.floor(averageRating)} />
             </div>
           </div>
 
@@ -45,7 +42,6 @@ function TourPurchase({ destination, price, id, router, isBought, isReviewed, ha
             tablet:text-xl target:flex-row-reverse tablet:mb-[20px] tablet:gap-[1px]
             mb-[30px] flex-row-reverse text-lg gap-[1px]"
             >
-              <span>USD</span>
               <span>{price}</span>
             </p>
 

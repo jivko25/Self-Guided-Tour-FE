@@ -109,7 +109,7 @@ function TourDetails() {
     estimatedDuration,
     thumbnailImageUrl,
     landmarks,
-    status,
+    averageRating,
     summary,
   } = tour;
 
@@ -154,6 +154,7 @@ function TourDetails() {
           userId={session?.userId}
           tourId={tour.creatorId}
           handleEditClick={handleEditClick}
+          rating={averageRating}
         />
 
         <TourImagesPhone
@@ -193,12 +194,13 @@ function TourDetails() {
         ) : (
           <TourPurchase
             destination={destination}
-            price={price}
+            price={`EUR ${price}`}
             id={id}
             router={router}
             isBought={isBought}
             isReviewed={isReviewed}
             handleReviewing={handleReviewing}
+            averageRating={averageRating}
           />
         )}
       </div>

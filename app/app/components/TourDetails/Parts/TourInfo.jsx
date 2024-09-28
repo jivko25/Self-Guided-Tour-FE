@@ -23,15 +23,16 @@ function TourInfo({ estimatedDuration, destination }) {
             text-base
             "
             >
-              This is a 2.5km walking tour
+              {/* This is a 2.5km walking tour */}
+              To complete it you will need average of {estimatedDuration} min.
             </h2>
-            <p
+            {/* <p
               className="text-[#13294b] font-normal font-['Inter']
             web:text-base
             text-sm"
             >
               To complete it you will need average of {estimatedDuration}min.
-            </p>
+            </p> */}
           </div>
         </div>
 
@@ -54,7 +55,6 @@ function TourInfo({ estimatedDuration, destination }) {
             web:text-base
             text-sm"
             >
-              {destination} is the capital of Bulgaria
             </p>
           </div>
         </div>
