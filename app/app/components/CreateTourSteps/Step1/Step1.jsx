@@ -245,7 +245,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Price}
           // hint="Please enter a valid Price"
-          content={"Help for Price"}
+          content={"Tour price in EUR"}
           required={true}
           createTour={true}
         />
