@@ -3,6 +3,7 @@ import Link from "next/link";
 import Pencil from "../../public/svg/pencil.svg";
 import Trashcan from "../../public/svg/trash.svg";
 import Image from "next/image.js";
+import { useSearchParams } from "next/navigation.js";
 import { useEffect, useState } from "react";
 
 export default function Location({
@@ -18,9 +19,15 @@ export default function Location({
 }) {
   const [path, setPath] = useState("create");
 
+  const searchParams = useSearchParams();
+
+  // Set placeId query to url without removing the edit query
   useEffect(() => {
-    setPath(`create?placeId=${location.placeId}`);
-  }, [location.placeId]);
+    const currentParams = new URLSearchParams(searchParams);
+    currentParams.set("placeId", location.placeId);
+
+    setPath(`create?${currentParams.toString()}`);
+  }, [location.placeId, searchParams]);
 
   const handleDelete = () => {
     if (handleDeleteLocation && location.placeId) {
