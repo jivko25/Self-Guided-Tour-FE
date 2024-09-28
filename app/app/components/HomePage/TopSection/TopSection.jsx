@@ -9,7 +9,7 @@ function TopSection() {
                 web:w-full web:h-[655px] web:tablet:h-none
                 tablet:h-[554px]
                 phone:h-[245px] phone:tablet:h-none
-                smallPhone:h-[222px] smallPhone:phone:h-none
+                h-[222px] phone:h-none
                 "
       ></div>
 
@@ -18,7 +18,7 @@ function TopSection() {
                 web:h-[535px]  
                 tablet:py-[150px] tablet:h-[554px] 
                 phone:relative phone:h-[245px] 
-                smallPhone:relative smallPhone:h-[222px]
+                relative h-[222px]
                 "
       >
         <h1
@@ -26,7 +26,7 @@ function TopSection() {
                     web:text-[64px] web:mb-[45px]
                     tablet:text-5xl tablet:mb-[50px]
                     phone:text-2xl phone:mb-[10px]
-                    smallPhone:text-2xl smallPhone:mb-[15px]
+                    text-2xl mb-[15px]
                     "
         >
           Heading
@@ -36,7 +36,7 @@ function TopSection() {
                     web:text-[32px] web:mb-[65px]
                     tablet:text-2xl tablet:mb-[70px]
                     phone:text-base phone:mb-[40px]
-                    smallPhone:text-base smallPhone:mb-[40px]
+                    text-base mb-[40px]
                     "
         >
           Subheading
@@ -46,7 +46,7 @@ function TopSection() {
                     web:mb-[70px] web:static web:phone:absolute-none 
                     tablet:static tablet:mb-[0px]
                     phone:absolute phone:bottom-[-20px]
-                    smallPhone:absolute smallPhone:bottom-[-25px]"
+                    absolute bottom-[-25px]"
         >
           <Search variant="default" />
         </div>

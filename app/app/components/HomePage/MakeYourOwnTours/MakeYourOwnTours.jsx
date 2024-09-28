@@ -30,8 +30,6 @@ function MakeYourOwnTours() {
             className="text-[#081120] text-base font-semibold font-['Inter']
             web:text-base
             tablet:text-base
-            phone:
-            smallPhone:
             "
           >
             Learn More
@@ -40,8 +38,6 @@ function MakeYourOwnTours() {
             className="hidden
             web:w-6 web:h-6 web:block
             tablet:w-6 tablet:h-6 tablet:block
-            phone:
-            smallPhone:
             "
           />
         </Link>

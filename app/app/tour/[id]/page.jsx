@@ -54,7 +54,7 @@ function TourDetails() {
           setError(err.statusText);
         }
       });
-  }, [id, userId]);
+  }, [id, userId, isReviewed]);
 
   useEffect(() => {
     getOne(id)
@@ -116,6 +116,10 @@ function TourDetails() {
   const handleReviewing = () => {
     setIsReviewing(true);
   };
+
+  const handleCancel = () => {
+    setIsReviewing(false);
+  }
 
   const handleReview = async ({ rating, comment }) => {
     try {
@@ -185,7 +189,7 @@ function TourDetails() {
         <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 my-[0px]"></div>
 
         {isReviewing ? (
-          <Review title={title} handleReview={handleReview} />
+          <Review title={title} handleReview={handleReview} handleCancel={handleCancel}/>
         ) : (
           <TourPurchase
             destination={destination}

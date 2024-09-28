@@ -6,11 +6,10 @@ import Star from "../../public/svg/star-outline.svg";
 import { useState } from "react";
 import Btn from "../Buttons/Btn";
 
-export default function Review({ title, handleReview }) {
+export default function Review({ title, handleReview, handleCancel }) {
   const [rating, setRating] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
   const [comment, setComment] = useState("");
-  const [submitted, setSubmitted] = useState(false);
 
   const renderStar = (starValue) => {
     return (
@@ -32,7 +31,6 @@ export default function Review({ title, handleReview }) {
     e.preventDefault();
     if (handleReview) {
       handleReview({ rating, comment });
-      setSubmitted(true);
     }
   };
 
@@ -62,7 +60,7 @@ export default function Review({ title, handleReview }) {
           />
           <div className="flex flex-col tablet:flex-row-reverse gap-y-3 tablet:gap-x-6">
             <Btn fullWidth text={"Submit"} />
-            <Btn fullWidth text={"Cancel"} variant="outlined" type="button" />
+            <Btn fullWidth text={"Cancel"} variant="outlined" type="button" onClick={handleCancel} />
           </div>
         </form>
       </div>
