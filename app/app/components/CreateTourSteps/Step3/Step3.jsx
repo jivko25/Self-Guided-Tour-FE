@@ -266,17 +266,16 @@ const Step3 = () => {
         });
       }
 
-      const resourceObjects = validFiles.map((file) => ({
-        id: "",
-        resourceFile: file,
-        resourceUrl: "",
-        resourceType: file.type,
-      }));
-
       setInputs((prevInputs) => ({
         ...prevInputs,
-        addFields: [...prevInputs.addFields, ...resourceObjects],
+        addFields: [...prevInputs.addFields, ...validFiles],
       }));
+      updateFormData({
+        step3Data: {
+          ...inputs,
+          addFields: [...inputs.addFields, ...validFiles],
+        },
+      });
     } else {
       setInputs((prevInputs) => ({
         ...prevInputs,
@@ -289,10 +288,12 @@ const Step3 = () => {
   };
 
   // Function to check if a file is an image
-  const isImage = (file) => file && file.type && file.type.toLowerCase().startsWith("image");
+  const isImage = (file) =>
+    file && file.type && file.type.toLowerCase().startsWith("image");
 
   // Function to check if a file is a video
-  const isVideo = (file) => file && file.type && file.type.toLowerCase().startsWith("video");
+  const isVideo = (file) =>
+    file && file.type && file.type.toLowerCase().startsWith("video");
 
   const isFile = (file) => file instanceof File;
 
