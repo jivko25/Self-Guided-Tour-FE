@@ -26,7 +26,7 @@ const Step2 = () => {
 
   const drag = useRef(0);
   const dragOver = useRef(0);
-  const [tourType, setTourType] = useState('');
+  const [tourType, setTourType] = useState("");
   const [createCoordinates, setCreateCoordinates] = useState([]);
   const [warnings, setWarnings] = useState([]);
 
@@ -48,7 +48,6 @@ const Step2 = () => {
       updateStep2Data(newData, formData.step2Data.length); // pass index as length of step2Data
       setCreateCoordinates([...createCoordinates, newData]);
       setData(newData);
-      
     },
     [updateStep2Data, formData.step2Data.length]
   );
@@ -99,9 +98,9 @@ const Step2 = () => {
 
   const handleWarnings = (warn) => {
     if (warn) {
-     setWarnings(warn);
+      setWarnings(warn);
     }
-  }
+  };
 
   return (
     <>
@@ -128,7 +127,7 @@ const Step2 = () => {
           >
             <GoogleMaps
               getLocationInfo={getLocationInfo}
-              directions={{tourType, locations: createCoordinates}}
+              directions={{ tourType, locations: createCoordinates }}
               handleWarnings={handleWarnings}
             />
           </section>
@@ -173,7 +172,9 @@ const Step2 = () => {
                   <h2>Warnings:</h2>
                   <ul>
                     {warnings.map((warning, index) => (
-                      <li key={index}>{index + 1}. {warning}</li>
+                      <li key={index}>
+                        {index + 1}. {warning}
+                      </li>
                     ))}
                   </ul>
                 </div>

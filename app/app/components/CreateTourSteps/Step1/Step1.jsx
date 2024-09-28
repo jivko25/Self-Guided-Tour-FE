@@ -58,9 +58,12 @@ const Step1 = () => {
   };
 
   const fieldValidations = [
-    { field: "tour", message: "Please enter the tour title" },
+    { field: "tour", message: "Please enter a tour title" },
     { field: "destination", message: "Please enter a destination" },
-    { field: "duration", message: "Please specify the duration (in minutes)" },
+    {
+      field: "duration",
+      message: "Please specify approximate duration (in minutes)",
+    },
     { field: "price", message: "Please enter the price (in EUR)" },
     {
       field: "tourType",
@@ -84,7 +87,7 @@ const Step1 = () => {
       popup({
         type: "ERROR",
         message:
-          "Duration must be a positive number and cannot exceed 3 days (4320 minutes)",
+          "Duration must be a at least 15 minutes and cannot exceed 1 day (1440 minutes)",
       });
       return;
     }
@@ -242,7 +245,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Price}
           // hint="Please enter a valid Price"
-          content={"The cost of the tour in EUR"}
+          content={"Tour price in EUR"}
           required={true}
           createTour={true}
         />

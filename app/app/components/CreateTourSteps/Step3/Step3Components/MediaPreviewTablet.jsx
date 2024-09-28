@@ -32,6 +32,7 @@ function MediaPreviewTablet({ inputs, isImage, isVideo, onRemove, isFile }) {
                   }
                   width={index === 0 ? 858 : 279}
                   height={240}
+                  unoptimized
                   className={`rounded-[5px] ${
                     index === 0
                       ? "tablet:w-full tablet:h-60"
