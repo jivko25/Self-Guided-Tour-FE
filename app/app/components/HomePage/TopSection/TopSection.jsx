@@ -29,7 +29,7 @@ function TopSection() {
                     text-2xl mb-[15px]
                     "
         >
-          Heading
+          Jauntster
         </h1>
         <p
           className="text-base font-medium text-center text-white
@@ -39,7 +39,7 @@ function TopSection() {
                     text-base mb-[40px]
                     "
         >
-          Subheading
+          Discover like a local
         </p>
         <div
           className="

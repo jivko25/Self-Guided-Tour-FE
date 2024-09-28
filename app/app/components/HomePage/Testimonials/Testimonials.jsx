@@ -17,8 +17,10 @@ function Testimonials() {
     const fetchTours = async () => {
       try {
         const resBulgarian = await axiosTour.get(
-          "?sortBy=mostBought&pageNumber=1&pageSize=4"
+          "?sortBy=averageRating&pageNumber=1&pageSize=4"
         );
+        console.log(resBulgarian.data);
+        
         setRecommendedPlaces(resBulgarian.data.result.tours);
       } catch (err) {
         console.error(err);
@@ -89,8 +91,9 @@ function Testimonials() {
                     description={place.summary}
                     location={place.destination}
                     price={`EUR ${place.price}`}
-                    rating={place.rating || 0}
+                    rating={place.averageRating}
                     onclick={() => router.push(`/tour/${place.tourId}`)}
+                    creatorName={place.creatorName}
                   />
                 </div>
               ))}

@@ -166,7 +166,7 @@ export default function Explore() {
               description={tour.summary}
               location={tour.destination}
               price={`EUR ${tour.price}`}
-              rating={4.5}
+              rating={tour.averageRating}
               onclick={() => router.push(`/tour/${tour.tourId}`)}
             />
           ))}
