@@ -58,9 +58,12 @@ const Step1 = () => {
   };
 
   const fieldValidations = [
-    { field: "tour", message: "Please enter the tour title" },
+    { field: "tour", message: "Please enter a tour title" },
     { field: "destination", message: "Please enter a destination" },
-    { field: "duration", message: "Please specify the duration (in minutes)" },
+    {
+      field: "duration",
+      message: "Please specify approximate duration (in minutes)",
+    },
     { field: "price", message: "Please enter the price (in EUR)" },
     {
       field: "tourType",
