@@ -37,6 +37,23 @@ function TourDetails() {
   });
 
   useEffect(() => {
+    getOne(id)
+      .then((res) => {
+        const { data, error } = res;
+        if (data) {
+          setTour(data);
+        } else if (error) {
+          popup({
+            type: "ERROR",
+            message: error.message,
+          });
+          setError(error.message);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
     getReviewsByTourId(id)
       .then((data) => {
         const result = data.data.result.filter((tour) => tour.userId == userId);
@@ -57,23 +74,6 @@ function TourDetails() {
   }, [id, userId, isReviewed]);
 
   useEffect(() => {
-    getOne(id)
-      .then((res) => {
-        const { data, error } = res;
-        if (data) {
-          setTour(data);
-        } else if (error) {
-          popup({
-            type: "ERROR",
-            message: error.message,
-          });
-          setError(error.message);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
     getBoughtTours()
       .then((data) => {
         const result = data.data.filter((tour) => tour.tourId == id);
@@ -119,7 +119,7 @@ function TourDetails() {
 
   const handleCancel = () => {
     setIsReviewing(false);
-  }
+  };
 
   const handleReview = async ({ rating, comment }) => {
     try {
@@ -190,7 +190,11 @@ function TourDetails() {
         <div className="hidden web:hidden phone:block tablet:block border-b-2 border-[#d1d0d8] w-full tablet:my-4 my-[0px]"></div>
 
         {isReviewing ? (
-          <Review title={title} handleReview={handleReview} handleCancel={handleCancel}/>
+          <Review
+            title={title}
+            handleReview={handleReview}
+            handleCancel={handleCancel}
+          />
         ) : (
           <TourPurchase
             destination={destination}

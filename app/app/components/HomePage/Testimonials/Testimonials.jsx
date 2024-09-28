@@ -19,8 +19,6 @@ function Testimonials() {
         const resBulgarian = await axiosTour.get(
           "?sortBy=averageRating&pageNumber=1&pageSize=4"
         );
-        console.log(resBulgarian.data);
-        
         setRecommendedPlaces(resBulgarian.data.result.tours);
       } catch (err) {
         console.error(err);

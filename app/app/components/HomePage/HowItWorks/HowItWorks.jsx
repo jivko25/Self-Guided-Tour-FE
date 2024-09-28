@@ -11,7 +11,7 @@ function HowItWorks() {
     web:flex-row web:mt-[0px] web:justify-center web:gap-[50px] web:h-[992px]
     tablet:flex-row tablet:mt-[0px] tablet:justify-center tablet:gap-[50px] tablet:h-[573px]
     phone:flex-col phone:mt-[30px] phone:justify-center phone:gap-[20px] phone:min-h-[395px]
-    flex-col mt-[30px] justify-center gap-[30px] min-h-[638px] pb-10 phone:pb-0
+    flex-col mt-[30px] justify-center gap-[30px] min-h-[638px] pb-14 tablet:pb-0
     "
     >
       <div className="flex items-center justify-center w-full h-full">
