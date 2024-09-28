@@ -48,9 +48,9 @@ export const CreateTourProvider = ({ children }) => {
   const [localStorageData, setLocalStorageData] = useState(false);
   const hasPrompted = useRef(false); // Use a ref to ensure the prompt only happens once
 
-  // Currently it saves every time formData changes, but it's a better idea to save it with a Save Draft Button
+  // Currently it saves every time formData changes in create, but it's a better idea to save it with a Save Draft Button
   useEffect(() => {
-    if (hasPrompted.current) {
+    if (hasPrompted.current && !editModeTourId) {
       const filteredData = filterOutAddFields(formData);
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(filteredData));
     }
