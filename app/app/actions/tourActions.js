@@ -138,3 +138,15 @@ export async function getOne(id) {
 
   return { data, error };
 }
+
+/**
+ * @param {string} query 
+ */
+export async function getTours(query) {
+  try {
+    const response = await axiosTour.get(query);
+    return response.data.result;
+  } catch (err) {
+    throw err?.response?.data?.errors;
+  }
+};
