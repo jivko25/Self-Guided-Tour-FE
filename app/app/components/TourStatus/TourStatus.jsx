@@ -31,7 +31,9 @@ export default function TourStatus({ status }) {
       <div
         className={`flex items-center gap-1 align-center text-[13px] font-medium font-['Open Sans'] leading-none ${styles.textColor}`}
       >
-        {styles.icon && <Image src={styles.icon} width={12} height={12} />}
+        {styles.icon && (
+          <Image src={styles.icon} width={12} height={12} alt="status" />
+        )}
         <p>{status}</p>
       </div>
     </div>
