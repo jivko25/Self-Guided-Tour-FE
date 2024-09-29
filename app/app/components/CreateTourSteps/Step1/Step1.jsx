@@ -251,7 +251,7 @@ const Step1 = () => {
         />
 
         <Btn
-          className=" w-[177] h-[43px] text-[16px]  border-b-2 border-b-[#E8B600]   self-center  tablet:self-end web:w-[100px]   "
+          className=" w-[177] h-[43px] text-[16px]  border-b-2 border-b-[#E8B600] hover:border-opacity-70 self-center  tablet:self-end web:w-[100px]   "
           variant="transparent"
           text="Next"
           onClick={onNextStep}

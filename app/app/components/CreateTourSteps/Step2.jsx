@@ -225,7 +225,7 @@ const Step2 = () => {
               onClick={prevStep}
             />
             <Btn
-              className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
+              className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] hover:border-opacity-70 tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Next"
               onClick={handleNextStep}
