@@ -42,11 +42,6 @@ export default function Web({ isAuthenticated, handleLogout }) {
           text="Explore"
           link="/explore?page=1&sort=newest"
         />
-        {!isAuthenticated && (
-          <div className="mr-[30px]">
-            <Btn type="button" variant="transparent" text="Menu" link="/menu" />
-          </div>
-        )}
         {isAuthenticated && (
           <>
             <Btn
