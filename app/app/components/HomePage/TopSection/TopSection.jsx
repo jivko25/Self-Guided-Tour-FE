@@ -21,24 +21,25 @@ function TopSection() {
                 "
       >
         <h1
-          className="text-2xl font-bold text-center text-white font-['Inter Tight']
-                    web:text-[64px] web:mb-[45px]
-                    tablet:text-5xl tablet:mb-[50px]
-                    phone:text-2xl phone:mb-[10px]
-                    text-2xl mb-[15px]
+          className="font-bold text-center text-white font-['Inter Tight']
+                    web:text-[190px]
+                    tablet:text-[120px]
+                    phone:text-[70px]
+                    text-6xl
                     "
         >
           Jauntster
         </h1>
         <p
           className="text-base font-medium text-center text-white
-                    web:text-[32px] web:mb-[65px]
-                    tablet:text-2xl tablet:mb-[70px]
-                    phone:text-base phone:mb-[40px]
-                    text-base mb-[40px]
+                    web:text-[32px] web:mb-[65px] web:tracking-[.4em]
+                    tablet:text-2xl tablet:mb-[70px] tablet:tracking-[.25em]
+                    phone:text-base phone:mb-[40px] phone:tracking-[0.15em]
+                    text-base mb-[40px] tracking-[.05em]
+                    
                     "
         >
-          Discover like a local
+          DISCOVER LIKE A LOCAL
         </p>
         <div
           className="
