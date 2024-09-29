@@ -69,40 +69,40 @@ export default function Footer() {
         <div className="flex flex-col flex-1">
           <Link
             href="/explore"
-            className="text-base font-medium font-['Inter'] mb-[20px] cursor-pointer"
+            className="text-base font-medium font-['Inter'] mb-[20px] cursor-pointer hover:underline"
           >
             Explore
           </Link>
           <div className="flex flex-col gap-[10px]">
-            <Link href="/explore?page=1&search=sofia" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=sofia" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Sofia
             </Link>
-            <Link href="/explore?page=1&search=plovdiv" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=plovdiv" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Plovdiv
             </Link>
-            <Link href="/explore?page=1&search=veliko%20tarnovo" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=veliko%20tarnovo" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Veliko Tarnovo
             </Link>
-            <Link href="/explore?page=1&search=ruse" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=ruse" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Ruse
             </Link>
-            <Link href="/explore?page=1&search=burgas" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=burgas" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Burgas
             </Link>
           </div>
         </div>
         <div className="flex flex-col flex-1">
           <div className="flex flex-col gap-[10px]">
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Search
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Account
             </Link>
-            <Link href="/create" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/create" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               Create Tour
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer hover:underline">
               My Tours
             </Link>
           </div>

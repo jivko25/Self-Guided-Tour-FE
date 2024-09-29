@@ -17,7 +17,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
 
   const signInButtonClass =
     pathname === "/"
-      ? "h-11 px-4 py-3 justify-center items-center flex text-center font-medium text-gray-900 rounded-md border-2 border-neutral-50 bg-neutral-50"
+      ? "h-11 px-4 py-3 justify-center items-center flex text-center font-medium text-gray-900 rounded-md border-2 border-neutral-50 bg-neutral-50 hover:border-neutral-50"
       : "h-11 px-4 py-3 justify-center items-center flex text-center font-medium bg-neutral text-gray-900 border-2 rounded-md border-blue-950";
 
   return (
@@ -66,11 +66,12 @@ export default function Web({ isAuthenticated, handleLogout }) {
               />
             </div>
             <div className="mx-2.5">
-              <Button
-                variant="secondary-outlined"
+              <Btn
+                variant="outlined"
                 text="Logout"
-                type={"submit"}
+                type="button"
                 onClick={logout}
+                className={signInButtonClass}
               />
             </div>
           </>
