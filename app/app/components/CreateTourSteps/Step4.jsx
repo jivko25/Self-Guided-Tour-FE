@@ -7,11 +7,12 @@ import FileTray from "../../public/svg/file-tray.svg";
 import Visualize from "../../public/svg/image-outline.svg";
 import InputField from "../InputField/InputField.jsx";
 import Btn from "../Buttons/Btn.jsx";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Step4 = () => {
-  const { formData, updateFormData, handlePublishTour } = useCreateTour();
+  const { formData, updateFormData, handlePublishTour, isEditMode } = useCreateTour();
   const router = useRouter();
+  const editId = useSearchParams().get('edit') || 0;
 
   const [imageName, setImageName] = useState(
     formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
@@ -148,8 +149,11 @@ const Step4 = () => {
 
       db.close();
     };
-
-    router.push("/preview/0");
+    if (isEditMode) {
+      router.push(`/preview/${editId}?edit=0`);
+    } else {
+      router.push("/preview/0");
+    }
   };
 
   return (
