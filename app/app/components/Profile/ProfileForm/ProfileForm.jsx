@@ -13,6 +13,7 @@ import { registerValidationScheme } from "@/app/utils/validationSchemes";
 function ProfileForm() {
   const { getProfile, user, isLoading, dispatch, profilePictureSrc, error } =
     useProfile();
+
   const profilePictureRef = useRef(null);
   // Set up server action
   const [formState, updateProfile] = useFormState(
@@ -71,20 +72,19 @@ function ProfileForm() {
       }
     };
   }, [profilePictureSrc]);
-  console.log(user);
   return (
     <form
       action={updateProfile}
-      className=" w-[884px] text-l font-medium mb-11"
+      className=" tablet:w-[884px] text-l font-medium mb-11"
       noValidate
     >
-      <div className="flex gap-5 mb-16">
+      <div className="flex flex-col tablet:flex-row gap-5 mb-6 tablet:mb-16">
         <InputField
           id="firstName"
           name="firstName"
           label="First Name"
           type="text"
-          classes=" w-[430px]"
+          classes=" tablet:w-[430px]"
           value={user?.firstName}
         />
         <InputField
@@ -92,18 +92,21 @@ function ProfileForm() {
           id="lastName"
           name="lastName"
           type="text"
-          classes=" w-[439px]"
+          classes=" tablet:w-[439px]"
           value={user?.lastName}
         />
       </div>
-      <div className="flex gap-5 mb-16">
+      <div className="flex flex-col tablet:flex-row gap-5 mb-6 tablet:mb-16">
         <InputField
           label="Email Addres"
           type="email"
           id="email"
+          hasTooltip={true}
+          content={"External users can't change their email address."}
+          readOnly={!user?.hasPassword}
           value={user?.email}
           name="email"
-          classes=" w-[430px]"
+          classes=" tablet:w-[430px] z-10"
           error={error?.email}
         />
         <InputField
@@ -111,20 +114,25 @@ function ProfileForm() {
           type="text"
           name="phoneNumber"
           id="phoneNumber"
-          classes=" w-[439px]"
+          classes=" tablet:w-[430px] z-11"
           value={user?.phoneNumber}
         />
+        <input type="hidden" name="hasPassword" value={user?.hasPassword} />
       </div>
       <div className="mt-8 flex gap-0.5 flex-col">
         <label htmlFor="about">Something About Yourself (optional)</label>
         <textarea
           name="about"
-          className="w-full  h-36 border border-[#CECECE] bg-transparent"
+          className="tablet:w-full  h-36 border border-[#CECECE] bg-transparent"
           style={{ resize: "none", textIndent: "10px" }}
           defaultValue={user?.about}
         ></textarea>
       </div>
-      <section className="mt-16 flex flex-col gap-9">
+      <section
+        className="mt-16 flex gap-9 
+      flex-col 
+       "
+      >
         <main>
           <label htmlFor="profile">Profile Picture (optional)</label>
           <ProfilePicture src={profilePictureSrc} />
@@ -145,7 +153,7 @@ function ProfileForm() {
           onClick={triggerFileUpload}
         />
       </section>
-      <section className=" border-t-2 border-[#D1D0D8] mt-16">
+      <section className=" border-t-2 border-[#D1D0D8] mt-16  mb-16">
         <h1 className="mt-16 text-xl">Sign In and Security</h1>
         {user?.hasPassword ? (
           <InputField
@@ -156,14 +164,14 @@ function ProfileForm() {
             classes=" w-[430px] mt-16"
           />
         ) : (
-          <h1 className="text-l mt-8">
+          <h1 className="text-l mt-8 w-full ">
             It looks like you’re currently using an external login method
             (Google, Facebook, etc.) and don’t have a password set for your
             account. If you’d like, you can add a password for added security or
             for alternative login options.
           </h1>
         )}
-        <div className="flex gap-8 mt-16">
+        <div className="flex gap-8 mt-16 smallPhone:flex-col tablet:flex-row">
           <InputField
             label="New Password"
             name="password"
