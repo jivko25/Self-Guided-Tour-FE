@@ -9,6 +9,9 @@ const initialState = {
   user: null,
   profilePictureSrc: null,
   error: null,
+  page: 1,
+  pageSize: 10,
+  totalPages: 1,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -32,11 +35,44 @@ function reducer(state, action) {
       return { ...state, error: action.payload };
     case "clearError":
       return { ...state, error: null };
+    case "nextPage":
+      if (state.page === state.totalPages) {
+        return state;
+      }
+      return { ...state, page: state.page + 1 };
+    case "previousPage":
+      if (state.page === 1) {
+        return state;
+      }
+      return { ...state, page: state.page - 1 };
+    case "totalPages/totalResults":
+      return {
+        ...state,
+        totalPages: action.payload.totalPages,
+        totalResults: action.payload.totalResults,
+      };
+    case "resetPage":
+      return { ...state, page: 1, totalPages: 1 };
+    default: {
+      throw new Error(`Unhandled action type: ${action.type}`);
+    }
   }
 }
 export const ProfileProvider = ({ children }) => {
-  const [{ profile, isLoading, user, profilePictureSrc, error }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    {
+      profile,
+      isLoading,
+      user,
+      profilePictureSrc,
+      error,
+      totalPages,
+      page,
+      pageSize,
+      totalResults,
+    },
+    dispatch,
+  ] = useReducer(reducer, initialState);
   // Fetch the user profile
   const getProfile = useCallback(async function getProfile() {
     try {
@@ -48,18 +84,56 @@ export const ProfileProvider = ({ children }) => {
     }
   }, []);
   // Fetch tours
-  const getToursAsync = useCallback(async function getTours() {
-    const response = await axios.get("/profile/my-tours");
-    const tours = response?.data;
-    console.log(response);
+  const getToursAsync = useCallback(async function getTours(curretPage) {
+    const response = await axios.get(
+      `/profile/my-tours?page=${curretPage}&pageSize=${pageSize}`
+    );
+    const tours = response?.data?.result?.data;
+    dispatch({
+      type: "totalPages/totalResults",
+      payload: {
+        totalPages: response?.data?.result?.totalPages,
+        totalResults: response?.data?.result?.totalResults,
+      },
+    });
     return tours;
   }, []);
-  const getBoughtToursAsync = useCallback(async function getBoughtTours() {
-    const response = await axios.get("/profile/bought-tours");
-    const tours = response?.data;
-    console.log(response);
+  // Fetch bought tours
+  const getBoughtToursAsync = useCallback(async function getBoughtTours(
+    curretPage
+  ) {
+    const response = await axios.get(
+      `/profile/bought-tours?page=${curretPage}&pageSize=${pageSize}`
+    );
+    const tours = response?.data?.result?.data;
+    dispatch({
+      type: "totalPages/totalResults",
+      payload: {
+        totalPages: response?.data?.result?.totalPages,
+        totalResults: response?.data?.result?.totalResults,
+      },
+    });
     return tours;
-  }, []);
+  },
+  []);
+  // Fetch transactions
+  const getTransactionsAsync = useCallback(async function getTransactions(
+    curretPage
+  ) {
+    const response = await axios.get(
+      `/profile/transactions?page=${curretPage}&pageSize=${pageSize}`
+    );
+    const transactions = response?.data?.result?.data;
+    dispatch({
+      type: "totalPages/totalResults",
+      payload: {
+        totalPages: response?.data?.result?.totalPages,
+        totalResults: response?.data?.result?.totalResults,
+      },
+    });
+    return transactions;
+  },
+  []);
   return (
     <ProfileContext.Provider
       value={{
@@ -72,6 +146,11 @@ export const ProfileProvider = ({ children }) => {
         error,
         getToursAsync,
         getBoughtToursAsync,
+        getTransactionsAsync,
+        totalPages,
+        page,
+        pageSize,
+        totalResults,
       }}
     >
       {children}
