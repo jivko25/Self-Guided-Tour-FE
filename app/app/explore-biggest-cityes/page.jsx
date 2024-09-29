@@ -75,7 +75,7 @@ function page() {
     },
     {
       thumbnailImageUrl: kurdjali,
-      destination: "Kurdjali",
+      destination: "Kardzhali",
     },
     {
       thumbnailImageUrl: nesebar,
@@ -91,7 +91,7 @@ function page() {
     },
     {
       thumbnailImageUrl: panagiurishte,
-      destination: "Panaguirishte",
+      destination: "Panagyurishte",
     },
     {
       thumbnailImageUrl: koprivshtica,
@@ -108,7 +108,7 @@ function page() {
     },
     {
       thumbnailImageUrl: kazanlak,
-      destination: "kazanlak",
+      destination: "Kazanlak",
     },
     {
       thumbnailImageUrl: troqn,
@@ -148,7 +148,7 @@ function page() {
     },
     {
       thumbnailImageUrl: kiustendil,
-      destination: "Kiustendil",
+      destination: "Kyustendil",
     },
     {
       thumbnailImageUrl: pernik,
