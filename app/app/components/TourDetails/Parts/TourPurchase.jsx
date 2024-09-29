@@ -76,7 +76,7 @@ function TourPurchase({
               link={`/preview/${id}`}
             />
             <Btn
-            className={isReviewed ? "hover:text-opacity-100 hover:border-blue-950" : " "}
+              className={isReviewed ? "hover:text-opacity-100 hover:border-blue-950" : ""}
               variant="outlined"
               text="Rate This Tour"
               fullWidth
