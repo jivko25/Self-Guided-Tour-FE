@@ -9,8 +9,19 @@ const hover =
 function ProfileNavigation() {
   const pathname = usePathname();
   return (
-    <div className="flex gap-36">
-      <ul className="flex gap-24 border-b-2 border-[#D1D0D8] pb-4 web:w-[1210px]">
+    <div
+      className="flex text-nowrap
+     web:mt-16 
+     tablet:gap-36 
+      smallPhone:mt-40 smallPhone:text-sm  "
+    >
+      <ul
+        className="flex tablet:gap-24 border-b-2 border-[#D1D0D8] pb-4
+       web:w-[1210px] 
+       tablet:w-[800px]
+       phone:w-[500px]
+       smallPhone:w-[300px] smallPhone:gap-8 "
+      >
         <li className={`${hover}`}>
           <Link
             href="/profile/my-profile"
@@ -37,10 +48,12 @@ function ProfileNavigation() {
             My Balance
           </Link>
         </li>
-        <li className={`${hover}`}>
+        <li className={`${hover} `}>
           <Link
             href="/profile/settings"
-            className={pathname === "/profile/settings" ? active : ""}
+            className={`${
+              pathname === "/profile/settings" ? active : ""
+            } w-[77px]`}
           >
             Settings
           </Link>
