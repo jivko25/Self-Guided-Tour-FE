@@ -7,10 +7,14 @@ import TrashIcon from "@/app/public/svg/trash.svg";
 import TourDetails from "../TourDetails/TourDetails";
 import TourSummary from "../TourDetails/TourSummary";
 import TourStatus from "../../TourStatus/TourStatus";
+import EyeIcon from "@/app/public/svg/view.svg";
 import { useState } from "react";
 import Btn from "../../Buttons/Btn";
-function TableRow({ tour }) {
+import ImageSkeleton from "../../Skeletons/ImageSkeleton";
+import StatusDot from "./StatusDot";
+function TableRow({ tour, activeTab }) {
   const [showDetails, setShowDetails] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   function handleShowDetails() {
     setShowDetails(!showDetails);
   }
@@ -25,16 +29,26 @@ function TableRow({ tour }) {
               onClick={handleShowDetails}
               className="hidden web:block"
             />
-            {tour.title}
+            <div className="flex justify-center items-center gap-3">
+              <p>{tour.title}</p>
+              <StatusDot status={tour.status} />
+            </div>
           </div>
           {showDetails && (
-            <Image
-              src={tour.thumbnailImageUrl}
-              alt="thumnail-image"
-              width={309}
-              height={240}
-              className="rounded-[5px] w-[309px] h-[240px] object-cover "
-            />
+            <>
+              <ImageSkeleton isLoading={isLoading} />
+              <Image
+                src={tour.thumbnailImageUrl}
+                alt="thumnail-image"
+                width={309}
+                height={240}
+                className={`rounded-[5px] w-[309px] h-[240px] object-cover ${
+                  isLoading ? "hidden" : ""
+                } `}
+                priority={true}
+                onLoad={() => setIsLoading(false)}
+              />
+            </>
           )}
         </div>
       </td>
@@ -44,36 +58,46 @@ function TableRow({ tour }) {
           {showDetails && <TourDetails tour={tour} />}
         </div>
       </td>
-      <td className="py-2 align-top max-w-32 text-left ">
+      <td className=" align-top max-w-32 text-left smallPhone:hidden  tablet:table-cell flex justify-center ">
         <div className="mt-7 flex flex-col gap-7 justify-center items-center">
-          <p>Creator Name</p>
           {showDetails && <TourSummary tour={tour} />}
         </div>
       </td>
       <td className=" align-top smallPhone:hidden tablet:table-cell ">
         <div className="mt-7">
-          <TourStatus status={tour.status} />
+          {activeTab === "My Tours" ? (
+            <TourStatus status={tour.status} />
+          ) : (
+            <p>{tour.creatorName}</p>
+          )}
         </div>
       </td>
 
       <td className="align-top text-center ">
-        <div className="flex content-center justify-center gap-6 mt-7">
+        <div className="flex content-center justify-center gap-6 mt-5">
           {!showDetails ? (
-            <>
+            activeTab === "My Tours" ? (
+              <>
+                <IconButton
+                  icon={PencilIcon}
+                  className="border-[3px] p-2 border-[#13294B] rounded-[5px]"
+                />
+                {tour.status !== "Under Review" && (
+                  <IconButton
+                    icon={TrashIcon}
+                    className="border-[3px] p-2 border-[#E80000] rounded-[5px]  "
+                  />
+                )}
+              </>
+            ) : (
               <IconButton
-                icon={PencilIcon}
+                icon={EyeIcon}
                 className="border-[3px] p-2 border-[#13294B] rounded-[5px]"
               />
-              {tour.status !== "Under Review" && (
-                <IconButton
-                  icon={TrashIcon}
-                  className="border-[3px] p-2 border-[#E80000] rounded-[5px]  "
-                />
-              )}
-            </>
+            )
           ) : (
             <Btn
-              text="Edit"
+              text={activeTab === "My Tours" ? "Edit" : "View"}
               variant="transparent-outlined"
               className="w-full max-w-32 boreder-[2px]
               "
