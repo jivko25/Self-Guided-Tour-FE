@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCreateTour } from "@/app/context/createTourContext";
 import { useEffect, useRef, useState } from "react";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { getOne } from "@/app/actions/tourActions";
 import { usePopup } from "@/app/context/popupContext";
 import ArrowRedo from "../../public/svg/arrow-redo.svg";
@@ -14,6 +14,7 @@ import Pencil from "../../public/svg/pencil.svg";
 import Play from "../../public/svg/play.svg";
 import X from "../../public/svg/X.svg";
 import { useRouter } from "next/navigation";
+import { getUserSession } from "@/app/actions/authActions";
 
 const IOSTypes = {
   driving: "d",
@@ -27,12 +28,31 @@ export default function Preview() {
   const [title, setTitle] = useState("");
   const [locations, setLocations] = useState([]);
   const [tourType, setTourType] = useState("");
+  const [creatorId, setCreatorId] = useState("");
+  const [canEdit, setCanEdit] = useState(false);
+  const [userId, setUserId] = useState();
+  const params = useSearchParams();
+
   const dbRef = useRef(null);
   const popup = usePopup();
   const router = useRouter();
 
   useEffect(() => {
-    if (id == 0) {
+    getUserSession().then((session) => {
+      setUserId(session.userId);
+    });
+  });
+
+  useEffect(() => {
+    if (userId == creatorId) {
+      setCanEdit(true);
+    } else {
+      setCanEdit(false);
+    }
+  }, [userId, creatorId]);
+
+  useEffect(() => {
+    if (id == 0 || params.has("edit")) {
       let db;
       dbRef.current = indexedDB.open("step2DB", 1);
 
@@ -48,30 +68,44 @@ export default function Preview() {
           const result = event.target.result[0].data;
           setTitle(result.step1Data.tour);
           setTourType(result.step1Data.tourType);
-          
+
           const newArr = result.step2Data.map((loc) => {
             return {
               locationName: loc.location,
               description: loc.locationDescription,
               latitude: loc.latitude,
               longitude: loc.longitude,
-              audio: loc.addFields.filter(
-                (file) =>
-                  file.name.endsWith(".mp3") ||
-                  file.name.endsWith(".wav") ||
-                  file.name.endsWith(".aac") ||
-                  file.name.endsWith(".flac") ||
-                  file.name.endsWith(".ogg")
-              ),
-              video: loc.addFields.filter(
-                (file) =>
-                  file.name.endsWith(".mp4") ||
-                  file.name.endsWith(".avi") ||
-                  file.name.endsWith(".mkv") ||
-                  file.name.endsWith(".mov") ||
-                  file.name.endsWith(".wmv") ||
-                  file.name.endsWith(".flv")
-              ),
+              audio: loc.addFields.filter((file) => {
+                if (file.name) {
+                  if (
+                    file.name.endsWith(".mp3") ||
+                    file.name.endsWith(".wav") ||
+                    file.name.endsWith(".aac") ||
+                    file.name.endsWith(".flac") ||
+                    file.name.endsWith(".ogg")
+                  ) {
+                    return file;
+                  }
+                } else if (file.type == "Audio") {
+                  return file;
+                }
+              }),
+              video: loc.addFields.filter((file) => {
+                if (file.name) {
+                  if (
+                    file.name.endsWith(".mp4") ||
+                    file.name.endsWith(".avi") ||
+                    file.name.endsWith(".mkv") ||
+                    file.name.endsWith(".mov") ||
+                    file.name.endsWith(".wmv") ||
+                    file.name.endsWith(".flv")
+                  ) {
+                    return file;
+                  }
+                } else if (file.type == "Video") {
+                  return file;
+                }
+              }),
             };
           });
           
@@ -90,6 +124,7 @@ export default function Preview() {
         if (data) {
           setTitle(data.title);
           setTourType(data.tourType);
+          setCreatorId(data.creatorId);
 
           const newData = data.landmarks.map((loc) => {
             return {
@@ -105,8 +140,7 @@ export default function Preview() {
               ),
             };
           });
-          // console.log(newData);
-          
+
           setLocations(newData);
         } else {
           popup({
@@ -215,7 +249,11 @@ export default function Preview() {
     if (id == 0) {
       router.push("/create");
     } else {
-      router.push(`tour/${id}`);
+      if (params.has("edit")) {
+        router.push(`/create?edit=${id}`);
+      } else {
+        router.push(`/tour/${id}`);
+      }
     }
   };
 
@@ -227,12 +265,17 @@ export default function Preview() {
           <span className="block w-0.5 h-[59px] bg-[#617086] mx-9"></span>
           {title}
         </h1>
-        <Link className="flex flex-row items-start gap-3" href={`/edit/${id}`}>
-          <Image src={Pencil} width={24} height={24} alt="Edit tour" />
-          <span className="hidden tablet:inline text-[16px] font-semibold">
-            Edit Tour
-          </span>
-        </Link>
+        {canEdit && (
+          <Link
+            className="flex flex-row items-start gap-3"
+            href={`/create?edit=${id}`}
+          >
+            <Image src={Pencil} width={24} height={24} alt="Edit tour" />
+            <span className="hidden tablet:inline text-[16px] font-semibold">
+              Edit Tour
+            </span>
+          </Link>
+        )}
       </header>
       <div
         className="w-full h-full web:relative mt-24 tablet:mt-[151px] web:mt-[64px] 
@@ -253,15 +296,17 @@ export default function Preview() {
                   {title}
                 </p>
               </div>
-              <Link
-                className="flex flex-row items-start gap-3"
-                href={`/edit/${id}`}
-              >
-                <Image src={Pencil} width={24} height={24} alt="Edit tour" />
-                <span className="hidden tablet:inline text-[16px] font-semibold">
-                  Edit Tour
-                </span>
-              </Link>
+              {canEdit && (
+                <Link
+                  className="flex flex-row items-start gap-3"
+                  href={`/edit/${id}`}
+                >
+                  <Image src={Pencil} width={24} height={24} alt="Edit tour" />
+                  <span className="hidden tablet:inline text-[16px] font-semibold">
+                    Edit Tour
+                  </span>
+                </Link>
+              )}
             </header>
             <section
               className="h-[250px] phone:h-[297px] tablet:h-[476px] mb-[12px] web:w-1/2 web:h-[582px] 
@@ -377,6 +422,8 @@ const MediaPlayer = ({ isVideo = false, file, count }) => {
   useEffect(() => {
     if (file.hasOwnProperty("resourceUrl")) {
       setUrl(file.resourceUrl);
+    } else if (file.hasOwnProperty("url")) {
+      setUrl(file.url);
     } else {
       setUrl(URL.createObjectURL(file));
     }
