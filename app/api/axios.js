@@ -26,7 +26,7 @@ export const axiosAuth = Axios.create({
 });
 
 export const axiosTour = Axios.create({
-  baseURL: `${BASE_URL}/Tour`,
+  baseURL: `${BASE_URL}/Tour/`,
   headers: {
     "Content-Type": "multipart/form-data",
   },
@@ -42,7 +42,25 @@ export const axiosAdmin = Axios.create({
   httpsAgent: agent,
 });
 
+export const axiosReview = Axios.create({
+  baseURL: `${BASE_URL}/Review/`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  httpsAgent: agent,
+});
+
+export const axiosProfile = Axios.create({
+  baseURL: `${BASE_URL}/Profile/`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  httpsAgent: agent,
+});
+
 // Attach the interceptor to axios, axiosTour and axiosAdmin
 setupSessionInterceptors(axios);
 setupSessionInterceptors(axiosTour);
 setupSessionInterceptors(axiosAdmin);
+setupSessionInterceptors(axiosReview);
+setupSessionInterceptors(axiosProfile);

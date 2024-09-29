@@ -107,7 +107,7 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, []);
 
-  console.log(formData);
+  // console.log(formData);
 
   // Show load draft modal only if it's not edit mode
   useEffect(() => {

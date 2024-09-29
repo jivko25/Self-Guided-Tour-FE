@@ -7,6 +7,8 @@ import SeeMoreSvgHomePage from "../Svgs/SeeMoreSvgHomePage";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from "next/navigation";
+import { getReviewsByTourId } from "@/app/actions/reviewActions";
+import { getTours } from "@/app/actions/tourActions";
 
 function Testimonials() {
   const [recommendedPlaces, setRecommendedPlaces] = useState([]);
@@ -14,17 +16,34 @@ function Testimonials() {
   const sliderRef = useRef(null); // Reference for the slider
 
   useEffect(() => {
-    const fetchTours = async () => {
-      try {
-        const resBulgarian = await axiosTour.get(
-          "?sortBy=mostBought&pageNumber=1&pageSize=4"
-        );
-        setRecommendedPlaces(resBulgarian.data.result.tours);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchTours();
+    getTours("?sortBy=averageRating&pageNumber=1&pageSize=4")
+      .then((data) => {
+        data.tours.forEach(async (tour) => {
+          const response = await getReviewsByTourId(tour.tourId);
+          const reviews = response.data.result;
+          const sorted = reviews.sort((a, b) => b.rating - a.rating);
+          
+          setRecommendedPlaces((prev) => [
+            ...prev,
+            {
+              tourId: tour.tourId,
+              title: tour.title,
+              thumbnailImageUrl: tour.thumbnailImageUrl,
+              destination: tour.destination,
+              price: tour.price,
+              averageRating: tour.averageRating,
+              comment: sorted[0].comment,
+              user: sorted[0].user,
+              userImg: sorted[0].userImg,
+            },
+          ]);
+        });
+      })
+      .catch((errors) => {
+        for (const key in errors) {
+          console.error(errors[key]);
+        }
+      });
   }, []);
 
   const settings = {
@@ -62,7 +81,6 @@ function Testimonials() {
           dots: false,
         },
       },
-      
     ],
   };
 
@@ -86,11 +104,13 @@ function Testimonials() {
                     key={place.tourId}
                     title={place.title}
                     imageSrc={place.thumbnailImageUrl}
-                    description={place.summary}
+                    description={place.comment}
                     location={place.destination}
                     price={`EUR ${place.price}`}
-                    rating={place.rating || 0}
+                    rating={place.averageRating}
                     onclick={() => router.push(`/tour/${place.tourId}`)}
+                    userName={place.user}
+                    userImg={place.userImg}
                   />
                 </div>
               ))}

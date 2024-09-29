@@ -13,8 +13,8 @@ export default function Card({
   price,
   rating,
   classes = "",
-  creatorName = "",
-  creatorImg,
+  userName = "",
+  userImg,
   onclick,
 }) {
   const windowWidth = useWindowWidth();
@@ -59,10 +59,10 @@ export default function Card({
           >
             <div className="flex justify-between items-center text-[13px] tablet:text-[16px] mb-[36px] tablet:mb-[18px] pr-[6px] tablet:pr-[16px]">
               <div className="flex flex-row items-center w-[151px]">
-                {creatorImg ? (
+                {userImg ? (
                   <div className="hidden tablet:block rounded-full tablet:mr-[8px] tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] relative">
                     <Image
-                      src={creatorImg}
+                      src={userImg}
                       alt="User image"
                       fill={true}
                       sizes="(max-width: 1280px) 20vw, 10vw"
@@ -77,11 +77,11 @@ export default function Card({
                                   web-[12px] rounded-full tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] 
                                   bg-[#617086] text-[#FFFFFF] text-[20px]"
                   >
-                    {creatorName && `${creatorName?.toUpperCase()[0]}`}
+                    {userName && `${userName?.toUpperCase()[0]}`}
                   </div>
                 )}
                 <span className="web:text-[20px] tablet font-medium">
-                  {creatorName}
+                  {userName}
                 </span>
               </div>
               {rating && (

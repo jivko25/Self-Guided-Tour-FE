@@ -8,6 +8,9 @@ import Linkedin from "../Svg/Linkedin";
 import MailOutline from "../Svg/MailOutline";
 import MapOutline from "../Svg/MapOutline";
 import Link from "next/link";
+import Image from "next/image";
+import LogoColored from "@/app/public/svg/logo-colored.svg";
+import Logo from "@/app/public/svg/logo.svg";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -32,7 +35,13 @@ export default function Footer() {
   return (
     <div className={`hidden web:py-[0%] tablet:flex tablet:py-[10%] flex-col items-center justify-center w-full min-h-[474px] web:px-[20%] tablet:px-[3%] ${footerColors } ${hiddenFooter}`}>
       <h1 className="flex w-full max-w-[1336px] text-center text-[31px] font-medium font-['Inter'] mb-[55px] mt-[35px]">
-        LOGO
+      <Image
+          src={(isTourPage) ? LogoColored : Logo}
+          width={83}
+          style={{ height: "auto" }}
+          alt="Logo"
+          priority={true}
+        />
       </h1>
       <section className="flex w-full max-w-[1336px] web:gap-[100px] tablet:gap-[30px]">
         <ul className="flex flex-col flex-1 gap-[30px] web:mr-[10%] tablet:mr-[40px]">
@@ -65,30 +74,24 @@ export default function Footer() {
             Explore
           </Link>
           <div className="flex flex-col gap-[10px]">
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=sofia" className="text-base font-normal font-['Inter'] cursor-pointer">
               Sofia
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=plovdiv" className="text-base font-normal font-['Inter'] cursor-pointer">
               Plovdiv
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=veliko%20tarnovo" className="text-base font-normal font-['Inter'] cursor-pointer">
               Veliko Tarnovo
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=ruse" className="text-base font-normal font-['Inter'] cursor-pointer">
               Ruse
             </Link>
-            <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
+            <Link href="/explore?page=1&search=burgas" className="text-base font-normal font-['Inter'] cursor-pointer">
               Burgas
             </Link>
           </div>
         </div>
         <div className="flex flex-col flex-1">
-          <Link
-            href=""
-            className="text-base font-medium font-['Inter'] mb-[20px] cursor-pointer"
-          >
-            Menu
-          </Link>
           <div className="flex flex-col gap-[10px]">
             <Link href="" className="text-base font-normal font-['Inter'] cursor-pointer">
               Search

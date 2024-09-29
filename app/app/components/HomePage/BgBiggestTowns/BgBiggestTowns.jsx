@@ -35,23 +35,21 @@ function BgBiggestTowns() {
       className="flex flex-col items-center justify-center gap-[30px] w-full h-full
       web:max-w-[1792px] web:min-h-[752px] web:gap-[30px]
       tablet:px-[10px] tablet:gap-[30px] tablet:min-h-[450px]
-      phone:gap-[20px] phone:mb-[50px]
-      smallPhone:gap-[20px] smallPhone:mb-[50px]
+      gap-[20px] mb-[50px]
       "
     >
       <div
         className="flex items-center w-[95%] max-w-[1792px]
       web:justify-between web:mb-[50px]
       tablet:justify-between tablet:mb-[30px]
-      phone:justify-center
+      ustify-center
       "
       >
         <h2
           className="text-[#081120] font-medium font-['Inter'] leading-[58.50px]
           web:text-[39px]
           tablet:text-[31px]
-          phone:text-base 
-          smallPhone:text-base smallPhone:px-[10px]
+          text-base px-[10px]
           "
         >
           Explore Biggest Towns in Bulgaria
@@ -60,8 +58,6 @@ function BgBiggestTowns() {
           className="hidden space-x-2 items-start
         web:flex web:h-[19px]
         tablet:flex tablet:h-[19px]
-        phone:
-        smallPhone:
       "
           href="/explore-biggest-cityes"
         >
@@ -69,8 +65,6 @@ function BgBiggestTowns() {
             className="text-[#081120] text-base font-semibold font-['Inter']
           web:w-[74px] web:h-[19px] web:text-base
           tablet:w-[74px] tablet:h-[19px] tablet:text-base
-          phone:
-          smallPhone:
           "
           >
             See More
@@ -79,8 +73,6 @@ function BgBiggestTowns() {
             className="hidden
           web:w-6 web:h-6 web:block
           tablet:w-6 tablet:h-6 tablet:block
-          phone:
-          smallPhone:
           "
           />
         </Link>
@@ -88,7 +80,7 @@ function BgBiggestTowns() {
       <div
         className="flex items-center justify-evenly w-full 
     web:max-w-[1792px] web:gap-[25px]
-    smallPhone:gap-[10px]
+    gap-[10px]
     "
       >
         {exploreBiggestCities.map((place, index) => (
@@ -97,7 +89,7 @@ function BgBiggestTowns() {
               thumbnailImageUrl={place.thumbnailImageUrl}
               destination={place.destination}
               onClick={() =>
-                router.push(`/explore?search=${place.destination}`)
+                router.push(`/explore?page=1&search=${place.destination}`)
               }
             />
           </div>

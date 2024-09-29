@@ -1,6 +1,5 @@
 "use client";
 import { createContext, useContext, useState } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
