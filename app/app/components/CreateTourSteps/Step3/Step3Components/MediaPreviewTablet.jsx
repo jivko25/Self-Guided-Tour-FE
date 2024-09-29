@@ -4,7 +4,15 @@ import ReactPlayer from "react-player";
 import React from "react";
 import CloseIcon from "../../../../public/svg/close-red.svg";
 
-function MediaPreviewTablet({ inputs, isImage, isVideo, onRemove, isFile }) {
+function MediaPreviewTablet({
+  inputs,
+  isImage,
+  isVideo,
+  isAudio,
+  onRemove,
+  isFile,
+}) {
+  let audioIndex = 0;
   return (
     <>
       {/* IMAGES */}
@@ -54,6 +62,17 @@ function MediaPreviewTablet({ inputs, isImage, isVideo, onRemove, isFile }) {
                   className="tablet:rounded-[5px] tablet:w-[279px] tablet:h-60"
                   controls={true}
                 />
+              )}
+              {isAudio(file) && (
+                <figure>
+                  <figcaption className="text-center">
+                    Audio {++audioIndex}:
+                  </figcaption>
+                  <audio
+                    controls
+                    src={isFile(file) ? URL.createObjectURL(file) : file.url}
+                  ></audio>
+                </figure>
               )}
             </div>
           ))}

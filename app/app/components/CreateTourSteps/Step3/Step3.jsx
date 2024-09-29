@@ -295,6 +295,9 @@ const Step3 = () => {
   const isVideo = (file) =>
     file && file.type && file.type.toLowerCase().startsWith("video");
 
+  const isAudio = (file) =>
+    file && file.type && file.type.toLowerCase().startsWith("audio");
+
   const isFile = (file) => file instanceof File;
 
   return (
@@ -348,6 +351,7 @@ const Step3 = () => {
               isFile={isFile}
               isImage={isImage}
               isVideo={isVideo}
+              isAudio={isAudio}
               onRemove={handleRemoveMedia}
             />
           </section>
@@ -385,6 +389,7 @@ const Step3 = () => {
         >
           <MediaPreviewTablet
             inputs={inputs}
+            isAudio={isAudio}
             isFile={isFile}
             isImage={isImage}
             isVideo={isVideo}
