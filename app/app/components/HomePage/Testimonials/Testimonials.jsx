@@ -1,5 +1,4 @@
 "use client";
-import { axiosTour } from "@/api/axios";
 import React, { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
 import Card from "../../Card/Card";
@@ -33,7 +32,7 @@ function Testimonials() {
               price: tour.price,
               averageRating: tour.averageRating,
               comment: sorted[0].comment,
-              user: sorted[0].user,
+              userName: sorted[0].userName,
               userImg: sorted[0].userImg,
             },
           ]);
@@ -109,7 +108,7 @@ function Testimonials() {
                     price={`EUR ${place.price}`}
                     rating={place.averageRating}
                     onclick={() => router.push(`/tour/${place.tourId}`)}
-                    userName={place.user}
+                    userName={place.userName}
                     userImg={place.userImg}
                   />
                 </div>
@@ -131,7 +130,7 @@ function Testimonials() {
               Testimonials Heading
             </h1>
 
-            <div className="w-full mt-[30px] ">
+            <div className="w-full mt-[30px]">
               <button
                 onClick={() => sliderRef.current.slickPrev()}
                 className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[7px] mr-[20px] hover:opacity-60"
