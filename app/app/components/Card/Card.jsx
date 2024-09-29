@@ -74,13 +74,13 @@ export default function Card({
                 ) : (
                   <div
                     className="hidden tablet:flex justify-center items-center tablet:mr-[8px] 
-                                  web-[12px] rounded-full tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] 
-                                  bg-[#617086] text-[#FFFFFF] text-[20px]"
+                                  web:mr-[12px] rounded-full tablet:w-[40px] tablet:h-[40px] web:w-[60px] web:h-[60px] 
+                                  bg-[#617086] text-[#FFFFFF] text-[20px] shrink-0"
                   >
                     {userName && `${userName?.toUpperCase()[0]}`}
                   </div>
                 )}
-                <span className="web:text-[20px] tablet font-medium">
+                <span className="web:text-[20px] font-medium line-clamp-1">
                   {userName}
                 </span>
               </div>

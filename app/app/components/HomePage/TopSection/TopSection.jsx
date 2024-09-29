@@ -6,6 +6,7 @@ function TopSection() {
     <>
       <div
         className="absolute brightness-75 top-0 left-0 w-full web:h-full bg-custom-image bg-cover bg-center z-[-5]
+                web:h-[700px]
                 tablet:h-[554px]
                 phone:h-[245px]
                 h-[222px]
