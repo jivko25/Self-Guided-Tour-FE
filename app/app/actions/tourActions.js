@@ -81,6 +81,11 @@ export async function updateTour(tourId, tourData) {
           `Landmarks[${index}].Resources[${resIndex}].ResourceFile`,
           resource
         );
+        // Passing empty resourceId , cause otherwise backend returns empty resources
+        formData.append(
+          `Landmarks[${index}].Resources[${resIndex}].ResourceId`,
+          ""
+        );
       } else {
         // else it's resource from server with id,type,url , so append them to the formData
         formData.append(
