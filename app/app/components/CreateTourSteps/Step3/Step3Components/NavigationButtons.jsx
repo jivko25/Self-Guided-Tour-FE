@@ -21,7 +21,7 @@ function NavigationButtons({ handlePrevStep, handleNextStep }) {
       />
       <Btn
         variant="fullWidth"
-        className="text-center text-gray-900 text-base font-semibold justify-center items-center flex border-b-2 border-yellow-500 h-[43px]
+        className="text-center text-gray-900 hover:text-opacity-70 text-base font-semibold justify-center items-center flex border-b-2 border-yellow-500 hover:border-opacity-70 h-[43px]
         web:px-[16px] web:py-[12px] web:w-[128px]
         tablet:px-[16px] tablet:py-[12px] tablet:w-[128px]
         phone:px-[16px] phone:py-[12px] phone:w-[177px] 
