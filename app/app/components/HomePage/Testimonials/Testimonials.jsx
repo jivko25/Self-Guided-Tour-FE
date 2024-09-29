@@ -14,7 +14,6 @@ function Testimonials() {
   const [recommendedPlaces, setRecommendedPlaces] = useState([]);
   const router = useRouter();
   const sliderRef = useRef(null); // Reference for the slider
-  const [testimonial, setTestimonial] = useState(null);
 
   useEffect(() => {
     getTours("?sortBy=averageRating&pageNumber=1&pageSize=4")
@@ -23,7 +22,7 @@ function Testimonials() {
           const response = await getReviewsByTourId(tour.tourId);
           const reviews = response.data.result;
           const sorted = reviews.sort((a, b) => b.rating - a.rating);
-
+          
           setRecommendedPlaces((prev) => [
             ...prev,
             {
@@ -110,7 +109,8 @@ function Testimonials() {
                     price={`EUR ${place.price}`}
                     rating={place.averageRating}
                     onclick={() => router.push(`/tour/${place.tourId}`)}
-                    creatorName={place.user}
+                    userName={place.user}
+                    userImg={place.userImg}
                   />
                 </div>
               ))}
