@@ -9,8 +9,7 @@ function ProfileLayout({ children }) {
 
   return (
     <ProfileProvider>
-      <div className="flex flex-col  justify-start gap-7 h-[1720px] mx-52">
-        <h1>Profile Page</h1>
+      <div className="flex flex-col  justify-start gap-7 h-[1720px] mx-[215px]">
         <ProfileNavigation />
         {children}
       </div>

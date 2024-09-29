@@ -16,9 +16,7 @@ export default function TableTabs({
           } rounded-tl-[5px] rounded-tr-[5px] border-b border-neutral-50 justify-start items-center inline-flex web:w-[262px] `}
           onClick={() => setActiveTab(tab)}
         >
-          <div className="text-[#081120] text-[13px] mx-auto web:text-lg">
-            {tab}
-          </div>
+          <div className="text-[#081120]  mx-auto web:text-lg">{tab}</div>
           {chidren}
         </div>
       ))}
