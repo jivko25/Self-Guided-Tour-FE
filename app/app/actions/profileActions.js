@@ -8,23 +8,38 @@ import {
 export async function updateProfileAsync(prevState, formData) {
   const rawFormData = Object.fromEntries(formData);
   try {
+    // Validate email
     await emailValidationScheme.validate({
       email: rawFormData.email,
     });
+    // Handle password change
     if (
       rawFormData.currentPassword ||
       rawFormData.password ||
       rawFormData.repeatPassword
     ) {
-      console.log(rawFormData.password);
-      console.log(rawFormData.repeatPassword);
-      await passwordValidationScheme.validate({
-        password: rawFormData.password,
-        repeatPassword: rawFormData.repeatPassword,
-      });
+      // Handle password create/change
+      if (rawFormData.hasPassowrd) {
+        // Change password
+        const passwordChangeRequest = {
+          currentPassword: rawFormData.currentPassword,
+          password: rawFormData.password,
+        };
+        await axiosSSR.post("/auth/change-password", passwordChangeRequest);
+      } else {
+        // Create password
+        const passwordCreateRequest = {
+          password: rawFormData.password,
+        };
+        await axiosSSR.post(
+          "/auth/create-password",
+          rawFormData.repeatPassword
+        );
+      }
     }
+    // Handle profile update
+    await axiosSSR.patch("/profile", formData);
 
-    const response = await axiosSSR.patch("/profile", formData);
     return "Profile updated successfully";
   } catch (error) {
     if (error.path) {
