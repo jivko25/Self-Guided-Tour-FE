@@ -13,7 +13,9 @@ function CloseButton({
       className={`flex gap-${spaceBetween} ${className}`}
       onClick={onClick}
     >
-      {icon && <Image src={icon} alt={text} width={24} height={24} />}
+      {icon && (
+        <Image src={icon} alt={text || "button-icon"} width={24} height={24} />
+      )}
       {text ? <p className="hidden tablet:flex text-nowrap">{text}</p> : ""}
     </button>
   );
