@@ -1,5 +1,4 @@
 "use client";
-import { axiosTour } from "@/api/axios";
 import { useEffect, useState } from "react";
 import Card from "../components/Card/Card";
 import Search from "../components/Search/Search";

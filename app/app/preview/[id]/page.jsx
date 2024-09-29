@@ -6,13 +6,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCreateTour } from "@/app/context/createTourContext";
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { getOne } from "@/app/actions/tourActions";
 import { usePopup } from "@/app/context/popupContext";
 import ArrowRedo from "../../public/svg/arrow-redo.svg";
 import Pencil from "../../public/svg/pencil.svg";
 import Play from "../../public/svg/play.svg";
 import X from "../../public/svg/X.svg";
+import { useRouter } from "next/navigation";
 
 const IOSTypes = {
   driving: "d",
@@ -26,40 +27,62 @@ export default function Preview() {
   const [title, setTitle] = useState("");
   const [locations, setLocations] = useState([]);
   const [tourType, setTourType] = useState("");
+  const dbRef = useRef(null);
   const popup = usePopup();
+  const router = useRouter();
 
   useEffect(() => {
     if (id == 0) {
-      setTitle(formData.step1Data.tour);
-      setTourType(formData.step1Data.tourType);
+      let db;
+      dbRef.current = indexedDB.open("step2DB", 1);
 
-      const newArr = formData.step2Data.map((loc) => {
-        return {
-          locationName: loc.location,
-          description: loc.locationDescription,
-          latitude: loc.latitude,
-          longitude: loc.longitude,
-          audio: loc.addFields.filter(
-            (file) =>
-              file.name.endsWith(".mp3") ||
-              file.name.endsWith(".wav") ||
-              file.name.endsWith(".aac") ||
-              file.name.endsWith(".flac") ||
-              file.name.endsWith(".ogg")
-          ),
-          video: loc.addFields.filter(
-            (file) =>
-              file.name.endsWith(".mp4") ||
-              file.name.endsWith(".avi") ||
-              file.name.endsWith(".mkv") ||
-              file.name.endsWith(".mov") ||
-              file.name.endsWith(".wmv") ||
-              file.name.endsWith(".flv")
-          ),
+      dbRef.current.onsuccess = function (event) {
+        db = event.target.result;
+
+        const transaction = db.transaction(["data"], "readonly");
+        const objectStore = transaction.objectStore("data");
+
+        const getRequest = objectStore.getAll();
+
+        getRequest.onsuccess = function (event) {
+          const result = event.target.result[0].data;
+          setTitle(result.step1Data.tour);
+          setTourType(result.step1Data.tourType);
+          
+          const newArr = result.step2Data.map((loc) => {
+            return {
+              locationName: loc.location,
+              description: loc.locationDescription,
+              latitude: loc.latitude,
+              longitude: loc.longitude,
+              audio: loc.addFields.filter(
+                (file) =>
+                  file.name.endsWith(".mp3") ||
+                  file.name.endsWith(".wav") ||
+                  file.name.endsWith(".aac") ||
+                  file.name.endsWith(".flac") ||
+                  file.name.endsWith(".ogg")
+              ),
+              video: loc.addFields.filter(
+                (file) =>
+                  file.name.endsWith(".mp4") ||
+                  file.name.endsWith(".avi") ||
+                  file.name.endsWith(".mkv") ||
+                  file.name.endsWith(".mov") ||
+                  file.name.endsWith(".wmv") ||
+                  file.name.endsWith(".flv")
+              ),
+            };
+          });
+          
+          setLocations(newArr);
+          db.close();
         };
-      });
 
-      setLocations(newArr);
+        getRequest.onerror = function (event) {
+          console.error("Error retrieving files:", event);
+        };
+      };
     } else {
       getOne(id).then((result) => {
         const { data, error } = result;
@@ -82,7 +105,8 @@ export default function Preview() {
               ),
             };
           });
-
+          // console.log(newData);
+          
           setLocations(newData);
         } else {
           popup({
@@ -170,6 +194,29 @@ export default function Preview() {
 
   const handleTourTypeChange = (tourType) => {
     setTourType(tourType);
+  };
+
+  const clearDB = () => {
+    if (dbRef.current) {
+      const deleteRequest = indexedDB.deleteDatabase("myFileDB");
+
+      deleteRequest.onerror = (event) => {
+        console.error("Error deleting data:", event);
+      };
+
+      deleteRequest.onblocked = () => {
+        console.warn("Deletion is blocked!");
+      };
+    }
+  };
+
+  const handleRedirect = () => {
+    clearDB();
+    if (id == 0) {
+      router.push("/create");
+    } else {
+      router.push(`tour/${id}`);
+    }
   };
 
   return (
@@ -311,7 +358,7 @@ export default function Preview() {
                 className="w-full tablet:w-[182px] web:w-[220px] webl:w-[278px] h-[44px] font-semibold"
                 variant="outlined"
                 text="Back"
-                link={id == 0 ? "/create" : `/tour/${id}`}
+                onClick={handleRedirect}
               />
             </div>
           </div>
