@@ -29,10 +29,10 @@ function Testimonials() {
               tourId: tour.tourId,
               title: tour.title,
               thumbnailImageUrl: tour.thumbnailImageUrl,
-              summary: tour.summary,
               destination: tour.destination,
               price: tour.price,
               averageRating: tour.averageRating,
+              comment: sorted[0].comment,
               user: sorted[0].user,
               userImg: sorted[0].userImg,
             },
@@ -104,7 +104,7 @@ function Testimonials() {
                     key={place.tourId}
                     title={place.title}
                     imageSrc={place.thumbnailImageUrl}
-                    description={place.summary}
+                    description={place.comment}
                     location={place.destination}
                     price={`EUR ${place.price}`}
                     rating={place.averageRating}
