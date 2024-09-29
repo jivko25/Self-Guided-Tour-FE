@@ -80,8 +80,9 @@ function HowItWorks() {
             tablet:w-[182px] tablet:h-[43px] tablet:text-base
             phone:w-[177px] phone:h-[43px] phone:text-base
             w-[140px] h-[43px] text-base
+            hover:text-opacity-70
             "
-            href="/explore"
+            href="/explore?page=1"
           >
             Explore
           </Link>
@@ -91,6 +92,7 @@ function HowItWorks() {
             tablet:w-[182px] tablet:h-[43px] tablet:text-base
             phone:w-[177px] phone:h-[43px] phone:text-base
             w-[140px] h-[43px] text-base
+            hover:opacity-70
             "
             href="/create"
           >
