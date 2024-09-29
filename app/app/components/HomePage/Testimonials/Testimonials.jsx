@@ -22,7 +22,7 @@ function Testimonials() {
           const response = await getReviewsByTourId(tour.tourId);
           const reviews = response.data.result;
           const sorted = reviews.sort((a, b) => b.rating - a.rating);
-          
+
           setRecommendedPlaces((prev) => [
             ...prev,
             {
@@ -134,13 +134,13 @@ function Testimonials() {
             <div className="w-full mt-[30px] ">
               <button
                 onClick={() => sliderRef.current.slickPrev()}
-                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[7px] mr-[20px]"
+                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[7px] mr-[20px] hover:opacity-60"
               >
                 <SeeMoreSvgHomePage className="w-[30px] h-[30px] rounded-full rotate-180 web:w-6 web:h-6 web:block tablet:w-6 tablet:h-6" />
               </button>
               <button
                 onClick={() => sliderRef.current.slickNext()}
-                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[7px] "
+                className="rounded-full bg-[#e8b600] web:p-[13px] tablet:p-[7px] hover:opacity-60"
               >
                 <SeeMoreSvgHomePage className="w-[30px] h-[30px] rounded-full web:w-6 web:h-6 web:block tablet:w-6 tablet:h-6" />
               </button>
