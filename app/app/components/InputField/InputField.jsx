@@ -22,6 +22,7 @@ const InputField = forwardRef(
       disabled,
       readOnly,
       createTour,
+      hasTooltip,
       content,
       ...otherProps
     },
@@ -67,7 +68,7 @@ const InputField = forwardRef(
         {label && (
           <label htmlFor={id}>
             {label}
-            {createTour && (
+            {(createTour || hasTooltip) && (
               <HelpIconInfo
                 styles={styles["help-icon"]}
                 id={id}
