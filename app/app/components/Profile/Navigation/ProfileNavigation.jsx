@@ -48,16 +48,6 @@ function ProfileNavigation() {
             My Balance
           </Link>
         </li>
-        <li className={`${hover} `}>
-          <Link
-            href="/profile/settings"
-            className={`${
-              pathname === "/profile/settings" ? active : ""
-            } w-[77px]`}
-          >
-            Settings
-          </Link>
-        </li>
       </ul>
       <LogOutButton
         text="Sign Out"

@@ -6,7 +6,16 @@ const ProfileContext = createContext();
 const initialState = {
   profile: null,
   isLoading: false,
-  user: null,
+  user: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    about: "",
+    currentPassword: "",
+    password: "",
+    repeatPassword: "",
+  },
   profilePictureSrc: null,
   error: null,
   page: 1,
@@ -15,7 +24,7 @@ const initialState = {
 };
 function reducer(state, action) {
   switch (action.type) {
-    case "profile/loading":
+    case "profile/loaded":
       return {
         ...state,
         isLoading: false,
@@ -26,6 +35,11 @@ function reducer(state, action) {
       return {
         ...state,
         profilePictureSrc: action.payload,
+      };
+    case "user/onChange":
+      return {
+        ...state,
+        user: { ...state.user, ...action.payload },
       };
     case "loading":
       return { ...state, isLoading: true };
@@ -53,6 +67,17 @@ function reducer(state, action) {
       };
     case "resetPage":
       return { ...state, page: 1, totalPages: 1 };
+    case "resetPasswords": {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          currentPassword: "",
+          password: "",
+          repeatPassword: "",
+        },
+      };
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -78,7 +103,7 @@ export const ProfileProvider = ({ children }) => {
     try {
       dispatch({ type: "loading" });
       const response = await axios.get("/profile");
-      dispatch({ type: "profile/loading", payload: response.data });
+      dispatch({ type: "profile/loaded", payload: response.data });
     } catch (error) {
       console.error("Failed to get profile:", error);
     }

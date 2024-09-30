@@ -6,12 +6,12 @@ function MyBalanceTable({ tableHeaders, error, transactions = [] }) {
   return (
     <table
       className="flex justify-start table-fixed flex-col 
-                                                web:w-[1418px]
+                                                web:w-[1490px]
                                                 tablet:w-[800px]  tablet:mt-28
                                                 phone:w-[500px]
                                                 smallPhone:w-[300px] smallPhone:mt-16"
     >
-      <thead className="border border-[#D1D0D8] h-[74px] mb-4">
+      <thead className="border border-[#D1D0D8] h-[74px] mb-4 ">
         <tr className="h-16 ">
           {tableHeaders.map((header, index) => (
             <th
