@@ -13,38 +13,28 @@ function Slider({
   setSelectedImage,
   landmarks,
   thumbnailImageUrl,
+  sliderIndex,
 }) {
   // State to track current image index in the slider
-  const [currentIndex, setCurrentIndex] = useState(
-    landmarks
-      .flatMap((landmark) =>
-        landmark.resources
-          ? landmark.resources.filter(
-              (resource) => resource.resourceType === "Image"
-            )
-          : []
-      )
-      .findIndex((resource) => resource.resourceUrl === selectedImage)
-  );
+  const [currentIndex, setCurrentIndex] = useState(sliderIndex);
 
-  // Filter all images from landmarks
-  const images = landmarks.flatMap((landmark) =>
-    landmark.resources
-      ? landmark.resources.filter(
-          (resource) => resource.resourceType === "Image"
-        )
-      : []
-  );
+  const images = [
+    { resourceUrl: thumbnailImageUrl, resourceId: "thumbnail" },
+    ...landmarks.flatMap((landmark) =>
+      landmark.resources
+        ? landmark.resources.filter(
+            (resource) => resource.resourceType === "Image"
+          )
+        : []
+    ),
+  ];
 
-  // UseEffect to set default image if no image is selected
-  useEffect(() => {
-    if (!selectedImage) {
-      // Set the default image to the thumbnail image
-      setSelectedImage(thumbnailImageUrl);
-      // Set the current index to 0 (first image)
-      setCurrentIndex(0);
-    }
-  }, [selectedImage, thumbnailImageUrl, setSelectedImage]);
+  // Function to navigate to the previous image
+  const handlePrevious = () => {
+    const newIndex = (currentIndex - 1 + images.length) % images.length;
+    setCurrentIndex(newIndex);
+    setSelectedImage(images[newIndex].resourceUrl);
+  };
 
   // Function to navigate to the next image
   const handleNext = () => {
@@ -85,24 +75,38 @@ function Slider({
                 {title}
               </h1>
 
-              <img
-                src={selectedImage}
-                alt="Selected"
-                className="max-w-full max-h-full mx-auto tablet:w-[685px] tablet:h-[400px] web:w-[1002px] web:h-[600px] rounded-[15px] object-cover"
-              />
-            </div>
+              <div className="flex items-center justify-center relative">
+                {/* Button for the previous image */}
+                {images.length > 1 && currentIndex > 0 && (
+                  <div className="absolute left-[-30px]">
+                    <button
+                      className="flex items-center justify-center w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8] z-10"
+                      onClick={handlePrevious}
+                    >
+                      <Next className="w-[30px] h-[30px]  transform rotate-180" />
+                    </button>
+                  </div>
+                )}
 
-            {/* Button for the next image */}
-            {totalImages > 1 && (
-              <div className="flex items-center justify-center h-full ml-[-30px]">
-                <button
-                  className="flex items-center justify-center web:mt-[80px] tablet:mt-[30px] w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8]"
-                  onClick={handleNext}
-                >
-                  <Next className="w-[30px] h-[30px]" />
-                </button>
+                <img
+                  src={selectedImage}
+                  alt="Selected"
+                  className="max-w-full max-h-full mx-auto tablet:w-[685px] tablet:h-[400px] web:w-[1002px] web:h-[600px] rounded-[15px] object-cover"
+                />
+
+                {/* Button for the next image */}
+                {totalImages > 0 && (
+                  <div className=" absolute right-[-30px]">
+                    <button
+                      className="flex items-center justify-center w-[60px] h-[60px] bg-neutral-50 rounded-full border border-[#d1d0d8] z-10"
+                      onClick={handleNext}
+                    >
+                      <Next className="w-[30px] h-[30px]" />
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
 
           {/* Gallery of thumbnails */}
