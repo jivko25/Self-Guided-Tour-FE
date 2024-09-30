@@ -31,10 +31,12 @@ function TourDetails() {
   const popup = usePopup();
 
   useEffect(() => {
-    getUserSession()
-      .then((sess) => setUserId(sess.userId))
-      .catch((err) => console.log(err));
-  });
+    // if (userId) {
+      getUserSession()
+        .then((sess) => setUserId(sess.userId))
+        .catch((err) => console.log(err));
+    // }
+  }, [userId]);
 
   useEffect(() => {
     getOne(id)
@@ -74,15 +76,17 @@ function TourDetails() {
   }, [id, userId, isReviewed]);
 
   useEffect(() => {
-    getBoughtTours()
-      .then((data) => {
-        const result = data.data.filter((tour) => tour.tourId == id);
+    if (userId) {
+      getBoughtTours()
+        .then((data) => {
+          const result = data.data.filter((tour) => tour.tourId == id);
 
-        if (result.length > 0) {
-          setIsBought(true);
-        }
-      })
-      .catch((err) => console.log(err));
+          if (result.length > 0) {
+            setIsBought(true);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   }, [id]);
 
   useEffect(() => {
