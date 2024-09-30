@@ -1,8 +1,4 @@
 "use client";
-<<<<<<< HEAD
-
-=======
->>>>>>> e849899427d448131a758d73187abaf33f084a05
 import React, { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
 import Card from "../../Card/Card";
