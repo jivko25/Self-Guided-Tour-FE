@@ -15,9 +15,9 @@ function TourPurchase({
 }) {
   return (
     <div
-      className="flex flex-col h-full flex-wrap items-start justify-center w-full
-        web:gap-[30px] web:max-w-[430px] web:mt-[0px]
-        tablet:max-w-[584px] tablet:mt-[0px]
+      className="flex flex-col h-full flex-wrap items-start justify-center 
+        web:gap-[30px] web:max-w-[430px] web:mt-[0px] web:w-full
+        tablet:max-w-[584px] tablet:mt-[0px] tablet:w-full
         mt-[20px] w-[95%]"
     >
       <div
@@ -60,7 +60,7 @@ function TourPurchase({
             tablet:mb-[20px] tablet:max-w-[430px] tablet:text-base 
             mb-[10px] text-sm"
         >
-          Explore the beautiful buildings and green parks of Sofia’s biggest
+          Explore the beautiful buildings and green parks of Sofia`s biggest
           theaters. Take a walk trough a beautiful sightseeing in the historical
           center of the city.
         </p>
