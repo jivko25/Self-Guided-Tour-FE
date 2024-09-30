@@ -31,11 +31,9 @@ function TourDetails() {
   const popup = usePopup();
 
   useEffect(() => {
-    // if (userId) {
       getUserSession()
         .then((sess) => setUserId(sess.userId))
         .catch((err) => console.log(err));
-    // }
   }, [userId]);
 
   useEffect(() => {
