@@ -17,7 +17,7 @@ const HelpIconInfo = ({
           <ReactTooltip
           id={id}
           place="right"
-          style={{ backgroundColor: "rgba(232, 182, 0, 1)" }}
+          style={{ backgroundColor: "rgba(232, 182, 0, 1)",  color: "black"} }
           content={content}
         />
         </>

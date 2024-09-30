@@ -20,7 +20,7 @@ function HomePage() {
         web:flex-col
         tablet:flex-col
         phone:flex-col-reverse
-        smallPhone:flex-col-reverse
+        flex-col-reverse
       "
       >
         <InfoCardsSection />

@@ -57,34 +57,63 @@ const Step1 = () => {
     setInput(() => state);
   };
 
+  const fieldValidations = [
+    { field: "tour", message: "Please enter a tour title" },
+    { field: "destination", message: "Please enter a destination" },
+    {
+      field: "duration",
+      message: "Please specify approximate duration (in minutes)",
+    },
+    { field: "price", message: "Please enter the price (in EUR)" },
+    {
+      field: "tourType",
+      message:
+        "Please choose a tour type (e.g., Walking, Bicycling, or Driving)",
+    },
+  ];
+
   const onNextStep = () => {
-    if (
-      input.tour === "" ||
-      input.destination === "" ||
-      input.duration === "" ||
-      input.price === "" ||
-      input.tourType === ""
-    ) {
+    for (let validation of fieldValidations) {
+      if (input[validation.field] === "") {
+        popup({
+          type: "ERROR",
+          message: validation.message,
+        });
+        return;
+      }
+    }
+    // Max duration 24 hours
+    if (input.duration < 15 || input.duration > 1440) {
       popup({
         type: "ERROR",
-        message: "Please fill in all required fields before proceeding.",
+        message:
+          "Duration must be a at least 15 minutes and cannot exceed 1 day (1440 minutes)",
       });
-    } else {
-      updateStep1Data(input);
-      nextStep();
+      return;
     }
+
+    if (input.price <= 0) {
+      popup({
+        type: "ERROR",
+        message: "Price must be a positive amount in EUR",
+      });
+      return;
+    }
+
+    updateStep1Data(input);
+    nextStep();
   };
 
   return (
     <>
       <div
-        className={`flex justify-center flex-col gap-5  tablet:w-[582px] ${
+        className={`flex justify-center flex-col gap-5  ${
           onType ? "h-[1050px] mt-40 mb-6" : "h-[756px]"
         } h-[753px]`}
       >
         <StepHeader
           title={"Let's get started!"}
-          description={"Subheding, short description, ect."}
+          description={"Subheading, short description, ect."}
           step={1}
         />
 
@@ -98,7 +127,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Tour}
           // hint="Please enter a valid Tour Title"
-          content={"Help for Tour Title"}
+          content={"The name of the tour package"}
           required={true}
           createTour={true}
         />
@@ -113,7 +142,7 @@ const Step1 = () => {
           onChange={handleChange}
           error={errors.Destination}
           // hint="Please enter a valid Destination"
-          content={"Help for Destination"}
+          content={"The location or city where the tour takes place"}
           required={true}
           createTour={true}
         />
@@ -122,16 +151,16 @@ const Step1 = () => {
           label="Duration"
           name="duration"
           type="number"
-          placeholder="Estimate duration of your tour"
+          placeholder="Estimate duration of your tour in minutes"
           value={input.duration}
           onChange={handleChange}
           error={errors.Duration}
           // hint="Please enter a valid Duration"
-          content={"Help for Duration"}
+          content={"The length of the tour, enter the time in minutes"}
           required={true}
           createTour={true}
         />
-        <div className={`relative`}>
+        <div className={`relative w-fit`}>
           <InputField
             id="tourType"
             label="Tour Type"
@@ -142,7 +171,7 @@ const Step1 = () => {
             // onChange={handleChange}
             error={errors.TourType}
             // hint="Please enter a valid Duration"
-            content={"Help for Tour Type"}
+            content={"Select the type of tour: Walking, Cycling, or Driving"}
             required={true}
             createTour={true}
             readOnly={true}
@@ -165,7 +194,7 @@ const Step1 = () => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="flex flex-col justify-center items-center border-[0.5px] border-[#CECECE] mt-[-1rem] gap-5 relative"
+            className="flex flex-col w-full   justify-center items-center border-[0.5px] border-[#CECECE] mt-[-1rem] gap-5 relative"
           >
             <p
               className="absolute top-[14px] right-1 cursor-pointer"
@@ -177,30 +206,30 @@ const Step1 = () => {
             <ul className="flex flex-col justify-center gap-4  pb-[20px]">
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Walking Tour")}
+                onClick={() => updateTourType("Walking")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Walk} alt="Walk icon" />
                 </p>
-                Walking Tour
+                Walking
               </li>
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Cycling Tour")}
+                onClick={() => updateTourType("Bicycling")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Bicycle} alt="Bicycle icon" />
                 </p>
-                Cycling Tour
+                Bicycling
               </li>
               <li
                 className={liClassName}
-                onClick={() => updateTourType("Driving Tour")}
+                onClick={() => updateTourType("Driving")}
               >
                 <p className="mr-[0.5rem]">
                   <Image src={Car} alt="Car icon" />
                 </p>
-                Driving Tour
+                Driving
               </li>
             </ul>
           </motion.div>
@@ -211,18 +240,18 @@ const Step1 = () => {
           label="Price"
           name="price"
           type="number"
-          placeholder="USD"
+          placeholder="EUR"
           value={input.price}
           onChange={handleChange}
           error={errors.Price}
           // hint="Please enter a valid Price"
-          content={"Help for Price"}
+          content={"Tour price in EUR"}
           required={true}
           createTour={true}
         />
 
         <Btn
-          className=" smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600]  h-[43px] self-center  tablet:hidden "
+          className=" w-[177] h-[43px] text-[16px]  border-b-2 border-b-[#E8B600] hover:border-opacity-70 self-center  tablet:self-end web:w-[100px]   "
           variant="transparent"
           text="Next"
           onClick={onNextStep}
@@ -231,9 +260,9 @@ const Step1 = () => {
         <AnimatePresence>
           {openModal && (
             <Modal
-              title={"Saved Data."}
+              title={"You have saved draft"}
               description={
-                "Do you want to load the saved draft? Note that you will need to add the files again."
+                "Do you want to load the previously saved draft? Note that you will need to add the files again."
               }
               open={openModal}
               onConfirm={updateSavedFormData}
@@ -241,14 +270,6 @@ const Step1 = () => {
             ></Modal>
           )}
         </AnimatePresence>
-      </div>
-      <div className="relative web:w-[1920px] web:h-[138px] tablet:w-[834px] tablet:h-[100px] phone:hidden tablet:block border-t border-[#E7EAED] ">
-        <Btn
-          className="absolute web:left-[1151px] web:top-[36px] tablet:left-[608px] tablet:top-[19px] phone:hidden tablet:block font-semibold text-[16px] border-b-2 border-b-[#E8B600] w-[177px] tablet:w-[100px] web:w[100px] h-[43px] "
-          variant="transparent"
-          text="Next"
-          onClick={onNextStep}
-        />
       </div>
     </>
   );

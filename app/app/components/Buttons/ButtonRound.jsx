@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function ButtonRound({
   type = "button",
   onclick,
-  classes,
+  classes = '',
   direction = "",
 }) {
   const [svg, setSvg] = useState(null);

@@ -1,6 +1,7 @@
+// createTourContext.jsx
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
-import { createTour } from "../actions/tourActions.js";
+import { createTour, updateTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
@@ -8,8 +9,9 @@ import {
   canProceedToStep,
 } from "../utils/wizardStepValidations.js";
 import { usePopup } from "./popupContext.jsx";
-import { useRouter } from "next/navigation.js";
+import { useRouter, useSearchParams } from "next/navigation.js";
 const LOCAL_STORAGE_KEY = "savedTourFormData";
+const EDIT_TOUR_KEY = "tourToEdit";
 
 const CreateTourContext = createContext();
 
@@ -30,19 +32,15 @@ export const CreateTourProvider = ({ children }) => {
     },
   };
 
-  // const loadInitialState = () => {
-  //   if (typeof window !== "undefined") {
-  //     // Check if the code is running in the browser
-  //     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-  //     return savedData ? JSON.parse(savedData) : emptyFormData;
-  //   }
-  //   return emptyFormData; // Return empty form data during SSR
-  // };
-
   const popup = usePopup();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check if it's edit mode
+  const editModeTourId = searchParams.get("edit");
 
   const [openModal, setOpenModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const [step, setStep] = useState(0);
   // const [formData, setFormData] = useState(loadInitialState());
@@ -50,9 +48,9 @@ export const CreateTourProvider = ({ children }) => {
   const [localStorageData, setLocalStorageData] = useState(false);
   const hasPrompted = useRef(false); // Use a ref to ensure the prompt only happens once
 
-  // Currently it saves every time formData changes, but it's a better idea to save it with a Save Draft Button
+  // Currently it saves every time formData changes in create, but it's a better idea to save it with a Save Draft Button
   useEffect(() => {
-    if (hasPrompted.current) {
+    if (hasPrompted.current && !editModeTourId) {
       const filteredData = filterOutAddFields(formData);
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(filteredData));
     }
@@ -67,8 +65,53 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, [localStorageData]);
 
+  // Check for the tourToEdit object in sessionStorage
   useEffect(() => {
-    if (!hasPrompted.current) {
+    const storedTour = sessionStorage.getItem(EDIT_TOUR_KEY);
+    if (storedTour) {
+      const tourToEdit = JSON.parse(storedTour);
+      // Set form data to the tourToEdit object if found
+      setFormData({
+        step1Data: {
+          tour: tourToEdit.title || "", //
+          destination: tourToEdit.destination || "", //
+          duration: tourToEdit.estimatedDuration || "",
+          tourType: tourToEdit.tourType || "",
+          price: tourToEdit.price || "",
+        },
+        step2Data:
+          tourToEdit.landmarks.map((landmark) => ({
+            landmarkId: landmark.landmarkId || null,
+            latitude: landmark.latitude || null,
+            longitude: landmark.longitude || null,
+            location: landmark.locationName || "",
+            locationCity: landmark.city || "",
+            locationDescription: landmark.description || "",
+            stopOrder: landmark.stopOrder || 0,
+            placeId: landmark.placeId || "",
+            addFields:
+              landmark.resources.map((resource) => ({
+                type: resource.resourceType || "",
+                url: resource.resourceUrl || "",
+                id: resource.resourceId || "",
+              })) || [],
+          })) || [],
+        step3Data: "",
+        step4Data: {
+          summary: tourToEdit.summary || "",
+          thumbnailImage: tourToEdit.thumbnailImageUrl || null,
+        },
+      });
+      setIsEditMode(true);
+      sessionStorage.removeItem(EDIT_TOUR_KEY);
+    }
+  }, []);
+
+  // console.log(formData);
+
+  // Show load draft modal only if it's not edit mode
+  useEffect(() => {
+    if (!hasPrompted.current && !editModeTourId) {
       const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
       const data = JSON.parse(savedData);
 
@@ -82,7 +125,7 @@ export const CreateTourProvider = ({ children }) => {
         setOpenModal(true);
       }
     }
-  }, []);
+  }, [isEditMode]);
 
   const onCloseModal = () => {
     setFormData(() => emptyFormData);
@@ -154,22 +197,11 @@ export const CreateTourProvider = ({ children }) => {
     hasPrompted.current = true;
   };
   const handlePublishTour = async () => {
-    const tourTypeOptions = [
-      { id: 0, label: "Walking Tour" },
-      { id: 1, label: "Cycling Tour" },
-      { id: 2, label: "Driving Tour" },
-    ];
-
-    // Find the corresponding ID for the selected tour type
-    const selectedTourType = tourTypeOptions.find(
-      (option) => option.label === formData.step1Data.tourType
-    );
-
     const tourData = {
       title: formData.step1Data.tour,
       summary: formData.step4Data.summary,
       price: formData.step1Data.price,
-      tourType: selectedTourType ? selectedTourType.id : null, // Use the id if found
+      tourType: formData.step1Data.tourType,
       destination: formData.step1Data.destination,
       thumbnailImage: formData.step4Data.thumbnailImage,
       estimatedDuration: formData.step1Data.duration,
@@ -180,12 +212,14 @@ export const CreateTourProvider = ({ children }) => {
         });
 
         return {
+          landmarkId: landmark.landmarkId,
           latitude: landmark.latitude,
           longitude: landmark.longitude,
           city: landmark.locationCity,
           locationName: landmark.location,
           stopOrder: landmark.stopOrder,
           description: landmark.locationDescription,
+          placeId: landmark.placeId,
           resources: resources,
         };
       }),
@@ -200,10 +234,18 @@ export const CreateTourProvider = ({ children }) => {
       return;
     }
 
-    const { error } = await createTour(tourData);
+    // If it's edit mode update the tour else create a new tour
+    let response;
+    if (isEditMode) {
+      const tourId = editModeTourId;
+      response = await updateTour(tourId, tourData);
+    } else {
+      response = await createTour(tourData);
+    }
+
+    const { error } = response;
 
     if (error) {
-      // Iterate over the errors and create a popup for each one
       Object.entries(error.errors).forEach(([field, messages]) => {
         popup({
           type: "ERROR",
@@ -211,11 +253,22 @@ export const CreateTourProvider = ({ children }) => {
         });
       });
     } else {
-      router.push("/");
-      popup({
-        type: "SUCCESS",
-        message: "Your tour has been successfully created",
-      });
+      // If user is editing already existing tour redirect him to tour details
+      if (isEditMode) {
+        router.push(`/tour/${editModeTourId}`);
+        popup({
+          type: "SUCCESS",
+          message: "Your tour has been successfully updated",
+        });
+      } else {
+        // TODO : Redirect to proper page which informs the user about his tour status
+        // If it's new tour redirect the user to home
+        router.push(`/`);
+        popup({
+          type: "SUCCESS",
+          message: "Your tour has been successfully created",
+        });
+      }
     }
   };
 
@@ -225,6 +278,7 @@ export const CreateTourProvider = ({ children }) => {
         step,
         formData,
         openModal,
+        isEditMode,
         onCloseModal,
         nextStep,
         prevStep,

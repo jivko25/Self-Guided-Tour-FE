@@ -7,9 +7,12 @@ import FileTray from "../../public/svg/file-tray.svg";
 import Visualize from "../../public/svg/image-outline.svg";
 import InputField from "../InputField/InputField.jsx";
 import Btn from "../Buttons/Btn.jsx";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const Step4 = () => {
-  const { formData, updateFormData, handlePublishTour } = useCreateTour();
+  const { formData, updateFormData, handlePublishTour, isEditMode } = useCreateTour();
+  const router = useRouter();
+  const editId = useSearchParams().get('edit') || 0;
 
   const [imageName, setImageName] = useState(
     formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
@@ -27,8 +30,6 @@ const Step4 = () => {
     "image/avif",
   ];
   const FILE_SIZE = 1024 * 1024; // 1MB
-
-  console.log(formData);
 
   // TODO: Schemas could be exported to util
   const TourSummarySchema = Yup.object().shape({
@@ -117,6 +118,43 @@ const Step4 = () => {
       value: formData.step1Data.price ? `${formData.step1Data.price} USD` : "",
     },
   ];
+
+  const redirectToPreview = () => {
+    let db;
+    const request = indexedDB.open("step2DB", 1);
+    
+    request.onupgradeneeded = function (event) {
+      db = event.target.result;
+      if (!db.objectStoreNames.contains("data")) {
+        db.createObjectStore("data", { keyPath: "id" });
+      }
+    };
+    
+    request.onsuccess = function (event) {
+      db = event.target.result;
+      const transaction = db.transaction(["data"], "readwrite");
+      const objectStore = transaction.objectStore("data");
+    
+      const fileData = {
+        id: "previewData",
+        name: "step2Data",
+        data: formData,
+      };
+    
+      const addRequest = objectStore.put(fileData);
+    
+      addRequest.onerror = (event) => {
+        console.error("Error storing file:", event);
+      };
+
+      db.close();
+    };
+    if (isEditMode) {
+      router.push(`/preview/${editId}?edit=0`);
+    } else {
+      router.push("/preview/0");
+    }
+  };
 
   return (
     <div className="w-full h-full flex flex-col justify-center mx-auto  gap-14 p-4 bg-neutral-50 tablet:w-5/6 tablet:p-8  ">
@@ -248,7 +286,12 @@ const Step4 = () => {
           />
         </div>
         <div className="tablet:w-[183px]">
-          <Btn fullWidth variant="outlined" text="Preview" />
+          <Btn
+            fullWidth
+            variant="outlined"
+            text="Preview"
+            onClick={redirectToPreview}
+          />
         </div>
       </section>
     </div>

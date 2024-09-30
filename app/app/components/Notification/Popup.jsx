@@ -20,11 +20,11 @@ const Popup = (props) => {
       initial="hidden"
       animate="visible"
       exit="hidden"
-      className={`flex flex-row justify-center items-center   mb-2  grip-2 mx-2 w-fit  h-fit
+      className={`flex flex-row   justify-center items-center p-4 rounded-sm mb-2    mx-2 w-full  h-fit
              ${props.type === "SUCCESS" ? "bg-[#D0FFCF]" : "bg-[#FFC1C1]"}`}
     >
       <p
-        className="w-fit h-fit content-center cursor-pointer"
+        className="w-6 h-6 content-center cursor-pointer tablet:w-10 tablet:h-10 web:w-[60px] web:h-[60px]"
         onClick={closePopup}
       >
         <Image
@@ -34,7 +34,7 @@ const Popup = (props) => {
       </p>
 
       <h3
-        className={`ml-[0.3rem] px-4 tablet:ml-[1rem] text-[16px] font-semibold tablet:text-[20px] tablet:font-medium ${
+        className={`ml-[0.3rem]  tablet:ml-[1rem] text-base font-semibold tablet:text-xl tablet:font-medium ${
           props.type === "SUCCESS" ? "text-[#037E00]" : "text-[#AA0000]"
         }`}
       >

@@ -1,89 +1,101 @@
-import React from 'react'
-import Star from '../Svgs/Star'
-import Btn from '../../Buttons/Btn'
+import React from "react";
+import Star from "../Svgs/Star";
+import Btn from "../../Buttons/Btn";
+import StarRating from "../../StarRating/StarRating";
 
-function TourPurchase({ destination, price, id, router }) {
+function TourPurchase({
+  destination,
+  price,
+  id,
+  router,
+  isBought,
+  isReviewed,
+  handleReviewing,
+  averageRating,
+}) {
   return (
     <div
-          className="flex flex-col h-full flex-wrap items-start justify-center w-full
+      className="flex flex-col h-full flex-wrap items-start justify-center w-full
         web:gap-[30px] web:max-w-[430px] web:mt-[0px]
         tablet:max-w-[584px] tablet:mt-[0px]
-        phone:mt-[20px] phone:w-[95%]
-        smallPhone:mt-[20px] smallPhone:w-[95%]
-        "
-        >
-          <div
-            className="flex 
+        mt-[20px] w-[95%]"
+    >
+      <div
+        className="flex 
           web:items-start web:flex-col 
           tablet:flex-row tablet:gap-[20px] tablet:justify-center
-          phone:flex-col phone:mb-[20px]
-          smallPhone:flex-col smallPhone:mb-[20px]
-          "
-          >
-            <h2
-              className="text-[#081120] font-medium font-['Inter']  
+          flex-col mb-[20px]"
+      >
+        <h2
+          className="text-[#081120] font-medium font-['Inter']  
             web:text-[31px] web:mb-[20px]
             tablet:text-2xl tablet:mb-[20px]
-            phone:text-xl phone:mb-[10px]
-            smallPhone:text-xl smallPhone:mb-[10px]
-            "
-            >
-              {destination} Theaters Tour
-            </h2>
-            <div className="flex gap-[10px] tablet:mt-[5px] ">
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-            </div>
-          </div>
+            text-xl mb-[10px]"
+        >
+          {destination} Theaters Tour
+        </h2>
+        <div className="flex gap-[10px] tablet:mt-[5px] ">
+          <StarRating starsCount={Math.floor(averageRating)} />
+        </div>
+      </div>
 
-          <div
-            className="flex 
+      <div
+        className="flex 
           web:flex-col 
           tablet:flex-col-reverse 
-          phone:flex-col-reverse phone:items-start
-          smallPhone:flex-col-reverse smallPhone:items-start
-          "
-          >
-            <p
-              className="flex text-[#081120] font-medium font-['Inter'] 
+          flex-col-reverse items-start"
+      >
+        <p
+          className="flex text-[#081120] font-medium font-['Inter'] 
             web:mb-[10px] web:flex-row web:text-2xl web:gap-[10px]
             tablet:text-xl target:flex-row-reverse tablet:mb-[20px] tablet:gap-[1px]
-            phone:mb-[30px] phone:flex-row-reverse phone:text-lg phone:gap-[1px]
-            smallPhone:mb-[30px] smallPhone:flex-row-reverse smallPhone:text-lg smallPhone:gap-[1px]
-            "
-            >
-              <span>USD</span>
-              <span>{price}</span>
-            </p>
+            mb-[30px] flex-row-reverse text-lg gap-[1px]"
+        >
+          <span>{price}</span>
+        </p>
 
-            <p
-              className=" text-[#13294b] font-normal font-['Inter'] leading-normal w-full
+        <p
+          className="text-[#13294b] font-normal font-['Inter'] leading-normal w-full
             web:mb-[10px] web:max-w-[430px] web:text-base
             tablet:mb-[20px] tablet:max-w-[430px] tablet:text-base 
-            phone:mb-[10px] phone:text-sm 
-            smallPhone:mb-[10px] smallPhone:text-sm 
-            "
-            >
-              Explore the beautiful buildings and green parks of Sofia’s biggest
-              theaters. Take a walk trough a beautiful sightseeing in the
-              historical center of the city.
-            </p>
-          </div>
+            mb-[10px] text-sm"
+        >
+          Explore the beautiful buildings and green parks of Sofia’s biggest
+          theaters. Take a walk trough a beautiful sightseeing in the historical
+          center of the city.
+        </p>
+      </div>
 
-          <div className="web:w-[430px] tablet:w-[282px] phone:w-[361px] smallPhone:w-[300px]">
+      <div className="web:w-[430px] tablet:w-[282px] w-full">
+        {isBought ? (
+          <div className="flex flex-col gap-y-2">
             <Btn
-              type="submit"
               variant="filled"
-              text="Buy Tour"
+              text="Preview"
               fullWidth
-              onClick={() => router.push(`/payment?tourId=${id}`)}
+              link={`/preview/${id}`}
+            />
+            <Btn
+              className={isReviewed ? "hover:text-opacity-100 hover:border-blue-950" : ""}
+              variant="outlined"
+              text="Rate This Tour"
+              fullWidth
+              disabled={isReviewed}
+              onClick={handleReviewing}
             />
           </div>
-        </div>
-  )
+        ) : (
+          <Btn
+            type="submit"
+            variant="filled"
+            text="Buy Tour"
+            fullWidth
+            onClick={() => router.push(`/payment?tourId=${id}`)}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
 
-export default TourPurchase
+export default TourPurchase;

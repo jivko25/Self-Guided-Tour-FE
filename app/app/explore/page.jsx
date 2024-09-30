@@ -1,5 +1,4 @@
 "use client";
-import { axiosTour } from "@/api/axios";
 import { useEffect, useState } from "react";
 import Card from "../components/Card/Card";
 import Search from "../components/Search/Search";
@@ -12,9 +11,10 @@ import ArrowDown from "../public/svg/arrow-down.svg";
 import ArrowUp from "../public/svg/arrow-up.svg";
 import { useWindowWidth } from "../utils/hooks";
 import Btn from "../components/Buttons/Btn";
+import { getTours } from "../actions/tourActions";
 
 const sortOprions = [
-  { label: "Newest", value: "newest", sr: "" },
+  { label: "Newest", value: "newest", icon: "" },
   { label: "Price Low", value: "minPrice", icon: ArrowDown },
   { label: "Price High", value: "maxPrice", icon: ArrowUp },
   { label: "Rating", value: "averageRating", icon: "" },
@@ -54,12 +54,31 @@ export default function Explore() {
 
   useEffect(() => {
     if (query) {
-      getTours(query);
+      setIsloading(true);
+
+      getTours(query)
+        .then((data) => {
+          setTotalPages(data.totalPages);
+          setTours(data.tours);
+        })
+        .catch((errors) => {
+          for (const key in errors) {
+            popup({
+              type: "ERROR",
+              message: errors[key],
+            });
+          }
+        })
+        .finally(() => {
+          setIsloading(false);
+        });
     }
   }, [query]);
 
   useEffect(() => {
-    handleURLParams(1, search, selectedSort);
+    if (selectedSort !== null) {
+      handleURLParams(1, search, selectedSort);
+    }
 
     return () => setSelectedSort(null);
   }, [selectedSort]);
@@ -71,26 +90,6 @@ export default function Explore() {
       setisPlaceHolder(false);
     }
   }, [windowWidth]);
-
-  const getTours = async (query) => {
-    setIsloading(true);
-    try {
-      const response = await axiosTour.get(query);
-      const dataResult = await response.data.result;
-      setTotalPages(dataResult.totalPages);
-      setTours(dataResult.tours);
-    } catch (err) {
-      const errors = err?.response?.data?.errors;
-
-      for (const key in errors) {
-        popup({
-          type: "ERROR",
-          message: errors[key],
-        });
-      }
-    }
-    setIsloading(false);
-  };
 
   const handlePrevPage = () => {
     if (page > 1) {
@@ -164,24 +163,26 @@ export default function Explore() {
               description={tour.summary}
               location={tour.destination}
               price={`EUR ${tour.price}`}
-              rating={4.5}
+              rating={tour.averageRating}
               onclick={() => router.push(`/tour/${tour.tourId}`)}
             />
           ))}
 
-        {(search && tours.length == 0 && !isLoading) && (
+        {search && tours.length == 0 && !isLoading && (
           <h3 className="mb-6 tablet:mb-16 text-l tablet:text-2xl">
             "{search}" - No results found
           </h3>
         )}
 
-      {(!search && tours.length == 0 && !isLoading )&& (
+        {!search && tours.length == 0 && !isLoading && (
           <div className="mb-6 tablet:mb-16 phone:col-end-1 web:col-start-2 web:col-end-4">
             <h3 className="text-l tablet:text-2xl mb-4">
               There are no tours at the moment.
             </h3>
-          <p className="text-[14px] tablet:text-[16px]">Want to be the first to create one?</p>
-          <Btn text={'Learn More'} />
+            <p className="text-[14px] tablet:text-[16px]">
+              Want to be the first to create one?
+            </p>
+            <Btn text={"Learn More"} />
           </div>
         )}
       </div>

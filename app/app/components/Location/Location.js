@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import pencil from "../../public/svg/pencil.svg";
-import trashcan from "../../public/svg/trash.svg";
-import CheckmarkIcon from "../../public/svg/checkmark-circle.svg";
-import AlertIcon from "../../public/alert-circle-outline.svg";
+import Pencil from "../../public/svg/pencil.svg";
+import Trashcan from "../../public/svg/trash.svg";
 import Image from "next/image.js";
+import { useSearchParams } from "next/navigation.js";
 import { useEffect, useState } from "react";
 
 export default function Location({
@@ -20,9 +19,15 @@ export default function Location({
 }) {
   const [path, setPath] = useState("create");
 
+  const searchParams = useSearchParams();
+
+  // Set placeId query to url without removing the edit query
   useEffect(() => {
-    setPath(`create?placeId=${location.placeId}`);
-  }, [location.placeId]);
+    const currentParams = new URLSearchParams(searchParams);
+    currentParams.set("placeId", location.placeId);
+
+    setPath(`create?${currentParams.toString()}`);
+  }, [location.placeId, searchParams]);
 
   const handleDelete = () => {
     if (handleDeleteLocation && location.placeId) {
@@ -55,7 +60,7 @@ export default function Location({
         )}
         <Link href={path} className="right-[42px] cursor-pointer absolute">
           <Image
-            src={pencil}
+            src={Pencil}
             width={24}
             height={24}
             alt="pencil"
@@ -64,7 +69,7 @@ export default function Location({
         </Link>
         <div className="cursor-pointer absolute right-[8px]">
           <Image
-            src={trashcan}
+            src={Trashcan}
             width={24}
             height={24}
             alt="trashcan"

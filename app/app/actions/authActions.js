@@ -24,6 +24,7 @@ export async function registerUser(prev, formData) {
       accessToken: response.data.accessToken,
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
+      userId: response.data.userId,
     });
     data = true;
   } catch (err) {
@@ -52,6 +53,7 @@ export async function loginUser(prev, formData) {
       accessToken: response.data.accessToken,
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
+      userId: response.data.userId,
     });
     data = true;
   } catch (err) {
@@ -78,6 +80,7 @@ export async function externalLoginUser(resp) {
       accessToken: response.data.accessToken,
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
+      userId: response.data.userId,
     });
     respData.data = true;
   } catch (err) {
@@ -122,7 +125,7 @@ export async function logoutUser() {
  */
 export async function getUserSession() {
   const session = getCookie("session");
-  return session ? true : false;
+  return session;
 }
 
 /**
@@ -145,6 +148,7 @@ export async function validateToken() {
       accessToken: response.data.accessToken,
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
+      userId: response.data.userId,
     });
   } catch (err) {
     deleteCookie("session");

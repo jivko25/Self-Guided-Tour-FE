@@ -26,8 +26,13 @@ const Step2 = () => {
 
   const drag = useRef(0);
   const dragOver = useRef(0);
-  const coordinatesRef = useRef([]);
+  const [tourType, setTourType] = useState("");
   const [createCoordinates, setCreateCoordinates] = useState([]);
+  const [warnings, setWarnings] = useState([]);
+
+  useEffect(() => {
+    setTourType(formData.step1Data.tourType);
+  }, [formData.step1Data.tourType]);
 
   useEffect(() => {
     if (formData.step2Data.length > 0) {
@@ -41,7 +46,6 @@ const Step2 = () => {
         return;
       }
       updateStep2Data(newData, formData.step2Data.length); // pass index as length of step2Data
-      coordinatesRef.current.push(newData);
       setCreateCoordinates([...createCoordinates, newData]);
       setData(newData);
     },
@@ -66,17 +70,15 @@ const Step2 = () => {
   };
 
   const handleDeleteLocation = (placeId) => {
-    const placeIndex = coordinatesRef.current.findIndex(
+    const placeIndex = createCoordinates.findIndex(
       (loc) => loc.placeId === placeId
     );
 
     if (placeIndex !== -1) {
-      coordinatesRef.current.splice(placeIndex, 1);
       setCreateCoordinates([
         ...createCoordinates.filter((c) => c.placeId !== placeId),
       ]);
     }
-
     updateFormData({
       step2Data: formData.step2Data.filter((loc) => loc.placeId !== placeId),
     });
@@ -94,6 +96,12 @@ const Step2 = () => {
     nextStep();
   };
 
+  const handleWarnings = (warn) => {
+    if (warn) {
+      setWarnings(warn);
+    }
+  };
+
   return (
     <>
       <section
@@ -102,7 +110,7 @@ const Step2 = () => {
                         px-[8px] phone:px-[16px] tablet:px-[125px] web:px-[56px] 
                         web:h-[582px] web:w-1/2"
       >
-        <div className="overflow-y-scroll web:pr-[40px] we:w-[100%] web:mr-[24px]">
+        <div className="overflow-y-scroll web:pr-[40px] web:w-[100%] web:mr-[24px]">
           <header className="flex flex-row justify-between">
             <h2 className="text-[20px] web:text-[24px]">Plan your route</h2>
             <span className="mt-[7px] tablet:mt-0 text-[#E8B600]">
@@ -119,7 +127,8 @@ const Step2 = () => {
           >
             <GoogleMaps
               getLocationInfo={getLocationInfo}
-              createCoordinates={createCoordinates}
+              directions={{ tourType, locations: createCoordinates }}
+              handleWarnings={handleWarnings}
             />
           </section>
           <section className="flex flex-wrap gap-6 mt-[36px] tablet:mt-[24px] web:mt-[36px]">
@@ -157,6 +166,19 @@ const Step2 = () => {
                 Once you’ve added locations on the map, they’ll appear in the
                 list below.
               </p>
+              {/* Display warnings to the user */}
+              {warnings.length > 0 && (
+                <div className="mb-1 text-[14px] text-[#FFA500]">
+                  <h2>Warnings:</h2>
+                  <ul>
+                    {warnings.map((warning, index) => (
+                      <li key={index}>
+                        {index + 1}. {warning}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {/* {formData.step2Data.map(({ placeId, location }, index) => (
                 <Location
                   key={index}
@@ -203,7 +225,7 @@ const Step2 = () => {
               onClick={prevStep}
             />
             <Btn
-              className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] tablet:w-[128px] h-[43px] self-center"
+              className="smallPhone:w-[177px] text-[16px] border-b-2 border-b-[#E8B600] hover:border-opacity-70 tablet:w-[128px] h-[43px] self-center"
               variant="transparent"
               text="Next"
               onClick={handleNextStep}

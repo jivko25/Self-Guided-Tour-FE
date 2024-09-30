@@ -11,7 +11,7 @@ export default function MobileMenuOverlayUser({menuOverlayVisible}) {
         link="/my-tours"
       />
       <div className="w-11/12 flex flex-col gap-2 my-8">
-        <Btn fullWidth text="Menu" link="/menu" onClick={menuOverlayVisible}/>
+        <Btn fullWidth variant="outlined" text="Menu" link="/menu" onClick={menuOverlayVisible}/>
       </div>
     </div>
   );

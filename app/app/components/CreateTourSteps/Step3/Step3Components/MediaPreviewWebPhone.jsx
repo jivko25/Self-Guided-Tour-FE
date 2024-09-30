@@ -4,10 +4,26 @@ import ReactPlayer from "react-player";
 import React from "react";
 import CloseIcon from "../../../../public/svg/close-red.svg";
 
-function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
+function MediaPreviewWebPhone({
+  inputs,
+  isImage,
+  isVideo,
+  isAudio,
+  onRemove,
+  isFile,
+}) {
+  let audioIndex = 0;
+
+  // Image & Videos
+  const mediaFiles = inputs.addFields.filter(
+    (file) => isImage(file) || isVideo(file)
+  );
+
+  const audioFiles = inputs.addFields.filter((file) => isAudio(file));
+
   return (
     <>
-      {/* IMAGES */}
+      {/* IMAGES & VIDEOS (Scrollable) */}
       <div
         className="
       web:grid web:grid-cols-2 web:gap-4 web:w-full web:h-full web:pl-[0px] web:overflow-hidden web:mr-[0px]
@@ -15,8 +31,8 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
       smallPhone:flex  smallPhone:mr-[20px] smallPhone:w-full smallPhone:pl-[20px] smallPhone:overflow-x-auto
       "
       >
-        {inputs.addFields.length > 0 &&
-          inputs.addFields.map((file, index) => (
+        {mediaFiles.length > 0 &&
+          mediaFiles.map((file, index) => (
             <div
               key={index}
               className={`relative ${
@@ -24,14 +40,23 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
               } mb-1 phone:flex-shrink-0 phone:mr-[10px] smallPhone:flex-shrink-0 smallPhone:mr-[10px] web:mr-[0px] `}
             >
               <button
-                className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-30 rounded-full p-1 z-10 hover:bg-opacity-100"
+                className="absolute  w-6 h-6 flex justify-center items-center right-1  bg-black bg-opacity-90 rounded-full p-1 z-10 "
                 onClick={() => onRemove(index)}
               >
-                <Image alt="remove-image" src={CloseIcon} height={24} width={24} />
+                <Image
+                  alt="remove-image"
+                  src={CloseIcon}
+                  height={24}
+                  width={24}
+                />
               </button>
               {isImage(file) && (
                 <Image
-                  src={URL.createObjectURL(file)}
+                  src={
+                    isFile(file)
+                      ? URL.createObjectURL(file) // Newly uploaded file
+                      : file.url // URL from the server
+                  }
                   width={269}
                   height={240}
                   className={`${
@@ -44,7 +69,11 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
               )}
               {isVideo(file) && (
                 <ReactPlayer
-                  url={URL.createObjectURL(file)}
+                  url={
+                    isFile(file)
+                      ? URL.createObjectURL(file) // Newly uploaded file
+                      : file.url // URL from the server
+                  }
                   width={269}
                   height={240}
                   borderRadius={5}
@@ -52,6 +81,22 @@ function MediaPreviewWebPhone({ inputs, isImage, isVideo, onRemove }) {
                   controls={true}
                 />
               )}
+            </div>
+          ))}
+      </div>
+
+      {/* AUDIO FILES (Separate from Media Scrollable Section) */}
+      <div className="mt-4">
+        {audioFiles.length > 0 &&
+          audioFiles.map((file, index) => (
+            <div key={index} className="mb-4">
+              <figcaption className="text-center">
+                Audio {++audioIndex}:
+              </figcaption>
+              <audio
+                controls
+                src={isFile(file) ? URL.createObjectURL(file) : file.url}
+              ></audio>
             </div>
           ))}
       </div>

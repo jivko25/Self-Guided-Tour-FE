@@ -1,3 +1,4 @@
+//createTourContext.jsx
 "use client";
 import { useCreateTour } from "@/app/context/createTourContext.jsx";
 import { useState, useEffect } from "react";
@@ -68,7 +69,7 @@ const Step3 = () => {
 
   const handlePrevStep = () => {
     if (placeId) {
-      // If accessed through the edit button, just remove the placeId and go to step 1
+      // If accessed through the edit button go to step 1
       goToStep(1);
     } else {
       // If accessed through the previous button in step 3
@@ -104,28 +105,61 @@ const Step3 = () => {
     if (placeId) {
       // If accessed through the edit button
       const { locationName, ...updatedInputs } = inputs;
-      if (!locationName || inputs.addFields.length === 0) {
+      if (!locationName) {
         popup({
           type: "ERROR",
-          message: "Location name or files missing!",
+          message: "Location name is missing!",
         });
         return;
-      } else {
-        popup({
-          type: "SUCCESS",
-          message: "Good job, required fields are filled!",
-        });
       }
+
+      if (locationName.length < 3 || locationName.length > 50) {
+        popup({
+          type: "ERROR",
+          message: "Location name must be between 3 and 50 characters long!",
+        });
+        return;
+      }
+
+      if (inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Please upload at least one file!",
+        });
+        return;
+      }
+
+      // If all validations pass
+      popup({
+        type: "SUCCESS",
+        message: "Good job, required fields are filled!",
+      });
       updateStep2Data({ ...updatedInputs, location: locationName }, placeId);
       goToStep(1);
     } else {
       // If accessed through the next button in step 2
       const { locationName, ...updatedInputs } = inputs;
 
-      if (!locationName || inputs.addFields.length === 0) {
+      if (!locationName) {
         popup({
           type: "ERROR",
-          message: "Location name or files missing!",
+          message: "Location name is missing",
+        });
+        return;
+      }
+
+      if (locationName.length < 3 || locationName.length > 50) {
+        popup({
+          type: "ERROR",
+          message: "Location name must be between 3 and 50 characters long",
+        });
+        return;
+      }
+
+      if (inputs.addFields.length === 0) {
+        popup({
+          type: "ERROR",
+          message: "Please upload at least one file",
         });
         return;
       }
@@ -163,7 +197,7 @@ const Step3 = () => {
         // If it's the last item, navigate to the next step
         popup({
           type: "SUCCESS",
-          message: "Good job, all locations are completed!",
+          message: "Good job, all locations are completed",
         });
         nextStep();
       }
@@ -200,14 +234,35 @@ const Step3 = () => {
     const { name, value, files } = e.target;
     if (name === "addFields" && files) {
       const fileArray = Array.from(files);
-      const validFiles = fileArray.filter(
-        (file) => file.size <= 5 * 1024 * 1024
-      ); // 5MB in bytes
+      const validFiles = [];
+      const invalidFiles = [];
+      const oversizedFiles = [];
 
-      if (validFiles.length !== fileArray.length) {
+      fileArray.forEach((file) => {
+        if (file.size > 5 * 1024 * 1024) {
+          oversizedFiles.push(file);
+        } else if (
+          ["image", "video", "audio"].some((type) =>
+            file.type.toLowerCase().startsWith(type)
+          )
+        ) {
+          validFiles.push(file);
+        } else {
+          invalidFiles.push(file);
+        }
+      });
+
+      if (oversizedFiles.length > 0) {
         popup({
           type: "ERROR",
-          message: "Some files exceed the 5MB limit and were not added.",
+          message: `The File exceed the 5MB limit and is not added `,
+        });
+      }
+
+      if (invalidFiles.length > 0) {
+        popup({
+          type: "ERROR",
+          message: `The File  not in a valid format and is not added `,
         });
       }
 
@@ -233,10 +288,17 @@ const Step3 = () => {
   };
 
   // Function to check if a file is an image
-  const isImage = (file) => file.type.startsWith("image");
+  const isImage = (file) =>
+    file && file.type && file.type.toLowerCase().startsWith("image");
 
   // Function to check if a file is a video
-  const isVideo = (file) => file.type.startsWith("video");
+  const isVideo = (file) =>
+    file && file.type && file.type.toLowerCase().startsWith("video");
+
+  const isAudio = (file) =>
+    file && file.type && file.type.toLowerCase().startsWith("audio");
+
+  const isFile = (file) => file instanceof File;
 
   return (
     <div className="flex flex-col w-full web:h-[100vh] ">
@@ -286,8 +348,10 @@ const Step3 = () => {
           >
             <MediaPreviewWebPhone
               inputs={inputs}
+              isFile={isFile}
               isImage={isImage}
               isVideo={isVideo}
+              isAudio={isAudio}
               onRemove={handleRemoveMedia}
             />
           </section>
@@ -325,6 +389,8 @@ const Step3 = () => {
         >
           <MediaPreviewTablet
             inputs={inputs}
+            isAudio={isAudio}
+            isFile={isFile}
             isImage={isImage}
             isVideo={isVideo}
             onRemove={handleRemoveMedia}

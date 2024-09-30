@@ -7,8 +7,6 @@ import { useEffect } from "react";
 import TourCardSkeleton from "../Skeletons/TourCardSkeleton";
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import Btn from "../../../Buttons/Btn";
-//Todo: Add this fields to the tour DTO
-const tourAverageRating = 4.6;
 
 function TourCard() {
   const {
@@ -51,7 +49,7 @@ function TourCard() {
       <div className=" m-5 mb-7 mt-4">
         <div className=" flex flex-row justify-between text-[24px] m-2 font-medium  ">
           <h1>{tour?.title}</h1>
-          <StarRating rating={tourAverageRating} />
+          <StarRating rating={tour.averageRating} />
         </div>
 
         <IconsBar
