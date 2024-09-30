@@ -5,9 +5,11 @@ import Slider from "../Slider/Slider";
 function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
   const [openSlider, setOpenSlider] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [sliderIndex, setSliderIndex] = useState(0);
 
-  const handleImageClick = (imageUrl) => {
+  const handleImageClick = (imageUrl, index) => {
     setSelectedImage(imageUrl);
+    setSliderIndex(index); // Set the index when an image is clicked
     setOpenSlider(true);
   };
 
@@ -38,7 +40,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
      
             "
           src={thumbnailImageUrl}
-          onClick={() => handleImageClick(thumbnailImageUrl)}
+          onClick={() => handleImageClick(thumbnailImageUrl, 0)}
           alt="Cover Image"
         />
         {landmarks &&
@@ -89,6 +91,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
           setSelectedImage={setSelectedImage}
           landmarks={landmarks}
           thumbnailImageUrl={thumbnailImageUrl}
+          sliderIndex={sliderIndex}
         />
       )}
     </>
