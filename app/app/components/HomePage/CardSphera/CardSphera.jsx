@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 
 function CardSphera({ thumbnailImageUrl, destination, onClick }) {
-  
   return (
     <div
       className="flex flex-col items-center justify-center

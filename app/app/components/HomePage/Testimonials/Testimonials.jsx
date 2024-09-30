@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
 import Card from "../../Card/Card";
@@ -8,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from "next/navigation";
 import { getReviewsByTourId } from "@/app/actions/reviewActions";
 import { getTours } from "@/app/actions/tourActions";
+
 
 function Testimonials() {
   const [recommendedPlaces, setRecommendedPlaces] = useState([]);
@@ -129,7 +131,6 @@ function Testimonials() {
             >
               Testimonials Heading
             </h1>
-
             <div className="w-full mt-[30px]">
               <button
                 onClick={() => sliderRef.current.slickPrev()}
