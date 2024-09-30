@@ -2,7 +2,7 @@ import TableRow from "./TableComponents/TableRow";
 import EmptyRow from "./TableComponents/EmptyRow";
 function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
   return (
-    <table className="min-w-full bg-white border">
+    <table className="w-full bg-white border">
       <thead>
         <tr className="h-12 bg-[#b6bdc7]">
           {tableHeaders.map((header, index) => (

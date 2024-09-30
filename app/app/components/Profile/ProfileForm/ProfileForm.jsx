@@ -2,13 +2,17 @@
 import Btn from "../../Buttons/Btn";
 import InputField from "../../InputField/InputField";
 import ProfilePicture from "./ProfilePicture";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
-import { updateProfileAsync } from "@/app/actions/profileActions";
+import {
+  updateProfileAsync,
+  updatePasswordAsync,
+  createPasswordAsync,
+} from "@/app/actions/profileActions";
 import { useProfile } from "@/app/context/profileContext";
 import { useForm as useFormValidation } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerValidationScheme } from "@/app/utils/validationSchemes";
+import { profileValidationScheme } from "@/app/utils/validationSchemes";
 
 function ProfileForm() {
   const { getProfile, user, isLoading, dispatch, profilePictureSrc, error } =
@@ -23,10 +27,10 @@ function ProfileForm() {
   //Set up the form validation
   const {
     register,
-    formState: { errors: validationErrors, isValid },
-    watch,
+    formState: { errors: validationErrors },
+    trigger,
   } = useFormValidation({
-    resolver: yupResolver(registerValidationScheme),
+    resolver: yupResolver(profileValidationScheme),
     mode: "onChange",
   });
   const [profilePicture, setProfilePicture] = useState("");
@@ -44,6 +48,41 @@ function ProfileForm() {
   }
   function triggerFileUpload() {
     profilePictureRef.current.click();
+  }
+  // Handle form submission
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    console.log(validationErrors);
+    //if (Object.keys(validationErrors).length !== 0) return;
+    console.log("submitting");
+    const rawFormData = Object.fromEntries(formData);
+    const { password, repeatPassword, currentPassword } = rawFormData;
+    console.log(password);
+    if (password) {
+      if (user?.hasPassword) {
+        console.log("updating password");
+        const response = await updatePasswordAsync(currentPassword, password);
+        console.log(response);
+      } else {
+        console.log("creating password");
+        const response = await createPasswordAsync(password, repeatPassword);
+        console.log(response);
+      }
+    }
+    console.log("updating profile");
+    updateProfile(formData);
+    dispatch({ type: "resetPasswords" });
+  }
+  //Handle onChange events
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    dispatch({ type: "user/onChange", payload: { [name]: value } });
+    if (name === "password") {
+      trigger("repeatPassword");
+    }
+    trigger(name);
   }
   //Handle validation errors
   useEffect(() => {
@@ -72,9 +111,10 @@ function ProfileForm() {
       }
     };
   }, [profilePictureSrc]);
+  if (!user) return null;
   return (
     <form
-      action={updateProfile}
+      onSubmit={handleSubmit}
       className=" tablet:w-[884px] text-l font-medium mb-11"
       noValidate
     >
@@ -86,6 +126,7 @@ function ProfileForm() {
           type="text"
           classes=" tablet:w-[430px]"
           value={user?.firstName}
+          onChange={handleInputChange}
         />
         <InputField
           label="Last Name (optional)"
@@ -94,6 +135,7 @@ function ProfileForm() {
           type="text"
           classes=" tablet:w-[439px]"
           value={user?.lastName}
+          onChange={handleInputChange}
         />
       </div>
       <div className="flex flex-col tablet:flex-row gap-5 mb-6 tablet:mb-16">
@@ -101,13 +143,15 @@ function ProfileForm() {
           label="Email Addres"
           type="email"
           id="email"
-          hasTooltip={true}
+          hasTooltip={user?.isExternalUser}
           content={"External users can't change their email address."}
-          readOnly={!user?.hasPassword}
+          readOnly={user?.isExternalUser}
           value={user?.email}
           name="email"
           classes=" tablet:w-[430px] z-10"
           error={error?.email}
+          onChange={handleInputChange}
+          {...register("email")}
         />
         <InputField
           label="Phone Number (optional)"
@@ -116,8 +160,8 @@ function ProfileForm() {
           id="phoneNumber"
           classes=" tablet:w-[430px] z-11"
           value={user?.phoneNumber}
+          onChange={handleInputChange}
         />
-        <input type="hidden" name="hasPassword" value={user?.hasPassword} />
       </div>
       <div className="mt-8 flex gap-0.5 flex-col">
         <label htmlFor="about">Something About Yourself (optional)</label>
@@ -125,7 +169,8 @@ function ProfileForm() {
           name="about"
           className="tablet:w-full  h-36 border border-[#CECECE] bg-transparent"
           style={{ resize: "none", textIndent: "10px" }}
-          defaultValue={user?.about}
+          value={user?.about}
+          onChange={handleInputChange}
         ></textarea>
       </div>
       <section
@@ -153,7 +198,7 @@ function ProfileForm() {
           onClick={triggerFileUpload}
         />
       </section>
-      <section className=" border-t-2 border-[#D1D0D8] mt-16  mb-16">
+      <section className=" border-t-2 border-[#D1D0D8] mt-16 mb-28">
         <h1 className="mt-16 text-xl">Sign In and Security</h1>
         {user?.hasPassword ? (
           <InputField
@@ -161,6 +206,8 @@ function ProfileForm() {
             name="currentPassword"
             id="currentPassword"
             type="password"
+            value={user?.currentPassword}
+            onChange={handleInputChange}
             classes=" w-[430px] mt-16"
           />
         ) : (
@@ -177,6 +224,8 @@ function ProfileForm() {
             name="password"
             id="password"
             type="password"
+            value={user?.password}
+            onChange={handleInputChange}
             classes=" w-[430px]"
             {...register("password")}
             error={
@@ -188,7 +237,10 @@ function ProfileForm() {
             label="Repeat Password"
             name="repeatPassword"
             type="password"
+            value={user?.repeatPassword}
+            onChange={handleInputChange}
             classes=" w-[430px]"
+            required={user?.password}
             {...register("repeatPassword")}
             error={
               validationErrors.repeatPassword?.message ||
@@ -199,10 +251,9 @@ function ProfileForm() {
         <Btn
           type="submit"
           text="Save Changes"
-          onClick={() => dispatch({ type: "loading" })}
           className={`${
             isLoading ? "animate-pulse" : ""
-          } w-48 mt-16 hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500`}
+          } w-48 mt-10 web:mt-16 hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500`}
           variant="filled"
         />
       </section>

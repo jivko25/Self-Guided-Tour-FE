@@ -75,3 +75,14 @@ export const passwordValidationScheme = yup.object({
     .string()
     .oneOf([yup.ref("password"), null], paswordsDontMatchErrorMessage),
 });
+export const profileValidationScheme = yup.object({
+  email: yup
+    .string()
+    .matches(emailRegex, emailErrorMessage)
+    .required(requiredMessage("Email")),
+  password: passwordValidation,
+  repeatPassword: yup
+    .string()
+    .required(requiredMessage("Repeat Password"))
+    .oneOf([yup.ref("password"), null], paswordsDontMatchErrorMessage),
+});
