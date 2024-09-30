@@ -7,36 +7,14 @@ import {
 } from "../utils/validationSchemes";
 export async function updateProfileAsync(prevState, formData) {
   const rawFormData = Object.fromEntries(formData);
+
   try {
     // Validate email
     await emailValidationScheme.validate({
       email: rawFormData.email,
     });
     // Handle password change
-    if (
-      rawFormData.currentPassword ||
-      rawFormData.password ||
-      rawFormData.repeatPassword
-    ) {
-      // Handle password create/change
-      if (rawFormData.hasPassowrd) {
-        // Change password
-        const passwordChangeRequest = {
-          currentPassword: rawFormData.currentPassword,
-          password: rawFormData.password,
-        };
-        await axiosSSR.post("/auth/change-password", passwordChangeRequest);
-      } else {
-        // Create password
-        const passwordCreateRequest = {
-          password: rawFormData.password,
-        };
-        await axiosSSR.post(
-          "/auth/create-password",
-          rawFormData.repeatPassword
-        );
-      }
-    }
+
     // Handle profile update
     await axiosSSR.patch("/profile", formData);
 
@@ -54,4 +32,43 @@ function structureError(error) {
   const type = error.path;
   const message = error.errors[0];
   return { error: { [type]: message }, type: "Validation Error" };
+}
+export async function updatePasswordAsync(currentPassword, newPassword) {
+  try {
+    // Handle password update
+    await axiosSSR.post(
+      "/auth/change-password",
+      {
+        currentPassword,
+        newPassword,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    return "Password updated successfully";
+  } catch (error) {
+    if (error.path) {
+      return structureError(error);
+    }
+    console.error("Failed to update password:", error);
+  }
+}
+export async function createPasswordAsync(password, repeatPassword) {
+  try {
+    // Handle password creation
+    await axiosSSR.post(
+      "/auth/create-password",
+      {
+        password,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    return "Password created successfully";
+  } catch (error) {
+    if (error.path) {
+      return structureError(error);
+    }
+    console.error("Failed to create password:", error);
+  }
 }
