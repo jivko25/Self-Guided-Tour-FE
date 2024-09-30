@@ -1,5 +1,4 @@
-import React from "react";
-import Star from "../Svgs/Star";
+import React, { useEffect, useState } from "react";
 import Btn from "../../Buttons/Btn";
 import StarRating from "../../StarRating/StarRating";
 
@@ -12,7 +11,16 @@ function TourPurchase({
   isReviewed,
   handleReviewing,
   averageRating,
+  sessionId,
+  creatorId,
 }) {
+  const handleBuy = () => {
+    if (!sessionId) {
+      router.push("/sign-in");
+    } else if (sessionId && creatorId != sessionId) {
+      router.push(`/payment?tourId=${id}`);
+    }
+  };
   return (
     <div
       className="flex flex-col h-full flex-wrap items-start justify-center w-full
@@ -67,30 +75,46 @@ function TourPurchase({
       </div>
 
       <div className="web:w-[430px] tablet:w-[282px] w-full">
-        {isBought ? (
-          <div className="flex flex-col gap-y-2">
-            <Btn
-              variant="filled"
-              text="Preview"
-              fullWidth
-              link={`/preview/${id}`}
-            />
-            <Btn
-              className={isReviewed ? "hover:!text-opacity-100 hover:border-blue-950" : ""}
-              variant="outlined"
-              text="Rate This Tour"
-              fullWidth
-              disabled={isReviewed}
-              onClick={handleReviewing}
-            />
-          </div>
-        ) : (
+        <div className="flex flex-col gap-y-2">
+          {sessionId && (
+            <>
+              {(isBought || creatorId == sessionId) && (
+                <Btn
+                  variant="filled"
+                  text="Preview"
+                  fullWidth
+                  link={`/preview/${id}`}
+                />
+              )}
+            </>
+          )}
+          {sessionId && (
+            <>
+              {isBought && creatorId != sessionId && (
+                <Btn
+                  className={
+                    isReviewed
+                      ? "hover:!text-opacity-100 hover:border-blue-950"
+                      : ""
+                  }
+                  variant="outlined"
+                  text="Rate This Tour"
+                  fullWidth
+                  disabled={isReviewed}
+                  onClick={handleReviewing}
+                />
+              )}
+            </>
+          )}
+        </div>
+        
+        {(!sessionId || (!isBought && creatorId != sessionId)) && (
           <Btn
             type="submit"
             variant="filled"
             text="Buy Tour"
             fullWidth
-            onClick={() => router.push(`/payment?tourId=${id}`)}
+            onClick={handleBuy}
           />
         )}
       </div>
