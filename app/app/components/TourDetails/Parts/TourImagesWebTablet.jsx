@@ -145,7 +145,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
                       onClick={() => setOpenSlider((prev) => !prev)}
                     >
                       <ImageOutline />
-                      <span className="text-[#081120] text-base font-semibold font-['Inter']">
+                      <span className="text-[#081120] text-base font-semibold  ">
                         View All Images
                       </span>
                     </button>
