@@ -13,7 +13,7 @@ export default function Loading() {
       >
         <section
           className="flex flex-col align-center text-[14px]
-                    mb-[30px] web:mb-0 font-medium text-[#081120] text-[14px] web:text-[16px]
+                    mb-[30px] web:mb-0 font-medium text-[#081120] web:text-[16px]
                     web:h-[582px] web:w-1/2"
         >
           <div className="overflow-y-scroll web:pr-[40px] web:mr-[80px]">
@@ -34,7 +34,7 @@ export default function Loading() {
               <ul className="text-[16px] text-[#13294B]">
                 <li
                   className="relative ml-5 before:absolute before:block before:content-[''] 
-                                before:bg-[#617086] before:w-[0.5px] before:top-0 before:bottom-0
+                                before:bg-[#617086] before:w-[0.5px] before:bottom-0
                                 before:top-[15px] pb-[64px] last:pb-[0px]"
                 >
                   <div className="absolute -left-[7px] w-[15px] h-[15px] border-[0.5px] rounded-full border-[#617086]"></div>
