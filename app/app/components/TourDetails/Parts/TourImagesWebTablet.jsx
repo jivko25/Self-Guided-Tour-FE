@@ -13,18 +13,22 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
     setOpenSlider(true);
   };
 
-  // Get all image resources
-  const imageResources = landmarks
-    ? landmarks.flatMap((landmark) =>
-        landmark.resources
-          ? landmark.resources.filter(
-              (resource) => resource.resourceType === "Image"
-            )
-          : []
-      )
-    : [];
+  // Get all image resources, including the thumbnail image as the first image
+  const images = [
+    { resourceUrl: thumbnailImageUrl, resourceId: "thumbnail" },
+    ...(landmarks
+      ? landmarks.flatMap((landmark) =>
+          landmark.resources
+            ? landmark.resources.filter(
+                (resource) => resource.resourceType === "Image"
+              )
+            : []
+        )
+      : []),
+  ];
 
-  const totalImages = imageResources.length;
+
+  const totalImages = images.length;
   return (
     <>
       <div
@@ -43,43 +47,33 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
           onClick={() => handleImageClick(thumbnailImageUrl, 0)}
           alt="Cover Image"
         />
-        {landmarks &&
-          landmarks
-            .flatMap((landmark) =>
-              landmark.resources
-                ? landmark.resources.filter(
-                    (resource) => resource.resourceType === "Image"
-                  )
-                : []
-            )
-            .slice(0, 4)
-            .map((resource, index) => (
-              <div key={resource.resourceId} className="relative">
-                <img
-                  className="object-cover overflow-hidden
+        {images.slice(1, 5).map((resource, index) => (
+          <div key={resource.resourceId} className="relative">
+            <img
+              className="object-cover overflow-hidden
                       web:w-[431px] web:h-[244px]
                       tablet:w-full tablet:h-[280px] cursor-pointer
              
                       "
-                  src={resource.resourceUrl}
-                  alt={`Landmark Image ${index + 1}`}
-                  onClick={() => handleImageClick(resource.resourceUrl)}
-                />
-                {index === 1 && totalImages > 4 && (
-                  <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
-                    <button
-                      className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2"
-                      onClick={() => setOpenSlider((prev) => !prev)}
-                    >
-                      <ImageOutline />
-                      <span className="text-[#081120] text-base font-semibold font-['Inter']">
-                        View All Images
-                      </span>
-                    </button>
-                  </div>
-                )}
+              src={resource.resourceUrl}
+              alt={`Landmark Image ${index + 1}`}
+              onClick={() => handleImageClick(resource.resourceUrl, index + 1)}
+            />
+            {index === 1 && totalImages > 4 && (
+              <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
+                <button
+                  className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2"
+                  onClick={() => setOpenSlider((prev) => !prev)}
+                >
+                  <ImageOutline />
+                  <span className="text-[#081120] text-base font-semibold font-['Inter']">
+                    View All Images
+                  </span>
+                </button>
               </div>
-            ))}
+            )}
+          </div>
+        ))}
       </div>
 
       {openSlider && (
@@ -89,8 +83,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
           setOpenSlider={setOpenSlider}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
-          landmarks={landmarks}
-          thumbnailImageUrl={thumbnailImageUrl}
+          images={images}
           sliderIndex={sliderIndex}
         />
       )}
