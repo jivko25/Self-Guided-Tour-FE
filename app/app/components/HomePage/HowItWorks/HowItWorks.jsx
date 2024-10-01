@@ -29,11 +29,11 @@ function HowItWorks() {
         
       </div>
       <div
-        className="flex justify-center items-start flex-col h-full w-full 
+        className="flex justify-center items-center flex-col h-full w-full 
           web:gap-[30px] web:items-start web:min-h-[922px] 
           tablet:gap-[20px] tablet:items-start tablet:min-h-[573px] 
           phone:gap-[30px] phone:items-center phone:min-h-[324px] 
-          gap-[10px] items-center min-h-[324px] 
+          gap-[10px] min-h-[324px] 
       
       "
       >
@@ -61,10 +61,10 @@ function HowItWorks() {
           mollis porttitor.
         </p>
         <p
-          className="flex justify-start items-center text-white font-normal font-['Inter'] w-full
+          className="flex justify-start items-center text-white font-normal font-['Inter'] 
         web:text-base web:max-w-[577px] web:w-full web:text-start
-        tablet:text-base tablet:max-w-[484px] tablet:w-full tablet:text-start
-        phone:text-[13px] phone:max-w-[363px] phone:w-[90%] phone:text-center
+        tablet:text-base tablet:max-w-[484px] tablet:w-full tablet:text-start 
+        phone:text-[13px] phone:max-w-[363px] phone:w-[90%] phone:text-center 
         text-[13px] w-[95%] text-center
           "
         >
