@@ -26,54 +26,135 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
         )
       : []),
   ];
-
-
   const totalImages = images.length;
+
   return (
     <>
       <div
-        className="hidden phone:hidden smallPhone:hidden overflow-hidden
-        web:grid web:grid-cols-4 web:grid-rows-2 web:gap-4 web:w-full web:h-full web:max-h-[582px] web:items-center web:justify-center web:rounded-[15px] 
-        tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:w-full tablet:h-full tablet:items-center tablet:justify-center tablet:rounded-[15px] 
-        "
+        className={`hidden phone:hidden smallPhone:hidden overflow-hidden ${
+          totalImages > 3
+            ? "web:grid web:grid-cols-4 web:grid-rows-2 web:gap-4 web:w-full web:h-full web:max-h-[582px] web:items-center web:justify-center web:rounded-[15px] tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:w-full tablet:h-full tablet:items-center tablet:justify-center tablet:rounded-[15px]"
+            : "w-full web:flex web:flex-row web:w-full tablet:flex tablet:flex-col tablet:w-full web:rounded-[15px] tablet:rounded-[15px] gap-[20px]"
+        }
+         `}
       >
-        <img
-          className="object-cover w-full h-full overflow-hidden
+        {/* Case with 1 image */}
+        {totalImages === 1 && (
+          <img
+            className="object-cover w-full overflow-hidden cursor-pointer
+                web:h-[500px]
+                tablet:h-[500px]
+            "
+            src={images[0].resourceUrl}
+            onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+            alt="Cover Image"
+          />
+        )}
+
+        {/* Case with 2 images */}
+        {totalImages === 2 && (
+          <>
+            <img
+              className="object-cover overflow-hidden cursor-pointer
+                web:h-[500px] web:flex-1
+                tablet:h-[314px] 
+            "
+              src={images[0].resourceUrl}
+              onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+              alt="Cover Image"
+            />
+            <img
+              className="object-cover overflow-hidden cursor-pointer
+                web:h-[500px] web:flex-1
+                tablet:h-[314px] 
+            "
+              src={images[1].resourceUrl}
+              onClick={() => handleImageClick(images[1].resourceUrl, 1)}
+              alt="Second Image"
+            />
+          </>
+        )}
+
+        {/* Case with 3 images */}
+        {totalImages === 3 && (
+          <>
+            <img
+              className="object-cover overflow-hidden cursor-pointer w-full
+              web:h-[500px]
+              tablet:h-[180px]
+     
+            "
+              src={images[0].resourceUrl}
+              onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+              alt="Cover Image"
+            />
+            <img
+              className="object-cover overflow-hidden cursor-pointer w-full
+              web:h-[500px]
+              tablet:h-[180px]
+     
+            "
+              src={images[1].resourceUrl}
+              onClick={() => handleImageClick(images[1].resourceUrl, 1)}
+              alt="Second Image"
+            />
+            <img
+              className="object-cover overflow-hidden cursor-pointer w-full
+              web:h-[500px]
+              tablet:h-[180px]
+     
+            "
+              src={images[2].resourceUrl}
+              onClick={() => handleImageClick(images[2].resourceUrl, 2)}
+              alt="Third Image"
+            />
+          </>
+        )}
+
+        {/* Case with 3 or more images */}
+        {totalImages > 3 && (
+          <>
+            <img
+              className="object-cover w-full h-full overflow-hidden
             web:col-span-2 web:row-span-2 web:h-[500px]  
             tablet:w-full tablet:h-[360px] tablet:col-span-2 cursor-pointer
      
             "
-          src={images[0].resourceUrl}
-          onClick={() => handleImageClick(images[0].resourceUrl, 0)}
-          alt="Cover Image"
-        />
-        {images.slice(1, 5).map((resource, index) => (
-          <div key={resource.resourceId} className="relative">
-            <img
-              className="object-cover overflow-hidden
+              src={images[0].resourceUrl}
+              onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+              alt="Cover Image"
+            />
+            {images.slice(1, 5).map((resource, index) => (
+              <div key={resource.resourceId} className="relative">
+                <img
+                  className="object-cover overflow-hidden
                       web:w-[431px] web:h-[244px]
                       tablet:w-full tablet:h-[280px] cursor-pointer
              
                       "
-              src={resource.resourceUrl}
-              alt={`Landmark Image ${index + 1}`}
-              onClick={() => handleImageClick(resource.resourceUrl, index + 1)}
-            />
-            {index === 1 && totalImages > 4 && (
-              <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
-                <button
-                  className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2"
-                  onClick={() => setOpenSlider((prev) => !prev)}
-                >
-                  <ImageOutline />
-                  <span className="text-[#081120] text-base font-semibold font-['Inter']">
-                    View All Images
-                  </span>
-                </button>
+                  src={resource.resourceUrl}
+                  alt={`Landmark Image ${index + 1}`}
+                  onClick={() =>
+                    handleImageClick(resource.resourceUrl, index + 1)
+                  }
+                />
+                {index === 1 && totalImages > 4 && (
+                  <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
+                    <button
+                      className="flex h-12 px-4 py-3 bg-neutral-50 rounded-[5px] justify-center items-center gap-2"
+                      onClick={() => setOpenSlider((prev) => !prev)}
+                    >
+                      <ImageOutline />
+                      <span className="text-[#081120] text-base font-semibold font-['Inter']">
+                        View All Images
+                      </span>
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+            ))}
+          </>
+        )}
       </div>
 
       {openSlider && (
