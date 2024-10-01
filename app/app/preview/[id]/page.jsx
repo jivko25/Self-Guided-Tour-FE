@@ -187,7 +187,7 @@ export default function Preview() {
                 return `&daddr=${loc.latitude},${loc.longitude}`;
               });
 
-              url = `geo:${userLat},${userLng}?q=${lat},${lng}(%22Start%22)${waypoints}&travelmode=${type}`;
+              url = `geo:${userLat},${userLng}?q=${destination.latitude},${destination.longitude}(%22Start%22)${waypoints}&travelmode=${type}`;
             } else if (isIOS) {
               // Open in Apple Maps on iOS devices
               const waypoints = rest.map((loc) => {
