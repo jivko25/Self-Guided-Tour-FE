@@ -6,7 +6,7 @@ function TourSummary({ summary }) {
           className="flex flex-col h-full flex-wrap w-full
         web:gap-[50px] web:max-w-[733px]
         tablet:max-w-[584px]
-        max-w-[95%]"
+        max-w-[100%]"
         >
           <div className="mb-[40px] h-full">
             <h3
