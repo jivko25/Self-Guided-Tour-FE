@@ -39,8 +39,12 @@ function Slider({
   // Function to navigate to the next image
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % images.length;
-    setCurrentIndex(newIndex);
-    setSelectedImage(images[newIndex].resourceUrl);
+
+    // Check if the image exists at newIndex
+    if (images[newIndex]) {
+      setCurrentIndex(newIndex);
+      setSelectedImage(images[newIndex].resourceUrl);
+    }
   };
 
   // When the user clicks on a thumbnail, update the selected image and index
