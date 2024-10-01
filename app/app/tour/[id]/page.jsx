@@ -26,6 +26,7 @@ function TourDetails() {
   const [isBought, setIsBought] = useState(false);
   const [isReviewed, setIsReviewed] = useState(false);
   const [isReviewing, setIsReviewing] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(false);
   const router = useRouter();
   const popup = usePopup();
 
@@ -43,17 +44,11 @@ function TourDetails() {
         const { data, error } = res;
         if (data) {
           setTour(data);
+          setLoading(false);
         } else if (error) {
-          popup({
-            type: "ERROR",
-            message: error.message,
-          });
-          setError(error.message);
+          setIsNotFound(true);
         }
       })
-      .finally(() => {
-        setLoading(false);
-      });
 
     if (userId) {
       getReviewsByTourId(id)
@@ -76,7 +71,7 @@ function TourDetails() {
           }
         });
     }
-  }, [id, userId, isReviewed]);
+  }, [id, userId, setIsNotFound, setIsReviewed]);
 
   useEffect(() => {
     if (userId) {
@@ -101,13 +96,18 @@ function TourDetails() {
     }
   }, [error]);
 
+  useEffect(() => {    
+    if (isNotFound) {
+      router.push('/404');
+    }
+  }, [isNotFound]);
+
   const handleEditClick = () => {
     sessionStorage.setItem("tourToEdit", JSON.stringify(tour));
     router.push(`/create?edit=${tour.tourId}`);
   };
 
   if (loading) return <p>Loading...</p>;
-  if (!tour) return notFound();
 
   const {
     title,
