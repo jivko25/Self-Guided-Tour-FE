@@ -5,7 +5,7 @@ import React from "react";
 function CardSphera({ thumbnailImageUrl, destination, onClick }) {
   return (
     <div
-      className="flex flex-col items-center justify-center
+      className="flex flex-col items-center justify-center cursor-pointer
       "
       onClick={onClick}
     >

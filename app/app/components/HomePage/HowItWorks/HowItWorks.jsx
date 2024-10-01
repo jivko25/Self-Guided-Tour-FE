@@ -7,17 +7,17 @@ import Image from "next/image";
 function HowItWorks() {
   return (
     <div
-      className="w-full flex items-center bg-[#13294b] p-[5%]
+      className="w-full flex items-center bg-[#13294b] p-[5%] webl:p-0
     web:flex-row web:mt-[0px] web:justify-center web:gap-[50px] web:h-[992px]
     tablet:flex-row tablet:mt-[0px] tablet:justify-center tablet:gap-[50px] tablet:h-[573px]
     phone:flex-col phone:mt-[30px] phone:justify-center phone:gap-[20px] phone:min-h-[395px]
     flex-col mt-[30px] justify-center gap-[30px] min-h-[638px] pb-14 tablet:pb-0
     "
     >
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex items-center justify-center webl:justify-end w-full h-full">
         <Image
           className="object-cover 
-          webl:w-[75%] 
+          webl:w-fit 
           web:w-[85%] 
           tablet:w-[450px]
           phone:w-[350px]
