@@ -90,6 +90,7 @@ function TourDetails() {
         })
         .catch((err) => console.log(err));
     }
+
   }, [id, userId]);
 
   useEffect(() => {

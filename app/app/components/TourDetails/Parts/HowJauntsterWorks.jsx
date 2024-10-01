@@ -35,7 +35,7 @@ function HowJauntsterWorks() {
             top-[-50px] px-[15px] py-[30px]
             web:h-[110px] web:w-[110px] web:top-[-55px]
             tablet:h-[110px] tablet:w-[110px] tablet:top-[-55px]
-            h-[90px] w-[90px] top-[-45px]"
+            h-[90px] w-[90px]"
           >
             <ArrowUndoOutline />
             <ArrowRedoOutline />
@@ -80,7 +80,7 @@ function HowJauntsterWorks() {
             top-[-50px] px-[15px] py-[30px]
             web:h-[110px] web:w-[110px] web:top-[-55px]
             tablet:h-[110px] tablet:w-[110px] tablet:top-[-55px]
-            h-[90px] w-[90px] top-[-45px]"
+            h-[90px] w-[90px]"
           >
             <ArrowUndoOutline />
             <ArrowRedoOutline />
