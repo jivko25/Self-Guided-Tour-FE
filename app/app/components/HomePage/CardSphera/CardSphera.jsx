@@ -23,7 +23,7 @@ function CardSphera({ thumbnailImageUrl, destination, onClick }) {
       />
 
       <h2
-        className="text-[#081120]  font-medium font-['Inter'] text-center
+        className="text-[#081120]  font-medium   text-center
         web:text-[31px] 
         tablet:text-[25px] 
         text-[13px] 
