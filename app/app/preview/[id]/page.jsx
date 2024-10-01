@@ -5,7 +5,7 @@ import GoogleMaps from "@/app/components/GoogleMaps/GoogleMaps";
 import Link from "next/link";
 import Image from "next/image";
 import { useCreateTour } from "@/app/context/createTourContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { getOne } from "@/app/actions/tourActions";
 import { usePopup } from "@/app/context/popupContext";
@@ -31,11 +31,15 @@ export default function Preview() {
   const popup = usePopup();
   const router = useRouter();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUserSession().then((session) => {
-      setUserId(session.userId);
+      if (session) {
+        setUserId(session.userId);
+      } else {
+        router.push('/sign-in');
+      }
     });
-  });
+  }, []);
 
   useEffect(() => {
     if (userId == creatorId) {
