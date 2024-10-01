@@ -17,7 +17,7 @@ function TourInfo({ estimatedDuration, destination }) {
           h-[32px] w-[32px]" />
           <div>
             <h2
-              className="text-[#081120] font-medium font-['Inter'] 
+              className="text-[#081120] font-medium   
             web:text-xl 
             tablet:text-lg
             text-base
@@ -27,7 +27,7 @@ function TourInfo({ estimatedDuration, destination }) {
               To complete it you will need average of {estimatedDuration} min.
             </h2>
             {/* <p
-              className="text-[#13294b] font-normal font-['Inter']
+              className="text-[#13294b] font-normal  
             web:text-base
             text-sm"
             >
@@ -43,7 +43,7 @@ function TourInfo({ estimatedDuration, destination }) {
           h-[32px] w-[32px]" />
           <div>
             <h2
-              className="text-[#081120] font-medium font-['Inter'] 
+              className="text-[#081120] font-medium   
             web:text-xl 
             tablet:text-lg
             text-base"
@@ -51,7 +51,7 @@ function TourInfo({ estimatedDuration, destination }) {
               This tour is located in {destination}
             </h2>
             <p
-              className="text-[#13294b]font-normal font-['Inter']
+              className="text-[#13294b]font-normal  
             web:text-base
             text-sm"
             >
