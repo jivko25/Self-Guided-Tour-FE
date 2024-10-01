@@ -72,7 +72,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
 
   return (
     <div
-      className="relative tablet:flex web:hidden tablet:hidden 
+      className="relative web:hidden tablet:hidden 
         w-full overflow-hidden gap-[10px] scroll-smooth snap-x snap-mandatory"
     >
       <div
