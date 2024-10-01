@@ -39,7 +39,7 @@ function BgBestPlaces() {
       "
       >
         <h2
-          className="text-[#081120] font-medium font-['Inter'] leading-[58.50px]
+          className="text-[#081120] font-medium   leading-[58.50px]
         web:text-[39px]
         tablet:text-[31px]
         text-base px-[10px]
@@ -55,7 +55,7 @@ function BgBestPlaces() {
           href="/explore"
         >
           <span
-            className="text-[#081120] text-base font-semibold font-['Inter']
+            className="text-[#081120] text-base font-semibold  
           web:w-[74px] web:h-[19px] web:text-base
           tablet:w-[74px] tablet:h-[19px] tablet:text-base
           "
