@@ -15,7 +15,6 @@ import { getOne } from "@/app/actions/tourActions";
 import { createReview, getReviewsByTourId } from "@/app/actions/reviewActions";
 import { usePopup } from "@/app/context/popupContext";
 import { getBoughtTours } from "@/app/actions/profileActions";
-import { getUserSession } from "@/app/actions/authActions";
 
 function TourDetails() {
   const { id } = useParams();
@@ -31,10 +30,12 @@ function TourDetails() {
   const popup = usePopup();
 
   useEffect(() => {
-    getUserSession()
-      .then((sess) => setUserId(sess.userId))
-      .catch((err) => console.log(err));
-  });
+    if (session) {
+      setUserId(session.userId);
+    } else {
+      setUserId("");
+    }
+  }, [session]);
 
   useEffect(() => {
     getOne(id)
@@ -54,36 +55,42 @@ function TourDetails() {
         setLoading(false);
       });
 
-    getReviewsByTourId(id)
-      .then((data) => {
-        const result = data.data.result.filter((tour) => tour.userId == userId);
+    if (userId) {
+      getReviewsByTourId(id)
+        .then((data) => {
+          const result = data.data.result.filter(
+            (tour) => tour.userId == userId
+          );
 
-        if (result.length > 0) {
-          setIsReviewed(true);
-        }
-      })
-      .catch((err) => {
-        if (err.errors) {
-          setError(err.errors.Rating);
-        } else if (err.errorMessages) {
-          setError(err.errorMessages.join("\r\n"));
-        } else {
-          setError(err.statusText);
-        }
-      });
+          if (result.length > 0) {
+            setIsReviewed(true);
+          }
+        })
+        .catch((err) => {
+          if (err.errors) {
+            setError(err.errors.Rating);
+          } else if (err.errorMessages) {
+            setError(err.errorMessages.join("\r\n"));
+          } else {
+            setError(err.statusText);
+          }
+        });
+    }
   }, [id, userId, isReviewed]);
 
   useEffect(() => {
-    getBoughtTours()
-      .then((data) => {
-        const result = data.data.filter((tour) => tour.tourId == id);
+    if (userId) {
+      getBoughtTours()
+        .then((data) => {
+          const result = data.data.filter((tour) => tour.tourId == id);
 
-        if (result.length > 0) {
-          setIsBought(true);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, [id]);
+          if (result.length > 0) {
+            setIsBought(true);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [id, userId]);
 
   useEffect(() => {
     if (error) {
@@ -151,7 +158,7 @@ function TourDetails() {
       >
         <TourTitle
           title={title}
-          userId={session?.userId}
+          userId={userId}
           tourId={tour.creatorId}
           handleEditClick={handleEditClick}
           rating={averageRating}
@@ -205,6 +212,8 @@ function TourDetails() {
             isReviewed={isReviewed}
             handleReviewing={handleReviewing}
             averageRating={averageRating}
+            sessionId={userId}
+            creatorId={tour.creatorId}
           />
         )}
       </div>
