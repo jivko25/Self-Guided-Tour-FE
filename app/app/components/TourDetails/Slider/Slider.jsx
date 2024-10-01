@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "../Svgs/CloseIcon";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,23 +11,25 @@ function Slider({
   setOpenSlider,
   selectedImage,
   setSelectedImage,
-  landmarks,
-  thumbnailImageUrl,
+  images,
   sliderIndex,
 }) {
   // State to track current image index in the slider
   const [currentIndex, setCurrentIndex] = useState(sliderIndex);
 
-  const images = [
-    { resourceUrl: thumbnailImageUrl, resourceId: "thumbnail" },
-    ...landmarks.flatMap((landmark) =>
-      landmark.resources
-        ? landmark.resources.filter(
-            (resource) => resource.resourceType === "Image"
-          )
-        : []
-    ),
-  ];
+  // Array of refs for each thumbnail image
+  const thumbnailRefs = useRef([]);
+
+  // Scroll to the selected thumbnail when the currentIndex changes
+  useEffect(() => {
+    if (thumbnailRefs.current[currentIndex]) {
+      thumbnailRefs.current[currentIndex].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+    }
+  }, [currentIndex]);
 
   // Function to navigate to the previous image
   const handlePrevious = () => {
@@ -52,7 +54,6 @@ function Slider({
     setSelectedImage(imageUrl);
     setCurrentIndex(index);
   };
-
   return (
     <div className="fixed top-0 left-0 right-0 z-50 bg-black w-full h-full p-[15px] overflow-y-auto hideScroll">
       <div className="flex flex-col items-center justify-center w-full h-auto">
@@ -123,6 +124,7 @@ function Slider({
             >
               {images.map((resource, index) => (
                 <img
+                  ref={(el) => (thumbnailRefs.current[index] = el)}
                   key={resource.resourceId}
                   className={`w-[182px] h-[100px] web:w-[200px] web:h-[140px] tablet:w-[182px] tablet:h-[100px] rounded-[15px] object-cover cursor-pointer ${
                     selectedImage === resource.resourceUrl
