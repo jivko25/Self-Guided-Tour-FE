@@ -91,7 +91,7 @@ const PendingTours = () => {
   ];
 
   return (
-    <div className="container max-w-[1349px] mt-20 mx-auto p-4  text-base font-normal  leading-none font-['Inter']">
+    <div className="container max-w-[1349px] mt-20 mx-auto p-4  text-base font-normal  leading-none  ">
       <AdminPanelTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <table className="min-w-full bg-white border">
         <thead>
