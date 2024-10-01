@@ -43,7 +43,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
           <img
             className="object-cover w-full overflow-hidden cursor-pointer
                 web:h-[500px]
-                tablet:h-[500px]
+                tablet:w-full tablet:h-[500px]
             "
             src={images[0].resourceUrl}
             onClick={() => handleImageClick(images[0].resourceUrl, 0)}
@@ -57,7 +57,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
             <img
               className="object-cover overflow-hidden cursor-pointer
                 web:h-[500px] web:flex-1
-                tablet:h-[314px] 
+                tablet:h-[314px] tablet:w-full
             "
               src={images[0].resourceUrl}
               onClick={() => handleImageClick(images[0].resourceUrl, 0)}
@@ -66,7 +66,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
             <img
               className="object-cover overflow-hidden cursor-pointer
                 web:h-[500px] web:flex-1
-                tablet:h-[314px] 
+                tablet:h-[314px] tablet:w-full
             "
               src={images[1].resourceUrl}
               onClick={() => handleImageClick(images[1].resourceUrl, 1)}
@@ -81,7 +81,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
             <img
               className="object-cover overflow-hidden cursor-pointer w-full
               web:h-[500px]
-              tablet:h-[180px]
+              tablet:h-[180px] tablet:w-full
      
             "
               src={images[0].resourceUrl}
@@ -91,7 +91,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
             <img
               className="object-cover overflow-hidden cursor-pointer w-full
               web:h-[500px]
-              tablet:h-[180px]
+              tablet:h-[180px] tablet:w-full
      
             "
               src={images[1].resourceUrl}
@@ -101,7 +101,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
             <img
               className="object-cover overflow-hidden cursor-pointer w-full
               web:h-[500px]
-              tablet:h-[180px]
+              tablet:h-[180px] tablet:w-full
      
             "
               src={images[2].resourceUrl}
