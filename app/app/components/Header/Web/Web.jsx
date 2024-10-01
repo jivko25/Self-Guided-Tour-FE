@@ -56,7 +56,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
               text="My tours"
               link="/my-tours"
             />
-            <div>
+            <div className="ml-[30px]">
               <Btn
                 className={signInButtonClass}
                 type="button"
@@ -79,7 +79,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
 
         {!isAuthenticated && (
           <>
-            <div className="mx-2.5">
+            <div className="ml-[30px] mx-2.5">
               <Btn
                 type="button"
                 variant="outlined"
