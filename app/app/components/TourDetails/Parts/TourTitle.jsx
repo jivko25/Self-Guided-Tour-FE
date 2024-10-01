@@ -13,7 +13,7 @@ function TourTitle({ title, handleEditClick, userId, tourId, rating }) {
     >
       <div className="flex items-center gap-[10px]">
         <h1
-          className="text-[#081120] font-['Inter'] font-medium 
+          className="text-[#081120]   font-medium 
             web:text-[39px] web:leading-[58.50px]
             tablet:text-[32px] tablet:leading-[48px]
             text-[25px]"
@@ -21,7 +21,7 @@ function TourTitle({ title, handleEditClick, userId, tourId, rating }) {
           {title}
         </h1>
         <Star />
-        <span className="text-[#13294b] text-base font-normal font-['Inter'] leading-none border-2 border-[#FAFAFA] border-b-[#e8b600]">
+        <span className="text-[#13294b] text-base font-normal   leading-none border-2 border-[#FAFAFA] border-b-[#e8b600]">
           {rating}
         </span>
       </div>
