@@ -286,7 +286,7 @@ export default function Preview() {
                     mb-[30px] web:mb-0 font-medium text-[#081120] web:text-[16px]
                     web:h-[582px] web:w-1/2"
         >
-          <div className="overflow-y-scroll web:pr-[40px] web:mr-[80px]">
+          <div className="overflow-y-scroll web:pr-[40px] web:mr-[80px] hideScroll">
             <header className="flex flex-row justify-between mb-9 tablet:mb-6 web:hidden">
               <div>
                 <h2 className="text-[24px] tablet:text-[31px] font-medium mb-2 tablet:mb-[22px]">
