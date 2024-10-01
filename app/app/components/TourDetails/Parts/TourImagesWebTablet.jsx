@@ -43,8 +43,8 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
             tablet:w-full tablet:h-[360px] tablet:col-span-2 cursor-pointer
      
             "
-          src={thumbnailImageUrl}
-          onClick={() => handleImageClick(thumbnailImageUrl, 0)}
+          src={images[0].resourceUrl}
+          onClick={() => handleImageClick(images[0].resourceUrl, 0)}
           alt="Cover Image"
         />
         {images.slice(1, 5).map((resource, index) => (
