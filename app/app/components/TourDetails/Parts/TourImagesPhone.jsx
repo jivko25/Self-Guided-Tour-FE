@@ -84,7 +84,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
           images.map((image, i) => (
             <div
               key={i}
-              className="relative flex-shrink-0 w-full h-56 snap-start cursor-pointer"
+              className="relative flex-shrink-0 w-full h-56 snap-start cursor-pointer mr-[10px]"
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
@@ -94,7 +94,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
                 src={image}
                 sizes="(max-width: 1280px) 50vw, 33vw"
                 fill={true}
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "cover", borderRadius: "5px" }}
                 alt={`Landmark Image ${i + 1}`}
                 priority={true}
                 draggable={false}
