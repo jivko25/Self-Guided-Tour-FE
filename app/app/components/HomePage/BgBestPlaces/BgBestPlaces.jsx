@@ -25,10 +25,10 @@ function BgBestPlaces() {
   }, []);
   return (
     <div
-      className="flex flex-col items-center justify-center gap-[30px] w-[95%] h-full
+      className="flex flex-col items-center justify-center gap-[20px] w-[95%] h-full
     web:max-w-[1792px] web:min-h-[752px] web:gap-[30px] web:px-[0px]
     tablet:px-[10px] tablet:gap-[30px]
-    gap-[20px]
+    
     "
     >
       <div
