@@ -25,10 +25,10 @@ function BgBestPlaces() {
   }, []);
   return (
     <div
-      className="flex flex-col items-center justify-center gap-[30px] w-[95%] h-full
+      className="flex flex-col items-center justify-center gap-[20px] w-[95%] h-full
     web:max-w-[1792px] web:min-h-[752px] web:gap-[30px] web:px-[0px]
     tablet:px-[10px] tablet:gap-[30px]
-    gap-[20px]
+    
     "
     >
       <div
@@ -39,7 +39,7 @@ function BgBestPlaces() {
       "
       >
         <h2
-          className="text-[#081120] font-medium font-['Inter'] leading-[58.50px]
+          className="text-[#081120] font-medium   leading-[58.50px]
         web:text-[39px]
         tablet:text-[31px]
         text-base px-[10px]
@@ -55,7 +55,7 @@ function BgBestPlaces() {
           href="/explore"
         >
           <span
-            className="text-[#081120] text-base font-semibold font-['Inter']
+            className="text-[#081120] text-base font-semibold  
           web:w-[74px] web:h-[19px] web:text-base
           tablet:w-[74px] tablet:h-[19px] tablet:text-base
           "
@@ -77,7 +77,7 @@ function BgBestPlaces() {
         MsOverflowStyle: "none",
         ScrollbarWidth: "none",
       }}
-        className="h-full w-full
+        className="h-full w-full hideScroll
         web:flex-nowrap web:flex web:items-center web:justify-evenly web:gap-[20px] web:min-h-[600px] web:overflow-y-hidden web:scrollbar-hide web:overflow-x-hidden
         tablet:flex tablet:items-center tablet:justify-start tablet:gap-[20px] tablet:min-h-[600px] tablet:overflow-x-scroll tablet:overflow-y-hidden tablet:scrollbar-hide
         phone:grid phone:grid-cols-2 phone:gap-4 phone:justify-items-center phone:items-center 

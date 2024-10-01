@@ -283,10 +283,10 @@ export default function Preview() {
       >
         <section
           className="flex flex-col align-center text-[14px]
-                    mb-[30px] web:mb-0 font-medium text-[#081120] text-[14px] web:text-[16px]
+                    mb-[30px] web:mb-0 font-medium text-[#081120] web:text-[16px]
                     web:h-[582px] web:w-1/2"
         >
-          <div className="overflow-y-scroll web:pr-[40px] web:mr-[80px]">
+          <div className="overflow-y-scroll web:pr-[40px] web:mr-[80px] hideScroll">
             <header className="flex flex-row justify-between mb-9 tablet:mb-6 web:hidden">
               <div>
                 <h2 className="text-[24px] tablet:text-[31px] font-medium mb-2 tablet:mb-[22px]">
@@ -324,7 +324,7 @@ export default function Preview() {
                     <li
                       key={i}
                       className="relative ml-5 before:absolute before:block before:content-[''] 
-                                before:bg-[#617086] before:w-[0.5px] before:top-0 before:bottom-0
+                                before:bg-[#617086] before:w-[0.5px] before:bottom-0
                                 before:top-[15px] pb-[64px] last:pb-[0px]"
                     >
                       <div className="absolute -left-[7px] w-[15px] h-[15px] border-[0.5px] rounded-full border-[#617086]"></div>

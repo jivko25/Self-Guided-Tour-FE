@@ -148,13 +148,13 @@ function TourDetails() {
   };
 
   return (
-    <div className="flex flex-col w-full px-[10px] tablet:items-center tablet:px-0">
+    <div className="flex flex-col w-full px-[20px] tablet:items-center tablet:px-0">
       <div
-        className="flex flex-col justify-center items-center 
+        className="flex flex-col justify-center items-center
       web:w-[80%] web:mt-[30px]
-      tablet:mt-[100px]
-      phone:mt-[50px] phone:p-[20px]
-      mt-[50px] p-[20px]
+      tablet:w-[85%] tablet:mt-[100px]
+      phone:mt-[50px] 
+      mt-[50px] 
       "
       >
         <TourTitle
@@ -189,8 +189,8 @@ function TourDetails() {
         className="flex justify-between flex-start border-b-2 border-[#d1d0d8]
       web:w-[80%] web:mt-[100px] web:pb-[100px] web:flex-row web:items-start web:pt-[0px]
       tablet:flex-col-reverse tablet:w-[95%] tablet:pt-[70px] tablet:pb-[70px] tablet:gap-[100px] tablet:items-center
-      phone:flex-col-reverse phone:w-[95%] phone:pt-[20px] phone:pb-[20px] phone:gap-[50px] phone:items-center
-      flex-col-reverse w-[95%] pt-[20px] pb-[20px] gap-[50px] items-center
+      phone:flex-col-reverse phone:w-[100%] phone:pt-[20px] phone:pb-[20px] phone:gap-[50px] phone:items-center
+      flex-col-reverse w-[100%] pt-[20px] pb-[20px] gap-[50px] items-center
       "
       >
         <TourSummary summary={summary} />

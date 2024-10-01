@@ -124,7 +124,7 @@ function Testimonials() {
         <div className="flex items-center web:justify-center web:w-[30%] tablet:justify-end tablet:w-[20%]">
           <div className="flex flex-col h-[75%] text-end">
             <h1
-              className=" text-[#081120] font-medium font-['Inter'] web:w-[370px] tablet:w-[200px]
+              className=" text-[#081120] font-medium   web:w-[370px] tablet:w-[200px]
             web:text-[61px]
             tablet:text-[31px]"
             >

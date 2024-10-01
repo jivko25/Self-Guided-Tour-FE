@@ -67,7 +67,7 @@ const RegisterForm = ({ userId }) => {
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
       <h2
-        className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
+        className="mb-[40px] text-center  text-white font-medium   
         web:text-[32px]
         tablet:text-[32px]
         phone:text-[24px]

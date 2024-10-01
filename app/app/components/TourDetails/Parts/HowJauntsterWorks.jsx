@@ -11,7 +11,7 @@ function HowJauntsterWorks() {
       m-[35px]"
     >
       <h1
-        className="text-[#081120] font-medium font-['Inter'] leading-9
+        className="text-[#081120] font-medium   leading-9
         web:text-2xl web:mb-[20px] 
         tablet:m-[20px] 
         text-lg text-center"
@@ -47,7 +47,7 @@ function HowJauntsterWorks() {
             tablet:mt-[10px] items-center"
           >
             <h1
-              className="text-[#081120]font-medium font-['Inter'] leading-[30px] font-medium
+              className="text-[#081120]font-medium   leading-[30px] font-medium
               web:mb-[20px] web:text-xl web:mt-[5px]
               tablet:text-lg tablet:mb-[20px] tablet:mt-[40px]
               text-sm mt-[30px] mb-[10px] text-center"
@@ -55,7 +55,7 @@ function HowJauntsterWorks() {
               How to get the most of the tour and its story
             </h1>
             <p
-              className="flex text-[#13294b] font-normal font-['Inter'] leading-normal w-full
+              className="flex text-[#13294b] font-normal   leading-normal w-full
               web:max-w-[667px] web:text-start web:text-base
               tablet:max-w-[535px] tablet:text-center tablet:text-base
               text-sm max-w-[300px]  text-center items-center"
@@ -92,7 +92,7 @@ function HowJauntsterWorks() {
             tablet:mt-[10px] items-center"
           >
             <h1
-              className="text-[#081120]font-medium font-['Inter'] leading-[30px] font-medium
+              className="text-[#081120]font-medium   leading-[30px] font-medium
               web:mb-[20px] web:text-xl web:mt-[5px]
               tablet:text-lg tablet:mb-[20px] tablet:mt-[40px]
               text-sm mt-[30px] mb-[10px] text-center"
@@ -100,7 +100,7 @@ function HowJauntsterWorks() {
               How to get the most of the tour and its story
             </h1>
             <p
-              className="flex text-[#13294b] font-normal font-['Inter'] leading-normal w-full
+              className="flex text-[#13294b] font-normal   leading-normal w-full
               web:max-w-[667px] web:text-start web:text-base
               tablet:max-w-[535px] tablet:text-center tablet:text-base
               text-sm max-w-[300px] text-center items-center"
