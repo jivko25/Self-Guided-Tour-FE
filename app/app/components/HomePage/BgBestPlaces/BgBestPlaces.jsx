@@ -77,7 +77,7 @@ function BgBestPlaces() {
         MsOverflowStyle: "none",
         ScrollbarWidth: "none",
       }}
-        className="h-full w-full
+        className="h-full w-full hideScroll
         web:flex-nowrap web:flex web:items-center web:justify-evenly web:gap-[20px] web:min-h-[600px] web:overflow-y-hidden web:scrollbar-hide web:overflow-x-hidden
         tablet:flex tablet:items-center tablet:justify-start tablet:gap-[20px] tablet:min-h-[600px] tablet:overflow-x-scroll tablet:overflow-y-hidden tablet:scrollbar-hide
         phone:grid phone:grid-cols-2 phone:gap-4 phone:justify-items-center phone:items-center 
