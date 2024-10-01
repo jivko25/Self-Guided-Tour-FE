@@ -34,7 +34,7 @@ export default function SearchSkeleton() {
                     smallPhone:max-w-[288px] smallPhone:max-h-[36px]"
       >
         <div
-          className="px-[10px] rounded-bl-[5px] rounded-[5px] border border-stone-300 bg-neutral-50 
+          className="px-[10px] rounded-bl-[5px] rounded-[5px] border border-stone-300
                 phone:w-[321px] h-[36px]  
                 tablet:w-[516px] tablet:h-[60px] tablet:opacity-80  
                 web:w-[810px] web:h-[60px] web:opacity-80
