@@ -1,6 +1,6 @@
 import Image from "next/image";
 import X from "../../public/svg/X.svg";
-function CloseButton({
+function IconButton({
   onClick,
   text = "",
   icon = X,
@@ -21,4 +21,4 @@ function CloseButton({
   );
 }
 
-export default CloseButton;
+export default IconButton;
