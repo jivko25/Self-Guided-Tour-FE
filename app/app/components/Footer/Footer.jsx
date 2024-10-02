@@ -16,7 +16,7 @@ export default function Footer() {
   const pathname = usePathname();
   const isTourPage = pathname.startsWith("/tour/");
 
-  const specialPages = ["/sign-in", "/create-account", "/create", "/admin"];
+  const specialPages = ["/sign-in", "/create-account", "/create", "/admin" , "/forgot-password"];
   const isSpecialPage = specialPages.some(page => pathname.startsWith(page));
 
   const hiddenFooter= isSpecialPage ? "web:hidden tablet:hidden" : "web:flex tablet:flex"
