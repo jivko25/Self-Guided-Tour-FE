@@ -1,17 +1,46 @@
-import { axiosProfile } from "@/api/axios.js";
+"use server";
+import { axiosSSR } from "@/api/axios";
 
-/**
- * @returns {array}
- */
-export async function getBoughtTours() {
+export async function updatePasswordAsync(currentPassword, newPassword) {
   try {
-    const response = await axiosProfile.get("bought-tours");
-    return response.data.result;
+    // Handle password update
+    await axiosSSR.post(
+      "/auth/change-password",
+      {
+        currentPassword,
+        newPassword,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    return { message: "Password updated successfully", type: "SUCCESS" };
   } catch (error) {
-    if (error.response.data) {
-      throw error.response.data;
-    } else {
-      throw error.response;
-    }
+    return { type: "ERROR", message: error?.response?.data?.message };
+  }
+}
+export async function createPasswordAsync(password, repeatPassword) {
+  try {
+    // Handle password creation
+    await axiosSSR.post(
+      "/auth/create-password",
+      {
+        password,
+      },
+      { headers: { "Content-Type": "application/json" } }
+    );
+
+    return { message: "Password created successfully", type: "SUCCESS" };
+  } catch (error) {
+    return { type: "ERROR", message: error?.response?.data?.message };
+  }
+}
+export async function updateProfileAsync(formData) {
+  try {
+    // Handle profile update
+    await axiosSSR.patch("/profile", formData);
+
+    return { message: "Profile updated successfully", type: "SUCCESS" };
+  } catch (error) {
+    return { type: "ERROR", message: error?.response?.data?.message };
   }
 }
