@@ -19,7 +19,7 @@ export const axios = Axios.create({
   //withCredentials: true, TODO: Uncomment when we setup CORS
 });
 
-//TODO: Add axios private instance for the auth
+
 export const axiosAuth = Axios.create({
   baseURL: `${BASE_URL}/Auth/`,
   headers: {

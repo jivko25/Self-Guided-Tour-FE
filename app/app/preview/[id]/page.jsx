@@ -5,8 +5,8 @@ import GoogleMaps from "@/app/components/GoogleMaps/GoogleMaps";
 import Link from "next/link";
 import Image from "next/image";
 import { useCreateTour } from "@/app/context/createTourContext";
-import { useEffect, useRef, useState } from "react";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
 import { getOne } from "@/app/actions/tourActions";
 import { usePopup } from "@/app/context/popupContext";
 import ArrowRedo from "../../public/svg/arrow-redo.svg";
@@ -15,12 +15,6 @@ import Play from "../../public/svg/play.svg";
 import X from "../../public/svg/X.svg";
 import { useRouter } from "next/navigation";
 import { getUserSession } from "@/app/actions/authActions";
-
-const IOSTypes = {
-  driving: "d",
-  walking: "w",
-  bicycling: "w",
-};
 
 export default function Preview() {
   const { id } = useParams();
@@ -37,11 +31,15 @@ export default function Preview() {
   const popup = usePopup();
   const router = useRouter();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getUserSession().then((session) => {
-      setUserId(session.userId);
+      if (session) {
+        setUserId(session.userId);
+      } else {
+        router.push('/sign-in');
+      }
     });
-  });
+  }, []);
 
   useEffect(() => {
     if (userId == creatorId) {
@@ -108,7 +106,7 @@ export default function Preview() {
               }),
             };
           });
-          
+
           setLocations(newArr);
           db.close();
         };
@@ -159,53 +157,26 @@ export default function Preview() {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
           const type = tourType.toLowerCase();
-          const isAndroid = /Android/i.test(navigator.userAgent);
-          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
           let url = "";
 
           if (!multiple) {
             const lat = locationData.latitude;
             const lng = locationData.longitude;
 
-            if (isAndroid) {
-              // Open Google Maps app if available on Android
-              url = `geo:${userLat},${userLng}?q=${lat},${lng}&travelmode=${type}`;
-            } else if (isIOS) {
-              // Open in Apple Maps on iOS devices
-              url = `http://maps.apple.com/?saddr=${userLat},${userLng}&daddr=${lat},${lng}&dirflg=${IOSTypes[type]}`;
-            } else {
-              // Open Google Maps in the browser on desktop or other devices
-              url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=${type}`;
-            }
+            url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}&travelmode=${type}`;
           } else {
             const destination = locationData[locationData.length - 1];
             const rest = locationData.slice(0, locationData.length - 1);
 
-            if (isAndroid) {
-              // Open Google Maps app if available on Android
-              const waypoints = rest.map((loc) => {
-                return `&daddr=${loc.latitude},${loc.longitude}`;
-              });
+            const waypoints = rest.map((loc) => {
+              return `${loc.latitude},${loc.longitude}`;
+            });
 
-              url = `geo:${userLat},${userLng}?q=${destination.latitude},${destination.longitude}(%22Start%22)${waypoints}&travelmode=${type}`;
-            } else if (isIOS) {
-              // Open in Apple Maps on iOS devices
-              const waypoints = rest.map((loc) => {
-                return `&daddr${loc.latitude},${loc.longitude}`;
-              });
-              url = `http://maps.apple.com/?saddr=${userLat},${userLng}${waypoints}&daddr=${destination.latitude},${destination.longitude}&dirflg=${IOSTypes[type]}`;
-            } else {
-              const waypoints = rest.map((loc) => {
-                return `${loc.latitude},${loc.longitude}`;
-              });
-
-              // Open Google Maps in the browser on desktop or other devices
-              url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${
-                destination.latitude
-              },${destination.longitude}&waypoints=${waypoints.join(
-                "|"
-              )}&travelmode=${type}`;
-            }
+            url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${
+              destination.latitude
+            },${destination.longitude}&waypoints=${waypoints.join(
+              "|"
+            )}&travelmode=${type}`;
           }
 
           window.open(url, "_blank");
@@ -484,7 +455,7 @@ const MediaPlayer = ({ isVideo = false, file, count }) => {
             <div className="flex flex-col justify-center items-center rounded-3xl px-10 mx-2 text-[#081120] bg-[#FAFAFA]">
               <div className="flex justify-end w-full mb-2 mt-5 border-b-2">
                 <Image
-                  className="w-6 h-6 tablet:w-10 tablet:h-10 border rounded-full text-center mb-3"
+                  className="w-6 h-6 tablet:w-10 tablet:h-10 border rounded-full text-center mb-3 hover:opacity-70"
                   onClick={handlePause}
                   width={14}
                   height={14}
