@@ -8,6 +8,7 @@ import { usePopup } from "../context/popupContext.jsx";
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
+  const [pendingRequest, setIsPendingRequest] = useState(false);
   const router = useRouter();
   const popup = usePopup();
 
@@ -15,17 +16,25 @@ export default function ForgotPasswordForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data, error } = await sendPasswordRecoveryLink({ email: email });
-    if (data) {
-      console.log(data);
-    }
-    if (error) {
-      popup({
-        type: "ERROR",
-        message: error.message,
-      });
-    }
+
+    if (pendingRequest) return; // Prevent multiple requests
+
+    setIsPendingRequest(true);
+
+    await sendPasswordRecoveryLink({ email });
+
+    setIsPendingRequest(false);
+
+    // Redirect to login regardless of error or success
+    popup({
+      type: "SUCCESS",
+      message: `Password recovery link has been sent to ${email}`,
+      timeout: null, // Pass timeout as null to keep the popup indefinitely
+    });
+
+    router.push("/sign-in");
   };
+
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
       <h2

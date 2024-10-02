@@ -20,12 +20,13 @@ export const PopupProvider = ({ children }) => {
     }
   };
 
-  // Dissapearing popup
-  const addPopup = (payload, timeout = 3000) => {
+  // Dissapearing popup - default 3 seconds(if no prop is passed)
+  const addPopup = (payload) => {
+    const { timeout = 3000, ...rest } = payload; // Destructure timeout and set default
     const id = v4();
-    dispatch({ type: "ADD", payload: { id, ...payload } });
+    dispatch({ type: "ADD", payload: { id, ...rest } });
 
-    // If the timeout is set, remove the popup after the specified time
+    // If timeout is null, do not set a timeout to make the popup stay indefinitely
     if (timeout !== null) {
       setTimeout(() => {
         dispatch({ type: "REMOVE", id });
