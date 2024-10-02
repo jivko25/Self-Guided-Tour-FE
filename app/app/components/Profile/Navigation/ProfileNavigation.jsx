@@ -1,13 +1,27 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import LogOut from "@/app/public/svg/log-out.svg";
 import LogOutButton from "../../Buttons/IconButton";
+import { useAuth } from "@/app/context/authContext";
+import { logoutUser } from "@/app/actions/authActions";
 const active = "border-b-[5px] border-[#E8B600] pb-4";
 const hover =
   "hover:translate-x-2 transform transition-transform duration-500 ";
 function ProfileNavigation() {
+  const { setSession } = useAuth();
+  const navigate = useRouter();
   const pathname = usePathname();
+  const handleLogout = async () => {
+    const result = await logoutUser();
+
+    if (result.error) {
+      console.log(result.error);
+    } else {
+      setSession(false);
+      navigate.push("/");
+    }
+  };
   return (
     <div
       className="flex text-nowrap
@@ -53,6 +67,7 @@ function ProfileNavigation() {
         text="Sign Out"
         icon={LogOut}
         className="hover:translate-x-2 transform transition-transform duration-500"
+        onClick={handleLogout}
       />
     </div>
   );

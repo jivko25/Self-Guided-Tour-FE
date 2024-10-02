@@ -3,41 +3,32 @@ import Btn from "../../Buttons/Btn";
 import InputField from "../../InputField/InputField";
 import ProfilePicture from "./ProfilePicture";
 import { useEffect, useRef, useState } from "react";
-import { useFormState } from "react-dom";
 import {
   updateProfileAsync,
   updatePasswordAsync,
   createPasswordAsync,
-} from "@/app/actions/profileActions";
+} from "@/app/actions/profilePageActions";
 import { useProfile } from "@/app/context/profileContext";
-import { useForm as useFormValidation } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { profileValidationScheme } from "@/app/utils/validationSchemes";
+import {
+  emailValidationScheme,
+  passwordValidationScheme,
+} from "@/app/utils/validationSchemes";
+import { usePopup } from "@/app/context/popupContext";
 
 function ProfileForm() {
   const { getProfile, user, isLoading, dispatch, profilePictureSrc, error } =
     useProfile();
+  const [change, setChange] = useState(false);
 
+  const popup = usePopup();
   const profilePictureRef = useRef(null);
-  // Set up server action
-  const [formState, updateProfile] = useFormState(
-    updateProfileAsync,
-    undefined
-  );
+
   //Set up the form validation
-  const {
-    register,
-    formState: { errors: validationErrors },
-    trigger,
-  } = useFormValidation({
-    resolver: yupResolver(profileValidationScheme),
-    mode: "onChange",
-  });
+
   const [profilePicture, setProfilePicture] = useState("");
   function handleFileUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
-    console.log(file.type);
     if (!file.type.startsWith("image")) {
       alert("Please upload an image file");
       return;
@@ -48,61 +39,77 @@ function ProfileForm() {
   }
   function triggerFileUpload() {
     profilePictureRef.current.click();
+    setChange(true);
   }
   // Handle form submission
   async function handleSubmit(e) {
     e.preventDefault();
+    // Check if the user has made any changes
+    if (!change) return;
 
     const formData = new FormData(e.target);
-    console.log(validationErrors);
-    //if (Object.keys(validationErrors).length !== 0) return;
-    console.log("submitting");
-    const rawFormData = Object.fromEntries(formData);
-    const { password, repeatPassword, currentPassword } = rawFormData;
-    console.log(password);
+    const { password, repeatPassword, currentPassword } = user;
+    // Validate the email
+    const emailError = validateEmail(user?.email);
+    if (emailError) {
+      dispatch({ type: "error", payload: emailError });
+      return;
+    }
+    // Validate the password
     if (password) {
+      const passwordError = validatePassword(
+        password,
+        repeatPassword,
+        currentPassword
+      );
+      if (passwordError) {
+        dispatch({ type: "error", payload: passwordError });
+        return;
+      }
+      let response;
       if (user?.hasPassword) {
-        console.log("updating password");
-        const response = await updatePasswordAsync(currentPassword, password);
-        console.log(response);
+        if (!currentPassword) {
+          dispatch({
+            type: "error",
+            payload: { currentPassword: "Please enter your current password" },
+          });
+          return;
+        }
+        response = await updatePasswordAsync(currentPassword, password);
       } else {
-        console.log("creating password");
-        const response = await createPasswordAsync(password, repeatPassword);
-        console.log(response);
+        response = await createPasswordAsync(password, repeatPassword);
+      }
+      if (response?.type === "ERROR") {
+        popup({
+          type: response?.type,
+          message: response?.message,
+        });
+        return;
       }
     }
-    console.log("updating profile");
-    updateProfile(formData);
+    // Update the user profile
+    const response = await updateProfileAsync(formData);
+    popup({
+      type: response?.type,
+      message: response?.message,
+    });
+    //Should reset the password fields.....
     dispatch({ type: "resetPasswords" });
   }
   //Handle onChange events
   function handleInputChange(e) {
     const { name, value } = e.target;
+    setChange(true);
     dispatch({ type: "user/onChange", payload: { [name]: value } });
-    if (name === "password") {
-      trigger("repeatPassword");
-    }
-    trigger(name);
   }
-  //Handle validation errors
-  useEffect(() => {
-    if (formState?.error) {
-      dispatch({ type: "error", payload: formState.error });
-    }
-    // Clear the error upon successful submission, form state is string only on succesfull submission
-    if (typeof formState === "string") {
-      dispatch({ type: "clearError" });
-    }
-    dispatch({ type: "loaded" });
-  }, [error, formState]);
+
   // Fetch the user profile when the component mounts
   useEffect(() => {
-    if (error) return;
     async function fetchProfile() {
       await getProfile();
     }
     fetchProfile();
-  }, [getProfile, error]);
+  }, [getProfile]);
   // Clean up the object URL when the component unmounts
   useEffect(() => {
     return () => {
@@ -111,7 +118,6 @@ function ProfileForm() {
       }
     };
   }, [profilePictureSrc]);
-  if (!user) return null;
   return (
     <form
       onSubmit={handleSubmit}
@@ -149,9 +155,8 @@ function ProfileForm() {
           value={user?.email}
           name="email"
           classes=" tablet:w-[430px] z-10"
-          error={error?.email}
           onChange={handleInputChange}
-          {...register("email")}
+          error={error?.email}
         />
         <InputField
           label="Phone Number (optional)"
@@ -193,7 +198,7 @@ function ProfileForm() {
         <Btn
           type="button"
           text="Choose File"
-          className="w-48  hover:bg-blue-950 hover:text-white hover:border-blue-800 transition-colors duration-500"
+          className="w-48  "
           variant="transparent-outlined"
           onClick={triggerFileUpload}
         />
@@ -208,7 +213,8 @@ function ProfileForm() {
             type="password"
             value={user?.currentPassword}
             onChange={handleInputChange}
-            classes=" w-[430px] mt-16"
+            classes=" w-[430px] mt-8 web:mt-16"
+            error={error?.currentPassword}
           />
         ) : (
           <h1 className="text-l mt-8 w-full ">
@@ -218,7 +224,7 @@ function ProfileForm() {
             for alternative login options.
           </h1>
         )}
-        <div className="flex gap-8 mt-16 smallPhone:flex-col tablet:flex-row">
+        <div className="flex gap-8 mt-8 web:mt-16 smallPhone:flex-col tablet:flex-row">
           <InputField
             label="New Password"
             name="password"
@@ -227,33 +233,26 @@ function ProfileForm() {
             value={user?.password}
             onChange={handleInputChange}
             classes=" w-[430px]"
-            {...register("password")}
-            error={
-              validationErrors.password?.message ||
-              validationErrors.repeatPassword?.message
-            }
+            error={error?.password}
           />
           <InputField
+            id="repeatPassword"
             label="Repeat Password"
             name="repeatPassword"
             type="password"
             value={user?.repeatPassword}
             onChange={handleInputChange}
             classes=" w-[430px]"
-            required={user?.password}
-            {...register("repeatPassword")}
-            error={
-              validationErrors.repeatPassword?.message ||
-              validationErrors.password?.message
-            }
+            error={error?.repeatPassword}
           />
         </div>
+
         <Btn
           type="submit"
           text="Save Changes"
           className={`${
             isLoading ? "animate-pulse" : ""
-          } w-48 mt-10 web:mt-16 hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500`}
+          } w-48 mt-10 web:mt-16 `}
           variant="filled"
         />
       </section>
@@ -262,3 +261,32 @@ function ProfileForm() {
 }
 
 export default ProfileForm;
+
+function validatePassword(password, repeatPassword) {
+  try {
+    if (password) {
+      passwordValidationScheme.validateSync(
+        {
+          password,
+          repeatPassword,
+        },
+        { abortEarly: false }
+      );
+    }
+  } catch (error) {
+    const errors = error.inner.reduce((acc, err) => {
+      acc[err.path] = err.message;
+      return acc;
+    }, {});
+    return errors || null;
+  }
+}
+
+function validateEmail(email) {
+  try {
+    emailValidationScheme.validateSync({ email });
+  } catch (error) {
+    //dispatch({ type: "error", payload: { [error.path]: error.message } });
+    return { [error.path]: error.message } || null;
+  }
+}

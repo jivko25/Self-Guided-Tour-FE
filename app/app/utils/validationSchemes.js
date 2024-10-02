@@ -70,7 +70,7 @@ export const emailValidationScheme = yup.object({
     .required(requiredMessage("Email")),
 });
 export const passwordValidationScheme = yup.object({
-  Password: passwordValidation,
+  password: passwordValidation,
   repeatPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], paswordsDontMatchErrorMessage),
@@ -80,6 +80,7 @@ export const profileValidationScheme = yup.object({
     .string()
     .matches(emailRegex, emailErrorMessage)
     .required(requiredMessage("Email")),
+  currentPassword: yup.string().required(requiredMessage("Current Password")),
   password: passwordValidation,
   repeatPassword: yup
     .string()

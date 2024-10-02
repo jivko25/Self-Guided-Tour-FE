@@ -28,13 +28,14 @@ function reducer(state, action) {
       return {
         ...state,
         isLoading: false,
-        user: action.payload,
+        user: { ...state.user, ...action.payload },
         profilePictureSrc: action.payload.profilePictureUrl,
       };
     case "priflePictureSrc":
       return {
         ...state,
         profilePictureSrc: action.payload,
+        user: { ...state.user, profilePictureUrl: action.payload },
       };
     case "user/onChange":
       return {
@@ -46,7 +47,7 @@ function reducer(state, action) {
     case "loaded":
       return { ...state, isLoading: false };
     case "error":
-      return { ...state, error: action.payload };
+      return { ...state, error: { ...state.error, ...action.payload } };
     case "clearError":
       return { ...state, error: null };
     case "nextPage":
@@ -65,6 +66,9 @@ function reducer(state, action) {
         totalPages: action.payload.totalPages,
         totalResults: action.payload.totalResults,
       };
+    case "reset": {
+      return initialState;
+    }
     case "resetPage":
       return { ...state, page: 1, totalPages: 1 };
     case "resetPasswords": {
@@ -102,7 +106,9 @@ export const ProfileProvider = ({ children }) => {
   const getProfile = useCallback(async function getProfile() {
     try {
       dispatch({ type: "loading" });
-      const response = await axios.get("/profile");
+      const response = await axios.get("/profile", {
+        headers: { "Cache-Control": "no-cache, no-store, must-revalidate" },
+      });
       dispatch({ type: "profile/loaded", payload: response.data });
     } catch (error) {
       console.error("Failed to get profile:", error);

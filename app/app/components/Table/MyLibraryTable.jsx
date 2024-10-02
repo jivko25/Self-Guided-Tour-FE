@@ -30,8 +30,8 @@ function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
             <TableRow key={tour.tourId} tour={tour} activeTab={activeTab} />
           ))
         )}
-        {Array.from({ length: 10 - tours.length }).map((_, index) => (
-          <EmptyRow key={index} />
+        {Array.from({ length: 10 - (tours.length || 0) }).map((_, index) => (
+          <EmptyRow key={index} height={83} />
         ))}
       </tbody>
     </table>

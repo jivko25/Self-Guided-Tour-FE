@@ -12,9 +12,17 @@ import { useState } from "react";
 import Btn from "../../Buttons/Btn";
 import ImageSkeleton from "../../Skeletons/ImageSkeleton";
 import StatusDot from "./StatusDot";
+import { useRouter } from "next/navigation";
 function TableRow({ tour, activeTab }) {
   const [showDetails, setShowDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useRouter();
+  function handleEdit(tourId) {
+    navigate.push(`/create?edit=${tourId}`);
+  }
+  function handlePreview(tourId) {
+    navigate.push(`/tour/${tourId}`);
+  }
   function handleShowDetails() {
     setShowDetails(!showDetails);
   }
@@ -81,6 +89,7 @@ function TableRow({ tour, activeTab }) {
                 <IconButton
                   icon={PencilIcon}
                   className="border-[3px] p-2 border-[#13294B] rounded-[5px]"
+                  onClick={() => handleEdit(tour.tourId)}
                 />
                 {tour.status !== "Under Review" && (
                   <IconButton
@@ -93,6 +102,7 @@ function TableRow({ tour, activeTab }) {
               <IconButton
                 icon={EyeIcon}
                 className="border-[3px] p-2 border-[#13294B] rounded-[5px]"
+                onClick={() => handlePreview(tour.tourId)}
               />
             )
           ) : (
@@ -101,6 +111,11 @@ function TableRow({ tour, activeTab }) {
               variant="transparent-outlined"
               className="w-full max-w-32 boreder-[2px]
               "
+              onClick={() =>
+                activeTab === "My Tours"
+                  ? handleEdit(tour.tourId)
+                  : handlePreview(tour.tourId)
+              }
             />
           )}
         </div>

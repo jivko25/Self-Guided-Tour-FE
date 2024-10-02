@@ -68,9 +68,7 @@ function TourCard() {
             onClick={() => handleSubmit(stripe, elements)}
             variant="filled"
             text="Confirm and pay"
-            className={`${
-              isStripeLoading ? "animate-pulse" : ""
-            } w-full hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500`}
+            className={`${isStripeLoading ? "animate-pulse" : ""} w-full`}
           />
         </div>
       </div>

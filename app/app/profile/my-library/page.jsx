@@ -1,14 +1,10 @@
 "use client";
-import MobilePagination from "@/app/components/Admin/Pagination/MobilePagination";
-import WebPagination from "@/app/components/Admin/Pagination/WebPagination";
+
 import MyToursTable from "@/app/components/Table/MyLibraryTable";
-import Table from "@/app/components/Table/Table";
 import MyLibraryPagination from "@/app/components/Table/TableComponents/MyLibraryPagination";
 import TableTabs from "@/app/components/Table/TableTabs";
 import { useProfile } from "@/app/context/profileContext";
-import { func } from "prop-types";
 import { useEffect, useState } from "react";
-import { set } from "react-hook-form";
 
 const tableHeaders = {
   ["Bought Tours"]: [

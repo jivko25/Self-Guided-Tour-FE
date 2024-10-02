@@ -50,7 +50,6 @@ export default function CheckoutForm() {
           text="Confirm and Pay"
           className={`
             ${isStripeLoading ? "animate-pulse" : ""}
-             hover:bg-white hover:text-blue-950 hover:border-blue-800 transition-colors duration-500
             web:w-[430px]
             tablet:w-[282px] tablet:order-2
             phone:w-[361px] `}
