@@ -1,15 +1,30 @@
 "use client";
 import Btn from "../components/Buttons/Btn.jsx";
 import InputField from "../components/InputField/InputField.jsx";
+import { useState } from "react";
 import { useRouter } from "next/navigation.js";
+import { sendPasswordRecoveryLink } from "../actions/authActions.js";
+import { usePopup } from "../context/popupContext.jsx";
 
 export default function ForgotPasswordForm() {
+  const [email, setEmail] = useState("");
   const router = useRouter();
+  const popup = usePopup();
 
-  const handleSubmit = (e) => {
+  const handleEmailChange = (e) => setEmail(e.target.value);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can add your send logic here
-    console.log("Form submitted");
+    const { data, error } = await sendPasswordRecoveryLink({ email: email });
+    if (data) {
+      console.log(data);
+    }
+    if (error) {
+      popup({
+        type: "ERROR",
+        message: error.message,
+      });
+    }
   };
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
@@ -39,16 +54,17 @@ export default function ForgotPasswordForm() {
         <InputField
           id="email"
           label="Email Address"
-          classes="tablet:w-[400px] phone:w-[320px] w-[288px] font-['Inter']"
+          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="email"
           type="email"
+          onChange={handleEmailChange}
           required
         />
 
         <div className="flex   text-[16px] justify-center  gap-y-6 space-x-10 px-6 tablet:px-0  h-[108px]">
           <div className="w-[130px]  tablet:w-[180px] h-11">
             <Btn
-              onClick={() => router.push("/sign-in")}
+              onClick={() => router.push("/sign-in")} // Return user to login page
               variant="outlined"
               text="Cancel"
               fullWidth
