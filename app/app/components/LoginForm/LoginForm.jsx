@@ -9,6 +9,7 @@ import { loginUser } from "@/app/actions/authActions";
 import { useFormState } from "react-dom";
 import { useAuth } from "@/app/context/authContext";
 import { redirect } from "next/navigation";
+import Link from "next/link.js";
 
 const LoginForm = () => {
   const [email, setEmail] = React.useState("");
@@ -25,7 +26,7 @@ const LoginForm = () => {
       if (formState.error) {
         setError(formState.error);
       } else {
-        if (formState !== '') {
+        if (formState !== "") {
           console.log(formState);
         }
       }
@@ -37,13 +38,15 @@ const LoginForm = () => {
 
   return (
     <div className="flex flex-col items-center justify-start  w-full">
-      <h2 className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
+      <h2
+        className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
       web:text-[32px]
       tablet:text-[32px]
       phone:text-[24px]
       smallPhone:text-[24px]
       text-[24px]
-      ">
+      "
+      >
         Sign In
       </h2>
       <form
@@ -85,9 +88,11 @@ const LoginForm = () => {
           "
           ></div>
 
-          <div className="text-center text-zinc-400 font-medium font-['Inter Tight']
+          <div
+            className="text-center text-zinc-400 font-medium font-['Inter Tight']
           web:text-sm tablet:text-sm phone:text-[10px] smallPhone:text-[10px] text-[10px]
-          ">
+          "
+          >
             OR
           </div>
 
@@ -115,18 +120,27 @@ const LoginForm = () => {
           required
         />
 
-        <InputField
-          id="password"
-          label="Password"
-          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
-          name="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          error={error}
-          // hint="Your password must be at least 6 characters long"
-          required
-        />
+        <div className="relative mb-4 tablet:w-[400px] phone:w-[320px] w-[288px] tablet:mb-0">
+          <InputField
+            id="password"
+            label="Password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            error={error}
+            required
+          />
+
+          {/* Forgot Password Link */}
+
+          <Link
+            href="/forgot-password"
+            className="absolute mt-2  right-0 text-[#4285f4] font-normal text-sm hover:underline"
+          >
+            Forgotten password?
+          </Link>
+        </div>
 
         <div
           className="
