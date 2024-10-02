@@ -55,7 +55,7 @@ const LoginForm = () => {
         Sign In
       </h2>
       <form
-        className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-[5px]
+        className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-t-[5px]
         web:w-[582px] web:min-h-[602px] tablet:w-[582px] tablet:min-h-[602px] phone:w-[361px] phone:min-h-[441px] smallPhone:w-full smallPhone:min-h-[451px] w-full min-h-[451px]"
         onSubmit={handleSubmit} 
       >
