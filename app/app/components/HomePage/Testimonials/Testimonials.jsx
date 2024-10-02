@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { getReviewsByTourId } from "@/app/actions/reviewActions";
 import { getTours } from "@/app/actions/tourActions";
 
-
 function Testimonials() {
   const [recommendedPlaces, setRecommendedPlaces] = useState([]);
   const router = useRouter();
@@ -33,9 +32,9 @@ function Testimonials() {
               destination: tour.destination,
               price: tour.price,
               averageRating: tour.averageRating,
-              comment: sorted[0].comment,
-              userName: sorted[0].userName,
-              userImg: sorted[0].userImg,
+              comment: sorted[0]?.comment,
+              userName: sorted[0]?.userName,
+              userImg: sorted[0]?.userImg,
             },
           ]);
         });
