@@ -95,6 +95,7 @@ function ProfileForm() {
     });
     //Should reset the password fields.....
     dispatch({ type: "resetPasswords" });
+    dispatch({ type: "clearError" });
   }
   //Handle onChange events
   function handleInputChange(e) {
