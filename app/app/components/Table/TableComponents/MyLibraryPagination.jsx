@@ -18,6 +18,7 @@ export default function MyLibraryPagination({
         className="w-full h-[75px] flex justify-between items-center px-10 py-4 bg-[#b6bdc7]
        text-[#081120]  text-base 
        font-normal rounded-tl-[5px] rounded-tr-[5px] smallPhone:hidden tablet:flex 
+       
        "
       >
         <section className="ml-10">

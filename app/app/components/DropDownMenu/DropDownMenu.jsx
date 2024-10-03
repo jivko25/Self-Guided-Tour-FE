@@ -11,8 +11,6 @@ function DropDownMenu({ onSignOut, buttonClasses, dropDownClass }) {
   const navigate = useRouter();
   const path = usePathname();
   function handleClick(path) {
-    // setIsMenuOpen((prev) => !prev);
-    navigate.eve;
     navigate.push(path);
   }
   useEffect(() => {
