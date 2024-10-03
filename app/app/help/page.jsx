@@ -71,7 +71,6 @@ const list2 = [
 function Page() {
   const [openIndex, setOpenIndex] = useState(null);
 
-  // Функция за управление на отварянето/затварянето
   const handleToggle = (index) => {
     setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
   };
@@ -100,7 +99,6 @@ function Page() {
       phone:gap-[20px]
       "
       >
-        {/* Първи контейнер - мапване на първия списък */}
         <div className="flex flex-col gap-[35px] web:gap-[20px] tablet:gap-[20px] phone:gap-[15px]">
           {list1.map((item, index) => (
             <CollapsibleItem
@@ -108,8 +106,8 @@ function Page() {
               title={item.title}
               description={item.description}
               isOpen={openIndex === index}
-              onToggle={() => handleToggle(index)} // Предаваме индекса за отваряне/затваряне
-              isLast={index === list1.length - 1} // Проверяваме дали е последният елемент
+              onToggle={() => handleToggle(index)}
+              isLast={index === list1.length - 1} 
             />
           ))}
         </div>
@@ -122,7 +120,7 @@ function Page() {
               description={item.description}
               isOpen={openIndex === index + list1.length}
               onToggle={() => handleToggle(index + list1.length)}
-              isLast={index === list2.length - 1} // Проверяваме дали е последният елемент
+              isLast={index === list2.length - 1} 
             />
           ))}
         </div>
