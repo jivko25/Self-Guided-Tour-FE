@@ -6,11 +6,11 @@ export default function SignIn() {
   return (
     <section className="flex relative items-center justify-center flex-col  w-full bg-cover min-h-screen">
       <div
-        className="absolute top-0 left-0 brightness-75 w-full h-full bg-custom-image bg-cover bg-center z-[-5]
-      smallPhone:max-h-[245px] smallPhone:phone:max-h-none 
-      phone:max-h-[245px] phone:tablet:max-h-none 
-      tablet:max-h-[554px]
-      web:w-full web:h-full web:tablet:max-h-none"
+        className="absolute top-0 left-0 brightness-75 w-full bg-custom-image bg-cover bg-center z-[-5]
+                    h-[245px]
+                    phone:h-[245px]
+                    tablet:h-[554px]
+                    web:h-[760px]"
       ></div>
       <div className="w-full absolute   
                       tablet:top-[150px]

@@ -11,7 +11,7 @@ function MakeYourOwnTours() {
     ">
 
       <div className="flex flex-col items-center justify-center gap-[50px]">
-        <h1 className="text-[#081120] font-medium font-['Inter'] leading-[58.50px]
+        <h1 className="text-[#081120] font-medium   leading-[58.50px]
         web:text-[39px] 
         tablet:text-[31px]
 
@@ -27,7 +27,7 @@ function MakeYourOwnTours() {
           href="/explore"
         >
           <span
-            className="text-[#081120] text-base font-semibold font-['Inter']
+            className="text-[#081120] text-base font-semibold  
             web:text-base
             tablet:text-base
             "

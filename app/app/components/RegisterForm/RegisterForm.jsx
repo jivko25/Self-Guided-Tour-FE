@@ -62,12 +62,10 @@ const RegisterForm = ({ userId }) => {
     trigger(name);
   };
 
-  //const password = watch("password", "");
-
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
       <h2
-        className="mb-[40px] text-center  text-white font-medium font-['Inter'] 
+        className="mb-[40px] text-center  text-white font-medium   
         web:text-[32px]
         tablet:text-[32px]
         phone:text-[24px]
@@ -79,7 +77,7 @@ const RegisterForm = ({ userId }) => {
       </h2>
 
       <form
-        className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-[5px] 
+        className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-t-[5px] 
         web:w-[582px] web:h-[826px] 
         tablet:w-[582px] tablet:h-[798px] 
         phone:w-[361px] phone:min-h-[713px] 

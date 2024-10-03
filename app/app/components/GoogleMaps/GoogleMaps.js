@@ -433,7 +433,7 @@ export default function GoogleMaps({
         <div style={{ display: "none" }}>
           <div ref={infoWindowRef} className={"w-[162px] h-[85px]"}>
             <div>
-              <textarea className="w-[160px] h-[55px] border border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
+              <textarea className="w-[160px] h-[55px] border-[#CECECE] border-[0.5px] py-[5px] px-[5px] 
                                 resize-none focus:outline-none rounded-sm text-[#13294B]" placeholder='Location name'>
               </textarea>
               <div className='flex justify-around mt-[10px] text-[#4285F4]'>

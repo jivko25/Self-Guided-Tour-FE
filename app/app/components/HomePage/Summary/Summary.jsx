@@ -7,13 +7,13 @@ function Summary() {
     tablet:flex tablet:min-h-[350px]
  
     ">
-      <h2 className="text-[#081120] font-medium font-['Inter'] leading-[58.50px]
+      <h2 className="text-[#081120] font-medium   leading-[58.50px]
       web:text-[39px] web:mb-[20px] 
       tablet:text-[31px] tablet:mb-[10px] 
       ">
         Lorem ipsum odor amet
       </h2>
-      <div className="text-center text-[#13294b] font-normal font-['Inter'] w-full
+      <div className="text-center text-[#13294b] font-normal   w-full
       web:text-xl web:w-[80%]
       tablet:text-base tablet:w-[766px] tablet:px-[20px]
       ">

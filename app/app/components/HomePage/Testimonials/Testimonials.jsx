@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { getReviewsByTourId } from "@/app/actions/reviewActions";
 import { getTours } from "@/app/actions/tourActions";
 
-
 function Testimonials() {
   const [recommendedPlaces, setRecommendedPlaces] = useState([]);
   const router = useRouter();
@@ -32,9 +31,9 @@ function Testimonials() {
               destination: tour.destination,
               price: tour.price,
               averageRating: tour.averageRating,
-              comment: sorted[0].comment,
-              userName: sorted[0].userName,
-              userImg: sorted[0].userImg,
+              comment: sorted[0]?.comment,
+              userName: sorted[0]?.userName,
+              userImg: sorted[0]?.userImg,
             },
           ]);
         });
@@ -124,7 +123,7 @@ function Testimonials() {
         <div className="flex items-center web:justify-center web:w-[30%] tablet:justify-end tablet:w-[20%]">
           <div className="flex flex-col h-[75%] text-end">
             <h1
-              className=" text-[#081120] font-medium font-['Inter'] web:w-[370px] tablet:w-[200px]
+              className=" text-[#081120] font-medium   web:w-[370px] tablet:w-[200px]
             web:text-[61px]
             tablet:text-[31px]"
             >

@@ -7,11 +7,11 @@ export default function MobilePagination() {
     <div className="flex mt-6 justify-center gap-4 tablet:hidden">
       <button>
         {" "}
-        <Image src={PrevPageIcon} width={40} height={36} />
+        <Image src={PrevPageIcon} width={40} height={36} alt="prev" />
       </button>
       <button>
         {" "}
-        <Image src={NextPageIcon} width={40} height={36} />
+        <Image src={NextPageIcon} width={40} height={36} alt="next" />
       </button>
     </div>
   );

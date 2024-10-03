@@ -6,11 +6,11 @@ function TourSummary({ summary }) {
           className="flex flex-col h-full flex-wrap w-full
         web:gap-[50px] web:max-w-[733px]
         tablet:max-w-[584px]
-        max-w-[95%]"
+        max-w-[100%]"
         >
           <div className="mb-[40px] h-full">
             <h3
-              className="text-[#081120] font-medium font-['Inter'] leading-9  
+              className="text-[#081120] font-medium   leading-9  
             web:mb-[20px] web:text-2xl
             tablet:mb-[20px] tablet:text-2xl
             mb-[20px] text-base"
@@ -18,7 +18,7 @@ function TourSummary({ summary }) {
               About the tour
             </h3>
             <p
-              className="text-[#13294b] font-normal font-['Inter'] leading-normal w-full
+              className="text-[#13294b] font-normal   leading-normal w-full
             web:max-w-[733px] web:text-base 
             tablet:max-w-[584px] tablet:text-base 
             max-w-full text-sm"
@@ -33,7 +33,7 @@ function TourSummary({ summary }) {
           phone:h-full phone:mb-[20px]"
           >
             <h3
-              className="text-[#081120] text-2xl font-medium font-['Inter'] leading-9 
+              className="text-[#081120] text-2xl font-medium   leading-9 
             web:mb-[20px] web:text-2xl
             tablet:mb-[20px] tablet:text-2xl
             phone:mb-[20px] phone:text-base
@@ -42,7 +42,7 @@ function TourSummary({ summary }) {
               Directions to starting point
             </h3>
             <p
-              className=" text-[#13294b] text-base font-normal font-['Inter'] leading-normal 
+              className=" text-[#13294b] text-base font-normal   leading-normal 
             web:max-w-[733px] web:text-base 
             tablet:max-w-[584px] tablet:text-base 
             phone:max-w-full phone:text-sm

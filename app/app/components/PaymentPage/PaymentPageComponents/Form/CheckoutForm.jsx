@@ -35,7 +35,8 @@ export default function CheckoutForm() {
       >
         <Btn
           variant="transparent-outlined"
-          className=" web:w-[279px]
+          className="hover:bg-blue-950 hover:text-white hover:border-blue-800 transition-colors duration-500
+                     web:w-[279px]
                     tablet:w-[282px]
                     phone:w-[361px]
                     phone:order-2

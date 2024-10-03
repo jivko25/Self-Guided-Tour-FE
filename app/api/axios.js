@@ -1,8 +1,11 @@
 import Axios from "axios";
 import https from "https";
-import { setupSessionInterceptors } from "./interceptors";
+import {
+  setupSessionInterceptors,
+  setupSessionInterceptorsSSR,
+} from "./interceptors";
 
-const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`
+const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_URL}/api`;
 
 const agent = new https.Agent({
   rejectUnauthorized: process.env.NODE_ENV === "production" ? true : false,
@@ -16,7 +19,7 @@ export const axios = Axios.create({
   //withCredentials: true, TODO: Uncomment when we setup CORS
 });
 
-//TODO: Add axios private instance for the auth
+
 export const axiosAuth = Axios.create({
   baseURL: `${BASE_URL}/Auth/`,
   headers: {
@@ -58,9 +61,21 @@ export const axiosProfile = Axios.create({
   httpsAgent: agent,
 });
 
+export const axiosSSR = Axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+    "Content-Type": "multipart/form-data",
+  },
+  httpsAgent: agent,
+});
+
 // Attach the interceptor to axios, axiosTour and axiosAdmin
 setupSessionInterceptors(axios);
 setupSessionInterceptors(axiosTour);
 setupSessionInterceptors(axiosAdmin);
+
+// Attach the interceptor to axiosSSR
+setupSessionInterceptorsSSR(axiosSSR);
 setupSessionInterceptors(axiosReview);
 setupSessionInterceptors(axiosProfile);

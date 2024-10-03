@@ -31,7 +31,7 @@ function InfoCardsSection() {
         />
         <div className="flex flex-col">
           <h4
-            className="text-[#081120] font-medium font-['Inter'] leading-[30px] 
+            className="text-[#081120] font-medium   leading-[30px] 
           web:text-xl web:text-start web:mb-[10px]
           tablet:text-xl tablet:text-start tablet:mb-[10px]
           phone:text-base phone:mb-[5px]
@@ -41,7 +41,7 @@ function InfoCardsSection() {
             Be Independent
           </h4>
           <p
-            className="text-[#13294b] font-normal font-['Inter'] leading-normal
+            className="text-[#13294b] font-normal   leading-normal
             web:text-base web:w-[278px] web:h-[48px] web:text-start
             tablet:text-base tablet:w-[215px] tablet:h-[48px] tablet:text-start
             phone:text-[13px] phone:w-[223px] phone:h-[32px]
@@ -71,7 +71,7 @@ function InfoCardsSection() {
         />
         <div className="flex flex-col">
           <h4
-            className="text-[#081120] font-medium font-['Inter'] leading-[30px] 
+            className="text-[#081120] font-medium   leading-[30px] 
           web:text-xl web:text-start web:mb-[10px]
           tablet:text-xl tablet:text-start tablet:mb-[10px]
           phone:text-base phone:text-end phone:mb-[5px]
@@ -81,7 +81,7 @@ function InfoCardsSection() {
             Share with Others
           </h4>
           <p
-            className="text-[#13294b] font-normal font-['Inter'] leading-normal
+            className="text-[#13294b] font-normal   leading-normal
             web:text-base web:w-[278px] web:h-[48px] web:text-start
             tablet:text-base tablet:w-[215px] tablet:h-[48px] tablet:text-start
             phone:text-[13px] phone:w-[223px] phone:h-[32px] phone:text-end
