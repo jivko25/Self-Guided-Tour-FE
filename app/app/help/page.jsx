@@ -5,7 +5,7 @@ import ChevronDown from "../components/Svg/ChevronDown";
 const list1 = [
   {
     title:
-      "Lorem ipsum odor amet, consectetuer adipiscing elit. Vulputate habitant mollis velit? Lorem ipsum odor amet, consectetuer adipiscing elit. Vulputate habitant mollis velit?",
+      "Lorem ipsum odor amet, consectetuer adipiscing elit. Vulputate habitant mollis velit?",
     description:
       "Lorem ipsum odor amet, consectetuer adipiscing elit. Vulputate habitant mollis velit, egestas efficitur bibendum turpis. Felis quam efficitur pretium lobortis sit at conubia.",
   },
@@ -77,14 +77,14 @@ function Page() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-evenly min-h-[80vh] w-full">
+    <div className="flex flex-col items-center justify-evenly min-h-[100vh] w-full">
       <h1 className="w-[884px] text-center text-[#081120] text-[31px] font-medium font-['Inter'] leading-[46.50px]">
         Do you need to know more? Here are some frequently asked question that
         might help.{" "}
       </h1>
       <div className="flex w-full items-center justify-evenly">
         {/* Първи контейнер - мапване на първия списък */}
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-[20px]">
           {list1.map((item, index) => (
             <CollapsibleItem
               key={index}
@@ -96,7 +96,7 @@ function Page() {
           ))}
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-[20px]">
           {list2.map((item, index) => (
             <CollapsibleItem
               key={index + list1.length}
@@ -125,7 +125,10 @@ function CollapsibleItem({ title, description, isOpen, onToggle }) {
 
   return (
     <div className="flex flex-col relative w-[582px] mb-4">
-      <div ref={containerRef} className="flex items-start justify-between">
+      <div
+        ref={containerRef}
+        className="flex items-start justify-between mb-[10px]"
+      >
         <p className="text-[#081120] text-xl font-medium font-['Inter']">
           {title}
         </p>
@@ -142,8 +145,11 @@ function CollapsibleItem({ title, description, isOpen, onToggle }) {
 
       {isOpen && (
         <p
-          style={{ bottom: `-${containerHeight * 1.5}px`, minHeight:`${containerHeight * 1}px` }}
-          className="absolute bg-white text-[#13294b] text-base font-normal font-['Inter'] leading-normal z-10"
+          style={{
+            bottom: `-${containerHeight * 3.6}px`,
+            minHeight: `${containerHeight * 3.6}px`,
+          }}
+          className="absolute  bg-white text-[#13294b] text-base font-normal font-['Inter'] leading-normal z-10 py-[10px]"
         >
           {description}
         </p>
