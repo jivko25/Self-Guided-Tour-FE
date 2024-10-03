@@ -57,7 +57,7 @@ export default function ForgotPasswordForm() {
         smallPhone:w-full smallPhone:min-h-[451px]
         w-full min-h-[451px]"
       >
-        <h2 className="w-[260px] text-center text-[#081120] text-lg font-medium font-['Inter'] ">
+        <h2 className="w-[260px] text-center text-[#081120] text-xl font-medium font-['Inter'] ">
           We will send you an email for new password shortly
         </h2>
         <InputField
