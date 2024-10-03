@@ -36,7 +36,7 @@ function TopSection() {
                     web:text-[32px] web:mb-[65px] web:tracking-[.4em]
                     tablet:text-2xl tablet:mb-[70px] tablet:tracking-[.25em]
                     phone:text-base phone:mb-[40px] phone:tracking-[0.15em]
-                    text-base mb-[40px] tracking-[.05em]
+                    mb-[40px] tracking-[.05em]
                     
                     "
         >

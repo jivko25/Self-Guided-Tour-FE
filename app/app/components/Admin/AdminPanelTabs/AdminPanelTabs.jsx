@@ -2,7 +2,7 @@ export default function AdminPanelTabs({ activeTab, setActiveTab }) {
   const adminTabs = ["Under Review", "Approved", "Declined"];
 
   return (
-    <div className="flex font-semibold font-['Inter'] leading-none">
+    <div className="flex font-semibold   leading-none">
       {adminTabs.map((tab, index) => (
         <div
           key={index}

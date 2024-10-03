@@ -13,47 +13,118 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
     setOpenSlider(true);
   };
 
-  // Get all image resources
-  const imageResources = landmarks
-    ? landmarks.flatMap((landmark) =>
-        landmark.resources
-          ? landmark.resources.filter(
-              (resource) => resource.resourceType === "Image"
-            )
-          : []
-      )
-    : [];
+  // Get all image resources, including the thumbnail image as the first image
+  const images = [
+    { resourceUrl: thumbnailImageUrl, resourceId: "thumbnail" },
+    ...(landmarks
+      ? landmarks.flatMap((landmark) =>
+          landmark.resources
+            ? landmark.resources.filter(
+                (resource) => resource.resourceType === "Image"
+              )
+            : []
+        )
+      : []),
+  ];
+  const totalImages = images.length;
 
-  const totalImages = imageResources.length;
   return (
     <>
       <div
-        className="hidden phone:hidden smallPhone:hidden overflow-hidden
-        web:grid web:grid-cols-4 web:grid-rows-2 web:gap-4 web:w-full web:h-full web:max-h-[582px] web:items-center web:justify-center web:rounded-[15px] 
-        tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:w-full tablet:h-full tablet:items-center tablet:justify-center tablet:rounded-[15px] 
-        "
+        className={`hidden phone:hidden smallPhone:hidden overflow-hidden ${
+          totalImages > 3
+            ? "web:grid web:grid-cols-4 web:grid-rows-2 web:gap-4 web:w-full web:h-full web:max-h-[582px] web:items-center web:justify-center web:rounded-[15px] tablet:grid tablet:grid-cols-2 tablet:gap-4 tablet:w-full tablet:h-full tablet:items-center tablet:justify-center tablet:rounded-[15px]"
+            : "w-full web:flex web:flex-row web:w-full tablet:flex tablet:flex-col tablet:w-full web:rounded-[15px] tablet:rounded-[15px] gap-[20px]"
+        }
+         `}
       >
-        <img
-          className="object-cover w-full h-full overflow-hidden
+        {/* Case with 1 image */}
+        {totalImages === 1 && (
+          <img
+            className="object-cover w-full overflow-hidden cursor-pointer
+                web:h-[500px]
+                tablet:w-full tablet:h-[500px]
+            "
+            src={images[0].resourceUrl}
+            onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+            alt="Cover Image"
+          />
+        )}
+
+        {/* Case with 2 images */}
+        {totalImages === 2 && (
+          <>
+            <img
+              className="object-cover overflow-hidden cursor-pointer
+                web:h-[500px] web:flex-1
+                tablet:h-[314px] tablet:w-full
+            "
+              src={images[0].resourceUrl}
+              onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+              alt="Cover Image"
+            />
+            <img
+              className="object-cover overflow-hidden cursor-pointer
+                web:h-[500px] web:flex-1
+                tablet:h-[314px] tablet:w-full
+            "
+              src={images[1].resourceUrl}
+              onClick={() => handleImageClick(images[1].resourceUrl, 1)}
+              alt="Second Image"
+            />
+          </>
+        )}
+
+        {/* Case with 3 images */}
+        {totalImages === 3 && (
+          <>
+            <img
+              className="object-cover overflow-hidden cursor-pointer w-full
+              web:h-[500px]
+              tablet:h-[180px] tablet:w-full
+     
+            "
+              src={images[0].resourceUrl}
+              onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+              alt="Cover Image"
+            />
+            <img
+              className="object-cover overflow-hidden cursor-pointer w-full
+              web:h-[500px]
+              tablet:h-[180px] tablet:w-full
+     
+            "
+              src={images[1].resourceUrl}
+              onClick={() => handleImageClick(images[1].resourceUrl, 1)}
+              alt="Second Image"
+            />
+            <img
+              className="object-cover overflow-hidden cursor-pointer w-full
+              web:h-[500px]
+              tablet:h-[180px] tablet:w-full
+     
+            "
+              src={images[2].resourceUrl}
+              onClick={() => handleImageClick(images[2].resourceUrl, 2)}
+              alt="Third Image"
+            />
+          </>
+        )}
+
+        {/* Case with 3 or more images */}
+        {totalImages > 3 && (
+          <>
+            <img
+              className="object-cover w-full h-full overflow-hidden
             web:col-span-2 web:row-span-2 web:h-[500px]  
             tablet:w-full tablet:h-[360px] tablet:col-span-2 cursor-pointer
      
             "
-          src={thumbnailImageUrl}
-          onClick={() => handleImageClick(thumbnailImageUrl, 0)}
-          alt="Cover Image"
-        />
-        {landmarks &&
-          landmarks
-            .flatMap((landmark) =>
-              landmark.resources
-                ? landmark.resources.filter(
-                    (resource) => resource.resourceType === "Image"
-                  )
-                : []
-            )
-            .slice(0, 4)
-            .map((resource, index) => (
+              src={images[0].resourceUrl}
+              onClick={() => handleImageClick(images[0].resourceUrl, 0)}
+              alt="Cover Image"
+            />
+            {images.slice(1, 5).map((resource, index) => (
               <div key={resource.resourceId} className="relative">
                 <img
                   className="object-cover overflow-hidden
@@ -63,7 +134,9 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
                       "
                   src={resource.resourceUrl}
                   alt={`Landmark Image ${index + 1}`}
-                  onClick={() => handleImageClick(resource.resourceUrl)}
+                  onClick={() =>
+                    handleImageClick(resource.resourceUrl, index + 1)
+                  }
                 />
                 {index === 1 && totalImages > 4 && (
                   <div className="hidden web:block web:absolute web:right-[20px] web:top-[20px]">
@@ -72,7 +145,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
                       onClick={() => setOpenSlider((prev) => !prev)}
                     >
                       <ImageOutline />
-                      <span className="text-[#081120] text-base font-semibold font-['Inter']">
+                      <span className="text-[#081120] text-base font-semibold  ">
                         View All Images
                       </span>
                     </button>
@@ -80,6 +153,8 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
                 )}
               </div>
             ))}
+          </>
+        )}
       </div>
 
       {openSlider && (
@@ -89,8 +164,7 @@ function TourImagesWebTablet({ title, thumbnailImageUrl, landmarks }) {
           setOpenSlider={setOpenSlider}
           selectedImage={selectedImage}
           setSelectedImage={setSelectedImage}
-          landmarks={landmarks}
-          thumbnailImageUrl={thumbnailImageUrl}
+          images={images}
           sliderIndex={sliderIndex}
         />
       )}

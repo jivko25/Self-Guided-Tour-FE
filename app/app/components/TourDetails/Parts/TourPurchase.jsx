@@ -35,7 +35,7 @@ function TourPurchase({
           flex-col mb-[20px]"
       >
         <h2
-          className="text-[#081120] font-medium font-['Inter']  
+          className="text-[#081120] font-medium    
             web:text-[31px] web:mb-[20px]
             tablet:text-2xl tablet:mb-[20px]
             text-xl mb-[10px]"
@@ -54,7 +54,7 @@ function TourPurchase({
           flex-col-reverse items-start"
       >
         <p
-          className="flex text-[#081120] font-medium font-['Inter'] 
+          className="flex text-[#081120] font-medium   
             web:mb-[10px] web:flex-row web:text-2xl web:gap-[10px]
             tablet:text-xl target:flex-row-reverse tablet:mb-[20px] tablet:gap-[1px]
             mb-[30px] flex-row-reverse text-lg gap-[1px]"
@@ -63,7 +63,7 @@ function TourPurchase({
         </p>
 
         <p
-          className="text-[#13294b] font-normal font-['Inter'] leading-normal w-full
+          className="text-[#13294b] font-normal   leading-normal w-full
             web:mb-[10px] web:max-w-[430px] web:text-base
             tablet:mb-[20px] tablet:max-w-[430px] tablet:text-base 
             mb-[10px] text-sm"

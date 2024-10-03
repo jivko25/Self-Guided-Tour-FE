@@ -40,7 +40,7 @@ function Success() {
           className="web:w-[280px]
                      tablet:w-[182px] tablet:order-2
                      smallPhone:w-[360px] "
-          onClick={() => router.push("/my-tours")}
+          onClick={() => router.push("/profile/my-library")}
         />
       </div>
     </section>

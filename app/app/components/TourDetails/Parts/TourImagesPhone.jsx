@@ -84,7 +84,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
           images.map((image, i) => (
             <div
               key={i}
-              className="relative flex-shrink-0 w-full h-56 snap-start cursor-pointer"
+              className="relative flex-shrink-0 w-full h-56 snap-start cursor-pointer mr-[16px]"
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}
               onMouseUp={handleMouseUp}
@@ -94,7 +94,7 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
                 src={image}
                 sizes="(max-width: 1280px) 50vw, 33vw"
                 fill={true}
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "cover", borderRadius: "5px" }}
                 alt={`Landmark Image ${i + 1}`}
                 priority={true}
                 draggable={false}
@@ -102,11 +102,11 @@ function TourImagesPhone({ thumbnailImageUrl, landmarks }) {
             </div>
           ))}
       </div>
-      <div className="flex justify-center mt-4 space-x-1">
+      <div className="flex justify-center mt-4 space-x-1 flex-wrap">
         {images.map((_, index) => (
           <span
             key={index}
-            className={`h-2.5 w-2.5 border border-[#617086] rounded-full cursor-pointer transition-colors duration-300 ${
+            className={`h-2.5 w-2.5 border border-[#617086] rounded-full cursor-pointer transition-colors duration-300 mb-[5px] ${
               currentSlide === index ? "bg-[#617086]" : "bg-none"
             }`}
             onClick={() => scrollToSlide(index)}

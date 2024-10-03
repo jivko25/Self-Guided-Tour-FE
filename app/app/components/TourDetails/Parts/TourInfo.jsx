@@ -5,10 +5,10 @@ import LocationSharp from "../Svgs/LocationSharp";
 function TourInfo({ estimatedDuration, destination }) {
   return (
     <div
-        className="flex border-b-2  border-[#d1d0d8] 
+        className="flex border-b-2 border-[#d1d0d8] 
         web:h-[250px] web:w-[80%] web:justify-around web:items-center
         tablet:flex-row-reverse tablet:h-[250px] tablet:w-[95%] tablet:justify-center tablet:gap-[20px] tablet:items-center
-        flex-col-reverse items-start justify-center gap-[30px] w-[95%] py-[40px]"
+        flex-col-reverse items-start justify-center gap-[30px] w-[100%] py-[40px]"
       >
         <div className="flex items-center">
           <Walk className="
@@ -17,7 +17,7 @@ function TourInfo({ estimatedDuration, destination }) {
           h-[32px] w-[32px]" />
           <div>
             <h2
-              className="text-[#081120] font-medium font-['Inter'] 
+              className="text-[#081120] font-medium   
             web:text-xl 
             tablet:text-lg
             text-base
@@ -27,7 +27,7 @@ function TourInfo({ estimatedDuration, destination }) {
               To complete it you will need average of {estimatedDuration} min.
             </h2>
             {/* <p
-              className="text-[#13294b] font-normal font-['Inter']
+              className="text-[#13294b] font-normal  
             web:text-base
             text-sm"
             >
@@ -43,7 +43,7 @@ function TourInfo({ estimatedDuration, destination }) {
           h-[32px] w-[32px]" />
           <div>
             <h2
-              className="text-[#081120] font-medium font-['Inter'] 
+              className="text-[#081120] font-medium   
             web:text-xl 
             tablet:text-lg
             text-base"
@@ -51,7 +51,7 @@ function TourInfo({ estimatedDuration, destination }) {
               This tour is located in {destination}
             </h2>
             <p
-              className="text-[#13294b]font-normal font-['Inter']
+              className="text-[#13294b]font-normal  
             web:text-base
             text-sm"
             >

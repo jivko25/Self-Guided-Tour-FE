@@ -106,7 +106,7 @@ const Step2 = () => {
     <>
       <section
         className="w-[100%] flex flex-col mt-[36px] align-center text-[14px]
-                        mb-[30px] web:mb-0 font-medium text-[#081120] text-[14px] web:text-[16px]
+                        mb-[30px] web:mb-0 font-medium text-[#081120] web:text-[16px]
                         px-[8px] phone:px-[16px] tablet:px-[125px] web:px-[56px] 
                         web:h-[582px] web:w-1/2"
       >
