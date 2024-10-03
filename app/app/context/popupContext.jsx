@@ -20,31 +20,34 @@ export const PopupProvider = ({ children }) => {
     }
   };
 
-  // Dissapearing popup
+  // Dissapearing popup - default 3 seconds(if no prop is passed)
   const addPopup = (payload) => {
+    const { timeout = 3000, ...rest } = payload; // Destructure timeout and set default
     const id = v4();
-    dispatch({ type: "ADD", payload: { id, ...payload } });
+    dispatch({ type: "ADD", payload: { id, ...rest } });
 
-    // Automatically remove the popup after 3 seconds
-    setTimeout(() => {
-      dispatch({ type: "REMOVE", id });
-    }, 3000);
+    // If timeout is null, do not set a timeout to make the popup stay indefinitely
+    if (timeout !== null) {
+      setTimeout(() => {
+        dispatch({ type: "REMOVE", id });
+      }, timeout);
+    }
   };
 
   const [state, dispatch] = useReducer(popupReduser, []);
 
   return (
     <Suspense>
-    <PopupContext.Provider value={addPopup}>
-      <div className="z-30 fixed bottom-[100px] w-11/12 ">
-        <AnimatePresence>
-          {state.map((x) => (
-            <Popup dispatch={dispatch} key={x.id} {...x} />
-          ))}
-        </AnimatePresence>
-      </div>
-      {children}
-    </PopupContext.Provider>
+      <PopupContext.Provider value={addPopup}>
+        <div className="z-30 fixed bottom-[100px] w-11/12 ">
+          <AnimatePresence>
+            {state.map((x) => (
+              <Popup dispatch={dispatch} key={x.id} {...x} />
+            ))}
+          </AnimatePresence>
+        </div>
+        {children}
+      </PopupContext.Provider>
     </Suspense>
   );
 };

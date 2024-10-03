@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function Btn({
+  disabled,
   id,
   variant = "filled",
   fullWidth = false,
@@ -27,10 +28,12 @@ export default function Btn({
       "bg-[#FAFAFA] text-blue-950 border-[#FAFAFA] rounded-md  hover:bg-opacity-70 hover:text-opacity-70",
   };
 
+  const disabledClasses = "opacity-50 cursor-not-allowed"; // Styling when disabled
+
   const commonClasses = `h-11 px-4 py-3 justify-center items-center inline-flex text-center font-medium 
   ${fullWidth ? "w-full" : "w-fit"} ${variantClasses[variant]} ${
-    className || ""
-  }`;
+    disabled ? disabledClasses : ""
+  } ${className || ""}`;
 
   // Render content based on whether icon is provided and its position
   const content = (
@@ -51,6 +54,7 @@ export default function Btn({
         <button
           type={type}
           className={commonClasses}
+          disabled={disabled} // Add disabled attribute here
           {...props}
           onClick={onClick}
         >
@@ -65,6 +69,7 @@ export default function Btn({
       id={id}
       type={type}
       className={commonClasses}
+      disabled={disabled} // Add disabled attribute here
       {...props}
       onClick={onClick}
     >
