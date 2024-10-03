@@ -34,7 +34,7 @@ export async function registerUser(prev, formData) {
 }
 
 /**
- * Hanles user log in
+ * Handles user log in
  * @param {*} prev
  * @param {*} formData
  * @returns {object}
@@ -154,4 +154,24 @@ export async function validateToken() {
     deleteCookie("session");
     return { error: err.response?.data?.message };
   }
+}
+
+/**
+ * Sends an email with password recovery link
+ * @returns {object}
+ */
+
+export async function sendPasswordRecoveryLink(email) {
+  let data = null;
+  let error = null;
+
+  try {
+    const response = await axiosAuth.post("/forgot-password", email);
+
+    data = response.data;
+  } catch (err) {
+    error = err.response?.data;
+  }
+
+  return { data, error };
 }
