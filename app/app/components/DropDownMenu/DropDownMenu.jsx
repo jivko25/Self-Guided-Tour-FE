@@ -3,16 +3,21 @@ import AboutUsIcon from "@/app/public/svg/compass.svg";
 import HelpIcon from "@/app/public/help-circle-outline.svg";
 import AccountIcon from "@/app/public/svg/person.svg";
 import Btn from "../Buttons/Btn";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { use, useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 function DropDownMenu({ onSignOut, buttonClasses, dropDownClass }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useRouter();
+  const path = usePathname();
   function handleClick(path) {
-    setIsMenuOpen((prev) => !prev);
+    // setIsMenuOpen((prev) => !prev);
+    navigate.eve;
     navigate.push(path);
   }
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [path]);
   return (
     <div className="z-20 relative">
       <div className="w-32">

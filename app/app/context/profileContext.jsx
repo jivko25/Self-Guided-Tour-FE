@@ -21,6 +21,7 @@ const initialState = {
   page: 1,
   pageSize: 10,
   totalPages: 1,
+  totalResults: 0,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -120,6 +121,7 @@ export const ProfileProvider = ({ children }) => {
       `/profile/my-tours?page=${curretPage}&pageSize=${pageSize}`
     );
     const tours = response?.data?.result?.data;
+    console.log(response?.data?.result);
     dispatch({
       type: "totalPages/totalResults",
       payload: {

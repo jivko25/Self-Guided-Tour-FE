@@ -71,7 +71,7 @@ function Library() {
     fetchTours();
   }, [getToursAsync, activeTab, page]);
   return (
-    <div className="mt-16">
+    <div className="mt-16 overflow-hidden">
       <TableTabs
         tabs={tabs}
         activeTab={activeTab}

@@ -2,8 +2,8 @@ import TableRow from "./TableComponents/TableRow";
 import EmptyRow from "./TableComponents/EmptyRow";
 function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
   return (
-    <table className="w-full bg-white border">
-      <thead>
+    <table className="w-full bg-white border max-h-[872px]">
+      <thead className="h-[75px]">
         <tr className="h-12 bg-[#b6bdc7]">
           {tableHeaders.map((header, index) => (
             <th
