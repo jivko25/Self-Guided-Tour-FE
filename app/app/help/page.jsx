@@ -77,7 +77,7 @@ function Page() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-evenly min-h-[100vh] w-full">
+    <div className="flex flex-col items-center justify-evenly min-h-[100vh] w-full pb-[70px]">
       <h1 className="w-[884px] text-center text-[#081120] text-[31px] font-medium font-['Inter'] leading-[46.50px]">
         Do you need to know more? Here are some frequently asked question that
         might help.{" "}
@@ -92,6 +92,7 @@ function Page() {
               description={item.description}
               isOpen={openIndex === index}
               onToggle={() => handleToggle(index)} // Предаваме индекса за отваряне/затваряне
+              isLast={index === list1.length - 1} // Проверяваме дали е последният елемент
             />
           ))}
         </div>
@@ -104,6 +105,7 @@ function Page() {
               description={item.description}
               isOpen={openIndex === index + list1.length}
               onToggle={() => handleToggle(index + list1.length)}
+              isLast={index === list2.length - 1} // Проверяваме дали е последният елемент
             />
           ))}
         </div>
@@ -112,7 +114,7 @@ function Page() {
   );
 }
 
-function CollapsibleItem({ title, description, isOpen, onToggle }) {
+function CollapsibleItem({ title, description, isOpen, onToggle, isLast }) {
   const containerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
 
@@ -145,11 +147,15 @@ function CollapsibleItem({ title, description, isOpen, onToggle }) {
 
       {isOpen && (
         <p
-          style={{
-            bottom: `-${containerHeight * 3.6}px`,
-            minHeight: `${containerHeight * 3.6}px`,
-          }}
-          className="absolute  bg-white text-[#13294b] text-base font-normal font-['Inter'] leading-normal z-10 py-[10px]"
+          style={
+            isLast
+              ? { bottom: `-${containerHeight * 1.7}px`,}
+              : {
+                  bottom: `-${containerHeight * 3.6}px`,
+                  minHeight: `${containerHeight * 3.6}px`,
+                }
+          }
+          className="absolute bg-white text-[#13294b] text-base font-normal font-['Inter'] leading-normal z-10 pt-[20px]"
         >
           {description}
         </p>
