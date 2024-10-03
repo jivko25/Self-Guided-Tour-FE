@@ -39,8 +39,8 @@ export default function ResetPasswordForm() {
           classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="password"
           type="password"
-          // //   value={formData.password}
-          // //   onChange={handleInputChange}
+          //    value={formData.password}
+          //   onChange={handleInputChange}
           //   error={validationErrors.password?.message || errors.Password}
           //   {...register("password")}
           // hint="Your password must be at least 6 characters long"
