@@ -1,11 +1,32 @@
 "use client";
-import { useRouter } from "next/navigation.js";
+import { useRouter, useSearchParams } from "next/navigation.js";
+
+import { useEffect, useState } from "react";
 
 import InputField from "../components/InputField/InputField.jsx";
 import Btn from "../components/Buttons/Btn.jsx";
 
 export default function ResetPasswordForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [resetToken, setResetToken] = useState(null);
+
+  useEffect(() => {
+    const token = searchParams.get("token");
+
+    // if there is no token found redirect the user to 404
+    if (!token) {
+      router.push("/404");
+    }
+
+    // if token is found set it to state
+    setResetToken(token);
+  }, []);
+
+  // if there is no token don't render the page
+  if (!resetToken) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col items-center justify-start h-full w-full">
