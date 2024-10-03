@@ -15,7 +15,7 @@ export default function Web({ isAuthenticated, handleLogout }) {
       handleLogout();
     }
   };
-
+  const dropDownClass = pathname === "/" ? "" : "border-2 border-blue-950";
   const signInButtonClass =
     pathname === "/"
       ? "h-11 px-4 py-3 justify-center items-center flex text-center font-medium text-gray-900 rounded-md border-2 border-neutral-50 bg-neutral-50 hover:border-neutral-50"
@@ -65,7 +65,11 @@ export default function Web({ isAuthenticated, handleLogout }) {
                 text="Menu"
                 link="/menu"
               /> */}
-              <DropDownMenu onSignOut={logout} />
+              <DropDownMenu
+                buttonClasses={signInButtonClass}
+                onSignOut={logout}
+                dropDownClass={dropDownClass}
+              />
             </div>
           </>
         )}
