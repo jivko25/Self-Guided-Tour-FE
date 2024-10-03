@@ -1,15 +1,53 @@
 "use client";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation.js";
 
-import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { passwordValidationScheme } from "../utils/validationSchemes.js";
+import { changeUserPassword } from "../actions/authActions.js";
 
 import InputField from "../components/InputField/InputField.jsx";
 import Btn from "../components/Buttons/Btn.jsx";
+import { usePopup } from "../context/popupContext.jsx";
 
 export default function ResetPasswordForm() {
   const router = useRouter();
+  const popup = usePopup();
   const searchParams = useSearchParams();
   const [resetToken, setResetToken] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      repeatPassword: "",
+    },
+    validationSchema: passwordValidationScheme,
+    onSubmit: async (values) => {
+      if (isSubmitting) return; // Prevent further submissions if already submitting
+      setIsSubmitting(true); // Set submitting state to true
+      const { data, error } = await changeUserPassword(
+        resetToken,
+        values.password
+      );
+      if (error) {
+        popup({
+          type: "ERROR",
+          message: error,
+        });
+        return;
+      }
+      if (data) {
+        popup({
+          type: "SUCCESS",
+          message: data,
+          timeout: null,
+        });
+        setIsSubmitting(false);
+        router.push("/sign-in");
+      }
+    },
+  });
 
   useEffect(() => {
     const token = searchParams.get("token");
@@ -42,7 +80,7 @@ export default function ResetPasswordForm() {
       </h2>
 
       <form
-        //   onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
         className="flex h-[610px] items-center justify-between px-[91px] pt-20  flex-col bg-neutral-50 rounded-[5px]
       web:w-[582px] web:min-h-[602px] 
       tablet:w-[582px] tablet:min-h-[602px] 
@@ -60,11 +98,14 @@ export default function ResetPasswordForm() {
           classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="password"
           type="password"
-          //    value={formData.password}
-          //   onChange={handleInputChange}
-          //   error={validationErrors.password?.message || errors.Password}
-          //   {...register("password")}
-          // hint="Your password must be at least 6 characters long"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.password && formik.touched.password
+              ? formik.errors.password
+              : null
+          }
           required
         />
 
@@ -74,13 +115,14 @@ export default function ResetPasswordForm() {
           classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
           name="repeatPassword"
           type="password"
-          //   value={formData.repeatPassword}
-          //   onChange={handleInputChange}
-          //   error={
-          //     validationErrors.repeatPassword?.message || errors.RepeatPassword
-          //   }
-          //   {...register("repeatPassword")}
-          // hint="Your repeat password must be at least 6 characters long"
+          value={formik.values.repeatPassword}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.errors.repeatPassword && formik.touched.repeatPassword
+              ? formik.errors.repeatPassword
+              : null
+          }
           required
         />
 
