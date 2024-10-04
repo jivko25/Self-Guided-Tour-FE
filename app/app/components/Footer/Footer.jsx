@@ -16,9 +16,15 @@ export default function Footer() {
   const pathname = usePathname();
   const isTourPage = pathname.startsWith("/tour/");
 
-
-  const specialPages = ["/sign-in", "/create-account", "/create", "/admin" , "/forgot-password"];
-  const isSpecialPage = specialPages.some(page => pathname.startsWith(page));
+  const specialPages = [
+    "/sign-in",
+    "/create-account",
+    "/create",
+    "/admin",
+    "/forgot-password",
+    "/help"
+  ];
+  const isSpecialPage = specialPages.some((page) => pathname.startsWith(page));
 
   const hiddenFooter = isSpecialPage
     ? "web:hidden tablet:hidden"
@@ -59,6 +65,13 @@ export default function Footer() {
             <HelpCircleOutline className={iconColors} />
             <p className="text-base font-normal  ">Help</p>
           </li>
+          <Link
+            href="/help"
+            className="flex items-center justify-start gap-[10px]"
+          >
+            <HelpCircleOutline className={iconColors} />
+            <p className="text-base font-normal">Help</p>
+          </Link>
           <li className="flex items-center justify-start gap-[10px]">
             <MapOutline className={iconColors} />
             <p className="text-base font-normal   cursor-pointer">About Us</p>
@@ -67,7 +80,7 @@ export default function Footer() {
         <div className="flex flex-col flex-1">
           <Link
             href="/explore"
-            className="text-base font-medium   mb-[20px] cursor-pointer hover:underline"
+            className="text-base font-medium mb-[20px] cursor-pointer hover:underline"
           >
             Explore
           </Link>
