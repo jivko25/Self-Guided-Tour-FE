@@ -24,11 +24,15 @@ import CloseIcon from "../../public/svg/close-red.svg";
 import MobilePagination from "@/app/components/Admin/Pagination/MobilePagination.jsx";
 import WebPagination from "@/app/components/Admin/Pagination/WebPagination.jsx";
 import TourStatus from "@/app/components/TourStatus/TourStatus.jsx";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/authContext";
 
 const PendingTours = () => {
   const [tours, setTours] = useState([]);
   const [activeTab, setActiveTab] = useState("Under Review");
   const [error, setError] = useState("");
+  const { session } = useAuth();
+  const router = useRouter();
 
   const fetchTours = async (status) => {
     const { data, error } = await getAllToursByStatus(status);
@@ -56,7 +60,13 @@ const PendingTours = () => {
     }
     fetchTours(status);
   }, [activeTab]);
-
+  // redicrect if not logged in as Admin
+  useEffect(() => {
+    if (!session) return;
+    if (session.userRole !== "Admin") {
+      router.push("/");
+    }
+  }, [session]);
   const handleAccept = async (tourId) => {
     const { data, error } = await approveTourById(tourId);
     if (data) {
