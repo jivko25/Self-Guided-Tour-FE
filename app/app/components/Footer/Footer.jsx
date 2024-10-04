@@ -22,7 +22,8 @@ export default function Footer() {
     "/create",
     "/admin",
     "/forgot-password",
-    "/help"
+    "/reset-password",
+    "/help",
   ];
   const isSpecialPage = specialPages.some((page) => pathname.startsWith(page));
 
