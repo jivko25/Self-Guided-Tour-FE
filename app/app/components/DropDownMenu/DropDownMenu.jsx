@@ -2,11 +2,12 @@ import IconButton from "../Buttons/IconButton";
 import AboutUsIcon from "@/app/public/svg/compass.svg";
 import HelpIcon from "@/app/public/help-circle-outline.svg";
 import AccountIcon from "@/app/public/svg/person.svg";
+import CompassIcon from "@/app/public/svg/compass.svg";
 import Btn from "../Buttons/Btn";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-function DropDownMenu({ onSignOut, buttonClasses, dropDownClass }) {
+function DropDownMenu({ onSignOut, buttonClasses, dropDownClass, session }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useRouter();
   const path = usePathname();
@@ -41,12 +42,14 @@ function DropDownMenu({ onSignOut, buttonClasses, dropDownClass }) {
               className="w-20"
               onClick={() => handleClick("/profile/my-profile")}
             />
+
             <IconButton
               text="About Us"
               icon={AboutUsIcon}
               className="w-20"
               onClick={() => handleClick("/about-us")}
             />
+
             <IconButton
               text="Help"
               icon={HelpIcon}
