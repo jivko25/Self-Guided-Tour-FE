@@ -30,7 +30,7 @@ export default function HeaderMobile({ isAuthenticated }) {
     setFocus(index);
 
     if (index === 0) {
-      router.push('/explore?page=1&sort=newest');
+      router.push("/explore?page=1&sort=newest");
     }
 
     // Toggle menu overlay visibility when "Menu" is clicked
@@ -38,6 +38,9 @@ export default function HeaderMobile({ isAuthenticated }) {
       setMenuOverlayVisible(!menuOverlayVisible);
     } else {
       setMenuOverlayVisible(false);
+    }
+    if (index === 1) {
+      router.push("/profile/my-library");
     }
   };
 

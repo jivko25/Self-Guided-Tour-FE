@@ -61,6 +61,10 @@ export default function Footer() {
             <MailOutline className={iconColors} />
             <p className="text-base font-normal  ">support@jauntster.com</p>
           </li>
+          <li className="flex items-center justify-start gap-[10px]">
+            <HelpCircleOutline className={iconColors} />
+            <p className="text-base font-normal  ">Help</p>
+          </li>
           <Link
             href="/help"
             className="flex items-center justify-start gap-[10px]"
@@ -122,7 +126,7 @@ export default function Footer() {
               Search
             </Link>
             <Link
-              href=""
+              href="/profile/my-profile"
               className="text-base font-normal   cursor-pointer hover:underline"
             >
               Account
@@ -134,7 +138,7 @@ export default function Footer() {
               Create Tour
             </Link>
             <Link
-              href=""
+              href="/profile/my-library"
               className="text-base font-normal   cursor-pointer hover:underline"
             >
               My Tours
