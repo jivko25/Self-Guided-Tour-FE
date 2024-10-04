@@ -121,7 +121,6 @@ export const ProfileProvider = ({ children }) => {
       `/profile/my-tours?page=${curretPage}&pageSize=${pageSize}`
     );
     const tours = response?.data?.result?.data;
-    console.log(response?.data?.result);
     dispatch({
       type: "totalPages/totalResults",
       payload: {
