@@ -9,6 +9,7 @@ import { loginUser } from "@/app/actions/authActions";
 import { useFormState } from "react-dom";
 import { useAuth } from "@/app/context/authContext";
 import { redirect } from "next/navigation";
+import Link from "next/link.js";
 
 const LoginForm = () => {
   const [email, setEmail] = React.useState("");
@@ -55,7 +56,7 @@ const LoginForm = () => {
         Sign In
       </h2>
       <form
-        className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-[5px]
+        className="flex items-center justify-evenly flex-col bg-neutral-50 rounded-t-[5px]
         web:w-[582px] web:min-h-[602px] tablet:w-[582px] tablet:min-h-[602px] phone:w-[361px] phone:min-h-[441px] smallPhone:w-full smallPhone:min-h-[451px] w-full min-h-[451px]"
         onSubmit={handleSubmit} 
       >
@@ -84,17 +85,27 @@ const LoginForm = () => {
           required
         />
 
-        <InputField
-          id="password"
-          label="Password"
-          classes="tablet:w-[400px] phone:w-[320px] w-[288px]"
-          name="password"
-          type="password"
-          value={password}
-          onChange={handlePasswordChange}
-          error={error}
-          required
-        />
+        <div className="relative mb-4 tablet:w-[400px] phone:w-[320px] w-[288px] tablet:mb-0">
+          <InputField
+            id="password"
+            label="Password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            error={error}
+            required
+          />
+
+          {/* Forgot Password Link */}
+
+          <Link
+            href="/forgot-password"
+            className="absolute mt-2  right-0 text-[#4285f4] font-normal text-sm hover:underline"
+          >
+            Forgotten password?
+          </Link>
+        </div>
 
         <div className="web:w-[400px] web:h-[43px] tablet:w-[400px] tablet:h-[43px] phone:w-80 phone:h-[43px] smallPhone:w-72 smallPhone:h-[43px] w-72 h-[43px]">
           <Btn
