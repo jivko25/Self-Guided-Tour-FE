@@ -39,7 +39,7 @@ function TableRow({ tour, activeTab }) {
             />
             <div className="flex justify-center items-center gap-3">
               <p>{tour.title}</p>
-              <StatusDot status={tour.status} />
+              {activeTab === "My Tours" && <StatusDot status={tour.status} />}
             </div>
           </div>
           {showDetails && (
@@ -50,7 +50,7 @@ function TableRow({ tour, activeTab }) {
                 alt="thumnail-image"
                 width={309}
                 height={240}
-                className={`rounded-[5px] w-[309px] h-[240px] object-cover ${
+                className={`rounded-[5px] w-[309px] h-[240px] object-cover hidden web:block ${
                   isLoading ? "hidden" : ""
                 } `}
                 priority={true}

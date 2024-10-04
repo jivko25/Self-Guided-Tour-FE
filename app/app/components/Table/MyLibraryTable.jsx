@@ -2,8 +2,8 @@ import TableRow from "./TableComponents/TableRow";
 import EmptyRow from "./TableComponents/EmptyRow";
 function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
   return (
-    <table className="w-full bg-white border max-h-[872px]">
-      <thead className="h-[75px]">
+    <table className="w-full bg-white border max-h-[872px] relative ">
+      <thead className="h-[75px] sticky top-0 overflow-hidden">
         <tr className="h-12 bg-[#b6bdc7]">
           {tableHeaders.map((header, index) => (
             <th
@@ -15,7 +15,8 @@ function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
           ))}
         </tr>
       </thead>
-      <tbody className="p-4">
+
+      <tbody className="p-4 ">
         {error ? (
           <tr>
             <td

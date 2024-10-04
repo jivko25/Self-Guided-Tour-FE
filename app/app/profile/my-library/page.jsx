@@ -71,17 +71,19 @@ function Library() {
     fetchTours();
   }, [getToursAsync, activeTab, page]);
   return (
-    <div className="mt-16 mb-32 overflow-auto">
+    <div className="mt-16 mb-32 ">
       <TableTabs
         tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <MyToursTable
-        tableHeaders={tableHeaders[activeTab]}
-        tours={tours}
-        activeTab={activeTab}
-      />
+      <div className="max-h-[1000px] overflow-auto">
+        <MyToursTable
+          tableHeaders={tableHeaders[activeTab]}
+          tours={tours}
+          activeTab={activeTab}
+        />
+      </div>
       <MyLibraryPagination
         totalPages={totalPages}
         page={page}
