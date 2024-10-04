@@ -58,17 +58,11 @@ export default function Web({ isAuthenticated, handleLogout }) {
               link="/profile/my-library"
             />
             <div className="ml-[20px]">
-              {/* <Btn
-                className={signInButtonClass}
-                type="button"
-                variant="outlined"
-                text="Menu"
-                link="/menu"
-              /> */}
               <DropDownMenu
                 buttonClasses={signInButtonClass}
                 onSignOut={logout}
                 dropDownClass={dropDownClass}
+                session={isAuthenticated}
               />
             </div>
           </>

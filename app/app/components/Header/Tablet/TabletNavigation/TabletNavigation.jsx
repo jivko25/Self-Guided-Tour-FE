@@ -5,8 +5,13 @@ import Btn from "../../../Buttons/Btn";
 import Search from "@/app/components/Search/Search";
 import Image from "next/image";
 import LogoColored from "@/app/public/svg/logo-colored.svg";
+import DropDownMenu from "@/app/components/DropDownMenu/DropDownMenu";
 
-const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
+const TabletNavigation = ({
+  isAuthenticated,
+  handleNavClose,
+  handleLogout,
+}) => {
   const handleClick = () => {
     if (handleNavClose) {
       handleNavClose();
@@ -61,12 +66,11 @@ const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
               />
               <div className="flex mt-[30px]">
                 <div className="mx-2.5 w-[182px]">
-                  <Btn
-                    type="button"
-                    variant="outlined"
-                    text="Menu"
-                    link="/menu"
-                    onClick={handleClick}
+                  <DropDownMenu
+                    session={isAuthenticated}
+                    onSignOut={handleLogout}
+                    dropDownClass="border-2 border-blue-950 left-[3.9rem]"
+                    buttonClasses="border-2 border-blue-950"
                   />
                 </div>
               </div>

@@ -61,7 +61,7 @@ const MenuIcon = ({ onClick }) => (
   </svg>
 );
 
-const Tablet = ({ isAuthenticated }) => {
+const Tablet = ({ isAuthenticated, handleLogout }) => {
   const [show, setShow] = useState(false);
   const menuRef = useRef(null);
 
@@ -110,6 +110,7 @@ const Tablet = ({ isAuthenticated }) => {
           <TabletNavigation
             isAuthenticated={isAuthenticated}
             handleNavClose={toggleShow}
+            handleLogout={handleLogout}
           />
         </div>
       </div>
