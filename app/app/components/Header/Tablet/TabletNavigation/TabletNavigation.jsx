@@ -56,7 +56,7 @@ const TabletNavigation = ({ isAuthenticated, handleNavClose }) => {
                 type="button"
                 variant="transparent"
                 text="My tours"
-                link="/my-tours"
+                link="/profile/my-library"
                 onClick={handleClick}
               />
               <div className="flex mt-[30px]">

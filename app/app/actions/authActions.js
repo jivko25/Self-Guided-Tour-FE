@@ -175,3 +175,19 @@ export async function sendPasswordRecoveryLink(email) {
 
   return { data, error };
 }
+
+export async function changeUserPassword(token, password) {
+  let data = null;
+  let error = null;
+  try {
+    const response = await axiosAuth.post("/reset-password", {
+      token: token,
+      password: password,
+    });
+
+    data = response.data;
+  } catch (err) {
+    error = err.response?.data;
+  }
+  return { data, error };
+}

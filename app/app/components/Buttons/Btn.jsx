@@ -24,6 +24,8 @@ export default function Btn({
       "bg-transparent text-gray-900 border-transparent hover:text-opacity-70",
     "transparent-outlined":
       "bg-transparent text-gray-900 rounded-md border-2 border-blue-950 hover:text-opacity-70 hover:border-[#617086]",
+    "filled-white":
+      "bg-[#FAFAFA] text-blue-950 border-[#FAFAFA] rounded-md  hover:bg-opacity-70 hover:text-opacity-70",
   };
 
   const disabledClasses = "opacity-50 cursor-not-allowed"; // Styling when disabled
