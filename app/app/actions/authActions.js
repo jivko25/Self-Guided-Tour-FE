@@ -25,6 +25,7 @@ export async function registerUser(prev, formData) {
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
       userId: response.data.userId,
+      userRole: response.data?.userRole,
     });
     data = true;
   } catch (err) {
@@ -54,6 +55,7 @@ export async function loginUser(prev, formData) {
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
       userId: response.data.userId,
+      userRole: response.data?.userRole,
     });
     data = true;
   } catch (err) {
@@ -81,6 +83,7 @@ export async function externalLoginUser(resp) {
       accessTokenExpiration: response.data.accessTokenExpiration,
       refreshToken: response.data.refreshToken,
       userId: response.data.userId,
+      userRole: response.data?.userRole,
     });
     respData.data = true;
   } catch (err) {
