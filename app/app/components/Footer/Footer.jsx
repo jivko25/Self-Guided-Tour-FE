@@ -65,13 +65,13 @@ export default function Footer() {
           <li>
             <Link
               href="/help"
-              className="flex items-center justify-start gap-[10px]"
+              className="flex items-center justify-start gap-[10px] hover:underline"
             >
               <HelpCircleOutline className={iconColors} />
               <p className="text-base font-normal">Help</p>
             </Link>
           </li>
-          <li className="flex items-center justify-start gap-[10px]">
+          <li className="flex items-center justify-start gap-[10px] hover:underline">
             <MapOutline className={iconColors} />
             <p className="text-base font-normal   cursor-pointer">About Us</p>
           </li>
