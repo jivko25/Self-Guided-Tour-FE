@@ -62,17 +62,15 @@ export default function Footer() {
             <MailOutline className={iconColors} />
             <p className="text-base font-normal  ">support@jauntster.com</p>
           </li>
-          <li className="flex items-center justify-start gap-[10px]">
-            <HelpCircleOutline className={iconColors} />
-            <p className="text-base font-normal  ">Help</p>
+          <li>
+            <Link
+              href="/help"
+              className="flex items-center justify-start gap-[10px]"
+            >
+              <HelpCircleOutline className={iconColors} />
+              <p className="text-base font-normal">Help</p>
+            </Link>
           </li>
-          <Link
-            href="/help"
-            className="flex items-center justify-start gap-[10px]"
-          >
-            <HelpCircleOutline className={iconColors} />
-            <p className="text-base font-normal">Help</p>
-          </Link>
           <li className="flex items-center justify-start gap-[10px]">
             <MapOutline className={iconColors} />
             <p className="text-base font-normal   cursor-pointer">About Us</p>
