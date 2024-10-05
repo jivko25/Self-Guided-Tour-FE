@@ -27,8 +27,8 @@ function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
             </td>
           </tr>
         ) : (
-          tours.map((tour) => (
-            <TableRow key={tour.tourId} tour={tour} activeTab={activeTab} />
+          tours.map((tour, i) => (
+            <TableRow key={i} tour={tour} activeTab={activeTab} />
           ))
         )}
         {Array.from({ length: 10 - (tours.length || 0) }).map((_, index) => (
