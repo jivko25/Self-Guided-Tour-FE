@@ -8,9 +8,10 @@ import LogoColored from "@/app/public/svg/logo-colored.svg";
 export default function MobileMenuOverlay({
   menuOverlayVisible,
   isAuthenticated,
+  handleLogout,
 }) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify- items-end z-50 ">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify- items-end z-30 ">
       <div className="relative w-full h-max   bg-neutral-50 rounded-tl-[5px] rounded-tr-[5px] phone:mx-4">
         <div
           className="absolute top-[12px] right-[12px] cursor-pointer"
@@ -38,7 +39,10 @@ export default function MobileMenuOverlay({
         </Link>
         <div className="flex flex-col phone:mb-32 ">
           {isAuthenticated ? (
-            <MobileMenuOverlayUser menuOverlayVisible={menuOverlayVisible} />
+            <MobileMenuOverlayUser
+              menuOverlayVisible={menuOverlayVisible}
+              handleLogout={handleLogout}
+            />
           ) : (
             <MobileMenuOverlayGuest menuOverlayVisible={menuOverlayVisible} />
           )}
