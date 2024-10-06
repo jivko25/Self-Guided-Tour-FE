@@ -20,7 +20,7 @@ import MenuFocusDark from "../../public/menu-focus-dark.svg";
 import MobileMenuOverlay from "../MobileMenuOverlay/MobileMenuOverlay.jsx";
 import { usePathname, useRouter } from "next/navigation.js";
 
-export default function HeaderMobile({ isAuthenticated }) {
+export default function HeaderMobile({ isAuthenticated, handleLogout }) {
   const [focus, setFocus] = useState(null);
   const [darkMode, setDarkMode] = useState(false);
   const [menuOverlayVisible, setMenuOverlayVisible] = useState(false);
@@ -89,6 +89,7 @@ export default function HeaderMobile({ isAuthenticated }) {
             <MobileMenuOverlay
               menuOverlayVisible={handleFocus}
               isAuthenticated={isAuthenticated}
+              handleLogout={handleLogout}
             />
           )}
         </div>

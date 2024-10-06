@@ -60,7 +60,7 @@ export default function Header() {
       </header>
 
       <header className="tablet:hidden z-50" hidden={headerVisible}>
-        <HeaderMobile isAuthenticated={session} />
+        <HeaderMobile isAuthenticated={session} handleLogout={handleLogout} />
       </header>
     </>
   );
