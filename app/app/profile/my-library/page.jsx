@@ -2,7 +2,7 @@
 
 import MyToursTable from "@/app/components/Table/MyLibraryTable";
 import MyLibraryPagination from "@/app/components/Table/TableComponents/MyLibraryPagination";
-import TableTabs from "@/app/components/Table/TableTabs";
+import TableTabs from "@/app/components/Table/TableComponents/TableTabs";
 import { useProfile } from "@/app/context/profileContext";
 import { useEffect, useState } from "react";
 
