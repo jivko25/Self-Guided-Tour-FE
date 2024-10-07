@@ -2,9 +2,11 @@ import IconButton from "../Buttons/IconButton";
 import AboutUsIcon from "@/app/public/svg/compass.svg";
 import HelpIcon from "@/app/public/help-circle-outline.svg";
 import AccountIcon from "@/app/public/svg/person.svg";
+import CompassIcon from "@/app/public/svg/compass.svg";
 import Btn from "../Buttons/Btn";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+
 import styles from "./DropDownMenu.module.scss";
 function DropDownMenu({
   onSignOut,
