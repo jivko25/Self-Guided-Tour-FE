@@ -85,12 +85,12 @@ const Search = ({ variant = "default", searchValue, placeholder, onSearch, handl
     tablet:w-[74px] tablet:h-[60px]   
     web:w-[74px] web:h-[60px]   
     smallPhone:w-[40px] smallPhone:h-[36px]
-    w-[36px] h-[32px]
+    w-[36px] h-[32px] hover:bg-[#42546F]
   `;
 
   const buttonTabletNavigationSearchStyles = `
     cursor-pointer bg-blue-950 rounded-tr-[5px] rounded-br-[5px] flex items-center justify-center  
-    w-[36px] h-[36px]
+    w-[36px] h-[36px] hover:bg-[#42546F]
   `;
   const svgDefaultStyles = `
     phone:w-[24px] phone:h-[24px] 

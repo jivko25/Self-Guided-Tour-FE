@@ -36,7 +36,7 @@ export default function Preview() {
       if (session) {
         setUserId(session.userId);
       } else {
-        router.push('/sign-in');
+        router.push("/sign-in");
       }
     });
   }, []);
@@ -186,6 +186,11 @@ export default function Preview() {
             type: "ERROR",
             message: "Unable to retrieve your location.",
           });
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
         }
       );
     } else {
