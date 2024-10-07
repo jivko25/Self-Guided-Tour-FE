@@ -1,4 +1,4 @@
-import TableRow from "./TableComponents/TableRow";
+import TableRow from "./TableComponents/MyLibraryTableRow";
 import EmptyRow from "./TableComponents/EmptyRow";
 function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
   return (
