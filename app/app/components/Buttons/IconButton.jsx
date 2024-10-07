@@ -16,7 +16,7 @@ function IconButton({
       {icon && (
         <Image src={icon} alt={text || "button-icon"} width={24} height={24} />
       )}
-      {text ? <p className="hidden tablet:flex text-nowrap">{text}</p> : ""}
+      {text ? <p className="hidden tablet:flex text-nowrap hover:opacity-70">{text}</p> : ""}
     </button>
   );
 }
