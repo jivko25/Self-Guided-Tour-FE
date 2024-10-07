@@ -1,7 +1,7 @@
 // createTourContext.jsx
 "use client";
 import { createContext, useContext, useState, useEffect, useRef } from "react";
-import { createTour, updateTour } from "../actions/tourActions.js";
+import { createTour, getOne, updateTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
 import {
@@ -10,8 +10,8 @@ import {
 } from "../utils/wizardStepValidations.js";
 import { usePopup } from "./popupContext.jsx";
 import { useRouter, useSearchParams } from "next/navigation.js";
+import { useAuth } from "./authContext.jsx";
 const LOCAL_STORAGE_KEY = "savedTourFormData";
-const EDIT_TOUR_KEY = "tourToEdit";
 
 const CreateTourContext = createContext();
 
@@ -35,6 +35,7 @@ export const CreateTourProvider = ({ children }) => {
   const popup = usePopup();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { session } = useAuth();
 
   // Check if it's edit mode
   const editModeTourId = searchParams.get("edit");
@@ -65,49 +66,57 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, [localStorageData]);
 
-  // Check for the tourToEdit object in sessionStorage
   useEffect(() => {
-    const storedTour = sessionStorage.getItem(EDIT_TOUR_KEY);
-    if (storedTour) {
-      const tourToEdit = JSON.parse(storedTour);
-      // Set form data to the tourToEdit object if found
-      setFormData({
-        step1Data: {
-          tour: tourToEdit.title || "", //
-          destination: tourToEdit.destination || "", //
-          duration: tourToEdit.estimatedDuration || "",
-          tourType: tourToEdit.tourType || "",
-          price: tourToEdit.price || "",
-        },
-        step2Data:
-          tourToEdit.landmarks.map((landmark) => ({
-            landmarkId: landmark.landmarkId || null,
-            latitude: landmark.latitude || null,
-            longitude: landmark.longitude || null,
-            location: landmark.locationName || "",
-            locationCity: landmark.city || "",
-            locationDescription: landmark.description || "",
-            stopOrder: landmark.stopOrder || 0,
-            placeId: landmark.placeId || "",
-            addFields:
-              landmark.resources.map((resource) => ({
-                type: resource.resourceType || "",
-                url: resource.resourceUrl || "",
-                id: resource.resourceId || "",
-              })) || [],
-          })) || [],
-        step3Data: "",
-        step4Data: {
-          summary: tourToEdit.summary || "",
-          thumbnailImage: tourToEdit.thumbnailImageUrl || null,
-        },
-      });
-      setIsEditMode(true);
-      sessionStorage.removeItem(EDIT_TOUR_KEY);
-    }
-  }, []);
+    const getTour = async () => {
+      if (editModeTourId) {
+        const { data, error } = await getOne(editModeTourId);
+        if (error) {
+          console.log(error);
+        }
 
-  // console.log(formData);
+        if (data) {
+          // prefill inputs only if current user is the owner
+          if (data.creatorId === session.userId) {
+            setFormData({
+              step1Data: {
+                tour: data?.title || "", //
+                destination: data?.destination || "", //
+                duration: data?.estimatedDuration || "",
+                tourType: data?.tourType || "",
+                price: data?.price || "",
+              },
+              step2Data:
+                data?.landmarks?.map((landmark) => ({
+                  landmarkId: landmark.landmarkId || null,
+                  latitude: landmark.latitude || null,
+                  longitude: landmark.longitude || null,
+                  location: landmark.locationName || "",
+                  locationCity: landmark.city || "",
+                  locationDescription: landmark.description || "",
+                  stopOrder: landmark.stopOrder || 0,
+                  placeId: landmark.placeId || "",
+                  addFields:
+                    landmark.resources?.map((resource) => ({
+                      type: resource.resourceType || "",
+                      url: resource.resourceUrl || "",
+                      id: resource.resourceId || "",
+                    })) || [],
+                })) || [],
+              step3Data: "",
+              step4Data: {
+                summary: data?.summary || "",
+                thumbnailImage: data?.thumbnailImageUrl || null,
+              },
+            });
+          } else {
+            router.push("/404");
+          }
+        }
+        setIsEditMode(true);
+      }
+    };
+    getTour();
+  }, [editModeTourId]);
 
   // Show load draft modal only if it's not edit mode
   useEffect(() => {

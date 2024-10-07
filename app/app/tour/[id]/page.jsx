@@ -39,16 +39,15 @@ function TourDetails() {
   }, [session]);
 
   useEffect(() => {
-    getOne(id)
-      .then((res) => {
-        const { data, error } = res;
-        if (data) {
-          setTour(data);
-          setLoading(false);
-        } else if (error) {
-          setIsNotFound(true);
-        }
-      })
+    getOne(id).then((res) => {
+      const { data, error } = res;
+      if (data) {
+        setTour(data);
+        setLoading(false);
+      } else if (error) {
+        setIsNotFound(true);
+      }
+    });
 
     if (userId) {
       getReviewsByTourId(id)
@@ -85,7 +84,6 @@ function TourDetails() {
         })
         .catch((err) => console.log(err));
     }
-
   }, [id, userId]);
 
   useEffect(() => {
@@ -97,14 +95,13 @@ function TourDetails() {
     }
   }, [error]);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (isNotFound) {
-      router.push('/404');
+      router.push("/404");
     }
   }, [isNotFound]);
 
   const handleEditClick = () => {
-    sessionStorage.setItem("tourToEdit", JSON.stringify(tour));
     router.push(`/create?edit=${tour.tourId}`);
   };
 
@@ -160,7 +157,7 @@ function TourDetails() {
         <TourTitle
           title={title}
           userId={userId}
-          tourId={tour.creatorId}
+          creatorId={tour.creatorId}
           handleEditClick={handleEditClick}
           rating={averageRating}
         />
