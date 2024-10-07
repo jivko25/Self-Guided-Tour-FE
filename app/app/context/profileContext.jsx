@@ -21,6 +21,7 @@ const initialState = {
   page: 1,
   pageSize: 10,
   totalPages: 1,
+  totalResults: 0,
 };
 function reducer(state, action) {
   switch (action.type) {

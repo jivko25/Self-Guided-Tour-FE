@@ -39,7 +39,7 @@ function TableRow({ tour, activeTab }) {
             />
             <div className="flex justify-center items-center gap-3">
               <p>{tour.title}</p>
-              <StatusDot status={tour.status} />
+              {activeTab === "My Tours" && <StatusDot status={tour.status} />}
             </div>
           </div>
           {showDetails && (
@@ -50,7 +50,7 @@ function TableRow({ tour, activeTab }) {
                 alt="thumnail-image"
                 width={309}
                 height={240}
-                className={`rounded-[5px] w-[309px] h-[240px] object-cover ${
+                className={`rounded-[5px] w-[309px] h-[240px] object-cover hidden web:block ${
                   isLoading ? "hidden" : ""
                 } `}
                 priority={true}
@@ -85,7 +85,7 @@ function TableRow({ tour, activeTab }) {
         <div className="flex content-center justify-center gap-6 mt-5">
           {!showDetails ? (
             activeTab === "My Tours" ? (
-              <>
+              <div className="flex gap-6 justify-start w-[115px]">
                 <IconButton
                   icon={PencilIcon}
                   className="border-[3px] p-2 border-[#13294B] rounded-[5px]"
@@ -97,7 +97,7 @@ function TableRow({ tour, activeTab }) {
                     className="border-[3px] p-2 border-[#E80000] rounded-[5px]  "
                   />
                 )}
-              </>
+              </div>
             ) : (
               <IconButton
                 icon={EyeIcon}

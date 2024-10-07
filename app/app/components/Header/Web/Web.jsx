@@ -5,6 +5,7 @@ import Btn from "../../Buttons/Btn.jsx";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import LogoColored from "@/app/public/svg/logo-colored.svg";
+import DropDownMenu from "../../DropDownMenu/DropDownMenu";
 
 export default function Web({ isAuthenticated, handleLogout }) {
   const pathname = usePathname();
@@ -14,14 +15,14 @@ export default function Web({ isAuthenticated, handleLogout }) {
       handleLogout();
     }
   };
-
+  const dropDownClass = pathname === "/" ? "" : "border-2 border-blue-950";
   const signInButtonClass =
     pathname === "/"
       ? "h-11 px-4 py-3 justify-center items-center flex text-center font-medium text-gray-900 rounded-md border-2 border-neutral-50 bg-neutral-50 hover:border-neutral-50"
       : "h-11 px-4 py-3 justify-center items-center flex text-center font-medium bg-neutral text-gray-900 border-2 rounded-md border-blue-950";
 
   return (
-    <nav className="flex items-center w-full h-full justify-around">
+    <nav className="flex items-center w-full h-full justify-around z-10">
       <Link
         className="text-center text-gray-900 text-2xl font-medium font-['Inter Tight']"
         href="/"
@@ -56,22 +57,12 @@ export default function Web({ isAuthenticated, handleLogout }) {
               text="My tours"
               link="/profile/my-library"
             />
-            <div className="ml-[30px]">
-              <Btn
-                className={signInButtonClass}
-                type="button"
-                variant="outlined"
-                text="Menu"
-                link="/menu"
-              />
-            </div>
-            <div className="mx-2.5">
-              <Btn
-                variant="outlined"
-                text="Logout"
-                type="button"
-                onClick={logout}
-                className={signInButtonClass}
+            <div className="ml-[20px]">
+              <DropDownMenu
+                buttonClasses={signInButtonClass}
+                onSignOut={logout}
+                dropDownClass={dropDownClass}
+                session={isAuthenticated}
               />
             </div>
           </>

@@ -2,7 +2,7 @@
 
 import MyToursTable from "@/app/components/Table/MyLibraryTable";
 import MyLibraryPagination from "@/app/components/Table/TableComponents/MyLibraryPagination";
-import TableTabs from "@/app/components/Table/TableTabs";
+import TableTabs from "@/app/components/Table/TableComponents/TableTabs";
 import { useProfile } from "@/app/context/profileContext";
 import { useEffect, useState } from "react";
 
@@ -71,17 +71,19 @@ function Library() {
     fetchTours();
   }, [getToursAsync, activeTab, page]);
   return (
-    <div className="mt-16">
+    <div className="mt-16 mb-32 ">
       <TableTabs
         tabs={tabs}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      <MyToursTable
-        tableHeaders={tableHeaders[activeTab]}
-        tours={tours}
-        activeTab={activeTab}
-      />
+      <div className="max-h-[1000px] overflow-auto">
+        <MyToursTable
+          tableHeaders={tableHeaders[activeTab]}
+          tours={tours}
+          activeTab={activeTab}
+        />
+      </div>
       <MyLibraryPagination
         totalPages={totalPages}
         page={page}

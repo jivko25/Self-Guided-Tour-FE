@@ -14,6 +14,7 @@ import {
   passwordValidationScheme,
 } from "@/app/utils/validationSchemes";
 import { usePopup } from "@/app/context/popupContext";
+import { func } from "prop-types";
 
 function ProfileForm() {
   const { getProfile, user, isLoading, dispatch, profilePictureSrc, error } =
@@ -53,6 +54,13 @@ function ProfileForm() {
     const emailError = validateEmail(user?.email);
     if (emailError) {
       dispatch({ type: "error", payload: emailError });
+      return;
+    }
+    if (handleOnlyCurrentPassword(password, repeatPassword, currentPassword)) {
+      dispatch({
+        type: "error",
+        payload: { password: "Please enter a new password" },
+      });
       return;
     }
     // Validate the password
@@ -103,7 +111,27 @@ function ProfileForm() {
     setChange(true);
     dispatch({ type: "user/onChange", payload: { [name]: value } });
   }
-
+  useEffect(() => {
+    const { password, repeatPassword, currentPassword } = user;
+    if (password === "") {
+      dispatch({
+        type: "error",
+        payload: { password: "" },
+      });
+    }
+    if (repeatPassword === "") {
+      dispatch({
+        type: "error",
+        payload: { repeatPassword: "" },
+      });
+      if (currentPassword === "") {
+        dispatch({
+          type: "error",
+          payload: { currentPassword: "" },
+        });
+      }
+    }
+  }, [user?.password, user?.repeatPassword, user?.currentPassword]);
   // Fetch the user profile when the component mounts
   useEffect(() => {
     async function fetchProfile() {
@@ -175,7 +203,7 @@ function ProfileForm() {
           name="about"
           className="tablet:w-full  h-36 border border-[#CECECE] bg-transparent"
           style={{ resize: "none", textIndent: "10px" }}
-          value={user?.about}
+          value={user?.about || ""}
           onChange={handleInputChange}
         ></textarea>
       </div>
@@ -290,4 +318,8 @@ function validateEmail(email) {
     //dispatch({ type: "error", payload: { [error.path]: error.message } });
     return { [error.path]: error.message } || null;
   }
+}
+
+function handleOnlyCurrentPassword(password, repeatPassword, currentPassword) {
+  return currentPassword !== "" && password === "" && repeatPassword === "";
 }

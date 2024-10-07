@@ -4,8 +4,6 @@ import { Loader } from "@googlemaps/js-api-loader"
 import locationmarker from "../../public/svg/locationmarker.svg";
 import Image from 'next/image';
 
-let center = { lat: 42.698334, lng: 23.319941 }
-
 /**
  * @param {object} props
  * @param {Function} props.getLocationInfo function to handle click on location on the map
@@ -75,7 +73,7 @@ export default function GoogleMaps({
         apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
         version: "weekly",
       });
-      let zoom = 17;
+      let zoom = 15;
 
       const [
         { Map, InfoWindow }, { AdvancedMarkerElement },
@@ -87,21 +85,44 @@ export default function GoogleMaps({
 
       GoogleSessionTokenRef.current = AutocompleteSessionToken;
 
-      if (coordinates && coordinates.lat) {
-        center = coordinates;
-      } else if (createCoordinates && createCoordinates.length > 0) {
-        const lastLocation = createCoordinates[createCoordinates.length - 1]
-        center = { lat: lastLocation.latitude, lng: lastLocation.longitude };
-      }
-
       const mapOPtions = {
-        center: center,
         zoom,
         mapId: 'NEXT_MAP',
         disableDoubleClickZoom: true
       }
 
       const map = new Map(mapsRef.current, mapOPtions);
+
+      if (coordinates && coordinates.lat) {
+        map.setCenter(coordinates);
+      } else if (createCoordinates && createCoordinates.length > 0) {
+        const lastLocation = createCoordinates[createCoordinates.length - 1]
+        map.setCenter({ lat: lastLocation.latitude, lng: lastLocation.longitude });
+      } else {
+        let coords = null
+        
+        if (!coords && !directions || directions?.locations.length == 0) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                if (!coords) {
+                  coords = { lat: position.coords.latitude, lng: position.coords.longitude };
+                  map.setCenter(coords);
+                }
+              },
+              (error) => {
+                console.log(error);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+              });
+          }
+        }
+
+        
+      }
 
       const handleClick = async (e) => {
         // Stop default behavior
@@ -220,7 +241,7 @@ export default function GoogleMaps({
 
       // Handling of click events
       let clickTimer = null;
-      
+
       map.addListener("click", (e) => {
         e.stop();
         if (clickTimer) {
@@ -318,7 +339,7 @@ export default function GoogleMaps({
                   warningsRef.current = warnings;
                 }
               }
-              
+
               directionsRenderer.setDirections(response);
               map.setCenter({ lat: lastLoc.latitude, lng: lastLoc.longitude });
             } else if (status == 'ZERO_RESULTS' && tourType == 'BICYCLING') {
