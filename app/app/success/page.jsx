@@ -20,7 +20,7 @@ export default function TourSuccess() {
       />
       <section className="flex w-full h-40 flex-col gap-4 tablet:h-fit tablet:flex-row items-center justify-center">
         <div className="w-full tablet:w-[181px] tablet:order-2 web:w-[279px]">
-          <Btn fullWidth link="/my-tours" variant="filled" text="My Tours" />
+          <Btn fullWidth link="/profile/my-library" variant="filled" text="My Tours" />
         </div>
         <div className="w-full tablet:w-[181px] web:w-[279px]">
           <Btn fullWidth link="/" variant="outlined" text="Home" />
