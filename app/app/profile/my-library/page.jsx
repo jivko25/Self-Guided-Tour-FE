@@ -35,6 +35,7 @@ const tabs = ["My Tours", "Bought Tours"];
 function Library() {
   const [tours, setTours] = useState(Array.from(10).fill(null));
   const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [rerenderTable, setRerenderTable] = useState(false);
   const {
     getToursAsync,
     getBoughtToursAsync,
@@ -69,7 +70,7 @@ function Library() {
       }
     }
     fetchTours();
-  }, [getToursAsync, activeTab, page]);
+  }, [getToursAsync, activeTab, page, rerenderTable]);
   return (
     <div className="mt-16 mb-32 ">
       <TableTabs
@@ -82,6 +83,7 @@ function Library() {
           tableHeaders={tableHeaders[activeTab]}
           tours={tours}
           activeTab={activeTab}
+          triggerRerender={() => setRerenderTable(!rerenderTable)}
         />
       </div>
       <MyLibraryPagination
