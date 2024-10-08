@@ -166,6 +166,16 @@ export const ProfileProvider = ({ children }) => {
     return transactions;
   },
   []);
+  // Delete tour
+  const deleteTourAsync = useCallback(async function deleteTour(tourId) {
+    try {
+      dispatch({ type: "loading" });
+      await axios.patch(`/profile/delete-my-tour/${tourId}`);
+      dispatch({ type: "loaded" });
+    } catch (error) {
+      console.error("Failed to delete tour:", error);
+    }
+  }, []);
   return (
     <ProfileContext.Provider
       value={{
@@ -183,6 +193,7 @@ export const ProfileProvider = ({ children }) => {
         page,
         pageSize,
         totalResults,
+        deleteTourAsync,
       }}
     >
       {children}
