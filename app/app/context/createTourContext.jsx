@@ -36,6 +36,7 @@ export const CreateTourProvider = ({ children }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { session } = useAuth();
+  const userId = session?.userId;
 
   // Check if it's edit mode
   const editModeTourId = searchParams.get("edit");
@@ -68,15 +69,18 @@ export const CreateTourProvider = ({ children }) => {
 
   useEffect(() => {
     const getTour = async () => {
-      if (editModeTourId) {
+      if (editModeTourId && userId) {
         const { data, error } = await getOne(editModeTourId);
         if (error) {
-          console.log(error);
+          popup({
+            type: "ERROR",
+            message: error.message,
+          });
         }
 
         if (data) {
           // prefill inputs only if current user is the owner
-          if (data.creatorId === session.userId) {
+          if (data.creatorId === userId) {
             setFormData({
               step1Data: {
                 tour: data?.title || "", //
@@ -116,7 +120,7 @@ export const CreateTourProvider = ({ children }) => {
       }
     };
     getTour();
-  }, [editModeTourId]);
+  }, [editModeTourId, userId]);
 
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
