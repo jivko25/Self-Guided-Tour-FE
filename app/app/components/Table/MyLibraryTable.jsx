@@ -1,6 +1,13 @@
 import TableRow from "./TableComponents/MyLibraryTableRow";
 import EmptyRow from "./TableComponents/EmptyRow";
-function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
+
+function MyToursTable({
+  tours = [],
+  tableHeaders,
+  error,
+  activeTab,
+  triggerRerender,
+}) {
   return (
     <table className="w-full bg-white border max-h-[872px] relative ">
       <thead className="h-[75px] sticky top-0 overflow-hidden">
@@ -28,7 +35,12 @@ function MyToursTable({ tours = [], tableHeaders, error, activeTab }) {
           </tr>
         ) : (
           tours.map((tour, i) => (
-            <TableRow key={i} tour={tour} activeTab={activeTab} />
+            <TableRow
+              key={i}
+              tour={tour}
+              activeTab={activeTab}
+              triggerRerender={triggerRerender}
+            />
           ))
         )}
         {Array.from({ length: 10 - (tours.length || 0) }).map((_, index) => (
