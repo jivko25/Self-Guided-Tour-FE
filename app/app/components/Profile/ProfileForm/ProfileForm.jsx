@@ -14,13 +14,11 @@ import {
   passwordValidationScheme,
 } from "@/app/utils/validationSchemes";
 import { usePopup } from "@/app/context/popupContext";
-import { func } from "prop-types";
 
 function ProfileForm() {
   const { getProfile, user, isLoading, dispatch, profilePictureSrc, error } =
     useProfile();
   const [change, setChange] = useState(false);
-
   const popup = usePopup();
   const profilePictureRef = useRef(null);
 
