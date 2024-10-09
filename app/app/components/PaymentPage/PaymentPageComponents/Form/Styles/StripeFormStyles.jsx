@@ -4,7 +4,7 @@ export const appearance = {
     fontFamily: "Inter, sans-serif",
     fontLineHeight: ".5",
     borderRadius: "1px",
-    gridRowSpacing: "4rem",
+    gridRowSpacing: "2rem",
     spacingUnit: "0.4rem",
   },
 };

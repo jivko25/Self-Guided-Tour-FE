@@ -39,7 +39,8 @@ export default function CheckoutForm() {
                      web:w-[279px]
                     tablet:w-[282px]
                     phone:w-[361px]
-                    phone:order-2
+                    order-2
+                    w-[250px]
                     "
           text="Cancel"
           type="button"
@@ -52,7 +53,8 @@ export default function CheckoutForm() {
             ${isStripeLoading ? "animate-pulse" : ""}
             web:w-[430px]
             tablet:w-[282px] tablet:order-2
-            phone:w-[361px] `}
+            phone:w-[361px]
+            w-[250px] `}
         />
       </div>
 
