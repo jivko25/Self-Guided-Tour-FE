@@ -5,7 +5,7 @@ function Summary() {
     <section
       className="hidden  flex-col items-center justify-center w-full h-full
     web:flex web:min-h-[350px] web:max-w-[1186px]
-    tablet:flex tablet:min-h-[350px]
+    tablet:flex tablet:min-h-[350px] tablet:max-w-[766px]
  
     "
     >
