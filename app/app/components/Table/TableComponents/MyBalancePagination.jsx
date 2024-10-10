@@ -14,13 +14,13 @@ export default function MyBalancePagination({
   return (
     <>
       <div
-        className="flex justify-between items-center px-10 
+        className=" justify-between items-center px-10 
      py-4 border-b border-[#D1D0D8] h-[74px] text-[#081120]
      text-base font-normal rounded-tl-[5px] rounded-tr-[5px]
-            web:w-[1490px]
-            tablet:w-[800px] 
+            web:w-[1000px]
+            tablet:w-[700px] 
             phone:w-[500px]
-            smallPhone:hidden tablet:flex "
+           hidden tablet:flex "
       >
         <section className="ml-10">
           <p>

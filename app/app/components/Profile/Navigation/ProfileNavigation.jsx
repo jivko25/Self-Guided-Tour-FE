@@ -25,16 +25,16 @@ function ProfileNavigation() {
   return (
     <div
       className="flex text-nowrap
-     web:mt-16 
-     tablet:gap-36 
-      smallPhone:mt-40 smallPhone:text-sm  "
+     web:mt-16 web:gap-36
+     tablet:gap-12
+      mt-40 text-sm  "
     >
       <ul
-        className="flex tablet:gap-24 border-b-2 border-[#D1D0D8] pb-4
-       web:w-[1210px] 
-       tablet:w-[800px]
-       phone:w-[500px]
-       smallPhone:w-[300px] smallPhone:gap-8 "
+        className="flex  border-b-2 border-[#D1D0D8] pb-4
+       web:w-[1000px] 
+       tablet:w-[600px] tablet:gap-24
+       phone:w-[360px] phone:gap-8
+       w-[280px] gap-4 "
       >
         <li className={`${hover}`}>
           <Link
@@ -66,7 +66,7 @@ function ProfileNavigation() {
       <LogOutButton
         text="Sign Out"
         icon={LogOut}
-        className="hover:translate-x-2 transform transition-transform duration-500"
+        className="hover:translate-x-2 transform transition-transform duration-500 hidden tablet:flex"
         onClick={handleLogout}
       />
     </div>

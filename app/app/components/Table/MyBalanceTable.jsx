@@ -6,10 +6,10 @@ function MyBalanceTable({ tableHeaders, error, transactions = [] }) {
   return (
     <table
       className="flex justify-start table-fixed flex-col 
-                                                web:w-[1490px]
-                                                tablet:w-[800px]  tablet:mt-28
-                                                phone:w-[500px]
-                                                smallPhone:w-[300px] smallPhone:mt-16"
+                                                web:w-[1000px]
+                                                tablet:w-[700px]  tablet:mt-28
+                                                phone:w-[360px] phone:text-base
+                                                w-[250px] mt-16 text-sm"
     >
       <thead className="border border-[#D1D0D8] h-[74px] mb-4 ">
         <tr className="h-16 ">
