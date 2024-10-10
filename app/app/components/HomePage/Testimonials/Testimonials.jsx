@@ -127,7 +127,7 @@ function Testimonials() {
             web:text-[61px]
             tablet:text-[31px]"
             >
-              Testimonials Heading
+              Let’s see what others think
             </h1>
             <div className="w-full mt-[30px]">
               <button
