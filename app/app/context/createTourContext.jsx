@@ -386,13 +386,7 @@ export const CreateTourProvider = ({ children }) => {
           message: "Your tour has been successfully updated",
         });
       } else {
-        // TODO : Redirect to proper page which informs the user about his tour status
-        // If it's new tour redirect the user to home
-        router.push(`/`);
-        popup({
-          type: "SUCCESS",
-          message: "Your tour has been successfully created",
-        });
+        router.push(`/success`);
       }
     }
   };

@@ -11,7 +11,7 @@ function TourDetails({ tour }) {
       </section>
       <section className="flex flex-col gap-4">
         <h1>Price</h1>
-        <p className="font-normal">{tour.price} USD</p>
+        <p className="font-normal">{tour.price} EUR</p>
       </section>
     </div>
   );

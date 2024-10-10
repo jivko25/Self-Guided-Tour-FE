@@ -116,7 +116,7 @@ const Step4 = () => {
       title: "Price",
       description:
         "The price is up to you - we will charge a small fee for our services and you can enjoy the financial benefits of your walking experience.",
-      value: formData.step1Data.price ? `${formData.step1Data.price} USD` : "",
+      value: formData.step1Data.price ? `${formData.step1Data.price} EUR` : "",
     },
   ];
 
@@ -158,7 +158,7 @@ const Step4 = () => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-center mx-auto  gap-14 p-4 bg-neutral-50 tablet:w-5/6 tablet:p-8  ">
+    <div className="w-full h-full flex flex-col justify-center mx-auto gap-14 p-4 bg-neutral-50 tablet:w-5/6 tablet:p-8  ">
       <header className="flex justify-between items-start ">
         <h2 className="w-52 text-gray-900 text-xl font-medium leading-[30px] tablet:text-2xl tablet:w-fit">
           Review and publish your tour
@@ -167,7 +167,7 @@ const Step4 = () => {
           Step 4 of 4
         </span>
       </header>
-      <p className="w-[269px] text-blue-950 text-sm font-normal  leading-[21px] tablet:w-fit web:w-[350px] web:text-base">
+      <p className="w-[269px] text-blue-950 text-sm font-normal leading-[21px] tablet:w-fit web:w-[350px] web:text-base">
         Make final touches on your tour and publish it for fellow travelers to
         explore.
       </p>
@@ -176,7 +176,7 @@ const Step4 = () => {
           <div className="w-10 h-10 p-2 bg-slate-500 rounded-[5px] justify-center items-center inline-flex">
             <Image src={Visualize} width={24} height={24} />
           </div>
-          <h2 className="text-blue-950 text-lg  font-medium  leading-[27px] tablet:text-xl">
+          <h2 className="text-blue-950 text-lg font-medium leading-[27px] tablet:text-xl">
             Cover Image
           </h2>
         </div>

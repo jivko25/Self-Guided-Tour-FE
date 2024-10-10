@@ -8,7 +8,7 @@ function MyBalanceTableRow({ transaction }) {
       <td className=" text-center smallPhone:hidden  tablet:table-cell w-[240px] ">
         {transaction.date}
       </td>
-      <td className="py-2  min-w-[240px]">USD{transaction.price}</td>
+      <td className="py-2  min-w-[240px]">EUR{transaction.price}</td>
     </tr>
   );
 }

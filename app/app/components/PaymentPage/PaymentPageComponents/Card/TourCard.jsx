@@ -61,7 +61,7 @@ function TourCard() {
 
         <div className="flex justify-between mt-6 text-[24px] mb-16 font-medium  ">
           <p>Total</p>
-          <h2>USD {tour?.price}</h2>
+          <h2>EUR {tour?.price}</h2>
         </div>
         <div className=" text-center">
           <Btn
