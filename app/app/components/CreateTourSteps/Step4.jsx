@@ -286,14 +286,16 @@ const Step4 = () => {
             onClick={handlePublishTour}
           />
         </div>
-        <div className="tablet:w-[183px]">
-          <Btn
-            fullWidth
-            variant="outlined"
-            text="Preview"
-            onClick={redirectToPreview}
-          />
-        </div>
+        {isEditMode && (
+          <div className="tablet:w-[183px]">
+            <Btn
+              fullWidth
+              variant="outlined"
+              text="Preview"
+              onClick={redirectToPreview}
+            />
+          </div>
+        )}
       </section>
     </div>
   );
