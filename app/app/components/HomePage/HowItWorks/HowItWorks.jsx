@@ -26,7 +26,6 @@ function HowItWorks() {
           src={imgGroup}
           alt="Description of image 1"
         />
-        
       </div>
       <div
         className="flex justify-center items-center flex-col h-full w-full 
@@ -55,10 +54,11 @@ function HowItWorks() {
         text-[13px] w-[95%] text-center
           "
         >
-          Cursus ante mauris suspendisse laoreet placerat porta amet blandit.
-          Venenatis habitasse ligula imperdiet ac sed facilisi. Sodales eget dis
-          nibh natoque dictum ante cursus varius. Penatibus lacinia etiam mattis
-          mollis porttitor.
+          Got a favorite route through your city? Share it! Use our map to pick
+          out your favorite spots—whether it's the perfect sunset lookout or a
+          hidden café. Add photos, videos, and even voice notes to guide others
+          through your trail. Whether it's a walking tour, a scenic bike route,
+          or a car ride through the countryside, the choice is yours.
         </p>
         <p
           className="flex justify-start items-center text-white font-normal   
@@ -68,10 +68,11 @@ function HowItWorks() {
         text-[13px] w-[95%] text-center
           "
         >
-          Cursus ante mauris suspendisse laoreet placerat porta amet blandit.
-          Venenatis habitasse ligula imperdiet ac sed facilisi. Sodales eget dis
-          nibh natoque dictum ante cursus varius. Penatibus lacinia etiam mattis
-          mollis porttitor.
+          Not sure where to start? No problem! Browse tours created by locals
+          and fellow travelers. Buy a tour that catches your eye and explore at
+          your own pace. Follow the map, check out the stops, and dive into the
+          experience with multimedia guides. Whether you want to discover hidden
+          gems or hit the must-see spots, there's a tour for you.
         </p>
         <div className="flex flex-col phone:flex-row justify-start items-center gap-[10px] ">
           <Link
