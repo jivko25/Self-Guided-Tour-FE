@@ -124,8 +124,8 @@ function Testimonials() {
           <div className="flex flex-col h-[75%] text-end">
             <h1
               className=" text-[#081120] font-medium   web:w-[370px] tablet:w-[200px]
-            web:text-[61px]
-            tablet:text-[31px]"
+            web:text-[51px]
+            tablet:text-[21px]"
             >
               Let’s see what others think
             </h1>
