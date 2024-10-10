@@ -28,7 +28,7 @@ function TableRow({ tour, activeTab, triggerRerender }) {
     navigate.push(`/create?edit=${tourId}`);
   }
   function handlePreview(tourId) {
-    navigate.push(`/tour/${tourId}`);
+    navigate.push(`/preview/${tourId}`);
   }
   function handleShowDetails() {
     setShowDetails(!showDetails);
