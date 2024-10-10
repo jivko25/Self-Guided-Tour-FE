@@ -52,7 +52,7 @@ function HowJauntsterWorks() {
               tablet:text-lg tablet:mb-[20px] tablet:mt-[40px]
               text-sm mt-[30px] mb-[10px] text-center"
             >
-              How to get the most of the tour and its story
+              How to get the most of the tour and its story 
             </h1>
             <p
               className="flex text-[#13294b] font-normal   leading-normal w-full
@@ -60,11 +60,13 @@ function HowJauntsterWorks() {
               tablet:max-w-[535px] tablet:text-center tablet:text-base
               text-sm max-w-[300px]  text-center items-center"
             >
-              You can start the tour from a fixed starting point. The route then
-              continuous in direction, chosen from the publisher. It helps you
-              to better understand the story behind the landmarks. If you like
-              you can use Resume to pick up a tour from the closest location
-              whenever you like.
+              This tour was designed with a story in mind! To get the full
+              experience, it’s best to follow the route and visit the locations
+              in the suggested order. Each stop builds on the last, giving you a
+              deeper insight into the journey. Feel free to pause and take in
+              the surroundings. The beauty of this tour is that you set the
+              pace. Whether you’re capturing the perfect photo or stopping for a
+              quick coffee break, there’s no rush!
             </p>
           </div>
         </div>
@@ -97,7 +99,7 @@ function HowJauntsterWorks() {
               tablet:text-lg tablet:mb-[20px] tablet:mt-[40px]
               text-sm mt-[30px] mb-[10px] text-center"
             >
-              How to get the most of the tour and its story
+              Enjoy the real and interactive ways of the experience 
             </h1>
             <p
               className="flex text-[#13294b] font-normal   leading-normal w-full
@@ -105,11 +107,12 @@ function HowJauntsterWorks() {
               tablet:max-w-[535px] tablet:text-center tablet:text-base
               text-sm max-w-[300px] text-center items-center"
             >
-              You can start the tour from a fixed starting point. The route then
-              continuous in direction, chosen from the publisher. It helps you
-              to better understand the story behind the landmarks. If you like
-              you can use Resume to pick up a tour from the closest location
-              whenever you like.
+              Make sure to check out the author’s photos, videos, and voice
+              notes at each stop. These little details can unlock hidden stories
+              and help you see things through their eyes. Some tours are best on
+              foot, while others might have you biking or driving through scenic
+              routes. Check the tour’s mode (walking, biking, or driving) to
+              make sure you're ready to roll!
             </p>
           </div>
         </div>
