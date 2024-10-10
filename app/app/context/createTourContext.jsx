@@ -4,12 +4,13 @@ import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { createTour, getOne, updateTour } from "../actions/tourActions.js";
 import { filterOutAddFields } from "../utils/filterOutAddFields.js";
 import { removePlaceIdFromUrl } from "../utils/wizardStepValidations.js";
+import { clearIndexedDB, checkIndexedDB } from "../utils/indexedDBUtils.js";
 import {
   validateStep,
   canProceedToStep,
 } from "../utils/wizardStepValidations.js";
 import { usePopup } from "./popupContext.jsx";
-import { useRouter, useSearchParams } from "next/navigation.js";
+import { useRouter, useSearchParams, usePathname } from "next/navigation.js";
 import { useAuth } from "./authContext.jsx";
 const LOCAL_STORAGE_KEY = "savedTourFormData";
 
@@ -35,7 +36,10 @@ export const CreateTourProvider = ({ children }) => {
   const popup = usePopup();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const currentPath = usePathname();
+
   const { session } = useAuth();
+
   const userId = session?.userId;
 
   // Check if it's edit mode
@@ -67,24 +71,118 @@ export const CreateTourProvider = ({ children }) => {
     }
   }, [localStorageData]);
 
+  // Delete indexedDB if user leaves preview or create
   useEffect(() => {
-    const getTour = async () => {
-      if (editModeTourId && userId) {
+    // Function to check URL search params and clear IndexedDB if required
+    const handleSearchParamsChange = () => {
+      const editTour = searchParams.get("editTour");
+      const edit = searchParams.get("edit");
+
+      // Clear IndexedDB if not in preview or create mode
+      if (!editTour && !edit) {
+        clearIndexedDB();
+      }
+    };
+
+    // Run the function when the component mounts or when searchParams change
+    handleSearchParamsChange();
+
+    // Cleanup or re-check on unmount if needed (depending on specific route navigation behavior)
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (editModeTourId) {
+      const getTour = async () => {
+        let db;
+        const dbRequest = indexedDB.open("tourToEdit", 1);
+
+        // Handle database upgrades or creation
+        dbRequest.onupgradeneeded = function (event) {
+          db = event.target.result;
+          db.createObjectStore("data", { keyPath: "id" });
+        };
+
+        dbRequest.onsuccess = async function (event) {
+          db = event.target.result;
+          const transaction = db.transaction(["data"], "readonly");
+          const objectStore = transaction.objectStore("data");
+
+          const getRequest = objectStore.getAll();
+          getRequest.onsuccess = async function (event) {
+            const indexedDBData = event.target.result;
+
+            if (indexedDBData.length > 0) {
+              // Prefill the form with data from IndexedDB
+              const data = indexedDBData[0].data;
+              setFormData({
+                step1Data: {
+                  tour: data?.step1Data.tour || "",
+                  destination: data?.step1Data.destination || "",
+                  duration: data?.step1Data.duration || "",
+                  tourType: data?.step1Data.tourType || "",
+                  price: data?.step1Data.price || "",
+                },
+                step2Data:
+                  data?.step2Data.map((landmark) => ({
+                    landmarkId: landmark.landmarkId || null,
+                    latitude: landmark.latitude || null,
+                    longitude: landmark.longitude || null,
+                    location: landmark.location || "",
+                    locationCity: landmark.city || "",
+                    locationDescription: landmark.description || "",
+                    stopOrder: landmark.stopOrder || 0,
+                    placeId: landmark.placeId || "",
+                    addFields:
+                      landmark.addFields?.map((resource) => ({
+                        type: resource.type || "",
+                        url: resource.url || "",
+                        id: resource.id || "",
+                      })) || [],
+                  })) || [],
+                step3Data: "",
+                step4Data: {
+                  summary: data?.step4Data.summary || "",
+                  thumbnailImage: data?.step4Data.thumbnailImage || null,
+                },
+              });
+            } else {
+              // No data in IndexedDB, fetch from server
+              fetchFromServer();
+            }
+          };
+
+          getRequest.onerror = function (event) {
+            console.error(
+              "Error fetching data from IndexedDB:",
+              event.target.error
+            );
+            // Fallback to fetching from server if IndexedDB error
+            fetchFromServer();
+          };
+        };
+
+        dbRequest.onerror = function (event) {
+          console.error("Error opening IndexedDB:", event.target.error);
+          // Fallback to fetching from server
+          fetchFromServer();
+        };
+      };
+
+      const fetchFromServer = async () => {
+        console.log("Getting data from SERVER");
         const { data, error } = await getOne(editModeTourId);
         if (error) {
-          popup({
-            type: "ERROR",
-            message: error.message,
-          });
+          router.push("/404");
+          return;
         }
 
         if (data) {
-          // prefill inputs only if current user is the owner
+          // Prefill inputs with backend data
           if (data.creatorId === userId) {
             setFormData({
               step1Data: {
-                tour: data?.title || "", //
-                destination: data?.destination || "", //
+                tour: data?.title || "",
+                destination: data?.destination || "",
                 duration: data?.estimatedDuration || "",
                 tourType: data?.tourType || "",
                 price: data?.price || "",
@@ -116,29 +214,43 @@ export const CreateTourProvider = ({ children }) => {
             router.push("/404");
           }
         }
-        setIsEditMode(true);
-      }
-    };
-    getTour();
+      };
+
+      getTour();
+      setIsEditMode(true);
+    }
   }, [editModeTourId, userId]);
 
   // Show load draft modal only if it's not edit mode
   useEffect(() => {
-    if (!hasPrompted.current && !editModeTourId) {
-      const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
-      const data = JSON.parse(savedData);
+    if (currentPath === "/create") {
+      const checkData = async () => {
+        try {
+          const dbExists = await checkIndexedDB();
 
-      if (
-        data?.step1Data?.tour !== "" ||
-        data?.step1Data?.destination !== "" ||
-        data?.step1Data?.duration !== "" ||
-        data?.step1Data?.price !== "" ||
-        data?.step1Data?.tourType !== ""
-      ) {
-        setOpenModal(true);
-      }
+          // Now check localStorage or IndexedDB
+          if (!hasPrompted.current && !editModeTourId && !dbExists) {
+            const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+            const data = JSON.parse(savedData);
+
+            if (
+              data?.step1Data?.tour !== "" ||
+              data?.step1Data?.destination !== "" ||
+              data?.step1Data?.duration !== "" ||
+              data?.step1Data?.price !== "" ||
+              data?.step1Data?.tourType !== ""
+            ) {
+              setOpenModal(true);
+            }
+          }
+        } catch (error) {
+          console.error("Error checking IndexedDB:", error);
+        }
+      };
+
+      checkData();
     }
-  }, [isEditMode]);
+  }, [isEditMode, currentPath]);
 
   const onCloseModal = () => {
     setFormData(() => emptyFormData);
