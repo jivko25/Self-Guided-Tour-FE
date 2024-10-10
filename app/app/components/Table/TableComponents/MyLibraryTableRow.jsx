@@ -28,7 +28,7 @@ function TableRow({ tour, activeTab, triggerRerender }) {
     navigate.push(`/create?edit=${tourId}`);
   }
   function handlePreview(tourId) {
-    navigate.push(`/tour/${tourId}`);
+    navigate.push(`/preview/${tourId}`);
   }
   function handleShowDetails() {
     setShowDetails(!showDetails);
@@ -78,18 +78,18 @@ function TableRow({ tour, activeTab, triggerRerender }) {
           )}
         </div>
       </td>
-      <td className="align-top text-center smallPhone:hidden  tablet:table-cell ">
+      <td className="align-top text-center hidden  tablet:table-cell ">
         <div className="mt-7 gap-9 flex flex-col">
           <p>{tour.createdAt}</p>
           {showDetails && <TourDetails tour={tour} />}
         </div>
       </td>
-      <td className=" align-top max-w-32 text-left smallPhone:hidden  tablet:table-cell flex justify-center ">
+      <td className=" align-top max-w-32 text-left hidden  tablet:table-cell flex justify-center ">
         <div className="mt-7 flex flex-col gap-7 justify-center items-center">
           {showDetails && <TourSummary tour={tour} />}
         </div>
       </td>
-      <td className=" align-top smallPhone:hidden tablet:table-cell ">
+      <td className=" align-top hidden tablet:table-cell ">
         <div className="mt-7">
           {activeTab === "My Tours" ? (
             <TourStatus status={tour.status} />
@@ -103,7 +103,7 @@ function TableRow({ tour, activeTab, triggerRerender }) {
         <div className="flex content-center justify-center gap-6 mt-5">
           {!showDetails ? (
             activeTab === "My Tours" ? (
-              <div className="flex gap-6 justify-start w-[115px]">
+              <div className="flex tablet:gap-6 gap-2  justify-start w-[115px]">
                 <IconButton
                   icon={PencilIcon}
                   className="border-[3px] p-2 border-[#13294B] rounded-[5px]"

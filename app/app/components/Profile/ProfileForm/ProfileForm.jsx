@@ -148,7 +148,12 @@ function ProfileForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className=" tablet:w-[884px] text-l font-medium mb-11"
+      className=" text-l font-medium mb-11 w-[280px]
+      web:w-[883px]
+      tablet:w-[550px]
+      phone:w-[300px]
+      
+      "
       noValidate
     >
       <div className="flex flex-col tablet:flex-row gap-5 mb-6 tablet:mb-16">
@@ -166,7 +171,7 @@ function ProfileForm() {
           id="lastName"
           name="lastName"
           type="text"
-          classes=" tablet:w-[439px]"
+          classes=" tablet:w-[430px]"
           value={user?.lastName}
           onChange={handleInputChange}
         />
@@ -195,7 +200,7 @@ function ProfileForm() {
           onChange={handleInputChange}
         />
       </div>
-      <div className="mt-8 flex gap-0.5 flex-col">
+      <div className="mt-8 flex gap-0.5 flex-col ">
         <label htmlFor="about">Something About Yourself (optional)</label>
         <textarea
           name="about"
@@ -206,7 +211,7 @@ function ProfileForm() {
         ></textarea>
       </div>
       <section
-        className="mt-16 flex gap-9 
+        className="tablet:mt-16 flex gap-9 mt-8
       flex-col 
        "
       >
@@ -230,7 +235,7 @@ function ProfileForm() {
           onClick={triggerFileUpload}
         />
       </section>
-      <section className=" border-t-2 border-[#D1D0D8] mt-16 mb-28">
+      <section className=" border-t-2 border-[#D1D0D8] mt-8 tablet:mt-16 mb-28">
         <h1 className="mt-16 text-xl">Sign In and Security</h1>
         {user?.hasPassword ? (
           <InputField
@@ -240,7 +245,7 @@ function ProfileForm() {
             type="password"
             value={user?.currentPassword}
             onChange={handleInputChange}
-            classes=" w-[430px] mt-8 web:mt-16"
+            classes=" tablet:w-[430px] mt-8 web:mt-16"
             error={error?.currentPassword}
           />
         ) : (
@@ -251,7 +256,7 @@ function ProfileForm() {
             for alternative login options.
           </h1>
         )}
-        <div className="flex gap-8 mt-8 web:mt-16 smallPhone:flex-col tablet:flex-row">
+        <div className="flex gap-8 mt-8 web:mt-16 flex-col tablet:flex-row">
           <InputField
             label="New Password"
             name="password"
@@ -259,7 +264,7 @@ function ProfileForm() {
             type="password"
             value={user?.password}
             onChange={handleInputChange}
-            classes=" w-[430px]"
+            classes=" tablet:w-[430px]"
             error={error?.password}
           />
           <InputField
@@ -269,7 +274,7 @@ function ProfileForm() {
             type="password"
             value={user?.repeatPassword}
             onChange={handleInputChange}
-            classes=" w-[430px]"
+            classes=" tablet:w-[430px]"
             error={error?.repeatPassword}
           />
         </div>

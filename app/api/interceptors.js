@@ -1,6 +1,6 @@
 import { getCookie } from "@/app/utils/cookieUtils.js";
 import { getCookieSSR } from "@/app/utils/cookieUtilsSSR.js";
-
+import { validateToken } from "@/app/actions/authActions";
 /**
  * Interceptor to add access token to requests
  * @param {object} axiosInstance
@@ -13,6 +13,7 @@ export const setupSessionInterceptors = (axiosInstance) =>
       const session = getCookie("session");
 
       if (session && session.accessToken) {
+        validateToken(session.accessToken);
         config.headers["Authorization"] = `Bearer ${session.accessToken}`;
       }
       return config;
@@ -32,6 +33,7 @@ export const setupSessionInterceptorsSSR = (axiosInstance) =>
     async (config) => {
       const session = await getCookieSSR("session");
       if (session && session.accessToken) {
+        validateToken(session.accessToken);
         config.headers["Authorization"] = `Bearer ${session.accessToken}`;
       }
       return config;

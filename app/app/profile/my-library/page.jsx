@@ -9,22 +9,22 @@ import { useEffect, useState } from "react";
 const tableHeaders = {
   ["Bought Tours"]: [
     { label: "Tour Title", additionalClasses: "" },
-    { label: "Date", additionalClasses: "smallPhone:hidden tablet:table-cell" },
-    { label: "", additionalClasses: "smallPhone:hidden tablet:block" },
+    { label: "Date", additionalClasses: "hidden tablet:table-cell" },
+    { label: "", additionalClasses: "hidden tablet:block" },
     {
       label: "Creator",
-      additionalClasses: "smallPhone:hidden tablet:table-cell",
+      additionalClasses: "hidden tablet:table-cell",
     },
     { label: "Action", additionalClasses: "" },
     { label: "", additionalClasses: "" },
   ],
   ["My Tours"]: [
     { label: "Tour Title", additionalClasses: "" },
-    { label: "Date", additionalClasses: "smallPhone:hidden tablet:table-cell" },
-    { label: "", additionalClasses: "smallPhone:hidden tablet:block" },
+    { label: "Date", additionalClasses: "hidden tablet:table-cell" },
+    { label: "", additionalClasses: "hidden tablet:block" },
     {
       label: "Status",
-      additionalClasses: "smallPhone:hidden tablet:table-cell",
+      additionalClasses: "hidden tablet:table-cell",
     },
     { label: "Action", additionalClasses: "rounded-tr-[5px] " },
   ],
