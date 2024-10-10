@@ -50,9 +50,9 @@ export default function Preview() {
   }, [userId, creatorId]);
 
   useEffect(() => {
-    if (id == 0 || params.has("edit")) {
+    if (id == 0 || params.has("editTour")) {
       let db;
-      dbRef.current = indexedDB.open("step2DB", 1);
+      dbRef.current = indexedDB.open("tourToEdit", 1);
 
       dbRef.current.onsuccess = function (event) {
         db = event.target.result;
@@ -225,7 +225,7 @@ export default function Preview() {
     if (id == 0) {
       router.push("/create");
     } else {
-      if (params.has("edit")) {
+      if (params.has("editTour")) {
         router.push(`/create?edit=${id}`);
       } else {
         router.push(`/tour/${id}`);

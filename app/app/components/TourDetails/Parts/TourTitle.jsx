@@ -3,7 +3,7 @@ import Star from "../Svgs/Star";
 import PencilIcon from "../../../public/svg/pencil.svg";
 import Btn from "../../Buttons/Btn.jsx";
 
-function TourTitle({ title, handleEditClick, userId, tourId, rating }) {
+function TourTitle({ title, handleEditClick, userId, creatorId, rating }) {
   return (
     <div
       className="flex justify-between items-center w-full 
@@ -25,7 +25,7 @@ function TourTitle({ title, handleEditClick, userId, tourId, rating }) {
           {rating}
         </span>
       </div>
-      {userId === tourId && (
+      {userId === creatorId && (
         <Btn
           type={"button"}
           icon={PencilIcon}
