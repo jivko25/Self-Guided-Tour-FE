@@ -47,16 +47,16 @@ function TableRow({ tour, activeTab, triggerRerender }) {
   }, [showModal]);
   return (
     <tr key={tour.id} className="border-b-2 text-center ">
-      <td className=" text-center max-w-32">
-        <div className=" flex flex-col justify-center items-start ml-10 my-7 gap-9 max-w-[100%]">
+      <td className=" text-center max-w-32 text-[12px] tablet:text-[16px] ">
+        <div className=" flex flex-col justify-center items-start ml-1 phone:ml-6 tablet:ml-10 my-7 gap-9 max-w-[100%]">
           <div className="flex justify-center gap-9">
             <IconButton
               icon={showDetails ? UpArrowIcon : DownArrowIcon}
               onClick={handleShowDetails}
               className="hidden web:block"
             />
-            <div className="flex justify-center items-center gap-3">
-              <p>{tour.title}</p>
+            <div className="flex justify-center items-center gap-2">
+              <p className="text-ellipsis overflow-hidden ..">{tour.title}</p>
               {activeTab === "My Tours" && <StatusDot status={tour.status} />}
             </div>
           </div>
