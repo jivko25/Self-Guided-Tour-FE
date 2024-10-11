@@ -1,4 +1,4 @@
-Jauntster
+# Jauntster
 
 ## Project description
 
