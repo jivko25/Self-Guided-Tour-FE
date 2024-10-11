@@ -13,7 +13,7 @@ function StatusDot({ status }) {
   return (
     <div
       style={{ backgroundColor: getStatusColor(status) }}
-      className={` tablet:hidden rounded-full  h-3 w-3`}
+      className={` tablet:hidden rounded-full  min-h-3 min-w-3`}
     ></div>
   );
 }
