@@ -67,17 +67,18 @@ function Page() {
 
   return (
     <div
-      className="flex flex-col items-center justify-start min-h-[150vh] w-full pb-[70px]
+      className="flex flex-col items-center justify-start min-h-[80vh] w-full pb-[200px]
      gap-[30px] p-[10px] 
-    web:mt-[0px] web:gap-[30px] web:justify-start web:min-h-[80vh]
-    tablet:mt-[50px] tablet:gap-[30px] tablet:justify-evenly tablet:min-h-[150vh]
-    phone:min-h-[120vh]
+    web:mt-[0px] web:gap-[30px] web:min-h-[80vh] web:pb-[0px]
+    tablet:mt-[50px] tablet:gap-[30px] tablet:pb-[50px]
+    phone:pb-[200px]
+    
     "
     >
       <h1
         className="w-full max-w-[884px] text-center text-[#081120] font-medium font-['Inter'] text-xl mb-[50px] mt-[40px]
       web:text-[31px] web:leading-[46.50px] web:mb-[50px] web:mt-[50px]
-      tablet:text-[31px] tablet:leading-[46.50px] tablet:mb-[0px] tablet:mt-[0px]
+      tablet:text-[31px] tablet:leading-[46.50px] tablet:mb-[50px] tablet:mt-[70px]
       "
       >
         Do you need to know more? Here are some frequently asked question that
@@ -160,7 +161,7 @@ function CollapsibleItem({ title, description, isOpen, onToggle, isLast }) {
 
       {isOpen && (
         <p
-          className={`absolute top-[40px] bg-[#FAFAFA] text-[#13294b] text-sm font-normal font-['Inter'] leading-normal z-10 pt-[20px] h-[160px]  web:h-[150px] tablet:h-[150px] phone:h-[120px] phone:text-base ${
+          className={`absolute top-[40px] bg-[#FAFAFA] text-[#13294b] text-sm font-normal font-['Inter'] leading-normal z-10 pt-[20px] h-[165px] web:h-[150px] tablet:h-[150px] phone:h-[190px] phone:text-base ${
             isLast ? "web:h-[100px]" : ""
           }`}
         >
