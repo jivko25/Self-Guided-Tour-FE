@@ -10,13 +10,10 @@ function MyToursTable({
 }) {
   return (
     <table className="w-full bg-white border max-h-[872px] relative ">
-      <thead className="h-[75px] sticky top-0 overflow-hidden">
-        <tr className="h-12 bg-[#b6bdc7]">
+      <thead className="h-[75px] sticky top-0 overflow-hidden ">
+        <tr className="h-12 bg-[#b6bdc7] text-nowrap">
           {tableHeaders.map((header, index) => (
-            <th
-              key={index}
-              className={`py-2 px-4 ${header.additionalClasses} `}
-            >
+            <th key={index} className={`py-2 px-4 ${header.additionalClasses}`}>
               {header.label}
             </th>
           ))}

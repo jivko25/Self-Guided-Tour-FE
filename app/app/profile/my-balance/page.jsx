@@ -5,7 +5,7 @@ import { useProfile } from "@/app/context/profileContext";
 import { useEffect, useState } from "react";
 const headers = [
   { label: "Tour Title", additionalClasses: "" },
-  { label: "Date", additionalClasses: "smallPhone:hidden tablet:table-cell" },
+  { label: "Date", additionalClasses: "hidden tablet:table-cell" },
   {
     label: "Price",
     additionalClasses: "",

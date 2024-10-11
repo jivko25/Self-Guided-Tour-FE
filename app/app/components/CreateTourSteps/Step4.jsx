@@ -10,14 +10,15 @@ import Btn from "../Buttons/Btn.jsx";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const Step4 = () => {
-  const { formData, updateFormData, handlePublishTour, isEditMode } = useCreateTour();
+  const { formData, updateFormData, handlePublishTour, isEditMode } =
+    useCreateTour();
   const router = useRouter();
-  const editId = useSearchParams().get('edit') || 0;
+  const editId = useSearchParams().get("edit") || 0;
 
   const [imageName, setImageName] = useState(
     formData.step4Data.thumbnailImage?.name || "You can upload image up to 1MB"
   );
-  console.log(formData.step4Data.description?.length);
+
   const [summaryCharCount, setSummaryCharCount] = useState(
     formData.step4Data.summary?.length || 0
   );
@@ -121,28 +122,28 @@ const Step4 = () => {
 
   const redirectToPreview = () => {
     let db;
-    const request = indexedDB.open("step2DB", 1);
-    
+    const request = indexedDB.open("tourToEdit", 1);
+
     request.onupgradeneeded = function (event) {
       db = event.target.result;
       if (!db.objectStoreNames.contains("data")) {
         db.createObjectStore("data", { keyPath: "id" });
       }
     };
-    
+
     request.onsuccess = function (event) {
       db = event.target.result;
       const transaction = db.transaction(["data"], "readwrite");
       const objectStore = transaction.objectStore("data");
-    
+
       const fileData = {
         id: "previewData",
-        name: "step2Data",
+        name: "tourToEdit",
         data: formData,
       };
-    
+
       const addRequest = objectStore.put(fileData);
-    
+
       addRequest.onerror = (event) => {
         console.error("Error storing file:", event);
       };
@@ -150,7 +151,7 @@ const Step4 = () => {
       db.close();
     };
     if (isEditMode) {
-      router.push(`/preview/${editId}?edit=0`);
+      router.push(`/preview/${editId}?editTour=0`);
     } else {
       router.push("/preview/0");
     }
@@ -285,14 +286,16 @@ const Step4 = () => {
             onClick={handlePublishTour}
           />
         </div>
-        <div className="tablet:w-[183px]">
-          <Btn
-            fullWidth
-            variant="outlined"
-            text="Preview"
-            onClick={redirectToPreview}
-          />
-        </div>
+        {isEditMode && (
+          <div className="tablet:w-[183px]">
+            <Btn
+              fullWidth
+              variant="outlined"
+              text="Preview"
+              onClick={redirectToPreview}
+            />
+          </div>
+        )}
       </section>
     </div>
   );
