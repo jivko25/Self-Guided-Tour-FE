@@ -77,7 +77,7 @@ function Page() {
     >
       <h1
         className="w-full max-w-[884px] text-center text-[#081120] font-medium font-['Inter'] text-xl mb-[50px] mt-[40px]
-      web:text-[31px] web:leading-[46.50px] web:mb-[50px] web:mt-[50px]
+      web:text-[31px] web:leading-[46.50px] web:mb-[50px] web:mt-[20px]
       tablet:text-[31px] tablet:leading-[46.50px] tablet:mb-[50px] tablet:mt-[70px]
       "
       >
