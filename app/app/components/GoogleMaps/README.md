@@ -11,7 +11,7 @@ The `@googlemaps/js-api-loader` library simplifies loading the Google Maps API b
 ---
 
 ## 2. [`Map`](https://developers.google.com/maps/documentation/javascript/add-google-map)
-The `Map` class is the core of Google Maps integration. It can be used it to control how the map looks (e.g., the zoom level, map type like satellite or terrain), where it's centered, and how users can interact with it (like dragging, zooming, etc.).
+The `Map` class is the core of Google Maps integration. It can be used it to control how the map looks (e.g., the zoom level, map type like satellite or terrain), where it's centered, and how users can interact with it (like dragging, zooming, etc.). 
 
 ### Key Features:
 - Displays a map with customizable zoom and center.
