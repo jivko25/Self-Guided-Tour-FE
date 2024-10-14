@@ -25,6 +25,7 @@ export default function Footer() {
     "/reset-password",
     "/help",
   ];
+  
   const isSpecialPage = specialPages.some((page) => pathname.startsWith(page));
 
   const hiddenFooter = isSpecialPage
